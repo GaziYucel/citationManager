@@ -2,7 +2,7 @@
 import('lib.pkp.classes.form.Form');
 class OptimetaCitationSettingsForm extends Form {
 
-	/** @var PluginTemplatePlugin  */
+	/** @var OptimetaCitationPlugin  */
 	public $plugin;
 
 	/**
