@@ -6,8 +6,8 @@
  * Copyright (c) 2017-2021 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class PluginTemplatePlugin
- * @brief Plugin class for the PluginTemplate plugin.
+ * @class OptimetaCitationPlugin
+ * @brief Plugin class for the OptimetaCitation plugin.
  */
 import('lib.pkp.classes.plugins.GenericPlugin');
 class OptimetaCitationPlugin extends GenericPlugin {
