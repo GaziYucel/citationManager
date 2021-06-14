@@ -6,7 +6,7 @@
  * Copyright (c) 2003-2021 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @brief Wrapper for the Plugin Template plugin.
+  * @brief Wrapper for the Optimeta Citation plugin.
  *
  */
 require_once('OptimetaCitationPlugin.inc.php');
