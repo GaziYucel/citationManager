@@ -15,7 +15,7 @@ msgid "plugins.generic.optimetaCitation.displayName"
 msgstr "Optimeta Citation Plugin"
 
 msgid "plugins.generic.optimetaCitation.description"
-msgstr "Optimeta Citation Plugin."
+msgstr "Optimeta Citation Plugin. (todo)"
 
 msgid "plugins.generic.optimetaCitation.publicationStatement"
 msgstr "Publication Statement (todo)"
