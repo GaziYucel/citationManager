@@ -33,7 +33,7 @@ class OptimetaCitationPlugin extends GenericPlugin {
 	 * @return string
 	 */
 	public function getDisplayName() {
-		return __('plugins.generic.pluginTemplate.displayName');
+		return __('plugins.generic.optimetaCitation.displayName');
 	}
 
 	/**
@@ -45,7 +45,7 @@ class OptimetaCitationPlugin extends GenericPlugin {
 	 * @return string
 	 */
 	public function getDescription() {
-		return __('plugins.generic.pluginTemplate.description');
+		return __('plugins.generic.optimetaCitation.description');
 	}
 
 	/**
@@ -121,8 +121,8 @@ class OptimetaCitationPlugin extends GenericPlugin {
 			case 'settings':
 
 				// Load the custom form
-				$this->import('PluginTemplateSettingsForm');
-				$form = new PluginTemplateSettingsForm($this);
+				$this->import('OptimetaCitationSettingsForm');
+				$form = new OptimetaCitationSettingsForm($this);
 
 				// Fetch the form the first time it loads, before
 				// the user has tried to save it
