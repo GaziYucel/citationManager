@@ -1,13 +1,18 @@
 <?php
+
 /**
- * @file index.php
+ * @file plugins/generic/optimetaCitation/index.php
  *
- * Copyright (c) 2014-2021 Simon Fraser University
- * Copyright (c) 2003-2021 John Willinsky
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
-  * @brief Wrapper for the Optimeta Citation plugin.
+ * @class OptimetaCitationsPlugin
+ * @ingroup plugins_generic_optimetacitation
  *
+ * @brief Wrapper for the Optimeta Citation plugin.
  */
-require_once('OptimetaCitationPlugin.inc.php');
-return new OptimetaCitationPlugin();
+
+require_once('OptimetaCitationsPlugin.inc.php');
+
+return new OptimetaCitationsPlugin();
