@@ -1,2 +1,5 @@
 # JetBrains PHPStorm
 .idea/**
+
+# Visual Studio Code
+.vscode/**
