@@ -1,0 +1,25 @@
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-09-01T23:59:59+00:00\n"
+"PO-Revision-Date: 2021-09-01T23:59:59+00:00\n"
+"Language: \n"
+
+msgid "plugins.generic.optimetaCitationsPlugin.name"
+msgstr "Optimeta Citations Plugin (name)"
+
+msgid "plugins.generic.optimetaCitationsPlugin.description"
+msgstr "Optimeta Citations Plugin. (todo)"
+
+msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement"
+msgstr "Publication Statement (todo)"
+
+msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement.description"
+msgstr "Add a publication statement that you would like to appear on every publication's landing page. (todo)"
+
+msgid "plugins.generic.optimetaCitationsPlugin.submissionEditFormLabel"
+msgstr "Citations"
