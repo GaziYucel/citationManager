@@ -1,4 +1,4 @@
-[![OPTIMETA Logo](https://projects.tib.eu/fileadmin/_processed_/e/8/csm_Optimeta_Logo_web_98c26141b1.png)](https://projects.tib.eu/optimeta/en/)
+[![OPTIMETA Logo](images/optimeta_logo_full.jpg)](https://projects.tib.eu/optimeta/en/)
 
 OPTIMETA Citation plugin
 ---------------------
