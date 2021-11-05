@@ -6,7 +6,7 @@
             <h4>Citations</h4>
         </div>
         <div>
-            <img src="/plugins/generic/optimetaCitationsPlugin/images/citation manager-embed_edit.png" style="width: 100%;">
+            <img src="/plugins/generic/optimetaCitations/images/citation manager-embed_edit.png" style="width: 100%;">
         </div>
         <div aria-live="polite" class="pkpFormPage__footer">
             <span role="status" aria-live="polite" aria-atomic="true"></span>
