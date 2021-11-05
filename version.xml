@@ -6,5 +6,5 @@
 	<release>0.0.0.0</release>
 	<date>2021-09-01</date>
 	<lazy-load>1</lazy-load>
-	<class>OptimetaCitations</class>
+	<class>OptimetaCitationsPlugin</class>
 </version>
