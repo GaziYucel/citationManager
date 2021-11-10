@@ -1,15 +1,15 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitation/OptimetaCitationsPlugin.inc.php
+ * @file plugins/generic/optimetaCitations/OptimetaCitationsPlugin.inc.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class OptimetaCitationsPlugin
- * @ingroup plugins_generic_optimetacitation
+ * @ingroup plugins_generic_optimetacitations
  *
- * @brief Wrapper for the Optimeta Citation plugin.
+ * @brief Wrapper for the OptimetaCitations plugin.
  */
 
 import('lib.pkp.classes.plugins.GenericPlugin');
