@@ -1,3 +1,6 @@
+
+<script src="{$pluginJavaScriptURL}/submissionEditForm.js"></script>
+
 <tab id="optimetaCitationsPlugin_citations" label="{translate key="plugins.generic.optimetaCitationsPlugin.submissionEditFormLabel"}">
     <div class="">
         <!-- <h1>submissionEditForm.tpl</h1> -->
