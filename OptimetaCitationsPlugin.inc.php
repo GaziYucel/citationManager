@@ -9,7 +9,7 @@
  * @class OptimetaCitationsPlugin
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Wrapper for the OptimetaCitations plugin.
+ * @brief Plugin for parsing Citations and submitting to Open Access websites.
  */
 
 import('lib.pkp.classes.plugins.GenericPlugin');
@@ -37,11 +37,24 @@ class OptimetaCitationsPlugin extends GenericPlugin
             // Hooks for changing the Submission > Publication Edit Metadata
             HookRegistry::register('Template::Workflow::Publication', array($this, 'extendSubmissionEditForm'));
 
-            // $request = Application::get()->getRequest();
-            // $templateMgr = TemplateManager::getManager($request);
+            $request = Application::get()->getRequest();
+            $templateMgr = TemplateManager::getManager($request);
+            $templateMgr->addStyleSheet(
+				'optimetaCitations',
+				$request->getBaseUrl() . '/' . $this->getPluginPath() . '/css/optimetaCitations.css'
+			);
 
             // main js scripts
-            // $templateMgr->assign('submissionMetadataFormFieldsJS', $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js/submissionWizardForm.js');
+			$templateMgr->addJavaScript(
+				'optimetaCitations',
+				$request->getBaseUrl() . '/' . $this->getPluginPath() . '/js/submissionEditForm.js'
+			);
+
+			$templateMgr->assign(array(
+				'pluginJavaScriptURL' => $this->getJavaScriptURL($request)
+			));
+
+            //$templateMgr->assign('submissionMetadataFormFieldsJS', $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js/submissionWizardForm.js');
         }
         return $success;
     }
@@ -113,4 +126,10 @@ class OptimetaCitationsPlugin extends GenericPlugin
         return is_null($context) ? 0 : $context->getId();
     }
 
+	/**
+	 * Get the JavaScript URL for this plugin.
+	 */
+	function getJavaScriptURL($request) {
+		return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js';
+	}
 }
