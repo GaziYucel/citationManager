@@ -41,17 +41,15 @@ class OptimetaCitationsPlugin extends GenericPlugin
             $templateMgr = TemplateManager::getManager($request);
             $templateMgr->addStyleSheet(
 				'optimetaCitations',
-				$request->getBaseUrl() . '/' . $this->getPluginPath() . '/css/optimetaCitations.css'
+				$this->getStylesheetURL($request) . '/optimetaCitations.css'
 			);
 
             // main js scripts
-			$templateMgr->addJavaScript(
-				'optimetaCitations',
-				$request->getBaseUrl() . '/' . $this->getPluginPath() . '/js/submissionEditForm.js'
-			);
+			// $templateMgr->addJavaScript('optimetaCitations', $this->getJavaScriptURL($request) . '/submissionEditForm.js');
 
 			$templateMgr->assign(array(
-				'pluginJavaScriptURL' => $this->getJavaScriptURL($request)
+				'pluginJavaScriptURL' => $this->getJavaScriptURL($request),
+				'pluginImagesURL' => $this->getImagesURL($request)
 			));
 
             //$templateMgr->assign('submissionMetadataFormFieldsJS', $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js/submissionWizardForm.js');
@@ -131,5 +129,19 @@ class OptimetaCitationsPlugin extends GenericPlugin
 	 */
 	function getJavaScriptURL($request) {
 		return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js';
+	}
+
+	/**
+	 * Get the Images URL for this plugin.
+	 */
+	function getImagesURL($request) {
+		return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/images';
+	}
+
+	/**
+	 * Get the Stylesheet URL for this plugin.
+	 */
+	function getStylesheetUrl($request) {
+		return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/css';
 	}
 }
