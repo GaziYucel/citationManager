@@ -1,15 +1,15 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitation/OptimetaCitationsPlugin.inc.php
+ * @file plugins/generic/optimetaCitations/OptimetaCitationsPlugin.inc.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class OptimetaCitationsPlugin
- * @ingroup plugins_generic_optimetacitation
+ * @ingroup plugins_generic_optimetacitations
  *
- * @brief Wrapper for the Optimeta Citation plugin.
+ * @brief Plugin for parsing Citations and submitting to Open Access websites.
  */
 
 import('lib.pkp.classes.plugins.GenericPlugin');
@@ -37,11 +37,22 @@ class OptimetaCitationsPlugin extends GenericPlugin
             // Hooks for changing the Submission > Publication Edit Metadata
             HookRegistry::register('Template::Workflow::Publication', array($this, 'extendSubmissionEditForm'));
 
-            // $request = Application::get()->getRequest();
-            // $templateMgr = TemplateManager::getManager($request);
+            $request = Application::get()->getRequest();
+            $templateMgr = TemplateManager::getManager($request);
+            $templateMgr->addStyleSheet(
+				'optimetaCitations',
+				$this->getStylesheetURL($request) . '/optimetaCitations.css'
+			);
 
             // main js scripts
-            // $templateMgr->assign('submissionMetadataFormFieldsJS', $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js/submissionWizardForm.js');
+			// $templateMgr->addJavaScript('optimetaCitations', $this->getJavaScriptURL($request) . '/submissionEditForm.js');
+
+			$templateMgr->assign(array(
+				'pluginJavaScriptURL' => $this->getJavaScriptURL($request),
+				'pluginImagesURL' => $this->getImagesURL($request)
+			));
+
+            //$templateMgr->assign('submissionMetadataFormFieldsJS', $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js/submissionWizardForm.js');
         }
         return $success;
     }
@@ -113,4 +124,24 @@ class OptimetaCitationsPlugin extends GenericPlugin
         return is_null($context) ? 0 : $context->getId();
     }
 
+	/**
+	 * Get the JavaScript URL for this plugin.
+	 */
+	function getJavaScriptURL($request) {
+		return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js';
+	}
+
+	/**
+	 * Get the Images URL for this plugin.
+	 */
+	function getImagesURL($request) {
+		return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/images';
+	}
+
+	/**
+	 * Get the Stylesheet URL for this plugin.
+	 */
+	function getStylesheetUrl($request) {
+		return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/css';
+	}
 }

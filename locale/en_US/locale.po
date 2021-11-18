@@ -10,16 +10,16 @@
 "Language: \n"
 
 msgid "plugins.generic.optimetaCitationsPlugin.name"
-msgstr "Optimeta Citations Plugin (name)"
+msgstr "Optimeta Citations Plugin"
 
 msgid "plugins.generic.optimetaCitationsPlugin.description"
-msgstr "Optimeta Citations Plugin. (todo)"
+msgstr "Optimeta Citations Plugin"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement"
-msgstr "Publication Statement (todo)"
+msgstr "Publication Statement"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement.description"
-msgstr "Add a publication statement that you would like to appear on every publication's landing page. (todo)"
+msgstr "Add a publication statement that you would like to appear on every publication's landing page"
 
 msgid "plugins.generic.optimetaCitationsPlugin.submissionEditFormLabel"
 msgstr "Citations"

@@ -1,6 +1,6 @@
-[![OPTIMETA Logo](images/optimeta_logo_full.jpg)](https://projects.tib.eu/optimeta/en/)
+[![OPTIMETA Logo](images/optimeta-logo-full.jpg)](https://projects.tib.eu/optimeta/en/)
 
-OPTIMETA Citation plugin
+OptimetaCitations plugin
 ---------------------
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 
