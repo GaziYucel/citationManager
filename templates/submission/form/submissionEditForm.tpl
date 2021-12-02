@@ -21,7 +21,7 @@
 			<div style="text-align: right; border-bottom: 1px solid #ddd; width: 100%;">
 				<img src="{$pluginImagesURL}/optimeta-citations-embed_edit-status.png">
 			</div>
-			<iframe id="iframe" src="https://ojs330.yucel.nl/plugins/generic/optimetaCitations/demo/data.html"
+			<iframe id="iframe" src="/plugins/generic/optimetaCitations/demo/data.html"
 			title="citations"
 			style="width: 100%; height: 500px; border: 0; padding: 0; margin: 0;"></iframe>
 
