@@ -10,3 +10,18 @@
  *
  * @brief Main stylesheet for the plugin.
  */
+
+.optimetaScrollableDiv {
+	border: 1px solid #cccc;
+	height: 500px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.optimetaScrollableDiv th {
+	background-color: #fff;
+	position: sticky;
+	position: -webkit-sticky;
+	top: 0;
+	z-index: 2;
+}
