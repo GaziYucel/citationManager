@@ -1,6 +1,5 @@
-<?php
 /**
- * @file plugins/generic/optimetaCitations/index.php
+ * @file plugins/generic/optimetaCitations/js/optimetaCitations.js
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -9,9 +8,6 @@
  * @class OptimetaCitationsPlugin
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Wrapper for the OptimetaCitations plugin.
+ * @brief Main javascript for the plugin. *
  */
 
-require_once('OptimetaCitationsPlugin.inc.php');
-
-return new OptimetaCitationsPlugin();

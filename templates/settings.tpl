@@ -1,0 +1,1 @@
+<h1>settings.tpl</h1>
