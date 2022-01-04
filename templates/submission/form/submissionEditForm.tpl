@@ -10,8 +10,7 @@
 	var optimetaApp = new pkp.Vue({
 		data: {
 			citations: optimetaCitations,
-			helper: optimetaCitationsHelper,
-			isParsingFinished: false
+			helper: optimetaCitationsHelper
 		},
 		methods: {
 			parseCitationsRaw(){
@@ -33,7 +32,6 @@
 
 	<div class="header">
 		<h4>Citations</h4>
-		{* <button v-on:click="optimetaApp.parseCitationsRaw()" id="buttonParse" class="pkpButton">Parse References</button> {{ optimetaApp.isParsingFinished }} *}
 	</div>
 
 	<div class="optimetaScrollableDiv">
@@ -83,15 +81,6 @@
 			</tbody>
 		</table>
 
-	</div>
-
-	<div style="display: none;">
-		<!-- debug -->
-{*		citationsJsonComputed <div class="optimetaCitationsDebug">{{ optimetaApp.citationsJsonComputed }}</div>*}
-{*		parsedCitationsDb <div class="optimetaCitationsDebug">{$parsedCitationsDb}</div>*}
-{*		parsedCitations <div class="optimetaCitationsDebug">{$parsedCitations}</div>*}
-{*		citationsRaw <div class="optimetaCitationsDebug">{$citationsRaw}</div>*}
-		<!-- debug -->
 	</div>
 
 	<div>

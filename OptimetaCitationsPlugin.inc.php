@@ -109,10 +109,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $templateMgr->assign(array(
             'pluginStylesheetURL' => $this->getStylesheetUrl($request),
             'pluginJavaScriptURL' => $this->getJavaScriptURL($request),
-            'pluginImagesURL' => $this->getImagesURL($request),
-            'parsedCitationsDb' => $parsedCitationsDb,
-            'parsedCitations' => $parsedCitations,
-            'citationsRaw' => $citationsRaw
+            'parsedCitations' => $parsedCitations
             ));
 
         $templateMgr->display(
