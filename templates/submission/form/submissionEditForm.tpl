@@ -87,10 +87,10 @@
 
 	<div style="display: none;">
 		<!-- debug -->
-		citationsJsonComputed <div class="optimetaCitationsDebug">{{ optimetaApp.citationsJsonComputed }}</div>
-		parsedCitationsDb <div class="optimetaCitationsDebug">{$parsedCitationsDb}</div>
-		parsedCitations <div class="optimetaCitationsDebug">{$parsedCitations}</div>
-		citationsRaw <div class="optimetaCitationsDebug">{$citationsRaw}</div>
+{*		citationsJsonComputed <div class="optimetaCitationsDebug">{{ optimetaApp.citationsJsonComputed }}</div>*}
+{*		parsedCitationsDb <div class="optimetaCitationsDebug">{$parsedCitationsDb}</div>*}
+{*		parsedCitations <div class="optimetaCitationsDebug">{$parsedCitations}</div>*}
+{*		citationsRaw <div class="optimetaCitationsDebug">{$citationsRaw}</div>*}
 		<!-- debug -->
 	</div>
 
