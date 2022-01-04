@@ -38,7 +38,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
             // is triggered only on these hooks
             HookRegistry::register('Template::Workflow::Publication', array($this, 'publicationTabCitations'));
-            HookRegistry::register('Publication::edit', array($this, 'publicationTabCitationsEdit'));
+            HookRegistry::register('Publication::edit', array($this, 'publicationTabCitationsSave'));
 
         }
 
@@ -97,13 +97,6 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $publicationDao = DAORegistry::getDAO('PublicationDAO');
         $publication = $publicationDao->getById($submission->getId());
 
-        if(isset($_POST[$this->citationsKeyForm])){
-            $publication->setData(
-                $this->citationsKeyDb,
-                $_POST[$this->citationsKeyForm]);
-            DebugToFile($this->citationsKeyDb . ' saved');
-        }
-
         $citationsRaw = $publication->getData('citationsRaw');
         $parsedCitationsDb = $publication->getData($this->citationsKeyDb);
         $parsedCitations = $parsedCitationsDb;
@@ -119,11 +112,11 @@ class OptimetaCitationsPlugin extends GenericPlugin
             'pluginImagesURL' => $this->getImagesURL($request),
             'parsedCitationsDb' => $parsedCitationsDb,
             'parsedCitations' => $parsedCitations,
-            'citationsRaw' => $citationsRaw,
-            'citationsKeyForm' => $this->citationsKeyForm
+            'citationsRaw' => $citationsRaw
             ));
 
-        $templateMgr->display($this->getTemplateResource("submission/form/submissionEditForm.tpl"));
+        $templateMgr->display(
+			$this->getTemplateResource("submission/form/submissionEditForm.tpl"));
 
     }
 
@@ -136,14 +129,13 @@ class OptimetaCitationsPlugin extends GenericPlugin
      *   Request
      * @brief process data from post/put
      */
-    public function  publicationTabCitationsEdit(string $hookname, array $args): void {
+    public function  publicationTabCitationsSave(string $hookname, array $args): void {
 
         $publication = $args[0];
         $params = $args[2];
 
         if (!array_key_exists($this->citationsKeyForm, $params)) {
-            DebugToFile($this->citationsKeyForm . ' not found');
-            //return;
+            return;
         }
 
         $value = $params[$this->citationsKeyForm];
