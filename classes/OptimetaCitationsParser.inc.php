@@ -15,54 +15,61 @@
 
 class OptimetaCitationsParser
 {
-	/**
-	 * Regex to extract DOI
-	 *
-	 * @var string
-	 */
+    /**
+     * Basis URL of doi
+     *
+     * @var string
+     */
+    private string $doiUrl = 'doi.org';
+
+    /**
+     * Regex to extract DOI
+     *
+     * @var string
+     */
     // '/^10.\d{4,9}/[-._;()/:A-Z0-9]+$/i'; // crossref regex, doesn't work
-    private $regexDoi = '(10[.][0-9]{4,}[^\s"/<>]*/[^\s"<>]+)';
+    private string $regexDoi = '(10[.][0-9]{4,}[^\s"/<>]*/[^\s"<>]+)';
 
-	/**
-	 * Variable which will hold the raw citations
-	 *
-	 * @var string
-	 */
-	private $rawCitations = "";
+    /**
+     * Variable which will hold the raw citations
+     *
+     * @var string
+     */
+    private string $rawCitations = "";
 
-	/**
-	 * Array which hold the parsed citations: ( ( "pid" => "pid1", "raw" => "raw1" ), ... )
-	 *
-	 * @var array
-	 */
-	private $parsedCitations = [];
+    /**
+     * Array which hold the parsed citations: ( ( "pid" => "pid1", "raw" => "raw1" ), ... )
+     *
+     * @var array
+     */
+    private array $parsedCitations = [];
 
-	/**
-	 * Constructor.
-	 * @param $rawCitation string an unparsed citation string
-	 */
-	function __construct(string $rawCitations = "")
-	{
-		$this->rawCitations= $rawCitations;
+    /**
+     * Constructor.
+     * @param $rawCitations string an unparsed citation string
+     */
+    function __construct(string $rawCitations = "")
+    {
+        $this->rawCitations= $rawCitations;
     }
 
-	/**
-	 * Returns parsed citations as an array
-	 *
-	 * @return parsedCitations array [ (doi1, citation1), (doi2, citations2), ... ]
-	 */
-	public function getParsedCitationsArray()
-	{
-		$this->parse();
-		return $this->parsedCitations;
-	}
+    /**
+     * Returns parsed citations as an array
+     *
+     * @return array parsedCitations [ (doi1, citation1), (doi2, citations2), ... ]
+     */
+    public function getParsedCitationsArray(): array
+    {
+        $this->parse();
+        return $this->parsedCitations;
+    }
 
     /**
      * Returns parsed citations as an JSON
      *
-     * @return parsedCitations json
+     * @return string (json) parsedCitations
      */
-    public function getParsedCitationsJson()
+    public function getParsedCitationsJson(): string
     {
         $this->parse();
         return json_encode($this->parsedCitations);
@@ -75,7 +82,7 @@ class OptimetaCitationsParser
      * @param $citationsRaw string
      * @return void
      */
-    private function parse()
+    private function parse(): void
     {
         $citationsRaw = $this->rawCitations;
         $citationsArray = [];
@@ -119,14 +126,23 @@ class OptimetaCitationsParser
 
             if(!empty($pid))
             {
-                $raw = str_replace('http://doi.org/' . $pid, '', $raw);
-                $raw = str_replace('https://doi.org/' . $pid, '', $raw);
-                $raw = trim($raw);
-                $pid = 'https://doi.org/' . $pid;
+                $raw = str_replace(
+                    'http://' . $this->doiUrl . '/',
+                    'https://' . $this->doiUrl . '/', $raw);
+                $pid = 'https://' . $this->doiUrl . '/' . $pid;
+
+                if(stristr($raw, $pid)){
+                    $raw = trim(str_replace($pid, '', $raw));
+                }
+                else{
+                    $pid = '';
+                }
             }
 
             $this->parsedCitations[] = [ "pid" => $pid, "raw" => $raw ];
         }
+
+        $this->addLog(var_export($this->parsedCitations, true));
 
     }
 
@@ -136,7 +152,8 @@ class OptimetaCitationsParser
      * @param $citationRawLine
      * @return string
      */
-    private function cleanCitationString($citationRawLine){
+    private function cleanCitationString($citationRawLine): string
+    {
 
         // Strip whitespace
         $citationRawLine = trim($citationRawLine);
@@ -160,7 +177,8 @@ class OptimetaCitationsParser
      * @param $citationRawLine
      * @return string
      */
-    private function removeLeadingNumbersFromBeginning($citationRawLine){
+    private function removeLeadingNumbersFromBeginning($citationRawLine): string
+    {
 
         $citationRawLine = preg_replace(
             '/^\s*[\[#]?[0-9]+[.)\]]?\s*/',
@@ -175,6 +193,5 @@ class OptimetaCitationsParser
     public $debug = '____S____' . "\r\n";
     function addLog($str){ $this->debug .= $str . "\r\n"; }
     function getLog(){ return $this->debug . "____E____"; }
-
 
 }
