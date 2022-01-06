@@ -20,7 +20,7 @@ use \PKP\components\forms\FormComponent;
 
 class OptimetaCitationsPlugin extends GenericPlugin
 {
-    private $citationsKeyDb      = 'optimetaCitations::parsedCitations';
+    private $citationsKeyDb      = 'optimetaCitations__parsedCitations';
     private $citationsKeyForm    = 'optimetaCitations__parsedCitations';
 
     /**
@@ -36,9 +36,12 @@ class OptimetaCitationsPlugin extends GenericPlugin
             // Is triggered with every request from anywhere
             HookRegistry::register('Schema::get::publication', array($this, 'addToSchema'));
 
-            // is triggered only on these hooks
-            HookRegistry::register('Template::Workflow::Publication', array($this, 'publicationTabCitations'));
-            HookRegistry::register('Publication::edit', array($this, 'publicationTabCitationsEdit'));
+            // Hooks for changing the frontent Submit an Article 3. Enter Metadata
+            HookRegistry::register('Templates::Submission::SubmissionMetadataForm::AdditionalMetadata', array($this, 'submissionWizard'));
+
+            // Is triggered only on these hooks
+            HookRegistry::register('Template::Workflow::Publication', array($this, 'publicationTab'));
+            HookRegistry::register('Publication::edit', array($this, 'publicationTabSave'));
 
         }
 
@@ -73,57 +76,48 @@ class OptimetaCitationsPlugin extends GenericPlugin
      * @param array $args [string, TemplateManager]
      * @brief Show tab under Publications
      */
-    public function publicationTabCitations(string $hookName, array $args): void
+    public function publicationTab(string $hookName, array $args): void
     {
         $templateMgr = &$args[1];
 
         $request = $this->getRequest();
         $context = $request->getContext();
         $submission = $templateMgr->getTemplateVars('submission');
+        $submissionId = $submission->getId();
+
         $latestPublication = $submission->getLatestPublication();
         $latestPublicationApiUrl = $request->getDispatcher()->url(
             $request,
             ROUTE_API,
             $context->getData('urlPath'),
-            'submissions/' . $submission->getId() . '/publications/' . $latestPublication->getId());
-
+            'submissions/' . $submissionId . '/publications/' . $latestPublication->getId());
         $form = new PublicationOptimetaCitationsForm($latestPublicationApiUrl, $latestPublication);
-
         $state = $templateMgr->getTemplateVars('state');
         $state['components'][FORM_PUBLICATION_OPTIMETA_CITATIONS] = $form->getConfig();
-
         $templateMgr->assign('state', $state);
 
         $publicationDao = DAORegistry::getDAO('PublicationDAO');
-        $publication = $publicationDao->getById($submission->getId());
-
-        if(isset($_POST[$this->citationsKeyForm])){
-            $publication->setData(
-                $this->citationsKeyDb,
-                $_POST[$this->citationsKeyForm]);
-            DebugToFile($this->citationsKeyDb . ' saved');
-        }
-
+        $publication = $publicationDao->getById($submissionId);
+        $parsedCitations = $publication->getData($this->citationsKeyDb);
         $citationsRaw = $publication->getData('citationsRaw');
-        $parsedCitationsDb = $publication->getData($this->citationsKeyDb);
-        $parsedCitations = $parsedCitationsDb;
-
-        if($parsedCitations == ''){
+        if($parsedCitations == '' && $citationsRaw != ''){
             $parser = new OptimetaCitationsParser($citationsRaw);
             $parsedCitations = $parser->getParsedCitationsJson();
+        }
+        if($parsedCitations == null || $parsedCitations == '') {
+                $parsedCitations = '[{}]';
         }
 
         $templateMgr->assign(array(
             'pluginStylesheetURL' => $this->getStylesheetUrl($request),
             'pluginJavaScriptURL' => $this->getJavaScriptURL($request),
             'pluginImagesURL' => $this->getImagesURL($request),
-            'parsedCitationsDb' => $parsedCitationsDb,
+            'citationsKeyForm' => $this->citationsKeyForm,
             'parsedCitations' => $parsedCitations,
-            'citationsRaw' => $citationsRaw,
-            'citationsKeyForm' => $this->citationsKeyForm
+            'citationsRaw' => $citationsRaw
             ));
 
-        $templateMgr->display($this->getTemplateResource("submission/form/submissionEditForm.tpl"));
+        $templateMgr->display($this->getTemplateResource("submission/form/publicationTab.tpl"));
 
     }
 
@@ -136,14 +130,13 @@ class OptimetaCitationsPlugin extends GenericPlugin
      *   Request
      * @brief process data from post/put
      */
-    public function  publicationTabCitationsEdit(string $hookname, array $args): void {
+    public function  publicationTabSave(string $hookname, array $args): void {
 
         $publication = $args[0];
         $params = $args[2];
 
         if (!array_key_exists($this->citationsKeyForm, $params)) {
-            DebugToFile($this->citationsKeyForm . ' not found');
-            //return;
+            return;
         }
 
         $value = $params[$this->citationsKeyForm];
@@ -151,7 +144,48 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $publication->setData($this->citationsKeyDb, $value);
     }
 
+    public function submissionWizard(string $hookname, array $args): void
+    {
+        $templateMgr = &$args[1];
+
+        $request = $this->getRequest();
+        $context = $request->getContext();
+
+        $publicationDao = DAORegistry::getDAO('PublicationDAO');
+        $submissionId = $request->getUserVar('submissionId');
+        $publication = $publicationDao->getById($submissionId);
+
+        $parsedCitations = $publication->getData($this->citationsKeyDb);
+        $citationsRaw = $publication->getData('citationsRaw');
+
+        if($parsedCitations == '' && $citationsRaw != ''){
+            $parser = new OptimetaCitationsParser($citationsRaw);
+            $parsedCitations = $parser->getParsedCitationsJson();
+        }
+        if($parsedCitations == null || $parsedCitations == '') {
+            $parsedCitations = '[{}]';
+        }
+
+        $templateMgr->assign(array(
+            'pluginStylesheetURL' => $this->getStylesheetUrl($request),
+            'pluginJavaScriptURL' => $this->getJavaScriptURL($request),
+            'pluginImagesURL' => $this->getImagesURL($request),
+            'citationsKeyForm' => $this->citationsKeyForm,
+            'parsedCitations' => $parsedCitations,
+            'citationsRaw' => $citationsRaw
+        ));
+
+        $templateMgr->display($this->getTemplateResource("submission/form/submissionWizard.tpl"));
+    }
+
+    public function submissionWizardSave(string $hookname, array $args): void
+    {
+
+    }
+
+    /* ********************** */
     /* Plugin related methods */
+    /* ********************** */
 
     /**
      * @copydoc PKPPlugin::getDisplayName
@@ -203,4 +237,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/css';
     }
 
+    /* ********************** */
+    /* Plugin related methods */
+    /* ********************** */
 }

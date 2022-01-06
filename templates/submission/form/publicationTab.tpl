@@ -1,3 +1,5 @@
+<script src="{$pluginJavaScriptURL}/optimetaCitations.js"></script>
+<link rel="stylesheet" href="{$pluginStylesheetURL}/optimetaCitations.css" type="text/css" />
 <script>
     var optimetaCitationsJson = `{$parsedCitations}`;
     var optimetaCitations = JSON.parse(optimetaCitationsJson);
@@ -8,10 +10,10 @@
     }
 
 	var optimetaApp = new pkp.Vue({
+		//el: '#optimetaCitations',
 		data: {
 			citations: optimetaCitations,
-			helper: optimetaCitationsHelper,
-			isParsingFinished: false
+			helper: optimetaCitationsHelper
 		},
 		methods: {
 			parseCitationsRaw(){
@@ -24,16 +26,12 @@
 			}
 		}
 	});
-
 </script>
-<script src="{$pluginJavaScriptURL}/submissionEditForm.js"></script>
-<link rel="stylesheet" href="{$pluginStylesheetURL}/optimetaCitations.css" type="text/css" />
 
 <tab v-if="supportsReferences" id="optimetaCitations" label="{translate key="plugins.generic.optimetaCitationsPlugin.submissionEditFormLabel"}">
 
 	<div class="header">
 		<h4>Citations</h4>
-		{* <button v-on:click="optimetaApp.parseCitationsRaw()" id="buttonParse" class="pkpButton">Parse References</button> {{ optimetaApp.isParsingFinished }} *}
 	</div>
 
 	<div class="optimetaScrollableDiv">
@@ -54,44 +52,35 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(helper, i) in optimetaApp.helper">
+				<tr v-for="(row, i) in optimetaApp.helper">
 					<td>
 						{{ i + 1 }}
 					</td>
 					<td style="">
-						<textarea v-show="helper.editRow"
+						<textarea v-show="row.editRow"
 								  v-model="optimetaApp.citations[i].raw"
 								  class="pkpFormField__input pkpFormField--textarea__input optimetaTextArea"
 								  style="height: 100px;"></textarea>
-						<span v-show="!helper.editRow">{{ optimetaApp.citations[i].raw }}</span>
+						<span v-show="!row.editRow">{{ optimetaApp.citations[i].raw }}</span>
 					</td>
 					<td>
-						<input v-show="helper.editRow"
+						<input v-show="row.editRow"
 							   v-model="optimetaApp.citations[i].pid"
 							   class="pkpFormField__input pkpFormField--text__input" />
-						<span v-show="!helper.editRow">{{ optimetaApp.citations[i].pid }}</span>
+						<span v-show="!row.editRow">{{ optimetaApp.citations[i].pid }}</span>
 					</td>
 					<td>
-						<button v-show="!helper.editRow"
-								v-on:click="helper.editRow = !helper.editRow"
+						<button v-show="!row.editRow"
+								v-on:click="row.editRow = !row.editRow"
 								class="pkpButton" label="Edit"> Edit </button>
-						<button v-show="helper.editRow"
-								v-on:click="helper.editRow = !helper.editRow"
+						<button v-show="row.editRow"
+								v-on:click="row.editRow = !row.editRow"
 								class="pkpButton" label="Close"> Close </button>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 
-	</div>
-
-	<div style="display: none;">
-		<!-- debug -->
-		citationsJsonComputed <div class="optimetaCitationsDebug">{{ optimetaApp.citationsJsonComputed }}</div>
-		parsedCitationsDb <div class="optimetaCitationsDebug">{$parsedCitationsDb}</div>
-		parsedCitations <div class="optimetaCitationsDebug">{$parsedCitations}</div>
-		citationsRaw <div class="optimetaCitationsDebug">{$citationsRaw}</div>
-		<!-- debug -->
 	</div>
 
 	<div>

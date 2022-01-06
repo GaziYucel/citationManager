@@ -12,8 +12,6 @@
  * @brief A preset form for setting a publication's parsed citations
  */
 
-require_once ('/home2/kd94958/public_www/yucel.nl_ojs330/plugins/generic/optimetaCitations/helper.php');
-
 use \PKP\components\forms\FormComponent;
 use \PKP\components\forms\FieldText;
 
@@ -26,7 +24,7 @@ class PublicationOptimetaCitationsForm extends FormComponent {
 	/** @copydoc FormComponent::$method */
 	public $method = 'PUT';
 
-    private $citationsKeyDb   = 'optimetaCitations::parsedCitations';
+    private $citationsKeyDb   = 'optimetaCitations__parsedCitations';
     private $citationsKeyForm = 'optimetaCitations__parsedCitations';
 
 	/**
