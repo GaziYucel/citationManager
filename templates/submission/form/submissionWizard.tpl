@@ -9,7 +9,7 @@
 		optimetaCitationsHelper[i].editRow = false;
 	}
 
-	var optimetaApp = new pkp.Vue({
+	var optimetaCitationsApp = new pkp.Vue({
 		el: '#optimetaCitations',
 		data: {
 			citations: optimetaCitations,
