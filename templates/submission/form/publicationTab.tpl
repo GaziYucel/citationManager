@@ -9,7 +9,7 @@
 		optimetaCitationsHelper[i].editRow = false;
     }
 
-	var optimetaApp = new pkp.Vue({
+	var optimetaCitationsApp = new pkp.Vue({
 		//el: '#optimetaCitations',
 		data: {
 			citations: optimetaCitations,
@@ -52,22 +52,22 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(row, i) in optimetaApp.helper">
+				<tr v-for="(row, i) in optimetaCitationsApp.helper">
 					<td>
 						{{ i + 1 }}
 					</td>
 					<td style="">
 						<textarea v-show="row.editRow"
-								  v-model="optimetaApp.citations[i].raw"
+								  v-model="optimetaCitationsApp.citations[i].raw"
 								  class="pkpFormField__input pkpFormField--textarea__input optimetaTextArea"
 								  style="height: 100px;"></textarea>
-						<span v-show="!row.editRow">{{ optimetaApp.citations[i].raw }}</span>
+						<span v-show="!row.editRow">{{ optimetaCitationsApp.citations[i].raw }}</span>
 					</td>
 					<td>
 						<input v-show="row.editRow"
-							   v-model="optimetaApp.citations[i].pid"
+							   v-model="optimetaCitationsApp.citations[i].pid"
 							   class="pkpFormField__input pkpFormField--text__input" />
-						<span v-show="!row.editRow">{{ optimetaApp.citations[i].pid }}</span>
+						<span v-show="!row.editRow">{{ optimetaCitationsApp.citations[i].pid }}</span>
 					</td>
 					<td>
 						<button v-show="!row.editRow"
@@ -84,7 +84,7 @@
 	</div>
 
 	<div>
-		<span style="display: none;">{{ components.optimetaCitationsForm.fields[0]['value'] = optimetaApp.citationsJsonComputed }}</span>
+		<span style="display: none;">{{ components.optimetaCitationsForm.fields[0]['value'] = optimetaCitationsApp.citationsJsonComputed }}</span>
 		<pkp-form v-bind="components.{$smarty.const.FORM_PUBLICATION_OPTIMETA_CITATIONS}" @set="set"/>
 	</div>
 
