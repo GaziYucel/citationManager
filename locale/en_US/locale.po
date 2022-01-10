@@ -27,4 +27,4 @@ msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
 msgstr "Citations"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
-msgstr "Citations saved successfully"
+msgstr "The citations have been updated."
