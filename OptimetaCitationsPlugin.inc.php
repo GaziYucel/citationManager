@@ -15,11 +15,14 @@
 import('lib.pkp.classes.plugins.GenericPlugin');
 import('plugins.generic.optimetaCitations.classes.components.forms.PublicationOptimetaCitationsForm');
 import('plugins.generic.optimetaCitations.classes.OptimetaCitationsParser');
+import('lib.pkp.classes.site.VersionCheck');
 
 class OptimetaCitationsPlugin extends GenericPlugin
 {
     private $citationsKeyDb      = 'OptimetaCitations__CitationsParsed';
     private $citationsKeyForm    = 'OptimetaCitations__CitationsParsed';
+
+    private $version             = '0.0.0.0';
 
     /**
     * @copydoc Plugin::register
@@ -28,6 +31,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
     {
         // Register the plugin even when it is not enabled
         $success = parent::register($category, $path);
+
+        $this->version = VersionCheck::getCurrentCodeVersion()->getVersionString(false);
 
         if ($success && $this->getEnabled()) {
 
@@ -84,16 +89,22 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $submission = $templateMgr->getTemplateVars('submission');
         $submissionId = $submission->getId();
 
+        $dispatcher = $request->getDispatcher();
         $latestPublication = $submission->getLatestPublication();
-        $latestPublicationApiUrl = $request->getDispatcher()->url(
+        $latestPublicationApiUrl = $dispatcher->url(
             $request,
             ROUTE_API,
             $context->getData('urlPath'),
             'submissions/' . $submissionId . '/publications/' . $latestPublication->getId());
-        $form = new PublicationOptimetaCitationsForm($latestPublicationApiUrl, $latestPublication);
-        $state = $templateMgr->getTemplateVars('state');
-        $state['components'][FORM_PUBLICATION_OPTIMETA_CITATIONS] = $form->getConfig();
-        $templateMgr->assign('state', $state);
+        $form = new PublicationOptimetaCitationsForm( $latestPublicationApiUrl, $latestPublication,
+            __('plugins.generic.optimetaCitationsPlugin.publication.success'));
+
+        $versionDependentName = 'state';
+        if(strstr($this->version, '3.2.1')){ $versionDependentName = 'workflowData'; }
+
+        $workflowData = $templateMgr->getTemplateVars($versionDependentName);
+        $workflowData['components'][FORM_PUBLICATION_OPTIMETA_CITATIONS] = $form->getConfig();
+        $templateMgr->assign($versionDependentName, $workflowData);
 
         $publicationDao = DAORegistry::getDAO('PublicationDAO');
         $publication = $publicationDao->getById($submissionId);

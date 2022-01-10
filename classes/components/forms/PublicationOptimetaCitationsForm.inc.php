@@ -24,6 +24,12 @@ class PublicationOptimetaCitationsForm extends FormComponent {
 	/** @copydoc FormComponent::$method */
 	public $method = 'PUT';
 
+	/** @copydoc FormComponent::$action */
+	public $action = '';
+
+	/** @copydoc FormComponent::$successMessage */
+	public $successMessage = '';
+
     private $citationsKeyDb   = 'OptimetaCitations__CitationsParsed';
     private $citationsKeyForm = 'OptimetaCitations__CitationsParsed';
 
@@ -33,8 +39,10 @@ class PublicationOptimetaCitationsForm extends FormComponent {
      * @param $action string URL to submit the form to
      * @param $publication Publication The publication to change settings for
 	 */
-	public function __construct($action, $publication) {
+	public function __construct($action, $publication, $successMessage) {
         $this->action = $action;
+        $this->successMessage = $successMessage;
+
         $value = $publication->getData($this->citationsKeyDb);
 
         $this->addField(new FieldText(

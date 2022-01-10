@@ -20,7 +20,7 @@ class OptimetaCitationsParser
      *
      * @var string
      */
-    private string $doiUrl = 'doi.org';
+    private $doiUrl = 'doi.org';
 
     /**
      * Regex to extract DOI
@@ -28,21 +28,21 @@ class OptimetaCitationsParser
      * @var string
      */
     // '/^10.\d{4,9}/[-._;()/:A-Z0-9]+$/i'; // crossref regex, doesn't work
-    private string $regexDoi = '(10[.][0-9]{4,}[^\s"/<>]*/[^\s"<>]+)';
+    private $regexDoi = '(10[.][0-9]{4,}[^\s"/<>]*/[^\s"<>]+)';
 
     /**
      * Variable which will hold the raw citations
      *
      * @var string
      */
-    private string $citationsRaw = "";
+    private $citationsRaw = "";
 
     /**
      * Array which hold the parsed citations: [ [ "pid" => "pid1", "raw" => "raw1" ], ... ]
      *
      * @var array
      */
-    private array $citationsParsed = [];
+    private $citationsParsed = [];
 
     /**
      * Constructor.
