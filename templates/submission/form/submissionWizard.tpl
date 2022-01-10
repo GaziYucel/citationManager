@@ -1,24 +1,14 @@
 <script src="{$pluginJavaScriptURL}/optimetaCitations.js"></script>
 <link rel="stylesheet" href="{$pluginStylesheetURL}/optimetaCitations.css" type="text/css" />
 <script>
-	var optimetaCitationsJson = `{$parsedCitations}`;
+	var optimetaCitationsJson = `{$citationsParsed}`;
 	var optimetaCitations = JSON.parse(optimetaCitationsJson);
-	var optimetaCitationsHelper = JSON.parse(optimetaCitationsJson);
-
-	for(let i = 0;i < optimetaCitationsHelper.length; i++){
-		optimetaCitationsHelper[i].editRow = false;
-	}
 
 	var optimetaCitationsApp = new pkp.Vue({
 		el: '#optimetaCitations',
 		data: {
-			citations: optimetaCitations,
-			helper: optimetaCitationsHelper
-		},
-		methods: {
-			parseCitationsRaw(){
-				this.isParsingFinished = !this.isParsingFinished;
-			}
+            citations: optimetaCitations,
+            helper: getHelperArray(optimetaCitations)
 		},
 		computed: {
 			citationsJsonComputed: function() {
@@ -27,50 +17,61 @@
 		}
 	});
 
-	var divCont = document.querySelector('#divCont');
-	var buttonParse = document.querySelector('#buttonParse');
+    function parseCitations(){
+        let questionText = 'The current parsed citations will be overwritten if you click OK. Are you sure?';
+        if (confirm(questionText) !== true) { return; }
 
-	function showContainer(){
-		divCont.style.display = 'block';
-	}
+        let citationsRawTextArea = document.getElementsByName('citationsRaw')[0]['value'];
+        let xhr = new XMLHttpRequest();
+        let url = '/index.php/ojs/optimetaCitations/parse';
+        let params = 'submissionId=19&citationsRaw=' + encodeURIComponent(citationsRawTextArea);
+        xhr.open('POST', url);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            if(IsStringJson(xhr.responseText)){
+                var responseArray = JSON.parse(xhr.responseText);
+                optimetaCitations = JSON.parse(responseArray.content['citationsParsed']);
 
-	$.ajax({
-		method: "GET",
-		contentType: "application/json",
-		url: "https://ojs330.yucel.nl/index.php/ojs/api/v1/submissions/22/publications/22",
-		data: ''
-	})
-		.done(function(response) {
-			// Here I need to call my function inside the plugin code
-		});
+                optimetaCitationsApp.citations = optimetaCitations;
+                optimetaCitationsApp.helper = getHelperArray(optimetaCitations);
+            }
+        };
+        xhr.send(params);
+    }
 
-	function getData(){
-		divCont.style.display = 'block';
+    function getHelperArray(baseArray){
+        let helperArray = JSON.parse(JSON.stringify(baseArray));
+        for(let i = 0;i < baseArray.length; i++){
+            helperArray[i].editRow = false;
+        }
+        return helperArray;
+    }
 
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				document.getElementById("debugTextarea").innerHTML = this.responseText;
-			}
-		};
-		xhttp.open("GET", "https://ojs330.yucel.nl/index.php/ojs/api/v1/submissions/22/publications/22", true);
-		xhttp.send();
-	}
+    function IsStringJson(str) {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    }
+
 </script>
 
 <div class="section" id="optimetaCitations" style="clear:both;">
 
-    <span class="label">Citations</span>
-
-	<div>
-		<a href="javascript:showContainer();" id="buttonParse" class="pkp_button">Parse References</a>
-		<a href="javascript:getData();" id="buttonParse" class="pkp_button">Parse References</a>
-{*        {capture assign=staticPageGridUrl}{url router=$smarty.const.ROUTE_COMPONENT component="plugins.generic.staticPages.controllers.grid.StaticPageGridHandler" op="fetchGrid" escape=false}{/capture}*}
-	</div>
+    <div class="header">
+        <table style="width: 100%;">
+            <tr>
+                <td><span class="label">Citations</span></td>
+                <td><a href="javascript:parseCitations()" id="buttonParse"
+                       class="pkpButton">Parse References</a></td>
+            </tr>
+        </table>
+    </div>
 
 	<div class="optimetaScrollableDiv">
-
-		<table>
+        <table style="width: 100%;">
 			<colgroup>
 				<col class="grid-column column-nr" style="width: 2%;">
 				<col class="grid-column column-raw" style="">
@@ -87,9 +88,7 @@
 			</thead>
 			<tbody>
 			<tr v-for="(row, i) in helper">
-				<td>
-                    {{ i + 1 }}
-				</td>
+				<td>{{ i + 1 }}</td>
 				<td style="">
 						<textarea v-show="row.editRow"
 								  v-model="citations[i].raw"
@@ -104,32 +103,20 @@
 					<span v-show="!row.editRow">{{ citations[i].pid }}</span>
 				</td>
 				<td>
-					<button v-show="!row.editRow"
-							v-on:click="row.editRow = !row.editRow"
-							class="pkpButton" label="Edit"> Edit </button>
-					<button v-show="row.editRow"
-							v-on:click="row.editRow = !row.editRow"
-							class="pkpButton" label="Close"> Close </button>
+                    <a v-show="!row.editRow"
+                       v-on:click="row.editRow = !row.editRow"
+                       class="pkpButton" label="Edit"> Edit </a>
+                    <a v-show="row.editRow"
+                       v-on:click="row.editRow = !row.editRow"
+                       class="pkpButton" label="Close"> Close </a>
 				</td>
 			</tr>
 			</tbody>
 		</table>
-
 	</div>
 
 	<div>
 		<textarea name="{$citationsKeyForm}" style="display: none;">{{ citationsJsonComputed }}</textarea>
-	</div>
-
-	<div id="divCont" style="display: block;">
-		citationsJsonComputed
-		<textarea>{{ citationsJsonComputed }}</textarea>
-		parsedCitations
-		<textarea>{$parsedCitations}</textarea>
-		citationsRaw
-		<textarea>{$citationsRaw}</textarea>
-		xhttp
-		<textarea id="debugTextarea"></textarea>
 	</div>
 
 </div>
