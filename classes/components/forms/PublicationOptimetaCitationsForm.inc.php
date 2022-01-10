@@ -24,8 +24,8 @@ class PublicationOptimetaCitationsForm extends FormComponent {
 	/** @copydoc FormComponent::$method */
 	public $method = 'PUT';
 
-    private $citationsKeyDb   = 'optimetaCitations__parsedCitations';
-    private $citationsKeyForm = 'optimetaCitations__parsedCitations';
+    private $citationsKeyDb   = 'OptimetaCitations__CitationsParsed';
+    private $citationsKeyForm = 'OptimetaCitations__CitationsParsed';
 
 	/**
 	 * Constructor
