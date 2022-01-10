@@ -35,44 +35,48 @@ class OptimetaCitationsParser
      *
      * @var string
      */
-    private string $rawCitations = "";
+    private string $citationsRaw = "";
 
     /**
-     * Array which hold the parsed citations: ( ( "pid" => "pid1", "raw" => "raw1" ), ... )
+     * Array which hold the parsed citations: [ [ "pid" => "pid1", "raw" => "raw1" ], ... ]
      *
      * @var array
      */
-    private array $parsedCitations = [];
+    private array $citationsParsed = [];
 
     /**
      * Constructor.
      * @param $rawCitations string an unparsed citation string
      */
-    function __construct(string $rawCitations = "")
+    function __construct(string $citationsRaw = "")
     {
-        $this->rawCitations= $rawCitations;
+        $this->citationsRaw= $citationsRaw;
     }
 
     /**
      * Returns parsed citations as an array
      *
-     * @return array parsedCitations [ (doi1, citation1), (doi2, citations2), ... ]
+     * @return array citationsParsed
      */
-    public function getParsedCitationsArray(): array
+    public function getCitationsParsedArray(): array
     {
         $this->parse();
-        return $this->parsedCitations;
+
+        return $this->citationsParsed;
     }
 
     /**
      * Returns parsed citations as an JSON
      *
-     * @return string (json) parsedCitations
+     * @return string (json) citationsParsed
      */
-    public function getParsedCitationsJson(): string
+    public function getCitationsParsedJson(): string
     {
         $this->parse();
-        return json_encode($this->parsedCitations);
+
+		if(sizeof($this->citationsParsed) == 0){ return '[]'; }
+
+        return json_encode($this->citationsParsed);
     }
 
     /**
@@ -84,7 +88,7 @@ class OptimetaCitationsParser
      */
     private function parse(): void
     {
-        $citationsRaw = $this->rawCitations;
+        $citationsRaw = $this->citationsRaw;
         $citationsArray = [];
 
         // Strip whitespace
@@ -139,35 +143,35 @@ class OptimetaCitationsParser
                 }
             }
 
-            $this->parsedCitations[] = [ "pid" => $pid, "raw" => $raw ];
+            $this->citationsParsed[] = [ "pid" => $pid, "raw" => $raw ];
         }
 
-        $this->addLog(var_export($this->parsedCitations, true));
+        $this->addLog(var_export($this->citationsParsed, true));
 
     }
 
     /**
      * Clean and normalize string
      *
-     * @param $citationRawLine
+     * @param $citationsRawLine
      * @return string
      */
-    private function cleanCitationString($citationRawLine): string
+    private function cleanCitationString($citationsRawLine): string
     {
 
         // Strip whitespace
-        $citationRawLine = trim($citationRawLine);
+        $citationsRawLine = trim($citationsRawLine);
 
         // Strip slashes
-        $citationRawLine = stripslashes($citationRawLine);
+        $citationsRawLine = stripslashes($citationsRawLine);
 
         // Remove trailing/leading line breaks.
-        $citationRawLine = trim($citationRawLine, "\n");
+        $citationsRawLine = trim($citationsRawLine, "\n");
 
         // Normalize whitespace
-        $citationRawLine = preg_replace('/[\s]+/', ' ', $citationRawLine);
+        $citationsRawLine = preg_replace('/[\s]+/', ' ', $citationsRawLine);
 
-        return $citationRawLine;
+        return $citationsRawLine;
 
     }
 
