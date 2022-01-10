@@ -59,7 +59,7 @@
 </script>
 
 <tab v-if="supportsReferences" id="optimetaCitations"
-     label="{translate key="plugins.generic.optimetaCitationsPlugin.submissionEditFormLabel"}">
+     label="{translate key="plugins.generic.optimetaCitationsPlugin.publication.label"}">
 
     <div class="header">
         <table style="width: 100%;">
