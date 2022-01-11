@@ -23,5 +23,8 @@ msgstr "Publication Statement"
 msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement.description"
 msgstr "Add a publication statement that you would like to appear on every publication's landing page"
 
-msgid "plugins.generic.optimetaCitationsPlugin.submissionEditFormLabel"
+msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
 msgstr "Citations"
+
+msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
+msgstr "The citations have been updated."
