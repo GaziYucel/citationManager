@@ -11,7 +11,7 @@ On the technical side, this project aims to develop two OJS plugins for spatiote
 Download & Installation
 ---------------------
 1. Download the plugin from https://github.com/TIBHannover/optimeta-plugin-citation
-2. Unzip the folder into `ojs/plugins/generic/optimetaCitations` in OJS
+2. Unzip the folder into `/plugins/generic/optimetaCitations` in OJS
 3. Activate the plugin in the OJS plug-in settings
 4. Specify your username/password for all Open Access websites
 
