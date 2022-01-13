@@ -18,7 +18,7 @@
 	});
 
     function parseCitations(){
-        let questionText = 'The current parsed citations will be overwritten if you click OK. Are you sure?';
+        let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.parse.question"}';
         if (confirm(questionText) !== true) { return; }
 
         let citationsRawTextArea = document.getElementsByName('citationsRaw')[0]['value'];
