@@ -26,5 +26,8 @@ msgstr "Add a publication statement that you would like to appear on every publi
 msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
 msgstr "Citations"
 
+msgid "plugins.generic.optimetaCitationsPlugin.parse.question"
+msgstr "The current parsed citations will be overwritten if you click OK. Are you sure?"
+
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
 msgstr "The citations have been updated."
