@@ -1,5 +1,6 @@
 <script src="{$pluginJavaScriptURL}/optimetaCitations.js"></script>
 <link rel="stylesheet" href="{$pluginStylesheetURL}/optimetaCitations.css" type="text/css" />
+
 <script>
 	var optimetaCitationsJson = `{$citationsParsed}`;
 	var optimetaCitations = JSON.parse(optimetaCitationsJson);
@@ -22,21 +23,24 @@
         if (confirm(questionText) !== true) { return; }
 
         let citationsRawTextArea = document.getElementsByName('citationsRaw')[0]['value'];
-        let xhr = new XMLHttpRequest();
-        let url = '/index.php/ojs/optimetaCitations/parse';
-        let params = 'submissionId=19&citationsRaw=' + encodeURIComponent(citationsRawTextArea);
-        xhr.open('POST', url);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onload = function() {
-            if(IsStringJson(xhr.responseText)){
-                var responseArray = JSON.parse(xhr.responseText);
-                optimetaCitations = JSON.parse(responseArray.content['citationsParsed']);
 
-                optimetaCitationsApp.citations = optimetaCitations;
-                optimetaCitationsApp.helper = getHelperArray(optimetaCitations);
+        $.ajax({
+            url: '{$pluginApiParseUrl}',
+            method: 'POST',
+            data: {
+                submissionId: {$submissionId},
+                citationsRaw: citationsRawTextArea
+            },
+            headers: {
+                'X-Csrf-Token': pkp.currentUser.csrfToken,
+            },
+            error(r) { },
+            success(response) {
+                optimetaCitations = JSON.parse(response['citationsParsed']);
+                optimetaCitationsApp.citations = JSON.parse(response['citationsParsed']);
+                optimetaCitationsApp.helper = getHelperArray(JSON.parse(response['citationsParsed']));
             }
-        };
-        xhr.send(params);
+        });
     }
 
     function getHelperArray(baseArray){

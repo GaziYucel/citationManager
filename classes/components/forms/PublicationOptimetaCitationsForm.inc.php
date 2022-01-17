@@ -12,14 +12,16 @@
  * @brief A preset form for setting a publication's parsed citations
  */
 
+include_once($_SERVER["DOCUMENT_ROOT"] . '/plugins/generic/optimetaCitations/params.inc.php');
+
 use \PKP\components\forms\FormComponent;
 use \PKP\components\forms\FieldText;
 
-define("FORM_PUBLICATION_OPTIMETA_CITATIONS", "optimetaCitationsForm");
+define("OPTIMETA_CITATIONS_PUBLICATION_FORM", OptimetaCitationsPublicationFormName);
 
 class PublicationOptimetaCitationsForm extends FormComponent {
 	/** @copydoc FormComponent::$id */
-	public $id = FORM_PUBLICATION_OPTIMETA_CITATIONS;
+	public $id = OPTIMETA_CITATIONS_PUBLICATION_FORM;
 
 	/** @copydoc FormComponent::$method */
 	public $method = 'PUT';
@@ -30,8 +32,8 @@ class PublicationOptimetaCitationsForm extends FormComponent {
 	/** @copydoc FormComponent::$successMessage */
 	public $successMessage = '';
 
-    private $citationsKeyDb   = 'OptimetaCitations__CitationsParsed';
-    private $citationsKeyForm = 'OptimetaCitations__CitationsParsed';
+    private $citationsKeyDb   = OptimetaCitationsParsedKeyDb;
+    private $citationsKeyForm = OptimetaCitationsParsedKeyDb;
 
 	/**
 	 * Constructor

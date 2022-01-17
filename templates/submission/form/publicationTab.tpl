@@ -1,5 +1,6 @@
 <script src="{$pluginJavaScriptURL}/optimetaCitations.js"></script>
 <link rel="stylesheet" href="{$pluginStylesheetURL}/optimetaCitations.css" type="text/css" />
+
 <script>
     var optimetaCitationsJson = `{$citationsParsed}`;
     var optimetaCitations = JSON.parse(optimetaCitationsJson);
@@ -17,27 +18,30 @@
 		}
 	});
 
-	function parseCitations(){
-		let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.parse.question"}';
-		if (confirm(questionText) !== true) { return; }
+    function parseCitations(){
+        let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.parse.question"}';
+        if (confirm(questionText) !== true) { return; }
 
-		let citationsRawTextArea = document.getElementById("citations-citationsRaw-control").value;
-		let xhr = new XMLHttpRequest();
-		let url = '/index.php/ojs/optimetaCitations/parse';
-		let params = 'submissionId=19&citationsRaw=' + encodeURIComponent(citationsRawTextArea);
-		xhr.open('POST', url);
-		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-		xhr.onload = function() {
-			if(IsStringJson(xhr.responseText)){
-				var responseArray = JSON.parse(xhr.responseText);
-				optimetaCitations = JSON.parse(responseArray.content['citationsParsed']);
+        let citationsRawTextArea = document.getElementById("citations-citationsRaw-control").value;
 
-				optimetaCitationsApp.citations = optimetaCitations;
-				optimetaCitationsApp.helper = getHelperArray(optimetaCitations);
-			}
-		};
-		xhr.send(params);
-	}
+        $.ajax({
+            url: '{$pluginApiParseUrl}',
+            method: 'POST',
+            data: {
+                submissionId: {$submissionId},
+                citationsRaw: citationsRawTextArea
+            },
+            headers: {
+                'X-Csrf-Token': pkp.currentUser.csrfToken,
+            },
+            error(r) { },
+            success(response) {
+                optimetaCitations = JSON.parse(response['citationsParsed']);
+                optimetaCitationsApp.citations = JSON.parse(response['citationsParsed']);
+                optimetaCitationsApp.helper = getHelperArray(JSON.parse(response['citationsParsed']));
+            }
+        });
+    }
 
 	function getHelperArray(baseArray){
 		let helperArray = JSON.parse(JSON.stringify(baseArray));
@@ -117,8 +121,8 @@
     </div>
 
     <div>
-        <span style="display: none;">{{ components.optimetaCitationsForm.fields[0]['value'] = optimetaCitationsApp.citationsJsonComputed }}</span>
-        <pkp-form v-bind="components.{$smarty.const.FORM_PUBLICATION_OPTIMETA_CITATIONS}" @set="set"/>
+        <span style="display: none;">{{ components.optimetaCitations_PublicationForm.fields[0]['value'] = optimetaCitationsApp.citationsJsonComputed }}</span>
+        <pkp-form v-bind="components.{$smarty.const.OPTIMETA_CITATIONS_PUBLICATION_FORM}" @set="set"/>
     </div>
 
 </tab>
