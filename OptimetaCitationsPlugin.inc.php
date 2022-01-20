@@ -19,20 +19,20 @@ import('lib.pkp.classes.site.VersionCheck');
 import('lib.pkp.classes.handler.APIHandler');
 
 import('plugins.generic.optimetaCitations.classes.components.forms.PublicationOptimetaCitationsForm');
+import('plugins.generic.optimetaCitations.classes.handler.OptimetaCitationsAPIHandler');
 import('plugins.generic.optimetaCitations.classes.OptimetaCitationsParser');
 
 class OptimetaCitationsPlugin extends GenericPlugin
 {
+    private $citationsKeyDb = OptimetaCitations_ParsedKeyDb;
+    private $citationsKeyForm = OptimetaCitations_ParsedKeyForm;
+    private $apiEndpoint = OptimetaCitations_ApiEndpoint;
 
-    private $citationsKeyDb      = OptimetaCitationsParsedKeyDb;
-    private $citationsKeyForm    = OptimetaCitationsParsedKeyForm;
-    private $apiEndpoint         = OptimetaCitationsAPIEndpoint;
-
-    private $version             = '0.0.0.0';
+    private $version = '0.0.0.0';
 
     /**
-    * @copydoc Plugin::register
-    */
+     * @copydoc Plugin::register
+     */
     public function register($category, $path, $mainContextId = null)
     {
         // Register the plugin even when it is not enabled
@@ -65,7 +65,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
      * @option object Publication schema
      * ]]
      */
-    public function addToSchema(string $hookName, array $args): void {
+    public function addToSchema(string $hookName, array $args): void
+    {
 
         $schema = $args[0];
 
@@ -76,7 +77,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
             "validation": [ "nullable" ]
         }';
 
-        $schema->properties->{ $this->citationsKeyDb } = json_decode($properties);
+        $schema->properties->{$this->citationsKeyDb} = json_decode($properties);
 
     }
 
@@ -96,7 +97,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
         $dispatcher = $request->getDispatcher();
         $latestPublication = $submission->getLatestPublication();
-        $apiBaseUrl = $dispatcher->url($request, ROUTE_API, $context->getData('urlPath'),'');
+        $apiBaseUrl = $dispatcher->url($request, ROUTE_API, $context->getData('urlPath'), '');
 
         $form = new PublicationOptimetaCitationsForm(
             $apiBaseUrl . 'submissions/' . $submissionId . '/publications/' . $latestPublication->getId(),
@@ -104,22 +105,25 @@ class OptimetaCitationsPlugin extends GenericPlugin
             __('plugins.generic.optimetaCitationsPlugin.publication.success'));
 
         $stateVersionDependentName = 'state';
-        if(strstr($this->version, '3.2.1')){ $stateVersionDependentName = 'workflowData'; }
+        if (strstr($this->version, '3.2.1')) {
+            $stateVersionDependentName = 'workflowData';
+        }
 
         $state = $templateMgr->getTemplateVars($stateVersionDependentName);
-        $state['components'][OPTIMETA_CITATIONS_PUBLICATION_FORM] = $form->getConfig();
+        $state['components'][OptimetaCitations_PublicationForm] = $form->getConfig();
         $templateMgr->assign($stateVersionDependentName, $state);
 
         $publicationDao = DAORegistry::getDAO('PublicationDAO');
         $publication = $publicationDao->getById($submissionId);
         $citationsParsed = $publication->getData($this->citationsKeyDb);
         $citationsRaw = $publication->getData('citationsRaw');
-        if($citationsParsed == '' && $citationsRaw != '')
-        {
+        if ($citationsParsed == '' && $citationsRaw != '') {
             $parser = new OptimetaCitationsParser($citationsRaw);
             $citationsParsed = $parser->getCitationsParsedJson();
         }
-        if($citationsParsed == null || $citationsParsed == '') { $citationsParsed = '[]'; }
+        if ($citationsParsed == null || $citationsParsed == '') {
+            $citationsParsed = '[]';
+        }
 
         $templateMgr->assign(array(
             'pluginStylesheetURL' => $this->getStylesheetUrl($request),
@@ -130,7 +134,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
             'citationsKeyForm' => $this->citationsKeyForm,
             'citationsParsed' => $citationsParsed,
             'citationsRaw' => $citationsRaw
-            ));
+        ));
 
         $templateMgr->display($this->getTemplateResource("submission/form/publicationTab.tpl"));
 
@@ -145,12 +149,12 @@ class OptimetaCitationsPlugin extends GenericPlugin
      *   Request
      * @brief process data from post/put
      */
-    public function publicationTabSave(string $hookname, array $args): void 
+    public function publicationTabSave(string $hookname, array $args): void
     {
         $publication = $args[0];
         $request = $this->getRequest();
 
-        if($request->getuserVar($this->citationsKeyForm)){
+        if ($request->getuserVar($this->citationsKeyForm)) {
             $publication->setData(
                 $this->citationsKeyDb,
                 $request->getuserVar($this->citationsKeyForm));
@@ -178,11 +182,13 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $publication = $publicationDao->getById($submissionId);
         $citationsParsed = $publication->getData($this->citationsKeyDb);
         $citationsRaw = $publication->getData('citationsRaw');
-        if($citationsParsed == '' && $citationsRaw != ''){
+        if ($citationsParsed == '' && $citationsRaw != '') {
             $parser = new OptimetaCitationsParser($citationsRaw);
             $citationsParsed = $parser->getCitationsParsedJson();
         }
-        if($citationsParsed == null || $citationsParsed == '') { $citationsParsed = '[]'; }
+        if ($citationsParsed == null || $citationsParsed == '') {
+            $citationsParsed = '[]';
+        }
 
         $templateMgr->assign(array(
             'pluginStylesheetURL' => $this->getStylesheetUrl($request),
@@ -207,9 +213,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
     {
         $router = $request->getRouter();
         if ($router instanceof \APIRouter && strpos(' ' .
-                $request->getRequestPath() . ' ', 'api/v1/' . $this->apiEndpoint) !== false)
-        {
-            import('plugins.generic.optimetaCitations.classes.handler.OptimetaCitationsAPIHandler');
+                $request->getRequestPath() . ' ', 'api/v1/' . $this->apiEndpoint) !== false) {
             $handler = new OptimetaCitationsAPIHandler($this);
             $router->setHandler($handler);
             $handler->getApp()->run();
@@ -276,5 +280,4 @@ class OptimetaCitationsPlugin extends GenericPlugin
     /* ********************** */
     /* Plugin related methods */
     /* ********************** */
-
 }

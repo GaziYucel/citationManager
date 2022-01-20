@@ -14,24 +14,21 @@
  *
  */
 
-include_once($_SERVER["DOCUMENT_ROOT"] . '/plugins/generic/optimetaCitations/params.inc.php');
-
 import('lib.pkp.classes.handler.APIHandler');
 
 class OptimetaCitationsAPIHandler extends APIHandler
 {
+    private $apiEndpoint = OptimetaCitations_ApiEndpoint;
 
-    private $apiEndpoint         = OptimetaCitationsAPIEndpoint;
+    private $submissionId = '';
+    private $citationsRaw = '';
+    private $citationsParsed = '[]';
 
-    private $submissionId 		= '';
-    private $citationsRaw 		= '';
-    private $citationsParsed 	= '[]';
-
-    private $response			= [
+    private $response = [
         'submissionId' => '',
         'citationsRaw' => '',
         'citationsParsed' => '[]',
-        'message' => '' ];
+        'message' => ''];
 
     public function __construct()
     {
@@ -56,7 +53,7 @@ class OptimetaCitationsAPIHandler extends APIHandler
         $rolePolicy = new PolicySet(COMBINING_PERMIT_OVERRIDES);
 
         import('lib.pkp.classes.security.authorization.RoleBasedHandlerOperationPolicy');
-        foreach($roleAssignments as $role => $operations) {
+        foreach ($roleAssignments as $role => $operations) {
             $rolePolicy->addPolicy(new RoleBasedHandlerOperationPolicy($request, $role, $operations));
         }
         $this->addPolicy($rolePolicy);
@@ -71,12 +68,12 @@ class OptimetaCitationsAPIHandler extends APIHandler
 
         // check if citationsRaw is in POST
         if ($request->getUserVars() && sizeof($request->getUserVars()) > 0 &&
-            isset($request->getUserVars()['citationsRaw'])){
+            isset($request->getUserVars()['citationsRaw'])) {
             $this->citationsRaw = trim($request->getUserVars()['citationsRaw']);
         }
 
         // citationsRaw not found, response with message
-        if(strlen($this->citationsRaw) === 0){
+        if (strlen($this->citationsRaw) === 0) {
             $this->response['message'] = 'citationsRaw not found';
             return $response->withJson($this->response, 404);
         }
@@ -93,8 +90,4 @@ class OptimetaCitationsAPIHandler extends APIHandler
 
         return $response->withJson($this->response, 200);
     }
-
 }
-
-
-
