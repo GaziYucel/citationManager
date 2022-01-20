@@ -14,6 +14,14 @@ Download & Installation
 2. Activate the plugin in the OJS plug-in settings
 3. Fill in your username/password for all Open Access websites where you are registered (registration is on external sites)
 
+Screenshots
+---------------------
+Add new submission wizard
+![OPTIMETA screenshot add submission](images/optimeta-citations-submission-add.gif)
+
+Edit submission / article
+![OPTIMETA screenshot add submission](images/optimeta-citations-submission-edit.gif)
+
 Contribute
 ---------------------
 All help is welcome: asking questions, providing documentation, testing, or even development.

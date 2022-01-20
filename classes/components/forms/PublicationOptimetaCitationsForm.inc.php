@@ -12,36 +12,34 @@
  * @brief A preset form for setting a publication's parsed citations
  */
 
-include_once($_SERVER["DOCUMENT_ROOT"] . '/plugins/generic/optimetaCitations/params.inc.php');
-
 use \PKP\components\forms\FormComponent;
 use \PKP\components\forms\FieldText;
 
-define("OPTIMETA_CITATIONS_PUBLICATION_FORM", OptimetaCitationsPublicationFormName);
+class PublicationOptimetaCitationsForm extends FormComponent
+{
+    /** @copydoc FormComponent::$id */
+    public $id = OptimetaCitations_PublicationForm;
 
-class PublicationOptimetaCitationsForm extends FormComponent {
-	/** @copydoc FormComponent::$id */
-	public $id = OPTIMETA_CITATIONS_PUBLICATION_FORM;
+    /** @copydoc FormComponent::$method */
+    public $method = 'PUT';
 
-	/** @copydoc FormComponent::$method */
-	public $method = 'PUT';
+    /** @copydoc FormComponent::$action */
+    public $action = '';
 
-	/** @copydoc FormComponent::$action */
-	public $action = '';
+    /** @copydoc FormComponent::$successMessage */
+    public $successMessage = '';
 
-	/** @copydoc FormComponent::$successMessage */
-	public $successMessage = '';
+    private $citationsKeyDb = OptimetaCitations_ParsedKeyDb;
+    private $citationsKeyForm = OptimetaCitations_ParsedKeyDb;
 
-    private $citationsKeyDb   = OptimetaCitationsParsedKeyDb;
-    private $citationsKeyForm = OptimetaCitationsParsedKeyDb;
-
-	/**
-	 * Constructor
-	 *
+    /**
+     * Constructor
+     *
      * @param $action string URL to submit the form to
      * @param $publication Publication The publication to change settings for
-	 */
-	public function __construct($action, $publication, $successMessage) {
+     */
+    public function __construct($action, $publication, $successMessage)
+    {
         $this->action = $action;
         $this->successMessage = $successMessage;
 
@@ -49,11 +47,10 @@ class PublicationOptimetaCitationsForm extends FormComponent {
 
         $this->addField(new FieldText(
             $this->citationsKeyForm, [
-            'label' => '',
-            'description' => '',
-            'isMultilingual' => false,
-            'value' => $value ]
+                'label' => '',
+                'description' => '',
+                'isMultilingual' => false,
+                'value' => $value]
         ));
-
-	}
+    }
 }

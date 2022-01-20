@@ -12,8 +12,8 @@
  * @brief Parameters and constants used by the optimetaCitations plugin
  */
 
-const OptimetaCitationsParsedKeyDb = 'OptimetaCitations__CitationsParsed';
-const OptimetaCitationsParsedKeyForm = 'OptimetaCitations__CitationsParsed';
-const OptimetaCitationsAPIEndpoint = 'optimetaCitations';
-const OptimetaCitationsPublicationFormName = "optimetaCitations_PublicationForm";
+const OptimetaCitations_ParsedKeyDb = 'OptimetaCitations__CitationsParsed';
+const OptimetaCitations_ParsedKeyForm = 'OptimetaCitations__CitationsParsed';
+const OptimetaCitations_ApiEndpoint = 'OptimetaCitations';
+const OptimetaCitations_PublicationForm = "OptimetaCitations_PublicationForm";
 

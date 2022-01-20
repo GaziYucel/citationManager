@@ -16,10 +16,10 @@
 
 import('lib.pkp.classes.db.DAO');
 
-class OptimetaCitationsDAO extends DAO {
-
-    function __construct() {
+class OptimetaCitationsDAO extends DAO
+{
+    function __construct()
+    {
         // do something usefull
     }
-
 }
