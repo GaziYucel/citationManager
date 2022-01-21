@@ -9,7 +9,7 @@
 		el: '#optimetaCitations',
 		data: {
             citations: optimetaCitations,
-            helper: getHelperArray(optimetaCitations)
+            helper: optimetaCitationsGetHelperArray(optimetaCitations)
 		},
 		computed: {
 			citationsJsonComputed: function() {
@@ -22,42 +22,23 @@
         let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.parse.question"}';
         if (confirm(questionText) !== true) { return; }
 
-        let citationsRawTextArea = document.getElementsByName('citationsRaw')[0]['value'];
-
         $.ajax({
             url: '{$pluginApiParseUrl}',
             method: 'POST',
             data: {
                 submissionId: {$submissionId},
-                citationsRaw: citationsRawTextArea
+                citationsRaw: document.getElementsByName('citationsRaw')[0]['value']
             },
             headers: {
-                'X-Csrf-Token': pkp.currentUser.csrfToken,
+                'X-Csrf-Token': optimetaCitationsGetCsrfToken(),
             },
             error(r) { },
             success(response) {
                 optimetaCitations = JSON.parse(response['citationsParsed']);
                 optimetaCitationsApp.citations = JSON.parse(response['citationsParsed']);
-                optimetaCitationsApp.helper = getHelperArray(JSON.parse(response['citationsParsed']));
+                optimetaCitationsApp.helper = optimetaCitationsGetHelperArray(JSON.parse(response['citationsParsed']));
             }
         });
-    }
-
-    function getHelperArray(baseArray){
-        let helperArray = JSON.parse(JSON.stringify(baseArray));
-        for(let i = 0;i < baseArray.length; i++){
-            helperArray[i].editRow = false;
-        }
-        return helperArray;
-    }
-
-    function IsStringJson(str) {
-        try {
-            JSON.parse(str);
-        } catch (e) {
-            return false;
-        }
-        return true;
     }
 
 </script>
