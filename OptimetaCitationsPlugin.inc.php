@@ -12,7 +12,10 @@
  * @brief Plugin for parsing Citations and submitting to Open Access websites.
  */
 
-include_once($_SERVER["DOCUMENT_ROOT"] . '/plugins/generic/optimetaCitations/params.inc.php');
+const OptimetaCitations_ParsedKeyDb = 'OptimetaCitations__CitationsParsed';
+const OptimetaCitations_ParsedKeyForm = 'OptimetaCitations__CitationsParsed';
+const OptimetaCitations_ApiEndpoint = 'OptimetaCitations';
+const OptimetaCitations_PublicationForm = "OptimetaCitations_PublicationForm";
 
 import('lib.pkp.classes.plugins.GenericPlugin');
 import('lib.pkp.classes.site.VersionCheck');
