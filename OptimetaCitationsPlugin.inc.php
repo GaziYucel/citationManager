@@ -66,11 +66,9 @@ class OptimetaCitationsPlugin extends GenericPlugin
      * @param $hookName string `Schema::get::publication`
      * @param $args [[
      * @option object Publication schema
-     * ]]
      */
     public function addToSchema(string $hookName, array $args): void
     {
-
         $schema = $args[0];
 
         $properties = '{
@@ -81,7 +79,6 @@ class OptimetaCitationsPlugin extends GenericPlugin
         }';
 
         $schema->properties->{$this->citationsKeyDb} = json_decode($properties);
-
     }
 
     /**
@@ -226,40 +223,10 @@ class OptimetaCitationsPlugin extends GenericPlugin
         return false;
     }
 
-    /* ********************** */
-    /* Plugin related methods */
-    /* ********************** */
-
-    /**
-     * @copydoc PKPPlugin::getDisplayName
-     */
-    public function getDisplayName()
-    {
-        return __('plugins.generic.optimetaCitationsPlugin.name');
-    }
-
-    /**
-     * @copydoc PKPPlugin::getDescription
-     */
-    public function getDescription()
-    {
-        return __('plugins.generic.optimetaCitationsPlugin.description');
-    }
-
-    /**
-     * Get the current context ID or the site-wide context ID (0) if no context
-     * can be found.
-     */
-    function getCurrentContextId()
-    {
-        $context = Application::get()->getRequest()->getContext();
-        return is_null($context) ? 0 : $context->getId();
-    }
-
     /**
      * Get the JavaScript URL for this plugin.
      */
-    function getJavaScriptURL($request)
+    function getJavaScriptURL($request): string
     {
         return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js';
     }
@@ -267,7 +234,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
     /**
      * Get the Images URL for this plugin.
      */
-    function getImagesURL($request)
+    function getImagesURL($request): string
     {
         return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/images';
     }
@@ -275,12 +242,32 @@ class OptimetaCitationsPlugin extends GenericPlugin
     /**
      * Get the Stylesheet URL for this plugin.
      */
-    function getStylesheetUrl($request)
+    function getStylesheetUrl($request): string
     {
         return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/css';
     }
 
     /* ********************** */
-    /* Plugin related methods */
+    /* Plugin required methods */
+    /* ********************** */
+
+    /**
+     * @copydoc PKPPlugin::getDisplayName
+     */
+    public function getDisplayName(): string
+    {
+        return __('plugins.generic.optimetaCitationsPlugin.name');
+    }
+
+    /**
+     * @copydoc PKPPlugin::getDescription
+     */
+    public function getDescription(): string
+    {
+        return __('plugins.generic.optimetaCitationsPlugin.description');
+    }
+
+    /* ********************** */
+    /* Plugin required methods */
     /* ********************** */
 }
