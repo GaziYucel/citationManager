@@ -1,3 +1,0 @@
-[submodule "vendor/optimeta"]
-	path = vendor/optimeta
-	url = https://github.com/TIBHannover/optimeta-plugin-shared.git
