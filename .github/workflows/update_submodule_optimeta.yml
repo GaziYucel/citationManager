@@ -1,0 +1,42 @@
+name: update_submodule_optimeta
+on: 
+  # schedule:
+  #  - cron: "0 6 * * *"
+  workflow_dispatch: ~
+
+jobs:
+  submodule_update:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the branch
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup git config username and email
+        run: |
+          git config user.name "GaziYucel"
+          git config user.email "<84437883+GaziYucel@users.noreply.github.com>"
+          # git clone https://github.com/GaziYucel/optimetaCitations
+          # cd optimetaCitations
+          
+      - name: rm -rf vendor/optimeta
+        run: |
+          rm -rf vendor/optimeta
+      - name: git clone https://github.com/TIBHannover/optimeta-plugin-shared vendor/optimeta
+        run: |
+          git clone https://github.com/TIBHannover/optimeta-plugin-shared vendor/optimeta
+      - name: rm -rf vendor/optimeta/.git
+        run: |
+          rm -rf vendor/optimeta/.git
+      - name: touch "vendor/optimeta/_updated_$(date +%Y-%m-%d_%H-%M-%S).txt"
+        run: |
+          touch "vendor/optimeta/_updated_$(date +%Y-%m-%d_%H-%M-%S).txt"
+      - name: git add --all vendor/optimeta
+        run: |
+          git add --all vendor/optimeta
+      - name: git commit -m "Submodule TIBHannover/optimeta-plugin-shared > vendor/optimeta"
+        run: |
+          git commit -m "Submodule TIBHannover/optimeta-plugin-shared > vendor/optimeta"
+      - name: git push
+        run: |
+          git push origin main
