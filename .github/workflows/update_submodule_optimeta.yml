@@ -37,9 +37,6 @@ jobs:
       - name: git commit -m "Submodule TIBHannover/optimeta-plugin-shared > vendor/optimeta"
         run: |
           git commit -m "Submodule TIBHannover/optimeta-plugin-shared > vendor/optimeta"
-      - name: gh pr create --title "The bug is fixed" --body "Everything works again"
-        run: |
-          gh pr create --title "The bug is fixed" --body "Everything works again"
       - name: git push
         run: |
           git push origin main
