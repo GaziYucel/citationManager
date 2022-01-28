@@ -1,42 +1,55 @@
 name: update_submodule_optimeta
-on: 
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+on:
   # schedule:
-  #  - cron: "0 6 * * *"
+  # cron format: minute, hour, day of the month, month, day of the week
+  # - cron: "0 6 * * *"
   workflow_dispatch: ~
 
 jobs:
-  submodule_update:
+  update_submodule_optimeta:
     runs-on: ubuntu-latest
     steps:
-      # Checkout the branch
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: setup git config username and email
+      - name: all further steps
         run: |
-          git config user.name "GaziYucel"
-          git config user.email "<84437883+GaziYucel@users.noreply.github.com>"
-          # git clone https://github.com/GaziYucel/optimetaCitations
-          # cd optimetaCitations
           
-      - name: rm -rf vendor/optimeta
-        run: |
+          # variables
+          dateTime=$(date +%Y-%m-%d_%H-%M-%S)
+          branchName="update_submodule_optimeta_$dateTime"
+          userName="GaziYucel"
+          userEmail="<84437883+GaziYucel@users.noreply.github.com>"
+          
+          # setup git config username and email
+          git config user.name $userName
+          git config user.email $userEmail
+          
+          # remove directory recursively vendor/optimeta
           rm -rf vendor/optimeta
-      - name: git clone https://github.com/TIBHannover/optimeta-plugin-shared vendor/optimeta
-        run: |
+
+          # checkout to new local branch
+          git checkout -b $branchName
+
+          # git clone TIBHannover/optimeta-plugin-shared > vendor/optimeta
           git clone https://github.com/TIBHannover/optimeta-plugin-shared vendor/optimeta
-      - name: rm -rf vendor/optimeta/.git
-        run: |
+
+          # remove directory recursively vendor/optimeta/.git
           rm -rf vendor/optimeta/.git
-      - name: touch "vendor/optimeta/_updated_$(date +%Y-%m-%d_%H-%M-%S).txt"
-        run: |
-          touch "vendor/optimeta/_updated_$(date +%Y-%m-%d_%H-%M-%S).txt"
-      - name: git add --all vendor/optimeta
-        run: |
+
+          # create vendor/optimeta/_updated_$dateTime.txt
+          touch "vendor/optimeta/_updated_$dateTime.txt"
+
+          # git add everything in directory vendor/optimeta
           git add --all vendor/optimeta
-      - name: git commit -m "Submodule TIBHannover/optimeta-plugin-shared > vendor/optimeta"
-        run: |
-          git commit -m "Submodule TIBHannover/optimeta-plugin-shared > vendor/optimeta"
-      - name: git push
-        run: |
-          git push origin main
+
+          # git commit
+          git commit -m "Update submodule TIBHannover/optimeta-plugin-shared > vendor/optimeta"
+
+          # git push to new branch name
+          git push -u origin $branchName
+
+          # create new pull-request
+          gh pr create --title "Update submodule TIBHannover/optimeta-plugin-shared > vendor/optimeta $dateTime" --body "branch name $branchName"
