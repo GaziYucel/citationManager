@@ -18,52 +18,44 @@ jobs:
       - name: all further steps
         run: |
 
-          # variables
           echo "variables"
           dateTime=$(date +%Y-%m-%d_%H-%M-%S)
-          branchName="update_submodule_optimeta_$dateTime"
+          branchName="submodule_optimeta_$dateTime"
           subModuleUrl="https://github.com/TIBHannover/optimeta-plugin-shared"
           subModulePath="vendor/optimeta"
-          message="Update $subModulePath from $subModuleUrl ($dateTime)"
+          message="Update $subModulePath from $subModuleUrl on $dateTime"
 
-          # setup git config username and email
-          echo "setup git config username and email: $GH_USERNAME"
-          git config user.name "$GH_USERNAME@users.noreply.github.com"
+          echo "setup git username: $GH_USERNAME"
           git config user.email "$GH_USERNAME"
           
-          # remove submodule directory recursively
-          echo "remove submodule directory recursively: $subModulePath"
-          rm -rf vendor/optimeta
+          echo "setup git email: $GH_USERNAME@users.noreply.github.com"
+          git config user.name "$GH_USERNAME@users.noreply.github.com"
+         
+          echo "remove directory $subModulePath recursively"
+          rm -rf $subModulePath
 
-          # checkout to new local branch
-          echo "checkout to new local branch: $branchName"
+          echo "checkout to new local branch with name $branchName"
           git checkout -b $branchName
 
-          # clone submodule and remove .git directory
-          echo "clone submodule and remove .git directory: $subModulePath/.git"
+          echo "clone $subModuleUrl to path $subModulePath"
           git clone "$subModuleUrl" "$subModulePath"
+          
+          echo "remove directory $subModulePath/.git recursively"
           rm -rf "$subModulePath/.git"
 
-          # create $submodulePath/_$dateTime.txt
-          echo "create $subModulePath/_$dateTime.txt"
-          # touch "$subModulePath/_$dateTime.txt"
+          echo "create file $subModulePath/_$dateTime.txt"
           echo "$dateTime" > "$subModulePath/_$dateTime.txt"
 
-          # add submodule directory recursively
-          echo "add submodule directory recursively: $subModulePath"
+          echo "add directory $subModulePath recursively"
           git add --all $subModulePath
 
-          # commit all changes
-          echo "commit all changes"
+          echo "commit all changes with message: $message"
           git commit -m "$message"
 
-          # push to new branch
-          echo "push to new branch: $branchName"
+          echo "push to new branch with name: $branchName"
           git push -u origin $branchName
 
-          # create a pull request
-          echo "create a pull request"
+          echo "create pull request with label and body: $message"
           gh pr create --title "$message" --body "$message"
           
-          # end
           echo "end"
