@@ -12,7 +12,7 @@ Download & Installation
 ---------------------
 1. Download the plugin from https://github.com/TIBHannover/optimetaCitations and unzip the folder into `/plugins/generic/optimetaCitations` in OJS
 2. Activate the plugin in the OJS plug-in settings
-3. Fill in your username/password for all Open Access websites where you are registered (registration is on external sites)
+3. Fill in your username/password for all Open Access websites where you are registered (registration is on external sites)(**not yet implemented**)
 
 Screenshots
 ---------------------
