@@ -24,8 +24,8 @@ jobs:
           userEmail="<84437883+GaziYucel@users.noreply.github.com>"
           
           # setup git config username and email
-          git config user.name $userName
-          git config user.email $userEmail
+          git config --global user.name $userName
+          git config --global user.email $userEmail
           
           # remove directory recursively vendor/optimeta
           rm -rf vendor/optimeta
