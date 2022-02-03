@@ -17,9 +17,11 @@ Download & Installation
 Screenshots
 ---------------------
 Add new submission wizard
+
 ![OPTIMETA screenshot add submission](images/optimeta-citations-submission-add.gif)
 
 Edit submission / article
+
 ![OPTIMETA screenshot add submission](images/optimeta-citations-submission-edit.gif)
 
 Contribute
