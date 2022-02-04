@@ -47,7 +47,7 @@
      label="{translate key="plugins.generic.optimetaCitationsPlugin.publication.label"}">
 
     <div class="header">
-        <table style="width: 100%;">
+        <table>
             <tr>
                 <td><h4>Citations</h4></td>
                 <td><a href="javascript:parseCitations()" id="buttonParse"
@@ -57,11 +57,11 @@
     </div>
 
     <div class="optimetaScrollableDiv">
-        <table style="width: 100%;">
+        <table>
             <colgroup>
                 <col class="grid-column column-nr" style="width: 2%;">
-                <col class="grid-column column-raw" style="">
-                <col class="grid-column column-pid" style="width: 20%;">
+                <col class="grid-column column-rawRemainder" style="">
+                <col class="grid-column column-doi" style="width: 20%;">
                 <col class="grid-column column-action" style="width: 6%;">
             </colgroup>
             <thead>
@@ -76,17 +76,26 @@
                 <tr v-for="(row, i) in optimetaCitationsApp.helper">
                     <td>{{ i + 1 }}</td>
                     <td style="">
-                        <textarea v-show="row.editRow"
-                                  v-model="optimetaCitationsApp.citations[i].raw"
+                        <textarea id="rawRemainder-{{ i + 1 }}"
+			          v-show="row.editRow"
+                                  v-model="optimetaCitationsApp.citations[i].rawRemainder"
                                   class="pkpFormField__input pkpFormField--textarea__input optimetaTextArea"
                                   style="height: 100px;"></textarea>
-                        <span v-show="!row.editRow">{{ optimetaCitationsApp.citations[i].raw }}</span>
+                        <span v-show="!row.editRow">{{ optimetaCitationsApp.citations[i].rawRemainder }}</span>
                     </td>
                     <td>
-                        <input v-show="row.editRow"
-                               v-model="optimetaCitationsApp.citations[i].pid"
+                        <input id="urn-{{ i + 1 }}"
+                               placeholder="URN"
+                               v-show="row.editRow"
+                               v-model="optimetaCitationsApp.citations[i].urn"
                                class="pkpFormField__input pkpFormField--text__input" />
-                        <span v-show="!row.editRow">{{ optimetaCitationsApp.citations[i].pid }}</span>
+                        <span v-show="!row.editRow">{{ optimetaCitationsApp.citations[i].urn }}</span>
+                        <input id="doi-{{ i + 1 }}"
+                               placeholder="DOI"
+                               v-show="row.editRow"
+                               v-model="optimetaCitationsApp.citations[i].doi"
+                               class="pkpFormField__input pkpFormField--text__input" />
+                        <span v-show="!row.editRow">{{ optimetaCitationsApp.citations[i].doi }}</span>
                     </td>
                     <td>
                         <a v-show="!row.editRow"

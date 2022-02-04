@@ -32,6 +32,9 @@
 
 #optimetaCitations .pkpFormPage__footer { }
 
+#optimetaCitations .header table {
+	width: 100%;
+}
 .optimetaScrollableDiv {
 	height: 500px;
 	overflow-x: hidden;
@@ -40,11 +43,11 @@
 
 .optimetaScrollableDiv table {
 	border-collapse: collapse;
+	width: 100%;
 }
 
-.optimetaScrollableDiv th,
-.optimetaScrollableDiv td {
-	border-bottom: 1px solid #ddd;
+.optimetaScrollableDiv tr:nth-child(even){
+	background-color: #f6f6f6;
 }
 
 .optimetaScrollableDiv th {

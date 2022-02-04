@@ -16,7 +16,6 @@
  * @returns {string}
  */
 function optimetaCitationsGetCsrfToken(){
-
 	// ojs version 3.2.1
 	if(typeof $ !== 'undefined' && typeof $.pkp !== 'undefined' &&
         typeof $.pkp.currentUser !== 'undefined' &&
