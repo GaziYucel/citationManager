@@ -13,15 +13,11 @@
  * @brief Class for parsing citations
  */
 
+import('plugins.generic.optimetaCitations.classes.OptimetaCitationsDataModel');
+import('plugins.generic.optimetaCitations.classes.parser.OptimetaCitationsDOIParser');
+
 class OptimetaCitationsParser
 {
-	/**
-	 * Regex to extract DOI
-	 *
-	 * @var string
-	 */
-	private $regexDoi = '(10[.][0-9]{4,}[^\s"/<>]*/[^\s"<>]+)';
-
 	/**
 	 * Variable which will hold the raw citations
 	 *
@@ -30,19 +26,27 @@ class OptimetaCitationsParser
 	private $citationsRaw = "";
 
 	/**
-	 * Array which hold the parsed citations: [ [ "pid" => "pid1", "raw" => "raw1" ], ... ]
+	 * Array which hold the parsed citations
 	 *
 	 * @var array
 	 */
 	private $citationsParsed = [];
 
-	/**
+    /**
+     * Array which hold the citations data model
+     *
+     * @var array
+     */
+    private $citationRowParsedTemplate = [];
+
+    /**
 	 * Constructor.
 	 * @param $rawCitations string an unparsed citation string
 	 */
 	function __construct(string $citationsRaw = "")
 	{
 		$this->citationsRaw = $citationsRaw;
+        $this->citationRowParsedTemplate = OptimetaCitationsDataModel::$entities;
 	}
 
 	/**
@@ -105,98 +109,74 @@ class OptimetaCitationsParser
 		$citationsArray = explode("\n", $citationsRaw);
 
 		// Extract DOI from every citation
-		foreach ($citationsArray as $index => $citationRawLine) {
+		foreach ($citationsArray as $index => $rowRaw) {
 
 			// Clean single citation
-			$citationRawLine = $this->cleanCitationString($citationRawLine);
+			$rowRaw = $this->cleanCitationString($rowRaw);
 
 			// Remove numbers from the beginning of each citation
-			$citationRawLine = $this->removeLeadingNumbersFromBeginning($citationRawLine);
+			$rowRaw = $this->removeLeadingNumbersFromBeginning($rowRaw);
 
-			// match doi in citation
-			$this->citationsParsed[] = $this->parseDoi($citationRawLine);
+            // Get data model and fill empty rowParsed
+            $rowParsed = $this->citationRowParsedTemplate;
+
+            // fill with values
+            $doiParser = new OptimetaCitationsDOIParser();
+            $parsedDois = $doiParser->getParsedDoi($rowRaw); // OptimetaCitationsDataModel
+            $rowParsed["doi"] = $parsedDois->doi;
+            $rowParsed["rawRemainder"] = $this->cleanCitationString($parsedDois->rawRemainder);
+
+            $rowParsed["raw"] = $rowRaw;
+
+            // push to citations parsed array
+			$this->citationsParsed[] = $rowParsed;
 		}
-	}
-
-	private function parseDoi($citationRawLine): array
-	{
-		$pid = '';
-		$raw = $citationRawLine;
-		$doiArray = [];
-		preg_match($this->regexDoi, $raw, $doiArray);
-
-		if (!empty($doiArray[0])) {
-			$pid = $doiArray[0];
-		}
-
-		if (!empty($pid)) {
-			$pidCorrect = 'https://doi.org/' . $pid;
-
-			$prefix = [
-				'http://doi.org/' . $pid,
-				'http://www.doi.org/' . $pid,
-				'https://www.doi.org/' . $pid,
-				'http://doi:' . $pid,
-				'https://doi:' . $pid,
-				'doi:' . $pid,
-				'doi: ' . $pid
-			];
-
-			$raw = str_replace($prefix, $pidCorrect, $raw);
-			$raw = str_replace($pidCorrect, '', $raw);
-			$raw = str_replace($pid, '', $raw);
-			$raw = $this->cleanCitationString($raw);
-
-			$pid = trim($pidCorrect, '.');
-		}
-
-		return ["pid" => $pid, "raw" => $raw];
 	}
 
 	/**
 	 * Clean and normalize string
 	 *
-	 * @param $citationsRawLine
+	 * @param $text
 	 * @return string
 	 */
-	private function cleanCitationString($citationsRawLine): string
+	private function cleanCitationString($text): string
 	{
 		// Strip whitespace
-		$citationsRawLine = trim($citationsRawLine);
+		$text = trim($text);
 
 		// String .
-		$citationsRawLine = trim($citationsRawLine, '.');
+		$text = trim($text, '.');
 
 		// String ,
-		$citationsRawLine = trim($citationsRawLine, ',');
+		$text = trim($text, ',');
 
 		// Strip slashes
-		$citationsRawLine = stripslashes($citationsRawLine);
+		$text = stripslashes($text);
 
 		// Remove trailing/leading line breaks.
-		$citationsRawLine = trim($citationsRawLine, "\n");
+		$text = trim($text, "\n");
 
 		// Normalize whitespace
-		$citationsRawLine = preg_replace('/[\s]+/', ' ', $citationsRawLine);
+		$text = preg_replace('/[\s]+/', ' ', $text);
 
-		return $citationsRawLine;
+		return $text;
 	}
 
 	/**
 	 * Remove numbers from the beginning of each citation.
 	 *
-	 * @param $citationRawLine
+	 * @param $text
 	 * @return string
 	 */
-	private function removeLeadingNumbersFromBeginning($citationRawLine): string
+	private function removeLeadingNumbersFromBeginning($text): string
 	{
 
-		$citationRawLine = preg_replace(
+		$text = preg_replace(
 			'/^\s*[\[#]?[0-9]+[.)\]]?\s*/',
 			'',
-			$citationRawLine);
+			$text);
 
-		return $citationRawLine;
+		return $text;
 
 	}
 }

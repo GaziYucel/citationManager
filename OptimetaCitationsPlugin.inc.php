@@ -23,7 +23,7 @@ import('lib.pkp.classes.handler.APIHandler');
 
 import('plugins.generic.optimetaCitations.classes.components.forms.PublicationOptimetaCitationsForm');
 import('plugins.generic.optimetaCitations.classes.handler.OptimetaCitationsAPIHandler');
-import('plugins.generic.optimetaCitations.classes.OptimetaCitationsParser');
+import('plugins.generic.optimetaCitations.classes.parser.OptimetaCitationsParser');
 
 class OptimetaCitationsPlugin extends GenericPlugin
 {
