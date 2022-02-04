@@ -13,7 +13,7 @@
  * @brief Class for parsing citations
  */
 
-import('plugins.generic.optimetaCitations.classes.OptimetaCitationsDataModel');
+import('plugins.generic.optimetaCitations.classes.db.OptimetaCitationsDataModelEntities');
 
 class OptimetaCitationsDOIParser
 {
@@ -26,9 +26,9 @@ class OptimetaCitationsDOIParser
 
     /**
      * @param $raw
-     * @return OptimetaCitationsDataModel
+     * @return OptimetaCitationsDataModelEntities
      */
-	public function getParsedDoi($raw): OptimetaCitationsDataModel
+	public function getParsedDoi($raw): OptimetaCitationsDataModelEntities
 	{
 		$doi = '';
 		$rawRemainder = $raw;
@@ -59,7 +59,7 @@ class OptimetaCitationsDOIParser
 			$doi = trim($pidCorrect, '.');
 		}
 
-        $model = new OptimetaCitationsDataModel();
+        $model = new OptimetaCitationsDataModelEntities();
 
         $model->doi = $doi;
         $model->raw = $raw;

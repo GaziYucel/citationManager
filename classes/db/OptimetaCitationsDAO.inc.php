@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file plugins/generic/optimetaCitations/classes/OptimetaCitationsDAO.inc.php
+ * @file plugins/generic/optimetaCitations/classes/db/OptimetaCitationsDAO.inc.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel

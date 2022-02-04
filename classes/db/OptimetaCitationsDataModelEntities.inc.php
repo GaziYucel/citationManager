@@ -1,20 +1,20 @@
 <?php
 
 /**
- * @file plugins/generic/optimetaCitations/classes/OptimetaCitationsDataModel.inc.php
+ * @file plugins/generic/optimetaCitations/classes/db/OptimetaCitationsDataModelEntities.inc.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @package plugins.generic.OptimetaCitations
- * @class OptimetaCitationsDataModel
+ * @class OptimetaCitationsDataModelEntities
  * @ingroup plugins_generic_optimetacitations
  *
  * @brief Class Citations Data Model
  */
 
-class OptimetaCitationsDataModel
+class OptimetaCitationsDataModelEntities
 {
     public $author;
     public $orcid;
@@ -30,19 +30,4 @@ class OptimetaCitationsDataModel
     public $rawRemainder;
     public $raw;
 
-    public static $entities = [
-        "author" => "",
-        "orcid" => "",
-        "title" => "",
-        "doi" => "",
-        "urn" => "",
-        "date" => "",
-        "volume" => "",
-        "issue" => "",
-        "pages" => "",
-        "subject" => "",
-        "fulltext" => "",
-        "rawRemainder" => "",
-        "raw" => ""
-    ];
 }
