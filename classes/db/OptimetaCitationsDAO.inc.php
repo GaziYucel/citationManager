@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file plugins/generic/optimetaCitations/classes/db/OptimetaCitationsDAO.inc.php
  *

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file plugins/generic/optimetaCitations/classes/handler/OptimetaCitationsAPIHandler.inc.php
  *

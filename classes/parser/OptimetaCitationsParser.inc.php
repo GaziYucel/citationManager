@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file plugins/generic/optimetaCitations/classes/parser/OptimetaCitationsParser.inc.php
  *
@@ -13,7 +12,7 @@
  * @brief Class for parsing citations
  */
 
-import('plugins.generic.optimetaCitations.classes.db.OptimetaCitationsDataModelEntities');
+import('plugins.generic.optimetaCitations.classes.model.OptimetaCitationsCitationModel');
 import('plugins.generic.optimetaCitations.classes.parser.OptimetaCitationsDOIParser');
 
 class OptimetaCitationsParser
@@ -107,11 +106,11 @@ class OptimetaCitationsParser
 			$rowRaw = $this->removeLeadingNumbersFromBeginning($rowRaw);
 
             // get data model and fill empty objRowParsed
-            $objRowParsed = new OptimetaCitationsDataModelEntities();
+            $objRowParsed = new OptimetaCitationsCitationModel();
 
             // fill with values
             $doiParser = new OptimetaCitationsDOIParser();
-            $objParsedDois = $doiParser->getParsedDoi($rowRaw); // OptimetaCitationsDataModelEntities
+            $objParsedDois = $doiParser->getParsedDoi($rowRaw); // OptimetaCitationsCitationModel
             $objRowParsed->doi = $objParsedDois->doi;
             $objRowParsed->rawRemainder = $this->cleanCitationString($objParsedDois->rawRemainder);
 

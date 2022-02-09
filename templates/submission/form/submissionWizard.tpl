@@ -76,10 +76,11 @@
 				<td>{{ i + 1 }}</td>
 				<td style="">
 					<textarea id="rawRemainder-{{ i + 1 }}"
-						  v-show="row.editRow"
-						  v-model="citations[i].rawRemainder"
-						  class="pkpFormField__input pkpFormField--textarea__input optimetaTextArea"
-						  style="height: 100px;"></textarea>
+							  placeholder="Remainder of Citation"
+							  v-show="row.editRow"
+							  v-model="citations[i].rawRemainder"
+							  class="pkpFormField__input pkpFormField--textarea__input optimetaTextArea"
+							  style="height: 100px;"></textarea>
 					<span v-show="!row.editRow">{{ citations[i].rawRemainder }}</span>
 				</td>
 				<td>
