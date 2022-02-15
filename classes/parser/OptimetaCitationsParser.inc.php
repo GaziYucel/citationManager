@@ -1,7 +1,6 @@
 <?php
-
 /**
- * @file plugins/generic/optimetaCitations/classes/OptimetaCitationsParser.inc.php
+ * @file plugins/generic/optimetaCitations/classes/parser/OptimetaCitationsParser.inc.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -13,8 +12,9 @@
  * @brief Class for parsing citations
  */
 
-import('plugins.generic.optimetaCitations.classes.OptimetaCitationsDataModel');
+import('plugins.generic.optimetaCitations.classes.model.OptimetaCitationsCitationModel');
 import('plugins.generic.optimetaCitations.classes.parser.OptimetaCitationsDOIParser');
+import('plugins.generic.optimetaCitations.classes.parser.OptimetaCitationsURLParser');
 
 class OptimetaCitationsParser
 {
@@ -33,20 +33,12 @@ class OptimetaCitationsParser
 	private $citationsParsed = [];
 
     /**
-     * Array which hold the citations data model
-     *
-     * @var array
-     */
-    private $citationRowParsedTemplate = [];
-
-    /**
 	 * Constructor.
 	 * @param $rawCitations string an unparsed citation string
 	 */
 	function __construct(string $citationsRaw = "")
 	{
 		$this->citationsRaw = $citationsRaw;
-        $this->citationRowParsedTemplate = OptimetaCitationsDataModel::$entities;
 	}
 
 	/**
@@ -77,59 +69,62 @@ class OptimetaCitationsParser
 		return json_encode($this->citationsParsed);
 	}
 
-	/**
-	 * Parse and return parsed citations as an array
-	 * Assumed that raw citations are separated with line endings
-	 *
-	 * @param $citationsRaw string
-	 * @return void
-	 */
+    /**
+     * Parse and return parsed citations as an array
+     * Assumed that raw citations are separated with line endings
+     *
+     * @return void
+     */
 	private function parse(): void
 	{
-		// Strip whitespace
+		// strip whitespace
 		$citationsRaw = trim($this->citationsRaw);
 
-		// Strip slashes
+		// strip slashes
 		$citationsRaw = stripslashes($citationsRaw);
 
-		// Remove empty lines and normalize line endings.
+		// remove empty lines and normalize line endings.
 		$citationsRaw = preg_replace('/[\r\n]+/s', "\n", $citationsRaw);
 
-		// Remove trailing/leading line breaks.
+		// remove trailing/leading line breaks.
 		$citationsRaw = trim($citationsRaw, "\n");
 
-		// Return if input is empty
+		// return if input is empty
 		if (empty($citationsRaw)) {
 			return;
 		}
 
-		// input not empty, continue parsing
-
-		// Break up at line endings.
+		// break up at line endings
 		$citationsArray = explode("\n", $citationsRaw);
 
-		// Extract DOI from every citation
+		// loop through citations and parse every citation
 		foreach ($citationsArray as $index => $rowRaw) {
 
-			// Clean single citation
+			// clean single citation
 			$rowRaw = $this->cleanCitationString($rowRaw);
 
-			// Remove numbers from the beginning of each citation
+			// remove numbers from the beginning of each citation
 			$rowRaw = $this->removeLeadingNumbersFromBeginning($rowRaw);
 
-            // Get data model and fill empty rowParsed
-            $rowParsed = $this->citationRowParsedTemplate;
+            // get data model and fill empty objRowParsed
+            $objRowParsed = new OptimetaCitationsCitationModel();
 
-            // fill with values
+            // doi parser
             $doiParser = new OptimetaCitationsDOIParser();
-            $parsedDois = $doiParser->getParsedDoi($rowRaw); // OptimetaCitationsDataModel
-            $rowParsed["doi"] = $parsedDois->doi;
-            $rowParsed["rawRemainder"] = $this->cleanCitationString($parsedDois->rawRemainder);
+            $objDoi = $doiParser->getParsed($rowRaw); // OptimetaCitationsCitationModel
+            $objRowParsed->doi = $objDoi->doi;
+            $objRowParsed->rawRemainder = $this->cleanCitationString($objDoi->rawRemainder);
 
-            $rowParsed["raw"] = $rowRaw;
+            // url parser (after parsing doi)
+            $urlParser = new OptimetaCitationsURLParser();
+            $objUrl = $urlParser->getParsed($objRowParsed->rawRemainder); // OptimetaCitationsCitationModel
+            $objRowParsed->url = $objUrl->url;
+            $objRowParsed->rawRemainder = $this->cleanCitationString($objUrl->rawRemainder);
+
+            $objRowParsed->raw = $rowRaw;
 
             // push to citations parsed array
-			$this->citationsParsed[] = $rowParsed;
+			$this->citationsParsed[] = (array) $objRowParsed;
 		}
 	}
 
@@ -141,22 +136,19 @@ class OptimetaCitationsParser
 	 */
 	private function cleanCitationString($text): string
 	{
-		// Strip whitespace
+		// strip whitespace
 		$text = trim($text);
 
-		// String .
+		// strip .
 		$text = trim($text, '.');
 
-		// String ,
+		// strip ,
 		$text = trim($text, ',');
 
-		// Strip slashes
+		// strip slashes
 		$text = stripslashes($text);
 
-		// Remove trailing/leading line breaks.
-		$text = trim($text, "\n");
-
-		// Normalize whitespace
+		// normalize whitespace
 		$text = preg_replace('/[\s]+/', ' ', $text);
 
 		return $text;

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file plugins/generic/optimetaCitations/classes/parser/OptimetaCitationsDOIParser.inc.php
  *
@@ -13,7 +12,7 @@
  * @brief Class for parsing citations
  */
 
-import('plugins.generic.optimetaCitations.classes.OptimetaCitationsDataModel');
+import('plugins.generic.optimetaCitations.classes.model.OptimetaCitationsCitationModel');
 
 class OptimetaCitationsDOIParser
 {
@@ -22,18 +21,18 @@ class OptimetaCitationsDOIParser
 	 *
 	 * @var string
 	 */
-	private $regexDoi = '(10[.][0-9]{4,}[^\s"/<>]*/[^\s"<>]+)';
+	private $regex = '(10[.][0-9]{4,}[^\s"/<>]*/[^\s"<>]+)';
 
     /**
      * @param $raw
-     * @return OptimetaCitationsDataModel
+     * @return OptimetaCitationsCitationModel
      */
-	public function getParsedDoi($raw): OptimetaCitationsDataModel
+	public function getParsed($raw): OptimetaCitationsCitationModel
 	{
 		$doi = '';
 		$rawRemainder = $raw;
 		$doiArray = [];
-		preg_match($this->regexDoi, $rawRemainder, $doiArray);
+		preg_match($this->regex, $rawRemainder, $doiArray);
 
 		if (!empty($doiArray[0])) {
 			$doi = $doiArray[0];
@@ -59,10 +58,8 @@ class OptimetaCitationsDOIParser
 			$doi = trim($pidCorrect, '.');
 		}
 
-        $model = new OptimetaCitationsDataModel();
-
+        $model = new OptimetaCitationsCitationModel();
         $model->doi = $doi;
-        $model->raw = $raw;
         $model->rawRemainder = $rawRemainder;
 
         return $model;

@@ -11,8 +11,6 @@
  * @brief Main stylesheet for the plugin.
  */
 
-#optimetaCitations { }
-
 #optimetaCitations .header table td:first-of-type {
     font-size: 1rem;
     font-weight: 700;
@@ -29,8 +27,6 @@
 #optimetaCitations .pkpFormGroup {
 	padding: 0 !important;
 }
-
-#optimetaCitations .pkpFormPage__footer { }
 
 #optimetaCitations .header table {
 	width: 100%;
@@ -70,4 +66,3 @@
 	overflow-x: hidden;
 	overflow-y: auto;
 }
-
