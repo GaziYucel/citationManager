@@ -14,6 +14,7 @@
 
 import('plugins.generic.optimetaCitations.classes.model.OptimetaCitationsCitationModel');
 import('plugins.generic.optimetaCitations.classes.parser.OptimetaCitationsDOIParser');
+import('plugins.generic.optimetaCitations.classes.parser.OptimetaCitationsURLParser');
 
 class OptimetaCitationsParser
 {
@@ -108,11 +109,17 @@ class OptimetaCitationsParser
             // get data model and fill empty objRowParsed
             $objRowParsed = new OptimetaCitationsCitationModel();
 
-            // fill with values
+            // doi parser
             $doiParser = new OptimetaCitationsDOIParser();
-            $objParsedDois = $doiParser->getParsedDoi($rowRaw); // OptimetaCitationsCitationModel
-            $objRowParsed->doi = $objParsedDois->doi;
-            $objRowParsed->rawRemainder = $this->cleanCitationString($objParsedDois->rawRemainder);
+            $objDoi = $doiParser->getParsed($rowRaw); // OptimetaCitationsCitationModel
+            $objRowParsed->doi = $objDoi->doi;
+            $objRowParsed->rawRemainder = $this->cleanCitationString($objDoi->rawRemainder);
+
+            // url parser (after parsing doi)
+            $urlParser = new OptimetaCitationsURLParser();
+            $objUrl = $urlParser->getParsed($objRowParsed->rawRemainder); // OptimetaCitationsCitationModel
+            $objRowParsed->url = $objUrl->url;
+            $objRowParsed->rawRemainder = $this->cleanCitationString($objUrl->rawRemainder);
 
             $objRowParsed->raw = $rowRaw;
 

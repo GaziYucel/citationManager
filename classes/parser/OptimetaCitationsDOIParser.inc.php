@@ -21,18 +21,18 @@ class OptimetaCitationsDOIParser
 	 *
 	 * @var string
 	 */
-	private $regexDoi = '(10[.][0-9]{4,}[^\s"/<>]*/[^\s"<>]+)';
+	private $regex = '(10[.][0-9]{4,}[^\s"/<>]*/[^\s"<>]+)';
 
     /**
      * @param $raw
      * @return OptimetaCitationsCitationModel
      */
-	public function getParsedDoi($raw): OptimetaCitationsCitationModel
+	public function getParsed($raw): OptimetaCitationsCitationModel
 	{
 		$doi = '';
 		$rawRemainder = $raw;
 		$doiArray = [];
-		preg_match($this->regexDoi, $rawRemainder, $doiArray);
+		preg_match($this->regex, $rawRemainder, $doiArray);
 
 		if (!empty($doiArray[0])) {
 			$doi = $doiArray[0];
@@ -59,9 +59,7 @@ class OptimetaCitationsDOIParser
 		}
 
         $model = new OptimetaCitationsCitationModel();
-
         $model->doi = $doi;
-        $model->raw = $raw;
         $model->rawRemainder = $rawRemainder;
 
         return $model;

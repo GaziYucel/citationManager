@@ -19,7 +19,7 @@ class OptimetaCitationsCitationModel
     public $orcid;          // orcid id of author
     public $title;          // title of article
     public $doi;            // doi of article
-    public $urn;            // urn of article
+    public $url;            // url of article
     public $date;           // publication date
     public $volume;         // volume of issue of journal
     public $issue;          // issue of journal
