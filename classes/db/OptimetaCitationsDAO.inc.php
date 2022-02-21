@@ -13,10 +13,14 @@
  * @brief Class for operations for retrieving and modifying Optimeta Citations objects
  */
 
+import('lib.pkp.classes.db.DAO');
+
 class OptimetaCitationsDAO extends DAO
 {
     function __construct()
     {
         // do something usefull
+
+        // parent::__construct();
     }
 }
