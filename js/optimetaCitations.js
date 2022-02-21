@@ -38,11 +38,14 @@ function optimetaCitationsGetCsrfToken(){
  * @returns {*}
  */
 function optimetaCitationsGetHelperArray(baseArray){
-	let helperArray = JSON.parse(JSON.stringify(baseArray));
-	for(let i = 0;i < baseArray.length; i++){
-		helperArray[i].editRow = false;
-	}
-	return helperArray;
+    let helperArray = JSON.parse(JSON.stringify(baseArray));
+    for(let i = 0;i < baseArray.length; i++){
+        for(let key of Object.keys(helperArray[i])){
+            helperArray[i]['_edit_' + key] = false;
+        }
+        helperArray[i]['editRow'] = false;
+    }
+    return helperArray;
 }
 
 /**
@@ -61,11 +64,11 @@ function optimetaCitationsIsStringJson(str) {
 
 /**
  *
- * @param ob
+ * @param obj
  * @param key
  * @returns {string}
  */
-function optimetaCitationsFindPathInArray (ob, key) {
+function optimetaCitationsFindPathInArray (obj, key) {
     const path = [];
     const keyExists = (obj) => {
         if (!obj || (typeof obj !== "object" && !Array.isArray(obj))) {
