@@ -1,20 +1,9 @@
 <?php
-/**
- * @file plugins/generic/optimetaCitations/classes/parser/OptimetaCitationsDOIParser.inc.php
- *
- * Copyright (c) 2021+ TIB Hannover
- * Copyright (c) 2021+ Gazi Yucel
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
- *
- * @class OptimetaCitationsDOIParser
- * @ingroup plugins_generic_optimetacitations
- *
- * @brief Class for parsing citations
- */
+namespace Optimeta\Citations\Parser;
 
-import('plugins.generic.optimetaCitations.classes.model.OptimetaCitationsCitationModel');
+use Optimeta\Citations\Model\CitationModel;
 
-class OptimetaCitationsDOIParser
+class ParserDOI
 {
 	/**
 	 * Regex to extract DOI
@@ -25,9 +14,9 @@ class OptimetaCitationsDOIParser
 
     /**
      * @param $raw
-     * @return OptimetaCitationsCitationModel
+     * @return CitationModel
      */
-	public function getParsed($raw): OptimetaCitationsCitationModel
+	public function getParsed($raw): CitationModel
 	{
 		$doi = '';
 		$rawRemainder = $raw;
@@ -58,7 +47,7 @@ class OptimetaCitationsDOIParser
 			$doi = trim($pidCorrect, '.');
 		}
 
-        $model = new OptimetaCitationsCitationModel();
+        $model = new CitationModel();
         $model->doi = $doi;
         $model->rawRemainder = $rawRemainder;
 

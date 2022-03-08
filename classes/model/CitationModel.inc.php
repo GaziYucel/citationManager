@@ -1,19 +1,7 @@
 <?php
-/**
- * @file plugins/generic/optimetaCitations/classes/model/OptimetaCitationsCitationModel.inc.php
- *
- * Copyright (c) 2021+ TIB Hannover
- * Copyright (c) 2021+ Gazi Yucel
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
- *
- * @package plugins.generic.OptimetaCitations
- * @class OptimetaCitationsCitationModel
- * @ingroup plugins_generic_optimetacitations
- *
- * @brief Class Citation Data Model
- */
+namespace Optimeta\Citations\Model;
 
-class OptimetaCitationsCitationModel
+class CitationModel
 {
     public $author;         // author of article
     public $orcid;          // orcid id of author
@@ -26,6 +14,8 @@ class OptimetaCitationsCitationModel
     public $pages;          // number of pages of article
     public $subject;        // subject or category of article
     public $fulltext;       // link to fulltext
+
+    // internal
     public $rawRemainder;   // remainder of raw citation after parsing
     public $raw;            // unchanged raw citation
 }

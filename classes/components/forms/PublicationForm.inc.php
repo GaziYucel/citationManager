@@ -1,21 +1,23 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/components/forms/PublicationOptimetaCitationsForm.inc.php
+ * @file plugins/generic/optimetaCitations/classes/components/forms/PublicationForm.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class PublicationOptimetaCitationsForm
+ * @class PublicationForm
  * @ingroup plugins_generic_optimetacitations
  *
  * @brief A preset form for setting a publication's parsed citations
  */
 
+namespace Optimeta\Citations\Components\Forms;
+
 use \PKP\components\forms\FormComponent;
 use \PKP\components\forms\FieldText;
 
-class PublicationOptimetaCitationsForm extends FormComponent
+class PublicationForm extends FormComponent
 {
     /** @copydoc FormComponent::$id */
     public $id = OptimetaCitations_PublicationForm;

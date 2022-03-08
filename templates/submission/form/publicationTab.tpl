@@ -18,6 +18,48 @@
 		}
 	});
 
+    function enrichCitations(){
+        let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.enrich.question"}';
+        if (confirm(questionText) !== true) { return; }
+
+        $.ajax({
+            url: '{$pluginApiEnrichUrl}',
+            method: 'POST',
+            data: {
+                submissionId: {$submissionId},
+                citationsRaw: document.getElementById("citations-citationsRaw-control").value
+            },
+            headers: {
+                'X-Csrf-Token': optimetaCitationsGetCsrfToken(),
+            },
+            error(r) { },
+            success(response) {
+
+            }
+        });
+    }
+
+    function submitCitations(){
+        let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.enrich.question"}';
+        if (confirm(questionText) !== true) { return; }
+
+        $.ajax({
+            url: '{$pluginApiSubmitUrl}',
+            method: 'POST',
+            data: {
+                submissionId: {$submissionId},
+                citationsRaw: document.getElementById("citations-citationsRaw-control").value
+            },
+            headers: {
+                'X-Csrf-Token': optimetaCitationsGetCsrfToken(),
+            },
+            error(r) { },
+            success(response) {
+
+            }
+        });
+    }
+
     function parseCitations(){
         let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.parse.question"}';
         if (confirm(questionText) !== true) { return; }
@@ -50,7 +92,11 @@
         <table>
             <tr>
                 <td><h4>Citations</h4></td>
-                <td><a href="javascript:parseCitations()" id="buttonParse"
+                <td><a href="javascript:enrichCitations()" id="buttonEnrich"
+                       class="pkpButton">Enrich References</a>
+                    <a href="javascript:submitCitations()" id="buttonSubmit"
+                       class="pkpButton">Submit References</a>
+                    <a href="javascript:parseCitations()" id="buttonParse"
                        class="pkpButton">Parse References</a></td>
             </tr>
         </table>
