@@ -23,7 +23,7 @@
         if (confirm(questionText) !== true) { return; }
 
         $.ajax({
-            url: '{$pluginApiParseUrl}',
+            url: '{$pluginApiUrl}/parse',
             method: 'POST',
             data: {
                 submissionId: {$submissionId},

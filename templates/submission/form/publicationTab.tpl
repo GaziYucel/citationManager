@@ -23,7 +23,7 @@
         if (confirm(questionText) !== true) { return; }
 
         $.ajax({
-            url: '{$pluginApiEnrichUrl}',
+            url: '{$pluginApiUrl}/enrich',
             method: 'POST',
             data: {
                 submissionId: {$submissionId},
@@ -44,7 +44,7 @@
         if (confirm(questionText) !== true) { return; }
 
         $.ajax({
-            url: '{$pluginApiSubmitUrl}',
+            url: '{$pluginApiUrl}/submit',
             method: 'POST',
             data: {
                 submissionId: {$submissionId},
@@ -65,7 +65,7 @@
         if (confirm(questionText) !== true) { return; }
 
         $.ajax({
-            url: '{$pluginApiParseUrl}',
+            url: '{$pluginApiUrl}/parse',
             method: 'POST',
             data: {
                 submissionId: {$submissionId},

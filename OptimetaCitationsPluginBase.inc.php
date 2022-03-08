@@ -36,9 +36,7 @@ class OptimetaCitationsPluginBase extends GenericPlugin
             'pluginStylesheetURL' => '',
             'pluginJavaScriptURL' => '',
             'pluginImagesURL' => '',
-            'pluginApiParseUrl' => '',
-            'pluginApiEnrichUrl' => '',
-            'pluginApiSubmitUrl' => '',
+            'pluginApiUrl' => '',
             'citationsKeyForm' => ''
         ];
 
@@ -64,9 +62,7 @@ class OptimetaCitationsPluginBase extends GenericPlugin
             'pluginStylesheetURL' => $this->getStylesheetUrl($request),
             'pluginJavaScriptURL' => $this->getJavaScriptURL($request),
             'pluginImagesURL' => $this->getImagesURL($request),
-            'pluginApiParseUrl' => $this->apiBaseUrl . $this->apiEndpoint . '/parse',
-            'pluginApiEnrichUrl' => $this->apiBaseUrl . $this->apiEndpoint . '/enrich',
-            'pluginApiSubmitUrl' => $this->apiBaseUrl . $this->apiEndpoint . '/submit',
+            'pluginApiUrl' => $this->apiBaseUrl . $this->apiEndpoint,
             'citationsKeyForm' => $this->citationsKeyForm
         ];
 
