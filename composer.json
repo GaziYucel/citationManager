@@ -1,0 +1,24 @@
+{
+  "name": "optimeta/citations",
+  "description": "Create and extract citation data and transfer to open access data sources",
+  "license": "GPL-3.0-or-later",
+  "keywords": ["Optimeta","Citations"],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/gaziyucel/optimeta-plugin-shared.git"
+    }
+  ],
+  "require": {
+    "php": ">=7.3",
+    "guzzlehttp/guzzle": "^7.4.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Optimeta\\Shared\\":"vendor/tibhannover/optimeta/"
+    }
+  },
+  "config": {},
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
