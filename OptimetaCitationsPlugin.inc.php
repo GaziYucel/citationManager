@@ -17,10 +17,6 @@ const OptimetaCitations_ParsedKeyForm = 'OptimetaCitations__CitationsParsed';
 const OptimetaCitations_ApiEndpoint = 'OptimetaCitations';
 const OptimetaCitations_PublicationForm = "OptimetaCitations_PublicationForm";
 
-//require_once ( __DIR__ . '/vendor/autoload.php');
-
-import('plugins.generic.optimetaCitations.OptimetaCitationsPluginBase');
-
 import('lib.pkp.classes.plugins.GenericPlugin');
 import('lib.pkp.classes.site.VersionCheck');
 import('lib.pkp.classes.handler.APIHandler');
@@ -33,8 +29,22 @@ use Optimeta\Citations\Components\Forms\PublicationForm;
 use Optimeta\Citations\Parser\Parser;
 use Optimeta\Citations\Handler\OptimetaCitationsAPIHandler;
 
-class OptimetaCitationsPlugin extends OptimetaCitationsPluginBase
+class OptimetaCitationsPlugin extends GenericPlugin
 {
+    private $citationsKeyDb = OptimetaCitations_ParsedKeyDb;
+    private $citationsKeyForm = OptimetaCitations_ParsedKeyForm;
+    private $apiEndpoint = OptimetaCitations_ApiEndpoint;
+
+    private $version = '0.0.0.0';
+
+    protected $templateParameters = [
+        'pluginStylesheetURL' => '',
+        'pluginJavaScriptURL' => '',
+        'pluginImagesURL' => '',
+        'citationsKeyForm' => '',
+        'pluginApiUrl' => ''
+    ];
+
     /**
      * @copydoc Plugin::register
      */
@@ -43,8 +53,25 @@ class OptimetaCitationsPlugin extends OptimetaCitationsPluginBase
         // Register the plugin even when it is not enabled
         $success = parent::register($category, $path);
 
+        $this->version = VersionCheck::getCurrentCodeVersion()->getVersionString(false);
+
+        // Current Request / Context
+        $request = $this->getRequest();
+
+        // Fill generic template parameters
+        $this->templateParameters = [
+            'pluginStylesheetURL' => $this->getStylesheetUrl($request),
+            'pluginJavaScriptURL' => $this->getJavaScriptURL($request),
+            'pluginImagesURL' => $this->getImagesURL($request),
+            'citationsKeyForm' => $this->citationsKeyForm,
+            'pluginApiUrl' => ''
+        ];
+
         if ($success && $this->getEnabled())
         {
+            // Is triggered with every request from anywhere
+            HookRegistry::register('Schema::get::publication', array($this, 'addToSchema'));
+
             // Is triggered only on these hooks
             HookRegistry::register('Templates::Submission::SubmissionMetadataForm::AdditionalMetadata', array($this, 'submissionWizard'));
             HookRegistry::register('Template::Workflow::Publication', array($this, 'publicationTab'));
@@ -58,10 +85,30 @@ class OptimetaCitationsPlugin extends OptimetaCitationsPluginBase
     }
 
     /**
-     * @desc Show tab under Publications
-     * @param string $hookName
-     * @param array $args
-     * @return void
+     * Add a property to the publication schema
+     *
+     * @param $hookName string `Schema::get::publication`
+     * @param $args [[
+     * @option object Publication schema
+     */
+    public function addToSchema(string $hookName, array $args): void
+    {
+        $schema = $args[0];
+
+        $properties = '{
+            "type": "string",
+            "multilingual": false,
+            "apiSummary": true,
+            "validation": [ "nullable" ]
+        }';
+
+        $schema->properties->{$this->citationsKeyDb} = json_decode($properties);
+    }
+
+    /**
+     * @param string $hookname
+     * @param array $args [string, TemplateManager]
+     * @brief Show tab under Publications
      */
     public function publicationTab(string $hookName, array $args): void
     {
@@ -102,6 +149,7 @@ class OptimetaCitationsPlugin extends OptimetaCitationsPluginBase
             $citationsParsed = '[]';
         }
 
+        $this->templateParameters['pluginApiUrl'] = $apiBaseUrl . $this->apiEndpoint;
         $this->templateParameters['submissionId'] = $submissionId;
         $this->templateParameters['citationsParsed'] = $citationsParsed;
         $this->templateParameters['citationsRaw'] = $citationsRaw;
@@ -111,13 +159,13 @@ class OptimetaCitationsPlugin extends OptimetaCitationsPluginBase
     }
 
     /**
-     * @desc Process data from post/put
      * @param string $hookname
      * @param array $args [
      *   Publication -> new publication
      *   Publication
      *   array parameters/publication properties to be saved
      *   Request
+     * @brief process data from post/put
      */
     public function publicationTabSave(string $hookname, array $args): void
     {
@@ -133,10 +181,10 @@ class OptimetaCitationsPlugin extends OptimetaCitationsPluginBase
     }
 
     /**
-     * @desc show citations part on step 3 in submission wizard
      * @param string $hookname
      * @param array $args
      * @return void
+     * @brief show citations part on step 3 in submission wizard
      */
     public function submissionWizard(string $hookname, array $args): void
     {
@@ -160,20 +208,26 @@ class OptimetaCitationsPlugin extends OptimetaCitationsPluginBase
             $citationsParsed = '[]';
         }
 
-        $this->templateParameters['submissionId'] = $submissionId;
-        $this->templateParameters['citationsParsed'] = $citationsParsed;
-        $this->templateParameters['citationsRaw'] = $citationsRaw;
-        $templateMgr->assign($this->templateParameters);
+        $templateMgr->assign(array(
+            'pluginStylesheetURL' => $this->getStylesheetUrl($request),
+            'pluginJavaScriptURL' => $this->getJavaScriptURL($request),
+            'pluginImagesURL' => $this->getImagesURL($request),
+            'pluginApiParseUrl' => $apiBaseUrl . $this->apiEndpoint . '/parse',
+            'pluginApiEnrichUrl' => $apiBaseUrl . $this->apiEndpoint . '/enrich',
+            'pluginApiSubmitUrl' => $apiBaseUrl . $this->apiEndpoint . '/submit',
+            'citationsKeyForm' => $this->citationsKeyForm,
+            'citationsParsed' => $citationsParsed,
+            'citationsRaw' => $citationsRaw
+        ));
 
         $templateMgr->display($this->getTemplateResource("submission/form/submissionWizard.tpl"));
     }
 
     /**
-     * @desc Execute api handler
      * @param string $hookName
      * @param PKPRequest $request
      * @return bool
-     * @throws Throwable
+     * @brief execute api handler
      */
     public function apiHandler(string $hookName, PKPRequest $request): bool
     {
@@ -188,4 +242,52 @@ class OptimetaCitationsPlugin extends OptimetaCitationsPluginBase
 
         return false;
     }
+
+    /**
+     * Get the JavaScript URL for this plugin.
+     */
+    function getJavaScriptURL($request): string
+    {
+        return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js';
+    }
+
+    /**
+     * Get the Images URL for this plugin.
+     */
+    function getImagesURL($request): string
+    {
+        return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/images';
+    }
+
+    /**
+     * Get the Stylesheet URL for this plugin.
+     */
+    function getStylesheetUrl($request): string
+    {
+        return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/css';
+    }
+
+    /* ********************** */
+    /* Plugin required methods */
+    /* ********************** */
+
+    /**
+     * @copydoc PKPPlugin::getDisplayName
+     */
+    public function getDisplayName(): string
+    {
+        return __('plugins.generic.optimetaCitationsPlugin.name');
+    }
+
+    /**
+     * @copydoc PKPPlugin::getDescription
+     */
+    public function getDescription(): string
+    {
+        return __('plugins.generic.optimetaCitationsPlugin.description');
+    }
+
+    /* ********************** */
+    /* Plugin required methods */
+    /* ********************** */
 }
