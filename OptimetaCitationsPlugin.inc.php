@@ -17,6 +17,8 @@ const OptimetaCitations_ParsedKeyForm = 'OptimetaCitations__CitationsParsed';
 const OptimetaCitations_ApiEndpoint = 'OptimetaCitations';
 const OptimetaCitations_PublicationForm = "OptimetaCitations_PublicationForm";
 
+require_once ( __DIR__ . '/vendor/autoload.php');
+
 import('lib.pkp.classes.plugins.GenericPlugin');
 import('lib.pkp.classes.site.VersionCheck');
 import('lib.pkp.classes.handler.APIHandler');
