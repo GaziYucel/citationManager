@@ -20,7 +20,7 @@ use \PKP\components\forms\FieldText;
 class PublicationForm extends FormComponent
 {
     /** @copydoc FormComponent::$id */
-    public $id = OptimetaCitations_PublicationForm;
+    public $id = OPTIMETA_CITATIONS_PUBLICATION_FORM;
 
     /** @copydoc FormComponent::$method */
     public $method = 'PUT';
@@ -31,8 +31,8 @@ class PublicationForm extends FormComponent
     /** @copydoc FormComponent::$successMessage */
     public $successMessage = '';
 
-    private $citationsKeyDb = OptimetaCitations_ParsedKeyDb;
-    private $citationsKeyForm = OptimetaCitations_ParsedKeyDb;
+    private $citationsKeyDb = OPTIMETA_CITATIONS_PARSED_KEY_DB;
+    private $citationsKeyForm = OPTIMETA_CITATIONS_PARSED_KEY_FORM;
 
     /**
      * Constructor
