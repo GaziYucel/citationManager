@@ -12,10 +12,10 @@
  * @brief Plugin for parsing Citations and submitting to Open Access websites.
  */
 
-const OptimetaCitations_ParsedKeyDb = 'OptimetaCitations__CitationsParsed';
-const OptimetaCitations_ParsedKeyForm = 'OptimetaCitations__CitationsParsed';
-const OptimetaCitations_ApiEndpoint = 'OptimetaCitations';
-const OptimetaCitations_PublicationForm = "OptimetaCitations_PublicationForm";
+const OPTIMETA_CITATIONS_PARSED_KEY_DB = 'OptimetaCitations__CitationsParsed';
+const OPTIMETA_CITATIONS_PARSED_KEY_FORM = 'OptimetaCitations__CitationsParsed';
+const OPTIMETA_CITATIONS_API_ENDPOINT = 'OptimetaCitations';
+const OPTIMETA_CITATIONS_PUBLICATION_FORM = "OptimetaCitations_PublicationForm";
 
 require_once ( __DIR__ . '/vendor/autoload.php');
 
@@ -33,11 +33,12 @@ use Optimeta\Citations\Handler\OptimetaCitationsAPIHandler;
 
 class OptimetaCitationsPlugin extends GenericPlugin
 {
-    protected $citationsKeyDb = OptimetaCitations_ParsedKeyDb;
-    protected $citationsKeyForm = OptimetaCitations_ParsedKeyForm;
-    protected $apiEndpoint = OptimetaCitations_ApiEndpoint;
+    protected $citationsKeyDb = OPTIMETA_CITATIONS_PARSED_KEY_DB;
+    protected $citationsKeyForm = OPTIMETA_CITATIONS_PARSED_KEY_FORM;
+    protected $apiEndpoint = OPTIMETA_CITATIONS_API_ENDPOINT;
+    protected $publicationForm = OPTIMETA_CITATIONS_PUBLICATION_FORM;
 
-    protected $version = '0.0.0.0';
+    protected $ojsVersion = '3.3.0.0';
 
     protected $templateParameters = [
         'pluginStylesheetURL' => '',
@@ -55,7 +56,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         // Register the plugin even when it is not enabled
         $success = parent::register($category, $path);
 
-        $this->version = VersionCheck::getCurrentCodeVersion()->getVersionString(false);
+        $this->ojsVersion = VersionCheck::getCurrentCodeVersion()->getVersionString(false);
 
         // Current Request / Context
         $request = $this->getRequest();
@@ -129,12 +130,12 @@ class OptimetaCitationsPlugin extends GenericPlugin
             __('plugins.generic.optimetaCitationsPlugin.publication.success'));
 
         $stateVersionDependentName = 'state';
-        if (strstr($this->version, '3.2.1')) {
+        if (strstr($this->ojsVersion, '3.2.1')) {
             $stateVersionDependentName = 'workflowData';
         }
 
         $state = $templateMgr->getTemplateVars($stateVersionDependentName);
-        $state['components'][OptimetaCitations_PublicationForm] = $form->getConfig();
+        $state['components'][$this->publicationForm] = $form->getConfig();
         $templateMgr->assign($stateVersionDependentName, $state);
 
         $publicationDao = DAORegistry::getDAO('PublicationDAO');

@@ -24,7 +24,7 @@ use PolicySet;
 
 class OptimetaCitationsAPIHandler extends APIHandler
 {
-    private $apiEndpoint = OptimetaCitations_ApiEndpoint;
+    private $apiEndpoint = OPTIMETA_CITATIONS_API_ENDPOINT;
 
     private $submissionId = '';
     private $citationsRaw = '';

@@ -159,7 +159,7 @@
 
     <div>
         <span style="display: none;">{{ components.OptimetaCitations_PublicationForm.fields[0]['value'] = optimetaCitationsApp.citationsJsonComputed }}</span>
-        <pkp-form v-bind="components.{$smarty.const.OptimetaCitations_PublicationForm}" @set="set"/>
+        <pkp-form v-bind="components.{$smarty.const.OPTIMETA_CITATIONS_PUBLICATION_FORM}" @set="set"/>
     </div>
 
 </tab>
