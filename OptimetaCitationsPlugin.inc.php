@@ -26,10 +26,12 @@ import('lib.pkp.classes.handler.APIHandler');
 import('plugins.generic.optimetaCitations.classes.Components.Forms.PublicationForm');
 import('plugins.generic.optimetaCitations.classes.Handler.OptimetaCitationsAPIHandler');
 import('plugins.generic.optimetaCitations.classes.Parser.Parser');
+import('plugins.generic.optimetaCitations.classes.SettingsForm');
 
 use Optimeta\Citations\Components\Forms\PublicationForm;
 use Optimeta\Citations\Parser\Parser;
 use Optimeta\Citations\Handler\OptimetaCitationsAPIHandler;
+use Optimeta\Citations\SettingsForm;
 
 class OptimetaCitationsPlugin extends GenericPlugin
 {
@@ -238,6 +240,67 @@ class OptimetaCitationsPlugin extends GenericPlugin
         return false;
     }
 
+    /**
+     * @copydoc Plugin::getActions()
+     */
+    public function getActions($request, $actionArgs){
+        $actions = parent::getActions($request, $actionArgs);
+        if (!$this->getEnabled()) {
+            return $actions;
+        }
+        $router = $request->getRouter();
+        import('lib.pkp.classes.linkAction.request.AjaxModal');
+        $linkAction = new LinkAction(
+            'settings',
+            new AjaxModal(
+                $router->url(
+                    $request,
+                    null,
+                    null,
+                    'manage',
+                    null,
+                    array(
+                        'verb' => 'settings',
+                        'plugin' => $this->getName(),
+                        'category' => 'generic'
+                    )
+                ),
+                $this->getDisplayName()
+            ),
+            __('manager.plugins.settings'),
+            null
+        );
+        array_unshift($actions, $linkAction);
+        return $actions;
+    }
+
+    /**
+     * @copydoc Plugin::manage()
+     */
+    public function manage($args, $request){
+        $context = $request->getContext();
+        switch ($request->getUserVar('verb')) {
+            case 'settings':
+                $form = new SettingsForm($this, $context->getId());
+                $form->initData();
+                return new JSONMessage(true, $form->fetch($request));
+            case 'save':
+                $form = new SettingsForm($this, $context->getId());
+                $form->readInputData();
+                if ($form->validate()) {
+                    $form->execute($request);
+                    $notificationManager = new NotificationManager();
+                    $notificationManager->createTrivialNotification(
+                        $request->getUser()->getId(),
+                        NOTIFICATION_TYPE_SUCCESS,
+                        array('contents' => __('plugins.generic.optimetaCitations.settings.form.saved'))
+                    );
+                    return new JSONMessage(true);
+                }
+                return new JSONMessage(true, $form->fetch($request));
+        }
+        return parent::manage($args, $request);
+    }
     /* ********************** */
     /* Plugin required methods */
     /* ********************** */
