@@ -37,3 +37,6 @@ msgstr "The current parsed citations will be overwritten if you click OK. Are yo
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
 msgstr "The citations have been updated."
+
+msgid "plugins.generic.optimetaCitations.settings.form.saved"
+msgstr "Settings saved successfully"
