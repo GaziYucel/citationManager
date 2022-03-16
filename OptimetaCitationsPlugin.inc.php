@@ -301,6 +301,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         }
         return parent::manage($args, $request);
     }
+
     /* ********************** */
     /* Plugin required methods */
     /* ********************** */
