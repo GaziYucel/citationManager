@@ -135,13 +135,13 @@
 						   v-show="row.editRow"
 						   v-model="citations[i].url"
 						   class="pkpFormField__input pkpFormField--text__input" />
-					<span v-show="!row.editRow">{{ citations[i].url }}</span>
+					<span v-show="!row.editRow"><a :href="citations[i].url" target="_blank">{{ citations[i].url }}</a></span>
 					<input id="doi-{{ i + 1 }}"
 						   placeholder="DOI"
 						   v-show="row.editRow"
 						   v-model="citations[i].doi"
 						   class="pkpFormField__input pkpFormField--text__input" />
-					<span v-show="!row.editRow">{{ citations[i].doi }}</span>
+					<span v-show="!row.editRow"><a :href="citations[i].doi" target="_blank">{{ citations[i].doi }}</a></span>
 				</td>
 				<td>
                     <a v-show="!row.editRow"

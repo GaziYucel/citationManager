@@ -136,13 +136,13 @@
                                v-show="row.editRow"
                                v-model="optimetaCitationsApp.citations[i].url"
                                class="pkpFormField__input pkpFormField--text__input" />
-                        <span v-show="!row.editRow">{{ optimetaCitationsApp.citations[i].url }}</span>
+                        <span v-show="!row.editRow"><a :href="optimetaCitationsApp.citations[i].url" target="_blank">{{ optimetaCitationsApp.citations[i].url }}</a></span>
                         <input id="doi-{{ i + 1 }}"
                                placeholder="DOI"
                                v-show="row.editRow"
                                v-model="optimetaCitationsApp.citations[i].doi"
                                class="pkpFormField__input pkpFormField--text__input" />
-                        <span v-show="!row.editRow">{{ optimetaCitationsApp.citations[i].doi }}</span>
+                        <span v-show="!row.editRow"><a :href="optimetaCitationsApp.citations[i].doi" target="_blank">{{ optimetaCitationsApp.citations[i].doi }}</a></span>
                     </td>
                     <td>
                         <a v-show="!row.editRow"
