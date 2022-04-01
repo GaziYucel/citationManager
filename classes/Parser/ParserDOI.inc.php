@@ -18,37 +18,37 @@ class ParserDOI
      */
 	public function getParsed($raw): CitationModel
 	{
-		$doi = '';
+		$match = '';
 		$rawRemainder = $raw;
-		$doiArray = [];
-		preg_match($this->regex, $rawRemainder, $doiArray);
+		$matches = [];
+		preg_match($this->regex, $rawRemainder, $matches);
 
-		if (!empty($doiArray[0])) {
-			$doi = $doiArray[0];
+		if (!empty($matches[0])) {
+			$match = $matches[0];
 		}
 
-		if (!empty($doi)) {
-			$pidCorrect = 'https://doi.org/' . $doi;
+		if (!empty($match)) {
+			$pidCorrect = 'https://doi.org/' . $match;
 
 			$prefix = [
-				'http://doi.org/' . $doi,
-				'http://www.doi.org/' . $doi,
-				'https://www.doi.org/' . $doi,
-				'http://doi:' . $doi,
-				'https://doi:' . $doi,
-				'doi:' . $doi,
-				'doi: ' . $doi
+				'http://doi.org/' . $match,
+				'http://www.doi.org/' . $match,
+				'https://www.doi.org/' . $match,
+				'http://doi:' . $match,
+				'https://doi:' . $match,
+				'doi:' . $match,
+				'doi: ' . $match
 			];
 
 			$rawRemainder = str_replace($prefix, $pidCorrect, $rawRemainder);
 			$rawRemainder = str_replace($pidCorrect, '', $rawRemainder);
-			$rawRemainder = str_replace($doi, '', $rawRemainder);
+			$rawRemainder = str_replace($match, '', $rawRemainder);
 
-			$doi = trim($pidCorrect, '.');
+			$match = trim($pidCorrect, '.');
 		}
 
         $model = new CitationModel();
-        $model->doi = $doi;
+        $model->doi = $match;
         $model->rawRemainder = $rawRemainder;
 
         return $model;

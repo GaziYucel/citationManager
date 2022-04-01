@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/handler/OptimetaCitationsAPIHandler.inc.php
+ * @file plugins/generic/optimetaCitations/classes/Handler/OptimetaCitationsAPIHandler.inc.php
  *
  * Copyright (c) 2014-2021 Simon Fraser University
  * Copyright (c) 2000-2021 John Willinsky
@@ -16,11 +16,13 @@ namespace Optimeta\Citations\Handler;
 
 import('lib.pkp.classes.security.authorization.PolicySet');
 import('lib.pkp.classes.security.authorization.RoleBasedHandlerOperationPolicy');
+import('plugins.generic.optimetaCitations.classes.Enricher.Enricher');
 
 use APIHandler;
-use Optimeta\Citations\Parser\Parser;
 use RoleBasedHandlerOperationPolicy;
 use PolicySet;
+use Optimeta\Citations\Parser\Parser;
+use Optimeta\Citations\Enricher\Enricher;
 
 class OptimetaCitationsAPIHandler extends APIHandler
 {
@@ -28,7 +30,8 @@ class OptimetaCitationsAPIHandler extends APIHandler
 
     private $submissionId = '';
     private $citationsRaw = '';
-    private $citationsParsed = '[]';
+    private $citationsParsed = [];
+    private $citationsEnriched = [];
 
     private $responseBody = [
         'submissionId' => '',
@@ -91,11 +94,11 @@ class OptimetaCitationsAPIHandler extends APIHandler
 
         // check if GET/POST filled
         if ($request->getUserVars() && sizeof($request->getUserVars()) > 0) {
-            if(isset($request->getUserVars()['citationsRaw'])){
-                $this->citationsRaw = trim($request->getUserVars()['citationsRaw']);
-            }
             if(isset($request->getUserVars()['submissionId'])){
                 $this->submissionId = trim($request->getUserVars()['submissionId']);
+            }
+            if(isset($request->getUserVars()['citationsRaw'])){
+                $this->citationsRaw = trim($request->getUserVars()['citationsRaw']);
             }
         }
 
@@ -113,10 +116,12 @@ class OptimetaCitationsAPIHandler extends APIHandler
 
         // parse citations
         $parser = new Parser($this->citationsRaw);
-        $this->citationsParsed = $parser->getCitationsParsedJson();
+        $this->citationsParsed = $parser->getCitationsParsedArray();
 
         // citations parsed, assign to response
-        $this->responseBody['citationsParsed'] = $this->citationsParsed;
+        $this->responseBody['citationsParsed'] = json_encode($this->citationsParsed);
+
+        $this->responseBody['message'] = 'parse successful';
 
         return $response->withJson($this->responseBody, 200);
     }
@@ -127,16 +132,26 @@ class OptimetaCitationsAPIHandler extends APIHandler
 
         // check if GET/POST filled
         if ($request->getUserVars() && sizeof($request->getUserVars()) > 0) {
-            if(isset($request->getUserVars()['citationsRaw'])){
-                $this->citationsRaw = trim($request->getUserVars()['citationsRaw']);
-            }
             if(isset($request->getUserVars()['submissionId'])){
                 $this->submissionId = trim($request->getUserVars()['submissionId']);
             }
+            if(isset($request->getUserVars()['citationsRaw'])){
+                $this->citationsRaw = trim($request->getUserVars()['citationsRaw']);
+            }
+            if(isset($request->getUserVars()['citationsParsed'])){
+                $this->citationsParsed = json_decode(trim($request->getUserVars()['citationsParsed']));
+            }
         }
 
+        // enrich citations
+        $enricher = new Enricher($this->citationsParsed);
+        $this->citationsEnriched = $enricher->getCitationsEnrichedArray();
+
+        // response body
         $this->responseBody['submissionId'] = $this->submissionId;
-        $this->responseBody['message'] = 'enrich';
+        $this->responseBody['citationsRaw'] = $this->citationsRaw;
+        $this->responseBody['citationsParsed'] = json_encode($this->citationsEnriched);
+        $this->responseBody['message'] = 'enrich successful';
 
         return $response->withJson($this->responseBody, 200);
     }
@@ -153,7 +168,7 @@ class OptimetaCitationsAPIHandler extends APIHandler
         }
 
         $this->responseBody['submissionId'] = $this->submissionId;
-        $this->responseBody['message'] = 'submit';
+        $this->responseBody['message'] = 'submit successful';
 
         return $response->withJson($this->responseBody, 200);
     }

@@ -19,22 +19,22 @@ class ParserURL
      */
 	public function getParsed($raw): CitationModel
 	{
-		$url = '';
+		$match = '';
 		$rawRemainder = $raw;
-		$urlArray = [];
-		preg_match($this->regex, $rawRemainder, $urlArray);
+		$matches = [];
+		preg_match($this->regex, $rawRemainder, $matches);
 
-		if (!empty($urlArray[0])) {
-			$url = $urlArray[0];
+		if (!empty($matches[0])) {
+			$match = $matches[0];
 		}
 
-		if (!empty($url)) {
-			$rawRemainder = str_replace($url, '', $rawRemainder);
-			$url = trim($url, '.');
+		if (!empty($match)) {
+			$rawRemainder = str_replace($match, '', $rawRemainder);
+			$match = trim($match, '.');
 		}
 
         $model = new CitationModel();
-        $model->url = $url;
+        $model->url = $match;
         $model->rawRemainder = $rawRemainder;
 
         return $model;

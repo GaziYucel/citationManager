@@ -27,14 +27,17 @@
 			method: 'POST',
 			data: {
 				submissionId: {$submissionId},
-				citationsRaw: document.getElementById("citations-citationsRaw-control").value
+				citationsRaw: document.getElementsByName('citationsRaw')[0]['value'],
+				citationsParsed: JSON.stringify(optimetaCitationsApp.citations)
 			},
 			headers: {
 				'X-Csrf-Token': optimetaCitationsGetCsrfToken(),
 			},
 			error(r) { },
 			success(response) {
-
+				optimetaCitations = JSON.parse(response['citationsParsed']);
+				optimetaCitationsApp.citations = JSON.parse(response['citationsParsed']);
+				optimetaCitationsApp.helper = optimetaCitationsGetHelperArray(JSON.parse(response['citationsParsed']));
 			}
 		});
 	}
@@ -128,6 +131,16 @@
 							  class="pkpFormField__input pkpFormField--textarea__input optimetaTextArea"
 							  style="height: 100px;"></textarea>
 					<span v-show="!row.editRow">{{ citations[i].rawRemainder }}</span>
+					<br/>
+					<span v-if="citations[i].wikiDataQid" v-show="!row.editRow" class="optimetaButton optimetaButtonGreen">
+                            Wikidata <a class="optimetaButtonGreen" :href="'https://www.wikidata.org/wiki/' + citations[i].wikiDataQid" target="_blank">{{ citations[i].wikiDataQid }}</a>
+                        </span>
+					<span v-if="!citations[i].wikiDataQid" v-show="!row.editRow" class="optimetaButton optimetaButtonGrey">Wikidata</span>
+					&nbsp;
+					<span v-if="citations[i].openAlexId" v-show="!row.editRow" class="optimetaButton optimetaButtonGreen">
+                            OpenAlex <a class="optimetaButtonGreen" :href="'https://openalex.org/' + citations[i].openAlexId" target="_blank">{{ citations[i].openAlexId }}</a>
+                        </span>
+					<span v-if="!citations[i].openAlexId" v-show="!row.editRow" class="optimetaButton optimetaButtonGrey">OpenAlex</span>
 				</td>
 				<td>
 					<input id="url-{{ i + 1 }}"
@@ -142,6 +155,12 @@
 						   v-model="citations[i].doi"
 						   class="pkpFormField__input pkpFormField--text__input" />
 					<span v-show="!row.editRow"><a :href="citations[i].doi" target="_blank">{{ citations[i].doi }}</a></span>
+					<input id="urn-{{ i + 1 }}"
+						   placeholder="URN"
+						   v-show="row.editRow"
+						   v-model="citations[i].urn"
+						   class="pkpFormField__input pkpFormField--text__input" />
+					<span v-show="!row.editRow"><a :href="citations[i].urn" target="_blank">{{ citations[i].urn }}</a></span>
 				</td>
 				<td>
                     <a v-show="!row.editRow"

@@ -7,8 +7,4 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
-    'Optimeta\\Shared\\Crossref\\Base' => $vendorDir . '/tibhannover/optimeta/Crossref/Base.php',
-    'Optimeta\\Shared\\OpenCitations\\Base' => $vendorDir . '/tibhannover/optimeta/OpenCitations/Base.php',
-    'Optimeta\\Shared\\Wikidata\\Base' => $vendorDir . '/tibhannover/optimeta/Wikidata/Base.php',
-    'Optimeta\\Shared\\Wikidata\\Query' => $vendorDir . '/tibhannover/optimeta/Wikidata/Query.php',
 );
