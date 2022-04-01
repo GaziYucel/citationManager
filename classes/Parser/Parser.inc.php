@@ -5,6 +5,7 @@ import('plugins.generic.optimetaCitations.classes.Model.CitationModel');
 import('plugins.generic.optimetaCitations.classes.Parser.ParserBase');
 import('plugins.generic.optimetaCitations.classes.Parser.ParserDOI');
 import('plugins.generic.optimetaCitations.classes.Parser.ParserURL');
+import('plugins.generic.optimetaCitations.classes.Parser.ParserURN');
 
 use Optimeta\Citations\Model\CitationModel;
 //use Optimeta\Citations\Parser\ParserBase;
@@ -93,12 +94,16 @@ class Parser extends ParserBase
             $objRowParsed->url = $objUrl->url;
             $objRowParsed->rawRemainder = $this->cleanCitationString($objUrl->rawRemainder);
 
+            // urn parser
+            $urnParser = new ParserURN();
+            $objUrn = $urnParser->getParsed($objRowParsed->rawRemainder); // OptimetaCitationsCitationModel
+            $objRowParsed->urn = $objUrn->urn;
+            $objRowParsed->rawRemainder = $this->cleanCitationString($objUrn->rawRemainder);
+
             $objRowParsed->raw = $rowRaw;
 
             // push to citations parsed array
             $this->citationsParsed[] = (array)$objRowParsed;
         }
     }
-
-
 }

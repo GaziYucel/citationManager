@@ -18,7 +18,8 @@ class ParserBase
     protected $citationsParsed = [];
 
     /**
-     * Constructor.
+     * Constructor
+     *
      * @param $rawCitations string an unparsed citation string
      */
     function __construct(string $citationsRaw = "")

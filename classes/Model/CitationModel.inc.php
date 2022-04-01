@@ -8,6 +8,7 @@ class CitationModel
     public $title;          // title of article
     public $doi;            // doi of article
     public $url;            // url of article
+    public $urn;            // urn of article
     public $date;           // publication date
     public $volume;         // volume of issue of journal
     public $issue;          // issue of journal
@@ -18,4 +19,7 @@ class CitationModel
     // internal
     public $rawRemainder;   // remainder of raw citation after parsing
     public $raw;            // unchanged raw citation
+
+    public $wikiDataQid;    // wikiData QID
+    public $openAlexId;     // OpenAlex ID
 }

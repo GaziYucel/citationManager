@@ -1,13 +1,16 @@
 <?php
-namespace Optimeta\Shared\Wikidata;
+namespace Optimeta\Shared\WikiData;
 
-class Base
+use GuzzleHttp\Exception\GuzzleException;
+use Http\Client\Exception;
+
+class WikiDataBase
 {
     /**
      * @desc User agent name to identify our bot
      * @var string
      */
-    protected $userAgent = 'OJS Plugin Optimeta';
+    protected $userAgent = 'OJS Optimeta Plugin';
 
     /**
      * @desc The bots username
@@ -49,11 +52,11 @@ class Base
      * @desc GuzzleHttp object
      * @var object (class)
      */
-    protected $httpClient;
+    protected $client;
 
     public function __construct()
     {
-        $this->httpClient = new \GuzzleHttp\Client();
+        $this->client = new \GuzzleHttp\Client();
     }
 
     /**
@@ -61,8 +64,9 @@ class Base
      * @param string $username - The account's username.
      * @param string $password - The account's password.
      * @returns bool - Returns true on success, false on failure.
+     * @throws GuzzleException
      */
-    protected function login(string $username, string $password): bool
+    public function login(string $username, string $password): bool
     {
         $post = array(
             'lgname' => $username,
@@ -87,7 +91,7 @@ class Base
     /**
      * @desc Logs the account out of the wiki and destroys all their session data.
      */
-    protected function logout()
+    public function logout()
     {
         $this->query(array('action' => 'logout'));
         $this->token = null;
@@ -99,8 +103,9 @@ class Base
      * @desc Returns edit token.
      * @param bool (default=false) $force - Force the script to get a fresh edit token.
      * @returns mixed - Returns the account's token on success or false on failure.
+     * @throws GuzzleException
      */
-    protected function getToken($force = false)
+    public function getToken($force = false)
     {
         if ($this->token != null && $force == false)
             return $this->token;
@@ -112,39 +117,92 @@ class Base
      * @desc Returns the last error the script ran into.
      * @returns string
      */
-    protected function getLastError(): string
+    public function getLastError(): string
     {
         return $this->lastError;
     }
 
     /**
-     * @desc Query API with get/post and return as array
-     * @param $query
-     * @param $post
+     * @desc Execute action query (GET) against API and return as array
+     * @param array $query
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    protected function query($query, $post = null): array
+    public function actionQueryGet(array $query): ?string
     {
-        $query = $this->queryString($query);
-        if ($post == null)
-            $data = $this->httpClient->get($this->url . $query);
-        else
-            $data = $this->httpClient->post($this->url . $query, $post);
-        return json_decode($data, true);
+        $query['action'] = 'query';
+        $query['format'] = 'json';
+        $queryString = '?' . http_build_query($query);
+
+        $response = $this->client->request('GET', $this->url . $queryString);
+
+        return $response->getBody();
     }
 
     /**
-     * @desc Constructs querystring and returns as urlencoded string
+     * @desc Execute action wbgetentities (GET) against API and return as array
      * @param array $query
-     * @return string
+     * @return string|null
+     * @throws GuzzleException
      */
-    protected function queryString(array $query): string
+    public function actionWbGetEntitiesGet(array $query): ?string
     {
-        $return = "?format=json";
-        foreach ($query as $key => $value) {
-            $return .= "&" . urlencode($key) . "=" . urlencode($value);
+        $query['action'] = 'wbgetentities';
+        $query['format'] = 'json';
+
+        $queryString = '?' . http_build_query($query);
+
+        $response = $this->client->request('GET', $this->url . $queryString);
+
+        return $response->getBody();
+    }
+
+    /**
+     * @desc Get entity with action query
+     * @param string $searchString
+     * @return string
+     * @throws GuzzleException
+     */
+    public function getEntity(string $searchString): string
+    {
+        if (empty($searchString)) return '';
+        $entity = '';
+        $query = [
+            "prop" => "",
+            "list" => "search",
+            "srsearch" => $searchString,
+            "srlimit" => "2"
+        ];
+
+        try{
+            $response = json_decode($this->actionQueryGet($query), true);
+            $entity = $response['query']['search'][0]['title'];
+            if($entity === null) $entity = '';
         }
-        return $return;
+        catch(Exception $ex){}
+
+        return $entity;
+    }
+
+    /**
+     * * @desc Get doi with action get entities
+     * @param string $entity
+     * @return string
+     * @throws GuzzleException
+     */
+    public function getDoi(string $entity): string
+    {
+        if (empty($entity)) return '';
+        $doi = '';
+        $query = [ "ids" => $entity ];
+
+        try{
+            $response = json_decode($this->actionWbGetEntitiesGet($query), true);
+            $doi = $response['entities'][$entity]['claims']['P356'][0]['mainsnak']['datavalue']['value'];
+            if($doi === null) $doi = '';
+        }
+        catch(Exception $ex){}
+
+        return $doi;
     }
 }

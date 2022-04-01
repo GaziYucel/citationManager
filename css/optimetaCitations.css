@@ -54,6 +54,22 @@
 	z-index: 2;
 }
 
+.optimetaButton {
+	min-width: 170px;
+	display: inline-block;
+	text-align: center;
+}
+
+.optimetaButtonGreen {
+	color: #ffffff;
+	background-color: #60a917;
+}
+
+.optimetaButtonGrey {
+	color: #ffffff;
+	background-color: #cccccc;
+}
+
 #OptimetaCitations_PublicationForm-OptimetaCitations__CitationsParsed-control{
 	display: none;
 }
