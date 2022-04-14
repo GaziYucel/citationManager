@@ -5,18 +5,18 @@
     var optimetaCitationsJson = `{$citationsParsed}`;
     var optimetaCitations = JSON.parse(optimetaCitationsJson);
 
-	var optimetaCitationsApp = new pkp.Vue({
-		//el: '#optimetaCitations',
-		data: {
-			citations: optimetaCitations,
-			helper: optimetaCitationsGetHelperArray(optimetaCitations)
-		},
-		computed: {
-			citationsJsonComputed: function() {
-				return JSON.stringify(this.citations);
-			}
-		}
-	});
+    var optimetaCitationsApp = new pkp.Vue({
+        //el: '#optimetaCitations',
+        data: {
+            citations: optimetaCitations,
+            helper: optimetaCitationsGetHelperArray(optimetaCitations)
+        },
+        computed: {
+            citationsJsonComputed: function() {
+                return JSON.stringify(this.citations);
+            }
+        }
+    });
 
     function enrichCitations(){
         let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.enrich.question"}';
@@ -95,12 +95,12 @@
         <table>
             <tr>
                 <td><h4>Citations</h4></td>
-                <td><a href="javascript:enrichCitations()" id="buttonEnrich"
+                <td><a href="javascript:parseCitations()" id="buttonParse"
+                       class="pkpButton">Parse References</a>
+                    <a href="javascript:enrichCitations()" id="buttonEnrich"
                        class="pkpButton">Enrich References</a>
                     <a href="javascript:submitCitations()" id="buttonSubmit"
-                       class="pkpButton">Submit References</a>
-                    <a href="javascript:parseCitations()" id="buttonParse"
-                       class="pkpButton">Parse References</a></td>
+                       class="pkpButton">Submit References</a></td>
             </tr>
         </table>
     </div>
