@@ -132,15 +132,15 @@
                               style="height: 100px;"></textarea>
                     <span v-show="!row.editRow">{{ citations[i].rawRemainder }}</span>
                     <br/>
-                    <span v-if="citations[i].wikiDataQid" v-show="!row.editRow" class="optimetaButton optimetaButtonGreen">
-                            Wikidata <a class="optimetaButtonGreen" :href="'https://www.wikidata.org/wiki/' + citations[i].wikiDataQid" target="_blank">{{ citations[i].wikiDataQid }}</a>
+                    <span v-if="citations[i].wikidata_qid" v-show="!row.editRow" class="optimetaButton optimetaButtonGreen">
+                            Wikidata <a class="optimetaButtonGreen" :href="'https://www.wikidata.org/wiki/' + citations[i].wikidata_qid" target="_blank">{{ citations[i].wikidata_qid }}</a>
                         </span>
-                    <span v-if="!citations[i].wikiDataQid" v-show="!row.editRow" class="optimetaButton optimetaButtonGrey">Wikidata</span>
+                    <span v-if="!citations[i].wikidata_qid" v-show="!row.editRow" class="optimetaButton optimetaButtonGrey">Wikidata</span>
                     &nbsp;
-                    <span v-if="citations[i].openAlexId" v-show="!row.editRow" class="optimetaButton optimetaButtonGreen">
-                            OpenAlex <a class="optimetaButtonGreen" :href="'https://openalex.org/' + citations[i].openAlexId" target="_blank">{{ citations[i].openAlexId }}</a>
+                    <span v-if="citations[i].openalex_id" v-show="!row.editRow" class="optimetaButton optimetaButtonGreen">
+                            OpenAlex <a class="optimetaButtonGreen" :href="'https://openalex.org/' + citations[i].openalex_id" target="_blank">{{ citations[i].openalex_id }}</a>
                         </span>
-                    <span v-if="!citations[i].openAlexId" v-show="!row.editRow" class="optimetaButton optimetaButtonGrey">OpenAlex</span>
+                    <span v-if="!citations[i].openalex_id" v-show="!row.editRow" class="optimetaButton optimetaButtonGrey">OpenAlex</span>
                 </td>
                 <td>
                     <input id="url-{{ i + 1 }}"

@@ -133,15 +133,15 @@
                                   style="height: 100px;"></textarea>
                         <span v-show="!row.editRow">{{ optimetaCitationsApp.citations[i].rawRemainder }}</span>
                         <br/>
-                        <span v-if="optimetaCitationsApp.citations[i].wikiDataQid" v-show="!row.editRow" class="optimetaButton optimetaButtonGreen">
-                            Wikidata <a class="optimetaButtonGreen" :href="'https://www.wikidata.org/wiki/' + optimetaCitationsApp.citations[i].wikiDataQid" target="_blank">{{ optimetaCitationsApp.citations[i].wikiDataQid }}</a>
+                        <span v-if="optimetaCitationsApp.citations[i].wikidata_qid" v-show="!row.editRow" class="optimetaButton optimetaButtonGreen">
+                            Wikidata <a class="optimetaButtonGreen" :href="'https://www.wikidata.org/wiki/' + optimetaCitationsApp.citations[i].wikidata_qid" target="_blank">{{ optimetaCitationsApp.citations[i].wikidata_qid }}</a>
                         </span>
-                        <span v-if="!optimetaCitationsApp.citations[i].wikiDataQid" v-show="!row.editRow" class="optimetaButton optimetaButtonGrey">Wikidata</span>
+                        <span v-if="!optimetaCitationsApp.citations[i].wikidata_qid" v-show="!row.editRow" class="optimetaButton optimetaButtonGrey">Wikidata</span>
                         &nbsp;
-                        <span v-if="optimetaCitationsApp.citations[i].openAlexId" v-show="!row.editRow" class="optimetaButton optimetaButtonGreen">
-                            OpenAlex <a class="optimetaButtonGreen" :href="'https://openalex.org/' + optimetaCitationsApp.citations[i].openAlexId" target="_blank">{{ optimetaCitationsApp.citations[i].openAlexId }}</a>
+                        <span v-if="optimetaCitationsApp.citations[i].openalex_id" v-show="!row.editRow" class="optimetaButton optimetaButtonGreen">
+                            OpenAlex <a class="optimetaButtonGreen" :href="'https://openalex.org/' + optimetaCitationsApp.citations[i].openalex_id" target="_blank">{{ optimetaCitationsApp.citations[i].openalex_id }}</a>
                         </span>
-                        <span v-if="!optimetaCitationsApp.citations[i].openAlexId" v-show="!row.editRow" class="optimetaButton optimetaButtonGrey">OpenAlex</span>
+                        <span v-if="!optimetaCitationsApp.citations[i].openalex_id" v-show="!row.editRow" class="optimetaButton optimetaButtonGrey">OpenAlex</span>
                     </td>
                     <td>
                         <input id="url-{{ i + 1 }}"
