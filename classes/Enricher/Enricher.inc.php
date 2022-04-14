@@ -75,11 +75,11 @@ class Enricher extends EnricherBase
                 $wikiDataQid = $wikiData->getEntity($doiOri);
                 $doiExt = '';
                 if(!empty($wikiDataQid)) $doiExt = $wikiData->getDoi($wikiDataQid);
-                if(strtolower($doiOri) == strtolower($doiExt)) $objRowEnriched->wikiDataQid = $wikiDataQid;
+                if(strtolower($doiOri) == strtolower($doiExt)) $objRowEnriched->wikidata_qid = $wikiDataQid;
 
                 // OpenAlex ID
                 $openAlexWorkId = $openAlex->getWorkId($doiOri);
-                $objRowEnriched->openAlexId = $openAlexWorkId;
+                $objRowEnriched->openalex_id = $openAlexWorkId;
 
                 // push to citations enriched array
                 $this->citationsEnriched[] = (array)$objRowEnriched;
