@@ -51,7 +51,7 @@
             method: 'POST',
             data: {
                 submissionId: {$submissionId},
-                citationsRaw: document.getElementById("citations-citationsRaw-control").value
+                citationsRaw: document.getElementsByName('citationsRaw')[0]['value']
             },
             headers: {
                 'X-Csrf-Token': optimetaCitationsGetCsrfToken(),
@@ -108,15 +108,13 @@
         <table>
             <colgroup>
                 <col class="grid-column column-nr" style="width: 2%;">
-                <col class="grid-column column-raw" style="">
-                <col class="grid-column column-pid" style="width: 20%;">
+                <col class="grid-column column-parts" style="">
                 <col class="grid-column column-action" style="width: 6%;">
             </colgroup>
             <thead>
             <tr>
                 <th> # </th>
-                <th> raw </th>
-                <th> pid </th>
+                <th> </th>
                 <th> action </th>
             </tr>
             </thead>
@@ -124,43 +122,89 @@
             <tr v-for="(row, i) in helper">
                 <td>{{ i + 1 }}</td>
                 <td style="">
-                    <textarea id="rawRemainder-{{ i + 1 }}"
-                              placeholder="Remainder of Citation"
-                              v-show="row.editRow"
-                              v-model="citations[i].rawRemainder"
-                              class="pkpFormField__input pkpFormField--textarea__input optimetaTextArea"
-                              style="height: 100px;"></textarea>
-                    <span v-show="!row.editRow">{{ citations[i].rawRemainder }}</span>
-                    <br/>
-                    <span v-if="citations[i].wikidata_qid" v-show="!row.editRow" class="optimetaButton optimetaButtonGreen">
-                            Wikidata <a class="optimetaButtonGreen" :href="'https://www.wikidata.org/wiki/' + citations[i].wikidata_qid" target="_blank">{{ citations[i].wikidata_qid }}</a>
-                        </span>
-                    <span v-if="!citations[i].wikidata_qid" v-show="!row.editRow" class="optimetaButton optimetaButtonGrey">Wikidata</span>
-                    &nbsp;
-                    <span v-if="citations[i].openalex_id" v-show="!row.editRow" class="optimetaButton optimetaButtonGreen">
-                            OpenAlex <a class="optimetaButtonGreen" :href="'https://openalex.org/' + citations[i].openalex_id" target="_blank">{{ citations[i].openalex_id }}</a>
-                        </span>
-                    <span v-if="!citations[i].openalex_id" v-show="!row.editRow" class="optimetaButton optimetaButtonGrey">OpenAlex</span>
-                </td>
-                <td>
-                    <input id="url-{{ i + 1 }}"
-                           placeholder="URL"
-                           v-show="row.editRow"
-                           v-model="citations[i].url"
-                           class="pkpFormField__input pkpFormField--text__input" />
-                    <span v-show="!row.editRow"><a :href="citations[i].url" target="_blank">{{ citations[i].url }}</a></span>
-                    <input id="doi-{{ i + 1 }}"
-                           placeholder="DOI"
-                           v-show="row.editRow"
-                           v-model="citations[i].doi"
-                           class="pkpFormField__input pkpFormField--text__input" />
-                    <span v-show="!row.editRow"><a :href="citations[i].doi" target="_blank">{{ citations[i].doi }}</a></span>
-                    <input id="urn-{{ i + 1 }}"
-                           placeholder="URN"
-                           v-show="row.editRow"
-                           v-model="citations[i].urn"
-                           class="pkpFormField__input pkpFormField--text__input" />
-                    <span v-show="!row.editRow"><a :href="citations[i].urn" target="_blank">{{ citations[i].urn }}</a></span>
+                    <div>
+                            <span v-show="!row.editRow">
+                                <a :href="citations[i].doi"
+                                   target="_blank">{{ citations[i].doi }}</a></span>
+                        <input id="doi-{{ i + 1 }}" placeholder="DOI" v-show="row.editRow"
+                               v-model="citations[i].doi"
+                               class="optimetaInput" />
+
+                        <span v-show="!row.editRow">
+                                <a :href="citations[i].urn"
+                                   target="_blank">{{ citations[i].urn }}</a></span>
+                        <input id="urn-{{ i + 1 }}" placeholder="URN" v-show="row.editRow"
+                               v-model="citations[i].urn"
+                               class="optimetaInput" />
+
+                        <span v-show="!row.editRow">
+                                <a :href="citations[i].url"
+                                   target="_blank">{{ citations[i].url }}</a></span>
+                        <input id="url-{{ i + 1 }}" placeholder="URL" v-show="row.editRow"
+                               v-model="citations[i].url"
+                               class="optimetaInput" />
+                    </div>
+
+                    <div v-show="!citations[i].isProcessed">
+                        <span class="optimetaTag">No information found</span>
+                    </div>
+
+                    <div v-show="citations[i].isProcessed">
+                        <span class="optimetaTag" v-for="(author, j) in citations[i].authors">{{ citations[i].authors[j].display_name }}</span>
+
+                        <span v-show="!row.editRow" class="optimetaTag">{{ citations[i].title }}</span>
+                        <input id="title-{{ i + 1 }}" placeholder="Title" v-show="row.editRow"
+                               v-model="citations[i].title"
+                               class="optimetaInput" />
+
+                        <span v-show="!row.editRow" class="optimetaTag">{{ citations[i].venue_display_name }}</span>
+                        <input id="venue_display_name-{{ i + 1 }}" placeholder="Venue" v-show="row.editRow"
+                               v-model="citations[i].venue_display_name"
+                               class="optimetaInput" />
+
+                        <span v-show="!row.editRow" class="optimetaTag">{{ citations[i].publication_year }}</span>
+                        <input id="publication_year-{{ i + 1 }}" placeholder="Year" v-show="row.editRow"
+                               v-model="citations[i].publication_year"
+                               class="optimetaInput" />
+
+                        <span v-show="!row.editRow" class="optimetaTag">Volume {{ citations[i].volume }}</span>
+                        <input id="volume-{{ i + 1 }}" placeholder="Volume" v-show="row.editRow"
+                               v-model="citations[i].volume"
+                               class="optimetaInput" />
+
+                        <span v-show="!row.editRow" class="optimetaTag">Issue {{ citations[i].issue }}</span>
+                        <input id="issue-{{ i + 1 }}" placeholder="Issue" v-show="row.editRow"
+                               v-model="citations[i].issue"
+                               class="optimetaInput" />
+
+                        <span v-show="!row.editRow" class="optimetaTag">Pages {{ citations[i].first_page }} - {{ citations[i].last_page }}</span>
+                        <input id="first_page-{{ i + 1 }}" placeholder="First page" v-show="row.editRow"
+                               v-model="citations[i].first_page"
+                               class="optimetaInput" /> -
+                        <input id="last_page-{{ i + 1 }}" placeholder="Last page" v-show="row.editRow"
+                               v-model="citations[i].last_page"
+                               class="optimetaInput" />
+
+                        Processed <input v-show="!row.editRow" type="checkbox" v-model="citations[i].isProcessed" disabled/>
+                        <input v-show="row.editRow" type="checkbox" v-model="citations[i].isProcessed"/>
+                    </div>
+
+                    <div class="optimetaRawText">{{ citations[i].raw }}</div>
+
+                    <div>
+                        <a class="optimetaButton optimetaButtonGreen"
+                           v-if="citations[i].wikidata_qid"
+                           :href="'https://www.wikidata.org/wiki/' + citations[i].wikidata_qid"
+                           target="_blank"><span>Wikidata</span></a>
+                        <span class="optimetaButton optimetaButtonGrey"
+                              v-if="!citations[i].wikidata_qid">Wikidata</span>
+                        <a class="optimetaButton optimetaButton optimetaButtonGreen"
+                           v-if="citations[i].openalex_id"
+                           :href="'https://openalex.org/' + citations[i].openalex_id"
+                           target="_blank"><span>OpenAlex</span></a>
+                        <span class="optimetaButton optimetaButtonGrey"
+                              v-if="!citations[i].openalex_id">OpenAlex</span>
+                    </div>
                 </td>
                 <td>
                     <a v-show="!row.editRow"

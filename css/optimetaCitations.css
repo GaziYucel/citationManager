@@ -54,22 +54,31 @@
 	z-index: 2;
 }
 
+.optimetaRow { border-bottom: 1px solid #eee; }
 .optimetaButton {
-	min-width: 170px;
 	display: inline-block;
-	text-align: center;
-}
-
-.optimetaButtonGreen {
 	color: #ffffff;
-	background-color: #60a917;
+	text-decoration: none;
+	padding: 0 .5em;
+	line-height: 24px;
 }
-
-.optimetaButtonGrey {
-	color: #ffffff;
-	background-color: #cccccc;
+.optimetaButton span { display: block; }
+.optimetaButtonGreen { background-color: #60a917; }
+.optimetaButtonGrey { background-color: #cccccc; }
+.optimetaRawText {
+	font-size: 12px;
+	line-height: 14px;
+	padding: 3px 0;
+	border: 1px dotted #ccc;
 }
+.optimetaTag {
+	background-color: #ededed;
+	padding: 0 .5em;
+	margin: 0 .5em 0 0;
+}
+.optimetaInput {
 
+}
 #OptimetaCitations_PublicationForm-OptimetaCitations__CitationsParsed-control{
 	display: none;
 }
