@@ -12,8 +12,8 @@
  */
 
 /**
- *
- * @returns {string}
+ * @desc Gets CSRF Token
+ * @returns string
  */
 function optimetaCitationsGetCsrfToken(){
 	// ojs version 3.2.1
@@ -33,9 +33,9 @@ function optimetaCitationsGetCsrfToken(){
 }
 
 /**
- *
- * @param baseArray
- * @returns {*}
+ * @desc Gets Helper Array
+ * @param baseArray array
+ * @returns array
  */
 function optimetaCitationsGetHelperArray(baseArray){
     let helperArray = JSON.parse(JSON.stringify(baseArray));
@@ -49,9 +49,9 @@ function optimetaCitationsGetHelperArray(baseArray){
 }
 
 /**
- *
- * @param str
- * @returns {boolean}
+ * @desc Check if string is json
+ * @param str string
+ * @returns boolean
  */
 function optimetaCitationsIsStringJson(str) {
 	try {
@@ -64,9 +64,9 @@ function optimetaCitationsIsStringJson(str) {
 
 /**
  *
- * @param obj
- * @param key
- * @returns {string}
+ * @param obj object
+ * @param key string
+ * @returns string
  */
 function optimetaCitationsFindPathInArray (obj, key) {
     const path = [];

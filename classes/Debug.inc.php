@@ -1,6 +1,8 @@
 <?php
 namespace Optimeta\Citations;
 
+use Exception;
+
 class Debug
 {
     /**
@@ -21,7 +23,6 @@ class Debug
         $textToWrite = $text;
         if (is_object($text) || is_array($text)) $textToWrite = var_export($text, true);
         if ($text == null) $textToWrite = 'null';
-
 
         $fp = fopen($this->file, 'a');
         try {

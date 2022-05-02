@@ -1,8 +1,12 @@
 <?php
 namespace Optimeta\Shared\OpenAlex;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Http\Client\Exception;
+
+use Optimeta\Shared\OpenAlex\Model\Author;
+use Optimeta\Shared\OpenAlex\Model\Work;
 
 class OpenAlexBase
 {
@@ -30,9 +34,30 @@ class OpenAlexBase
      */
     protected $client;
 
-    public function __construct()
+    /**
+     * @desc DOI of work
+     * @var
+     */
+    protected $doi;
+
+    /**
+     * @desc Author object
+     * @var object (class)
+     */
+    protected $author;
+
+    /**
+     * @desc Work object
+     * @var object (class)
+     */
+    protected $work;
+
+    public function __construct(string $doi)
     {
-        $this->client = new \GuzzleHttp\Client();
+        $this->doi = $doi;
+        $this->client = new Client();
+        $this->author = new Author();
+        $this->work = new Work();
     }
 
     /**
@@ -45,25 +70,55 @@ class OpenAlexBase
     }
 
     /**
-     * @param string $doi
      * @return string
      * @throws GuzzleException
      */
-    public function getWorkId(string $doi): string
+    public function getWorkId(): string
     {
-        if (empty($doi)) return '';
-        $id = '';
+        if (empty($this->doi)) return '';
+        $response = $this->getWorkFromApiAsObject();
+        return $response->id;
+    }
+
+    /**
+     * @return string
+     * @throws GuzzleException
+     */
+    public function getWorkFromApiAsJson(): string
+    {
+        if (empty($this->doi)) return '';
+
+        $response = '';
 
         try{
-            $response = $this->client->request('GET', $this->url . 'works/doi:' . $doi);
-            $responseBody = $response->getBody();
-            $responseBodyArray = json_decode($responseBody, true);
-            $id = $responseBodyArray['id'];
-            if($id === null) $id = '';
-            $id = str_replace('https://openalex.org/', '', $id);
+            $responseRaw = $this->client->request('GET', $this->url . 'works/doi:' . $this->doi);
+            $response = $responseRaw->getBody();
         }
         catch(Exception $ex){}
 
-        return $id;
+        return $response;
+    }
+
+    /**
+     * @return object (Work)
+     * @throws GuzzleException
+     */
+    public function getWorkFromApiAsObject(): object
+    {
+        if (empty($this->doi)) return $this->work;
+
+        try{
+            $response = $this->client->request('GET', $this->url . 'works/doi:' . $this->doi);
+            $responseBody = $response->getBody();
+            $responseBodyArray = json_decode($responseBody, true);
+            foreach($responseBodyArray as $key => $value){
+                if(property_exists($this->work, $key)){
+                    $this->work->$key = $value;
+                }
+            }
+        }
+        catch(Exception $ex){}
+
+        return $this->work;
     }
 }

@@ -1,9 +1,13 @@
 <?php
 namespace Optimeta\Citations\Enricher;
 
+import('plugins.generic.optimetaCitations.classes.Helpers');
+import('plugins.generic.optimetaCitations.classes.Model.AuthorModel');
 import('plugins.generic.optimetaCitations.classes.Model.CitationModel');
 import('plugins.generic.optimetaCitations.classes.Enricher.EnricherBase');
 
+use Optimeta\Citations\Helpers;
+use Optimeta\Citations\Model\AuthorModel;
 use Optimeta\Citations\Model\CitationModel;
 use Optimeta\Shared\OpenAlex\OpenAlexBase;
 use Optimeta\Shared\WikiData\WikiDataBase;
@@ -49,41 +53,93 @@ class Enricher extends EnricherBase
         // return if input is empty
         if (sizeof($this->citationsParsed) == 0) return;
 
-        import('plugins.generic.optimetaCitations.classes.Debug');
-//        $debug = new \Optimeta\Citations\Debug();
-//        $debug->Clear();
-
-        $wikiData = new WikiDataBase();
-        $openAlex = new OpenAlexBase();
-
         // loop through citations and enrich every citation
         foreach ($this->citationsParsed as $index => $row) {
-//            $debug->Add($row);
-
             if(is_object($row) || is_array($row)){
-                // get data model and fill empty objRowParsed
-                $objRowEnriched = new CitationModel();
+                $citation = new CitationModel();
 
                 // convert array to object
                 foreach($row as $key => $value){
-                    $objRowEnriched->$key = $value;
+                    if(property_exists($citation, $key)){
+                        $citation->$key = $value;
+                    }
                 }
 
-                $doiOri = str_replace('https://doi.org/', '', $objRowEnriched->doi);
+                // skip iteration if isProcessed or DOI empty
+                if($citation->isProcessed || empty($citation->doi)){
+                    $this->citationsEnriched[] = (array)$citation;
+                    continue;
+                }
+
+                // OpenAlex Work
+                $citation = $this->getOpenAlex($citation);
 
                 // WikiData QID
-                $wikiDataQid = $wikiData->getEntity($doiOri);
-                $doiExt = '';
-                if(!empty($wikiDataQid)) $doiExt = $wikiData->getDoi($wikiDataQid);
-                if(strtolower($doiOri) == strtolower($doiExt)) $objRowEnriched->wikidata_qid = $wikiDataQid;
-
-                // OpenAlex ID
-                $openAlexWorkId = $openAlex->getWorkId($doiOri);
-                $objRowEnriched->openalex_id = $openAlexWorkId;
+                $citation = $this->getWikiData($citation);
 
                 // push to citations enriched array
-                $this->citationsEnriched[] = (array)$objRowEnriched;
+                $this->citationsEnriched[] = (array)$citation;
             }
         }
+    }
+
+    /**
+     * @desc Get all information from OpenAlex and return as CitationModel
+     * @param object $citation
+     * @return object
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    private function getOpenAlex(object $citation): object
+    {
+        $openAlex = new OpenAlexBase(Helpers::removeDoiOrgPrefixFromUrl($citation->doi));
+        $openAlexWork = $openAlex->getWorkFromApiAsObject(); // \Optimeta\Shared\OpenAlex\Model\Work()
+
+        $citation->title = $openAlexWork->title;
+        $citation->publication_year = $openAlexWork->publication_year;
+        $citation->publication_date = $openAlexWork->publication_date;
+        $citation->type = $openAlexWork->type;
+        for($i = 0; $i < count((array)$openAlexWork->authorships); $i++){
+            $author = new AuthorModel();
+            $author->orcid = $openAlexWork->authorships[$i]['author']['orcid'];
+            $author->display_name = $openAlexWork->authorships[$i]['author']['display_name'];
+            $author->openalex_id = Helpers::removeOpenAlexOrgFromUrl($openAlexWork->authorships[$i]['author']['id']);
+            $citation->authors[] = (array)$author;
+        }
+        $citation->cited_by_count = $openAlexWork->cited_by_count;
+        $citation->volume = $openAlexWork->biblio['volume'];
+        $citation->issue = $openAlexWork->biblio['issue'];
+        $citation->pages = 0;
+        $citation->first_page = $openAlexWork->biblio['first_page'];
+        $citation->last_page = $openAlexWork->biblio['last_page'];
+        $citation->is_retracted = $openAlexWork->is_retracted;
+        $citation->updated_date = $openAlexWork->updated_date;
+        $citation->created_date = $openAlexWork->created_date;
+        $citation->venue_issn_l = $openAlexWork->host_venue['issn_l'];
+        $citation->venue_display_name = $openAlexWork->host_venue['display_name'];
+        $citation->venue_publisher = $openAlexWork->host_venue['publisher'];
+        $citation->venue_is_oa = $openAlexWork->host_venue['is_oa'];
+        $citation->venue_openalex_id = Helpers::removeOpenAlexOrgFromUrl($openAlexWork->host_venue['id']);
+        $citation->openalex_id = Helpers::removeOpenAlexOrgFromUrl($openAlexWork->id);
+        if(!empty($citation->openalex_id)) { $citation->isProcessed = true; }
+
+        return $citation;
+    }
+
+    /**
+     * @desc Get information from Wikidata and return as CitationModel
+     * @param object $citation
+     * @return object
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    private function getWikiData(object $citation): object
+    {
+        $wikiData = new WikiDataBase();
+        $wikiDataQid = $wikiData->getEntity(Helpers::removeDoiOrgPrefixFromUrl($citation->doi));
+        $doiWD = '';
+        if(!empty($wikiDataQid)) { $doiWD = $wikiData->getDoi($wikiDataQid); }
+        if(strtolower(Helpers::removeDoiOrgPrefixFromUrl($citation->doi)) == strtolower($doiWD)) {
+            $citation->wikidata_qid = $wikiDataQid; }
+
+        return $citation;
     }
 }
