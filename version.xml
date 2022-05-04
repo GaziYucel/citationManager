@@ -3,7 +3,7 @@
 <version>
 	<application>optimetaCitations</application>
 	<type>plugins.generic</type>
-	<release>0.0.4.0</release>
+	<release>0.0.7.0</release>
 	<date>2021-09-01</date>
 	<lazy-load>1</lazy-load>
 	<class>OptimetaCitationsPlugin</class>
