@@ -31,6 +31,16 @@ class SettingsForm extends \Form
     public $plugin;
 
     /**
+     * @desc Array of variables saved in the database
+     * @var string[]
+     */
+    private $settings = [
+        'optimetaCitations_wikidata_username',
+        'optimetaCitations_wikidata_password',
+        'optimetaCitations_wikidata_api_url'
+    ];
+
+    /**
      * @copydoc Form::__construct()
      */
     public function __construct($plugin) {
@@ -53,7 +63,10 @@ class SettingsForm extends \Form
     public function initData() {
         $context = Application::get()->getRequest()->getContext();
         $contextId = $context ? $context->getId() : CONTEXT_SITE;
-        $this->setData('publicationStatement', $this->plugin->getSetting($contextId, 'publicationStatement'));
+        foreach($this->settings as $key){
+            $this->setData($key, $this->plugin->getSetting($contextId, $key));
+        }
+
         parent::initData();
     }
 
@@ -62,7 +75,9 @@ class SettingsForm extends \Form
      * Load data that was submitted with the form
      */
     public function readInputData() {
-        $this->readUserVars(['publicationStatement']);
+        foreach($this->settings as $key){
+            $this->readUserVars([$key]);
+        }
         parent::readInputData();
     }
 
@@ -74,7 +89,6 @@ class SettingsForm extends \Form
      * template.
      */
     public function fetch($request, $template = null, $display = false) {
-
         // Pass the plugin name to the template so that it can be
         // used in the URL that the form is submitted to
         $templateMgr = TemplateManager::getManager($request);
@@ -92,10 +106,10 @@ class SettingsForm extends \Form
     public function execute(...$functionArgs) {
         $context = Application::get()->getRequest()->getContext();
         $contextId = $context ? $context->getId() : CONTEXT_SITE;
-        $this->plugin->updateSetting(
-            $contextId,
-            'publicationStatement',
-            $this->getData('publicationStatement'));
+
+        foreach($this->settings as $key){
+            $this->plugin->updateSetting( $contextId, $key, $this->getData($key));
+        }
 
         // Tell the user that the save was successful.
         import('classes.notification.NotificationManager');

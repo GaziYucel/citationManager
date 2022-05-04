@@ -40,3 +40,15 @@ msgstr "The citations have been updated."
 
 msgid "plugins.generic.optimetaCitations.settings.form.saved"
 msgstr "Settings saved successfully"
+
+msgid "plugins.generic.optimetaCitations.settings.wikidata_title"
+msgstr "Wikidata"
+
+msgid "plugins.generic.optimetaCitations.settings.wikidata_username"
+msgstr "Wikidata bot username"
+
+msgid "plugins.generic.optimetaCitations.settings.wikidata_password"
+msgstr "Wikidata bot password"
+
+msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url"
+msgstr "Wikidata api url"

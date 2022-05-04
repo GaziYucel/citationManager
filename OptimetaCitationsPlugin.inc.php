@@ -243,7 +243,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
     /**
      * @copydoc Plugin::getActions()
      */
-    public function getActions($request, $actionArgs){
+    public function getActions($request, $actionArgs)
+    {
         $actions = parent::getActions($request, $actionArgs);
         if (!$this->getEnabled()) {
             return $actions;
@@ -270,34 +271,39 @@ class OptimetaCitationsPlugin extends GenericPlugin
             __('manager.plugins.settings'),
             null
         );
+
+        // Add the LinkAction to the existing actions.
+        // Make it the first action to be consistent with
+        // other plugins.
         array_unshift($actions, $linkAction);
+
         return $actions;
     }
 
     /**
      * @copydoc Plugin::manage()
      */
-    public function manage($args, $request){
+    public function manage($args, $request)
+    {
         $context = $request->getContext();
         switch ($request->getUserVar('verb')) {
             case 'settings':
-                $form = new SettingsForm($this, $context->getId());
-                $form->initData();
-                return new JSONMessage(true, $form->fetch($request));
-            case 'save':
-                $form = new SettingsForm($this, $context->getId());
+                // Load the custom form
+                $form = new SettingsForm($this);
+
+                // Fetch the form the first time it loads, before
+                // the user has tried to save it
+                if (!$request->getUserVar('save')) {
+                    $form->initData();
+                    return new JSONMessage(true, $form->fetch($request));
+                }
+
+                // Validate and save the form data
                 $form->readInputData();
                 if ($form->validate()) {
-                    $form->execute($request);
-                    $notificationManager = new NotificationManager();
-                    $notificationManager->createTrivialNotification(
-                        $request->getUser()->getId(),
-                        NOTIFICATION_TYPE_SUCCESS,
-                        array('contents' => __('plugins.generic.optimetaCitations.settings.form.saved'))
-                    );
+                    $form->execute();
                     return new JSONMessage(true);
                 }
-                return new JSONMessage(true, $form->fetch($request));
         }
         return parent::manage($args, $request);
     }
