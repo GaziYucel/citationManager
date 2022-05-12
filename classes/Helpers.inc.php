@@ -65,4 +65,46 @@ class Helpers
         if(empty($url)) { return ''; }
         return str_replace('https://orcid.org/', '', $url);
     }
+
+    /**
+     * @desc Normalize line endings of string
+     * @param string $text
+     * @return string
+     */
+    public static function normalizeLineEndings(string $text): string
+    {
+        if(empty($text)) { return ''; }
+        return preg_replace(
+            '/[\r\n]+/s',
+            "\n",
+            $text);
+    }
+
+    /**
+     * @desc Normalize whitespace
+     * @param string $text
+     * @return string
+     */
+    public static function normalizeWhiteSpace(string $text): string
+    {
+        if(empty($text)) { return ''; }
+        return preg_replace(
+            '/[\s]+/',
+            ' ',
+            $text);
+    }
+
+    /**
+     * @desc Remove number from the beginning of string.
+     * @param $text
+     * @return string
+     */
+    public static function removeNumberPrefixFromString(string $text): string
+    {
+        if(empty($text)) { return ''; }
+        return preg_replace(
+            '/^\s*[\[#]?[0-9]+[.)\]]?\s*/',
+            '',
+            $text);
+    }
 }

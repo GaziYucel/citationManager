@@ -17,10 +17,13 @@ namespace Optimeta\Citations\Handler;
 import('lib.pkp.classes.security.authorization.PolicySet');
 import('lib.pkp.classes.security.authorization.RoleBasedHandlerOperationPolicy');
 import('plugins.generic.optimetaCitations.classes.Enricher.Enricher');
+import('plugins.generic.optimetaCitations.classes.Submitter.Submitter');
 
 use APIHandler;
+use Optimeta\Citations\Submitter\Submitter;
 use RoleBasedHandlerOperationPolicy;
 use PolicySet;
+use GuzzleHttp\Exception\GuzzleException;
 use Optimeta\Citations\Parser\Parser;
 use Optimeta\Citations\Enricher\Enricher;
 
@@ -32,6 +35,7 @@ class OptimetaCitationsAPIHandler extends APIHandler
     private $citationsRaw = '';
     private $citationsParsed = [];
     private $citationsEnriched = [];
+    private $citationsSubmitted = [];
 
     private $responseBody = [
         'submissionId' => '',
@@ -83,6 +87,7 @@ class OptimetaCitationsAPIHandler extends APIHandler
     }
 
     /**
+     * @desc Parse raw citations and return
      * @param $slimRequest
      * @param $response
      * @param $args
@@ -116,7 +121,7 @@ class OptimetaCitationsAPIHandler extends APIHandler
 
         // parse citations
         $parser = new Parser($this->citationsRaw);
-        $this->citationsParsed = $parser->getCitationsParsedArray();
+        $this->citationsParsed = $parser->getCitations();
 
         // citations parsed, assign to response
         $this->responseBody['citationsParsed'] = json_encode($this->citationsParsed);
@@ -126,6 +131,14 @@ class OptimetaCitationsAPIHandler extends APIHandler
         return $response->withJson($this->responseBody, 200);
     }
 
+    /**
+     * @desc Enrich parsed citations and return
+     * @param $slimRequest
+     * @param $response
+     * @param $args
+     * @return mixed
+     * @throws GuzzleException
+     */
     public function enrich($slimRequest, $response, $args)
     {
         $request = $this->getRequest();
@@ -145,7 +158,7 @@ class OptimetaCitationsAPIHandler extends APIHandler
 
         // enrich citations
         $enricher = new Enricher($this->citationsParsed);
-        $this->citationsEnriched = $enricher->getCitationsEnrichedArray();
+        $this->citationsEnriched = $enricher->getCitations();
 
         // response body
         $this->responseBody['submissionId'] = $this->submissionId;
@@ -156,6 +169,14 @@ class OptimetaCitationsAPIHandler extends APIHandler
         return $response->withJson($this->responseBody, 200);
     }
 
+    /**
+     * @desc Submit enriched citations and return
+     * @param $slimRequest
+     * @param $response
+     * @param $args
+     * @return mixed
+     * @throws GuzzleException
+     */
     public function submit($slimRequest, $response, $args)
     {
         $request = $this->getRequest();
@@ -165,9 +186,22 @@ class OptimetaCitationsAPIHandler extends APIHandler
             if(isset($request->getUserVars()['submissionId'])){
                 $this->submissionId = trim($request->getUserVars()['submissionId']);
             }
+            if(isset($request->getUserVars()['citationsRaw'])){
+                $this->citationsRaw = trim($request->getUserVars()['citationsRaw']);
+            }
+            if(isset($request->getUserVars()['citationsParsed'])){
+                $this->citationsParsed = json_decode(trim($request->getUserVars()['citationsParsed']));
+            }
         }
 
+        // enrich citations
+        $submitter = new Submitter($this->citationsParsed);
+        $this->citationsSubmitted = $submitter->getCitations();
+
+        // response body
         $this->responseBody['submissionId'] = $this->submissionId;
+        $this->responseBody['citationsRaw'] = $this->citationsRaw;
+        $this->responseBody['citationsParsed'] = json_encode($this->citationsSubmitted);
         $this->responseBody['message'] = 'submit successful';
 
         return $response->withJson($this->responseBody, 200);
