@@ -4,54 +4,57 @@ namespace Optimeta\Citations\Enricher;
 import('plugins.generic.optimetaCitations.classes.Helpers');
 import('plugins.generic.optimetaCitations.classes.Model.AuthorModel');
 import('plugins.generic.optimetaCitations.classes.Model.CitationModel');
-import('plugins.generic.optimetaCitations.classes.Enricher.EnricherBase');
 
 use Optimeta\Citations\Helpers;
 use Optimeta\Citations\Model\AuthorModel;
 use Optimeta\Citations\Model\CitationModel;
 use Optimeta\Shared\OpenAlex\OpenAlexBase;
-use Optimeta\Shared\WikiData\WikiDataBase;
+use GuzzleHttp\Exception\GuzzleException;
 
-class Enricher extends EnricherBase
+class Enricher
 {
     /**
-     * Returns parsed citations as an array
-     *
-     * @return array citationsEnriched
+     * @desc Array which holds the parsed citations
+     * @var array
      */
-    public function getCitationsEnrichedArray(): array
+    protected $citationsParsed = [];
+
+    /**
+     * @desc Array which holds the enriched citations
+     * @var array
+     */
+    protected $citationsEnriched = [];
+
+    /**
+     * @desc Constructor
+     * @param array $citationsParsed parsed citations
+     */
+    function __construct(array $citationsParsed = [])
     {
-        $this->enrich();
+        $this->citationsParsed = $citationsParsed;
+    }
+
+    /**
+     * @desc Returns parsed citations as an array
+     * @return array citationsEnriched
+     * @throws GuzzleException
+     */
+    public function getCitations(): array
+    {
+        $this->execute();
 
         return $this->citationsEnriched;
     }
 
     /**
-     * Returns parsed citations as an JSON
-     *
-     * @return string (json) citationsEnriched
-     */
-    public function getCitationsEnrichedJson(): string
-    {
-        $this->enrich();
-
-        if (sizeof($this->citationsEnriched) == 0) {
-            return '[]';
-        }
-
-        return json_encode($this->citationsEnriched);
-    }
-
-    /**
-     * Enrich and return enriched citations as an array
-     *
+     * @desc Enrich citations and save results to citationsEnriched
      * @return void
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    private function enrich(): void
+    private function execute(): void
     {
         // return if input is empty
-        if (sizeof($this->citationsParsed) == 0) return;
+        if (sizeof($this->citationsParsed) == 0) { return; }
 
         // loop through citations and enrich every citation
         foreach ($this->citationsParsed as $index => $row) {
@@ -74,9 +77,6 @@ class Enricher extends EnricherBase
                 // OpenAlex Work
                 $citation = $this->getOpenAlex($citation);
 
-                // WikiData QID
-                $citation = $this->getWikiData($citation);
-
                 // push to citations enriched array
                 $this->citationsEnriched[] = (array)$citation;
             }
@@ -87,7 +87,7 @@ class Enricher extends EnricherBase
      * @desc Get all information from OpenAlex and return as CitationModel
      * @param object $citation
      * @return object
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     private function getOpenAlex(object $citation): object
     {
@@ -121,24 +121,6 @@ class Enricher extends EnricherBase
         $citation->venue_openalex_id = Helpers::removeOpenAlexOrgFromUrl($openAlexWork->host_venue['id']);
         $citation->openalex_id = Helpers::removeOpenAlexOrgFromUrl($openAlexWork->id);
         if(!empty($citation->openalex_id)) { $citation->isProcessed = true; }
-
-        return $citation;
-    }
-
-    /**
-     * @desc Get information from Wikidata and return as CitationModel
-     * @param object $citation
-     * @return object
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    private function getWikiData(object $citation): object
-    {
-        $wikiData = new WikiDataBase();
-        $wikiDataQid = $wikiData->getEntity(Helpers::removeDoiOrgPrefixFromUrl($citation->doi));
-        $doiWD = '';
-        if(!empty($wikiDataQid)) { $doiWD = $wikiData->getDoi($wikiDataQid); }
-        if(strtolower(Helpers::removeDoiOrgPrefixFromUrl($citation->doi)) == strtolower($doiWD)) {
-            $citation->wikidata_qid = $wikiDataQid; }
 
         return $citation;
     }

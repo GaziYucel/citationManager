@@ -51,14 +51,17 @@
             method: 'POST',
             data: {
                 submissionId: {$submissionId},
-                citationsRaw: document.getElementById("citations-citationsRaw-control").value
+                citationsRaw: document.getElementById("citations-citationsRaw-control").value,
+                citationsParsed: JSON.stringify(optimetaCitationsApp.citations)
             },
             headers: {
                 'X-Csrf-Token': optimetaCitationsGetCsrfToken(),
             },
             error(r) { },
             success(response) {
-
+                optimetaCitations = JSON.parse(response['citationsParsed']);
+                optimetaCitationsApp.citations = JSON.parse(response['citationsParsed']);
+                optimetaCitationsApp.helper = optimetaCitationsGetHelperArray(JSON.parse(response['citationsParsed']));
             }
         });
     }
