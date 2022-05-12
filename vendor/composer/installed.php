@@ -5,9 +5,9 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '1af691ae7c0e95c4a92f83be12f8de917f652a7c',
+        'reference' => '00b10974e825f86086e0a711e2c5f4c6090adcfd',
         'name' => 'optimeta/citations',
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         'guzzlehttp/guzzle' => array(
@@ -43,7 +43,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '1af691ae7c0e95c4a92f83be12f8de917f652a7c',
+            'reference' => '00b10974e825f86086e0a711e2c5f4c6090adcfd',
             'dev_requirement' => false,
         ),
         'psr/http-client' => array(

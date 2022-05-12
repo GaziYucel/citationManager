@@ -4,10 +4,6 @@
   "license": "GPL-3.0-or-later",
   "keywords": ["Optimeta","Citations"],
   "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/gaziyucel/optimeta-plugin-shared.git"
-    }
   ],
   "require": {
     "php": ">=7.3",
