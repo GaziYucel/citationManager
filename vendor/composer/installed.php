@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '28699aef012992cfedfb3e2377866e196ba514db',
+        'reference' => '1af691ae7c0e95c4a92f83be12f8de917f652a7c',
         'name' => 'optimeta/citations',
         'dev' => true,
     ),
@@ -43,7 +43,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '28699aef012992cfedfb3e2377866e196ba514db',
+            'reference' => '1af691ae7c0e95c4a92f83be12f8de917f652a7c',
             'dev_requirement' => false,
         ),
         'psr/http-client' => array(
