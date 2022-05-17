@@ -99,11 +99,11 @@
             <tr>
                 <td><h4>Citations</h4></td>
                 <td><a href="javascript:parseCitations()" id="buttonParse"
-                       class="pkpButton">Parse References</a>
+                       class="pkpButton">Parse</a>
                     <a href="javascript:enrichCitations()" id="buttonEnrich"
-                       class="pkpButton">Enrich References</a>
+                       class="pkpButton">Enrich</a>
                     <a href="javascript:submitCitations()" id="buttonSubmit"
-                       class="pkpButton">Submit References</a></td>
+                       class="pkpButton">Submit</a></td>
             </tr>
         </table>
     </div>
@@ -149,48 +149,42 @@
                                    class="optimetaInput" />
                         </div>
 
-                        <div v-show="!optimetaCitationsApp.citations[i].isProcessed">
-                            <span class="optimetaTag">No information found</span>
-                        </div>
+                        <div>
+                            <div>
+                                <span v-for="(author, j) in optimetaCitationsApp.citations[i].authors">
+                                    <span v-show="!row.editRow" class="optimetaTag">{{ optimetaCitationsApp.citations[i].authors[j].display_name }}</span>
+                                    <input id="display_name-{{ i + 1 }}-{{ j + 1 }}" placeholder="Author" v-show="row.editRow"
+                                           v-model="optimetaCitationsApp.citations[i].authors[j].display_name"
+                                           class="optimetaInput" />
+                                </span>
+                            </div>
+                            <div>
+                                <span v-show="!row.editRow" class="optimetaTag">{{ optimetaCitationsApp.citations[i].title }}</span>
+                                <input id="title-{{ i + 1 }}" placeholder="Title" v-show="row.editRow" class="optimetaInput"
+                                       v-model="optimetaCitationsApp.citations[i].title" />
 
-                        <div v-show="optimetaCitationsApp.citations[i].isProcessed">
-                            <span class="optimetaTag" v-for="(author, j) in optimetaCitationsApp.citations[i].authors">{{ optimetaCitationsApp.citations[i].authors[j].display_name }}</span>
+                                <span v-show="!row.editRow" class="optimetaTag">{{ optimetaCitationsApp.citations[i].venue_display_name }}</span>
+                                <input id="venue_display_name-{{ i + 1 }}" placeholder="Venue" v-show="row.editRow" class="optimetaInput"
+                                       v-model="optimetaCitationsApp.citations[i].venue_display_name" />
 
-                            <span v-show="!row.editRow" class="optimetaTag">{{ optimetaCitationsApp.citations[i].title }}</span>
-                            <input id="title-{{ i + 1 }}" placeholder="Title" v-show="row.editRow"
-                                   v-model="optimetaCitationsApp.citations[i].title"
-                                   class="optimetaInput" />
+                                <span v-show="!row.editRow" class="optimetaTag">{{ optimetaCitationsApp.citations[i].publication_year }}</span>
+                                <input id="publication_year-{{ i + 1 }}" placeholder="Year" v-show="row.editRow" class="optimetaInput"
+                                       v-model="optimetaCitationsApp.citations[i].publication_year" />
 
-                            <span v-show="!row.editRow" class="optimetaTag">{{ optimetaCitationsApp.citations[i].venue_display_name }}</span>
-                            <input id="venue_display_name-{{ i + 1 }}" placeholder="Venue" v-show="row.editRow"
-                                   v-model="optimetaCitationsApp.citations[i].venue_display_name"
-                                   class="optimetaInput" />
+                                <span v-show="!row.editRow" class="optimetaTag">Volume {{ optimetaCitationsApp.citations[i].volume }}</span>
+                                <input id="volume-{{ i + 1 }}" placeholder="Volume" v-show="row.editRow" class="optimetaInput"
+                                       v-model="optimetaCitationsApp.citations[i].volume" />
 
-                            <span v-show="!row.editRow" class="optimetaTag">{{ optimetaCitationsApp.citations[i].publication_year }}</span>
-                            <input id="publication_year-{{ i + 1 }}" placeholder="Year" v-show="row.editRow"
-                                   v-model="optimetaCitationsApp.citations[i].publication_year"
-                                   class="optimetaInput" />
+                                <span v-show="!row.editRow" class="optimetaTag">Issue {{ optimetaCitationsApp.citations[i].issue }}</span>
+                                <input id="issue-{{ i + 1 }}" placeholder="Issue" v-show="row.editRow" class="optimetaInput"
+                                       v-model="optimetaCitationsApp.citations[i].issue" />
 
-                            <span v-show="!row.editRow" class="optimetaTag">Volume {{ optimetaCitationsApp.citations[i].volume }}</span>
-                            <input id="volume-{{ i + 1 }}" placeholder="Volume" v-show="row.editRow"
-                                   v-model="optimetaCitationsApp.citations[i].volume"
-                                   class="optimetaInput" />
-
-                            <span v-show="!row.editRow" class="optimetaTag">Issue {{ optimetaCitationsApp.citations[i].issue }}</span>
-                            <input id="issue-{{ i + 1 }}" placeholder="Issue" v-show="row.editRow"
-                                   v-model="optimetaCitationsApp.citations[i].issue"
-                                   class="optimetaInput" />
-
-                            <span v-show="!row.editRow" class="optimetaTag">Pages {{ optimetaCitationsApp.citations[i].first_page }} - {{ optimetaCitationsApp.citations[i].last_page }}</span>
-                            <input id="first_page-{{ i + 1 }}" placeholder="First page" v-show="row.editRow"
-                                   v-model="optimetaCitationsApp.citations[i].first_page"
-                                   class="optimetaInput" /> -
-                            <input id="last_page-{{ i + 1 }}" placeholder="Last page" v-show="row.editRow"
-                                   v-model="optimetaCitationsApp.citations[i].last_page"
-                                   class="optimetaInput" />
-
-                            Processed <input v-show="!row.editRow" type="checkbox" v-model="optimetaCitationsApp.citations[i].isProcessed" disabled/>
-                            <input v-show="row.editRow" type="checkbox" v-model="optimetaCitationsApp.citations[i].isProcessed"/>
+                                <span v-show="!row.editRow" class="optimetaTag">Pages {{ optimetaCitationsApp.citations[i].first_page }} - {{ optimetaCitationsApp.citations[i].last_page }}</span>
+                                <input id="first_page-{{ i + 1 }}" placeholder="First page" v-show="row.editRow" class="optimetaInput"
+                                       v-model="optimetaCitationsApp.citations[i].first_page" />
+                                <input id="last_page-{{ i + 1 }}" placeholder="Last page" v-show="row.editRow" class="optimetaInput"
+                                       v-model="optimetaCitationsApp.citations[i].last_page" />
+                            </div>
                         </div>
 
                         <div class="optimetaRawText">{{ optimetaCitationsApp.citations[i].raw }}</div>

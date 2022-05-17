@@ -1,5 +1,4 @@
 <?php
-
 namespace Optimeta\Citations\Submitter;
 
 import('plugins.generic.optimetaCitations.classes.Helpers');
@@ -60,9 +59,6 @@ class Submitter
      */
     public function execute(): void
     {
-        import('plugins.generic.optimetaCitations.classes.Debug');
-        $debug = new \Optimeta\Citations\Debug();
-
         // return if input is empty
         if (sizeof($this->citationsParsed) == 0) { return; }
 
@@ -80,7 +76,6 @@ class Submitter
 
                 // Wikidata
                 $citation = $this->getWikiData($citation);
-                $debug->Add($citation);
 
                 // push to citations enriched array
                 $this->citationsSubmitted[] = (array)$citation;

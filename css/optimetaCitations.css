@@ -55,30 +55,30 @@
 }
 
 .optimetaRow { border-bottom: 1px solid #eee; }
-.optimetaButton {
+.optimetaRow div { line-height: 1.65rem; }
+.optimetaRow .optimetaButton {
 	display: inline-block;
 	color: #ffffff;
 	text-decoration: none;
 	padding: 0 .5em;
 	line-height: 24px;
 }
-.optimetaButton span { display: block; }
-.optimetaButtonGreen { background-color: #60a917; }
-.optimetaButtonGrey { background-color: #cccccc; }
-.optimetaRawText {
+.optimetaRow .optimetaButton span { display: block; }
+.optimetaRow .optimetaButtonGreen { background-color: #60a917; }
+.optimetaRow .optimetaButtonGrey { background-color: #cccccc; }
+.optimetaRow .optimetaRawText {
 	font-size: 12px;
 	line-height: 14px;
 	padding: 3px 0;
 	border: 1px dotted #ccc;
 }
-.optimetaTag {
+.optimetaRow .optimetaTag {
 	background-color: #ededed;
 	padding: 0 .5em;
 	margin: 0 .5em 0 0;
 }
-.optimetaInput {
+.optimetaInput { }
 
-}
 #OptimetaCitations_PublicationForm-OptimetaCitations__CitationsParsed-control{
 	display: none;
 }

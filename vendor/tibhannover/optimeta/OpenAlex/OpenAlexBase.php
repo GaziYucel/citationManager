@@ -94,7 +94,7 @@ class OpenAlexBase
             $responseRaw = $this->client->request('GET', $this->url . 'works/doi:' . $this->doi);
             $response = $responseRaw->getBody();
         }
-        catch(Exception $ex){}
+        catch(\Exception $ex){}
 
         return $response;
     }
@@ -117,7 +117,7 @@ class OpenAlexBase
                 }
             }
         }
-        catch(Exception $ex){}
+        catch(\Exception $ex){}
 
         return $this->work;
     }

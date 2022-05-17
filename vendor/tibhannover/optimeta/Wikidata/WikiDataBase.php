@@ -134,9 +134,13 @@ class WikiDataBase
         $query['format'] = 'json';
         $queryString = '?' . http_build_query($query);
 
-        $response = $this->client->request('GET', $this->url . $queryString);
+        try{
+            $response = $this->client->request('GET', $this->url . $queryString);
+            return $response->getBody();
+        }
+        catch(\Exception $ex){}
 
-        return $response->getBody();
+        return '';
     }
 
     /**
@@ -149,12 +153,15 @@ class WikiDataBase
     {
         $query['action'] = 'wbgetentities';
         $query['format'] = 'json';
-
         $queryString = '?' . http_build_query($query);
 
-        $response = $this->client->request('GET', $this->url . $queryString);
+        try{
+            $response = $this->client->request('GET', $this->url . $queryString);
+            return $response->getBody();
+        }
+        catch(\Exception $ex){}
 
-        return $response->getBody();
+        return '';
     }
 
     /**
@@ -179,7 +186,7 @@ class WikiDataBase
             $entity = $response['query']['search'][0]['title'];
             if($entity === null) $entity = '';
         }
-        catch(Exception $ex){}
+        catch(\Exception $ex){}
 
         return $entity;
     }
@@ -201,7 +208,7 @@ class WikiDataBase
             $doi = $response['entities'][$entity]['claims']['P356'][0]['mainsnak']['datavalue']['value'];
             if($doi === null) $doi = '';
         }
-        catch(Exception $ex){}
+        catch(\Exception $ex){}
 
         return $doi;
     }
