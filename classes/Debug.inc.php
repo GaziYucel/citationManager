@@ -28,8 +28,10 @@ class Debug
         try {
             $date = new \DateTime();
             fwrite($fp, $date->format('Y-m-d H:i:s') . ' ' . $textToWrite . "\n");
-        } catch (\Exception $ex) {
-        } finally {
+        }
+        catch (\Exception $ex) {
+        }
+        finally {
             if ($fp) fclose($fp);
         }
     }
@@ -57,8 +59,10 @@ class Debug
         $fp = fopen($this->file, 'w');
         try {
             fwrite($fp, '');
-        } catch (Exception $ex) {
-        } finally {
+        }
+        catch (\Exception $ex) {
+        }
+        finally {
             if ($fp) fclose($fp);
         }
     }
