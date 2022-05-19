@@ -61,7 +61,7 @@
 	color: #ffffff;
 	text-decoration: none;
 	padding: 0 .5em;
-	line-height: 24px;
+	line-height: 20px;
 }
 .optimetaRow .optimetaButton span { display: block; }
 .optimetaRow .optimetaButtonGreen { background-color: #60a917; }
@@ -75,7 +75,8 @@
 .optimetaRow .optimetaTag {
 	background-color: #ededed;
 	padding: 0 .5em;
-	margin: 0 .5em 0 0;
+	/*margin: 0 .5em 0 0;*/
+	line-height: 20px;
 }
 .optimetaInput { }
 
@@ -90,4 +91,9 @@
 	color: #fff;
 	overflow-x: hidden;
 	overflow-y: auto;
+}
+
+.optimetaDisabled {
+	pointer-events: none;
+	cursor: default;
 }
