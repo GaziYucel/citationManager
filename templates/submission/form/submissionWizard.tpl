@@ -96,7 +96,7 @@
 
     function copyToRaw(){
         let questionText =
-            'Diese Methode überschreibt die RAW-Referenzen unter Literaturhinweise. ' +
+            'Diese Methode Ã¼berschreibt die RAW-Referenzen unter Literaturhinweise. ' +
             'NOCH NICHT IMPLEMENTIERT!';
         alert(questionText);
     }

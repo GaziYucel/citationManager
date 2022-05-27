@@ -5,18 +5,18 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '00b10974e825f86086e0a711e2c5f4c6090adcfd',
+        'reference' => '276780b4270086a53e5f2d80ffa7805f9b73dcde',
         'name' => 'optimeta/citations',
         'dev' => false,
     ),
     'versions' => array(
         'guzzlehttp/guzzle' => array(
-            'pretty_version' => '7.4.2',
-            'version' => '7.4.2.0',
+            'pretty_version' => '7.4.3',
+            'version' => '7.4.3.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/guzzle',
             'aliases' => array(),
-            'reference' => 'ac1ec1cd9b5624694c3a40be801d94137afb12b4',
+            'reference' => '74a8602c6faec9ef74b7a9391ac82c5e65b1cdab',
             'dev_requirement' => false,
         ),
         'guzzlehttp/promises' => array(
@@ -43,7 +43,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '00b10974e825f86086e0a711e2c5f4c6090adcfd',
+            'reference' => '276780b4270086a53e5f2d80ffa7805f9b73dcde',
             'dev_requirement' => false,
         ),
         'psr/http-client' => array(

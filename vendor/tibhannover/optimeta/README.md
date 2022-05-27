@@ -2,10 +2,11 @@
 
 Shared Library for the OPTIMETA OJS Plugins
 
-This library can be used as a submodule in other repositories. 
+This library will be used in the following OPTIMETA OJS Plugins repositories: 
 
-https://github.com/TIBHannover/optimeta-plugin-shared
+https://github.com/TIBHannover/optimetaCitations
 
+https://github.com/TIBHannover/optimetaGeo
 
 **Install / update**
 
