@@ -98,14 +98,12 @@ class OptimetaCitationsPlugin extends GenericPlugin
     {
         $schema = $args[0];
 
-        $properties = '{
-            "type": "string",
-            "multilingual": false,
-            "apiSummary": true,
-            "validation": [ "nullable" ]
-        }';
-
-        $schema->properties->{$this->citationsKeyDb} = json_decode($properties);
+        $schema->properties->{$this->citationsKeyDb} = (object)[
+            "type" => "string",
+            "multilingual" => false,
+            "apiSummary" => true,
+            "validation" => ["nullable"]
+        ];
     }
 
     /**
