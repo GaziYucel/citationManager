@@ -98,14 +98,12 @@ class OptimetaCitationsPlugin extends GenericPlugin
     {
         $schema = $args[0];
 
-        $properties = '{
-            "type": "string",
-            "multilingual": false,
-            "apiSummary": true,
-            "validation": [ "nullable" ]
-        }';
-
-        $schema->properties->{$this->citationsKeyDb} = json_decode($properties);
+        $schema->properties->{$this->citationsKeyDb} = (object)[
+            "type" => "string",
+            "multilingual" => false,
+            "apiSummary" => true,
+            "validation" => ["nullable"]
+        ];
     }
 
     /**
@@ -243,7 +241,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
     /**
      * @copydoc Plugin::getActions()
      */
-    public function getActions($request, $actionArgs)
+    public function getActions($request, $actionArgs): array
     {
         $actions = parent::getActions($request, $actionArgs);
         if (!$this->getEnabled()) {
@@ -283,7 +281,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
     /**
      * @copydoc Plugin::manage()
      */
-    public function manage($args, $request)
+    public function manage($args, $request): JSONMessage
     {
         $context = $request->getContext();
         switch ($request->getUserVar('verb')) {
@@ -308,9 +306,9 @@ class OptimetaCitationsPlugin extends GenericPlugin
         return parent::manage($args, $request);
     }
 
-    /* ********************** */
+    /* *********************** */
     /* Plugin required methods */
-    /* ********************** */
+    /* *********************** */
 
     /**
      * @copydoc PKPPlugin::getDisplayName
@@ -328,7 +326,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         return __('plugins.generic.optimetaCitationsPlugin.description');
     }
 
-    /* ********************** */
+    /* *********************** */
     /* Plugin required methods */
-    /* ********************** */
+    /* *********************** */
 }
