@@ -1,15 +1,15 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Handler/OptimetaCitationsAPIHandler.inc.php
+ * @file plugins/generic/optimetaCitations/classes/Handler/PluginAPIHandler.inc.php
  *
- * Copyright (c) 2014-2021 Simon Fraser University
- * Copyright (c) 2000-2021 John Willinsky
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class PKPUserHandler
- * @ingroup api_v1_users
+ * @class PluginAPIHandler
+ * @ingroup Handler
  *
- * @brief Base class to handle API requests for user operations.
+ * @brief Extended class of base request API handler
  *
  */
 namespace Optimeta\Citations\Handler;
@@ -27,7 +27,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Optimeta\Citations\Parser\Parser;
 use Optimeta\Citations\Enricher\Enricher;
 
-class OptimetaCitationsAPIHandler extends APIHandler
+class PluginAPIHandler extends APIHandler
 {
     private $apiEndpoint = OPTIMETA_CITATIONS_API_ENDPOINT;
 

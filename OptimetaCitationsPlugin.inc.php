@@ -24,13 +24,13 @@ import('lib.pkp.classes.site.VersionCheck');
 import('lib.pkp.classes.handler.APIHandler');
 
 import('plugins.generic.optimetaCitations.classes.Components.Forms.PublicationForm');
-import('plugins.generic.optimetaCitations.classes.Handler.OptimetaCitationsAPIHandler');
+import('plugins.generic.optimetaCitations.classes.Handler.PluginAPIHandler');
 import('plugins.generic.optimetaCitations.classes.Parser.Parser');
 import('plugins.generic.optimetaCitations.classes.SettingsForm');
 
 use Optimeta\Citations\Components\Forms\PublicationForm;
 use Optimeta\Citations\Parser\Parser;
-use Optimeta\Citations\Handler\OptimetaCitationsAPIHandler;
+use Optimeta\Citations\Handler\PluginAPIHandler;
 use Optimeta\Citations\SettingsForm;
 
 class OptimetaCitationsPlugin extends GenericPlugin
@@ -229,7 +229,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $router = $request->getRouter();
         if ($router instanceof \APIRouter && strpos(' ' .
                 $request->getRequestPath() . ' ', 'api/v1/' . $this->apiEndpoint) !== false) {
-            $handler = new OptimetaCitationsAPIHandler($this);
+            $handler = new PluginAPIHandler($this);
             $router->setHandler($handler);
             $handler->getApp()->run();
             exit;
