@@ -241,7 +241,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
     /**
      * @copydoc Plugin::getActions()
      */
-    public function getActions($request, $actionArgs)
+    public function getActions($request, $actionArgs): array
     {
         $actions = parent::getActions($request, $actionArgs);
         if (!$this->getEnabled()) {
@@ -281,7 +281,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
     /**
      * @copydoc Plugin::manage()
      */
-    public function manage($args, $request)
+    public function manage($args, $request): JSONMessage
     {
         $context = $request->getContext();
         switch ($request->getUserVar('verb')) {
