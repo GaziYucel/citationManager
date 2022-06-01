@@ -306,9 +306,9 @@ class OptimetaCitationsPlugin extends GenericPlugin
         return parent::manage($args, $request);
     }
 
-    /* ********************** */
+    /* *********************** */
     /* Plugin required methods */
-    /* ********************** */
+    /* *********************** */
 
     /**
      * @copydoc PKPPlugin::getDisplayName
@@ -326,7 +326,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         return __('plugins.generic.optimetaCitationsPlugin.description');
     }
 
-    /* ********************** */
+    /* *********************** */
     /* Plugin required methods */
-    /* ********************** */
+    /* *********************** */
 }
