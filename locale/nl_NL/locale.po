@@ -12,43 +12,43 @@ msgstr ""
 "Language: \n"
 
 msgid "plugins.generic.optimetaCitationsPlugin.name"
-msgstr "Optimeta Zitate Plugin"
+msgstr "Optimeta Citations Plugin"
 
 msgid "plugins.generic.optimetaCitationsPlugin.description"
-msgstr "Optimeta Zitate Plugin"
+msgstr "Optimeta Citations Plugin"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement"
-msgstr "Veröffentlichungserklärung"
+msgstr "Publicatieverklaring"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement.description"
-msgstr "Fügen Sie eine Publikationsbeschreibung hinzu, die auf jeder Landing Page einer Publikation erscheinen soll"
+msgstr "Voeg een publicatieverklaring toe die je op elke landingspagina van elke publicatie wilt laten verschijnen"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
-msgstr "Zitate"
+msgstr "Citations"
 
 msgid "plugins.generic.optimetaCitationsPlugin.submit.question"
-msgstr "Die aktuellen Zitate auf externen Open-Access-Seiten werden überschrieben, wenn Sie auf OK klicken. Are you sure?"
+msgstr "De huidige citaties op externe open access sites zullen worden overschreven als je op OK klikt. Weet je het zeker?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.enrich.question"
-msgstr "Die aktuellen geparsten Zitate aus externen Quellen werden überschrieben, wenn Sie auf OK klicken. Are you sure?"
+msgstr "De huidige geparseerde citaties van externe bronnen worden overschreven als je op OK klikt. Weet je het zeker?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.parse.question"
-msgstr "Die aktuell geparsten Zitate werden überschrieben, wenn Sie auf OK klicken. Are you sure?"
+msgstr "De huidige geparseerde citaten zullen worden overschreven als je op OK klikt. Weet je het zeker?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
-msgstr "Die Zitate wurden aktualisiert."
+msgstr "De citaties zijn bijgewerkt."
 
 msgid "plugins.generic.optimetaCitations.settings.form.saved"
-msgstr "Einstellungen erfolgreich gespeichert"
+msgstr "Instellingen succesvol opgeslagen"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_title"
 msgstr "Wikidata"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_username"
-msgstr "Wikidata-Bot-Benutzername"
+msgstr "Wikidata bot gebruikersnaam"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_password"
-msgstr "Wikidata-Bot-Passwort"
+msgstr "Wikidata bot wachtwoord"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url"
 msgstr "Wikidata api url"
