@@ -1,4 +1,4 @@
-[![OPTIMETA Logo](images/optimeta-logo-full.jpg)](https://projects.tib.eu/optimeta/en/)
+[![OPTIMETA Logo](images/optimeta_logo_full_bg_white.png)](https://projects.tib.eu/optimeta/en/)
 
 OptimetaCitations plugin
 ---------------------
@@ -16,7 +16,7 @@ Download & Installation
 
 Screenshot(s)
 ---------------------
-![OPTIMETA screenshot add submission](images/optimeta-citations-submission-edit.gif)
+![OPTIMETA screenshot add submission](.project/screenshots/optimeta-citations-submission-edit.gif)
 
 Contribute
 ---------------------
