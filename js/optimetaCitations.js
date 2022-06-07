@@ -10,6 +10,7 @@
  *
  * @brief Main javascript for the plugin. *
  */
+/*jshint esversion: 6 */
 
 /**
  * @desc Main OptimetaCitations Class
@@ -21,19 +22,19 @@ class OptimetaCitations {
      */
     getCsrfToken(){
         // ojs version 3.2.1
-        if(typeof $ !== 'undefined' && typeof $.pkp !== 'undefined' &&
-            typeof $.pkp.currentUser !== 'undefined' &&
-            typeof $.pkp.currentUser.csrfToken !== 'undefined'){
+        if(typeof $ !== "undefined" && typeof $.pkp !== "undefined" &&
+            typeof $.pkp.currentUser !== "undefined" &&
+            typeof $.pkp.currentUser.csrfToken !== "undefined"){
             return $.pkp.currentUser.csrfToken;
         }
 
         // ojs version 3.3.0
-        if(typeof pkp !== 'undefined' && typeof pkp.currentUser !== 'undefined' &&
-            typeof pkp.currentUser.csrfToken !== 'undefined'){
+        if(typeof pkp !== "undefined" && typeof pkp.currentUser !== "undefined" &&
+            typeof pkp.currentUser.csrfToken !== "undefined"){
             return pkp.currentUser.csrfToken;
         }
 
-        return '';
+        return "";
     }
 
     /**
@@ -45,9 +46,9 @@ class OptimetaCitations {
         let helperArray = JSON.parse(JSON.stringify(baseArray));
         for(let i = 0;i < baseArray.length; i++){
             for(let key of Object.keys(helperArray[i])){
-                helperArray[i]['_edit_' + key] = false;
+                helperArray[i]["_edit_" + key] = false;
             }
-            helperArray[i]['editRow'] = false;
+            helperArray[i]["editRow"] = false;
         }
         return helperArray;
     }
