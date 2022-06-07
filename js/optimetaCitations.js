@@ -12,97 +12,102 @@
  */
 
 /**
- * @desc Gets CSRF Token
- * @returns string
+ * @desc Main OptimetaCitations Class
  */
-function optimetaCitationsGetCsrfToken(){
-	// ojs version 3.2.1
-	if(typeof $ !== 'undefined' && typeof $.pkp !== 'undefined' &&
-        typeof $.pkp.currentUser !== 'undefined' &&
-        typeof $.pkp.currentUser.csrfToken !== 'undefined'){
-		return $.pkp.currentUser.csrfToken;
-	}
-
-	// ojs version 3.3.0
-	if(typeof pkp !== 'undefined' && typeof pkp.currentUser !== 'undefined' &&
-        typeof pkp.currentUser.csrfToken !== 'undefined'){
-		return pkp.currentUser.csrfToken;
-	}
-
-	return '';
-}
-
-/**
- * @desc Gets Helper Array
- * @param baseArray array
- * @returns array
- */
-function optimetaCitationsGetHelperArray(baseArray){
-    let helperArray = JSON.parse(JSON.stringify(baseArray));
-    for(let i = 0;i < baseArray.length; i++){
-        for(let key of Object.keys(helperArray[i])){
-            helperArray[i]['_edit_' + key] = false;
+class OptimetaCitations {
+    /**
+     * @desc Gets CSRF Token
+     * @returns string
+     */
+    getCsrfToken(){
+        // ojs version 3.2.1
+        if(typeof $ !== 'undefined' && typeof $.pkp !== 'undefined' &&
+            typeof $.pkp.currentUser !== 'undefined' &&
+            typeof $.pkp.currentUser.csrfToken !== 'undefined'){
+            return $.pkp.currentUser.csrfToken;
         }
-        helperArray[i]['editRow'] = false;
+
+        // ojs version 3.3.0
+        if(typeof pkp !== 'undefined' && typeof pkp.currentUser !== 'undefined' &&
+            typeof pkp.currentUser.csrfToken !== 'undefined'){
+            return pkp.currentUser.csrfToken;
+        }
+
+        return '';
     }
-    return helperArray;
-}
 
-/**
- * @desc Check if string is json
- * @param str string
- * @returns boolean
- */
-function optimetaCitationsIsStringJson(str) {
-	try {
-		JSON.parse(str);
-	} catch (e) {
-		return false;
-	}
-	return true;
-}
+    /**
+     * @desc Gets Helper Array
+     * @param baseArray array
+     * @returns array
+     */
+    getHelperArray(baseArray){
+        let helperArray = JSON.parse(JSON.stringify(baseArray));
+        for(let i = 0;i < baseArray.length; i++){
+            for(let key of Object.keys(helperArray[i])){
+                helperArray[i]['_edit_' + key] = false;
+            }
+            helperArray[i]['editRow'] = false;
+        }
+        return helperArray;
+    }
 
-/**
- *
- * @param obj object
- * @param key string
- * @returns string
- */
-function optimetaCitationsFindPathInArray (obj, key) {
-    const path = [];
-    const keyExists = (obj) => {
-        if (!obj || (typeof obj !== "object" && !Array.isArray(obj))) {
+    /**
+     * @desc Check if string is json
+     * @param str string
+     * @returns boolean
+     */
+    isStringJson(str) {
+        try {
+            JSON.parse(str);
+        } catch (e) {
             return false;
         }
-        else if (obj.hasOwnProperty(key)) {
-            return true;
-        }
-        else if (Array.isArray(obj)) {
-            let parentKey = path.length ? path.pop() : "";
+        return true;
+    }
 
-            for (let i = 0; i < obj.length; i++) {
-                path.push(`${parentKey}[${i}]`);
-                const result = keyExists(obj[i], key);
-                if (result) {
-                    return result;
-                }
-                path.pop();
+    /**
+     *
+     * @param obj object
+     * @param key string
+     * @returns string
+     */
+    findPathInArray (obj, key) {
+        const path = [];
+        const keyExists = (obj) => {
+            if (!obj || (typeof obj !== "object" && !Array.isArray(obj))) {
+                return false;
             }
-        }
-        else {
-            for (const k in obj) {
-                path.push(k);
-                const result = keyExists(obj[k], key);
-                if (result) {
-                    return result;
-                }
-                path.pop();
+            else if (obj.hasOwnProperty(key)) {
+                return true;
             }
-        }
-        return false;
-    };
+            else if (Array.isArray(obj)) {
+                let parentKey = path.length ? path.pop() : "";
 
-    keyExists(ob);
+                for (let i = 0; i < obj.length; i++) {
+                    path.push(`${parentKey}[${i}]`);
+                    const result = keyExists(obj[i], key);
+                    if (result) {
+                        return result;
+                    }
+                    path.pop();
+                }
+            }
+            else {
+                for (const k in obj) {
+                    path.push(k);
+                    const result = keyExists(obj[k], key);
+                    if (result) {
+                        return result;
+                    }
+                    path.pop();
+                }
+            }
+            return false;
+        };
 
-    return path.join(".");
+        keyExists(ob);
+
+        return path.join(".");
+    }
 }
