@@ -245,13 +245,15 @@
                                   v-if="!optimetaCitationsApp.citations[i].openalex_id">OpenAlex</span>
                         </div>
                     </td>
-                    <td>
+                    <td class="optimetaScrollableDiv-actions">
                         <a v-show="!row.editRow"
                            v-on:click="row.editRow = !row.editRow"
-                           class="pkpButton" label="Edit"> Edit </a>
+                           class="pkpButton" label="Edit"> <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
                         <a v-show="row.editRow"
                            v-on:click="row.editRow = !row.editRow"
-                           class="pkpButton" label="Close"> Close </a>
+                           class="pkpButton" label="Close"> <i class="fa fa-check" aria-hidden="true"></i>
+                        </a>
                     </td>
                 </tr>
             </tbody>
