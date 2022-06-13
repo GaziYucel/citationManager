@@ -53,6 +53,13 @@
 	top: 0;
 	z-index: 2;
 }
+.optimetaScrollableDiv-actions {
+	text-align: center;
+}
+.optimetaScrollableDiv-actions a {
+	width: 34px;
+	height: 34px;
+}
 
 .optimetaRow { border-bottom: 1px solid #eee; }
 .optimetaRow div { line-height: 1.65rem; }

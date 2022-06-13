@@ -2,6 +2,8 @@
 <link rel="stylesheet" href="{$pluginStylesheetURL}/optimetaCitations.css" type="text/css" />
 
 <script>
+    var objOptimetaCitations = new OptimetaCitations();
+
     var optimetaCitationsJson = `{$citationsParsed}`;
     var optimetaCitations = JSON.parse(optimetaCitationsJson);
 
@@ -9,7 +11,7 @@
         //el: '#optimetaCitations',
         data: {
             citations: optimetaCitations,
-            helper: optimetaCitationsGetHelperArray(optimetaCitations)
+            helper: objOptimetaCitations.getHelperArray(optimetaCitations)
         },
         computed: {
             citationsJsonComputed: function() {
@@ -36,13 +38,13 @@
                 citationsParsed: JSON.stringify(optimetaCitationsApp.citations)
             },
             headers: {
-                'X-Csrf-Token': optimetaCitationsGetCsrfToken(),
+                'X-Csrf-Token': objOptimetaCitations.getCsrfToken(),
             },
             error(r) { },
             success(response) {
                 optimetaCitations = JSON.parse(response['citationsParsed']);
                 optimetaCitationsApp.citations = JSON.parse(response['citationsParsed']);
-                optimetaCitationsApp.helper = optimetaCitationsGetHelperArray(JSON.parse(response['citationsParsed']));
+                optimetaCitationsApp.helper = objOptimetaCitations.getHelperArray(JSON.parse(response['citationsParsed']));
             }
         });
     }
@@ -60,13 +62,13 @@
                 citationsParsed: JSON.stringify(optimetaCitationsApp.citations)
             },
             headers: {
-                'X-Csrf-Token': optimetaCitationsGetCsrfToken(),
+                'X-Csrf-Token': objOptimetaCitations.getCsrfToken(),
             },
             error(r) { },
             success(response) {
                 optimetaCitations = JSON.parse(response['citationsParsed']);
                 optimetaCitationsApp.citations = JSON.parse(response['citationsParsed']);
-                optimetaCitationsApp.helper = optimetaCitationsGetHelperArray(JSON.parse(response['citationsParsed']));
+                optimetaCitationsApp.helper = objOptimetaCitations.getHelperArray(JSON.parse(response['citationsParsed']));
             }
         });
     }
@@ -83,13 +85,13 @@
                 citationsRaw: document.getElementById("citations-citationsRaw-control").value
             },
             headers: {
-                'X-Csrf-Token': optimetaCitationsGetCsrfToken(),
+                'X-Csrf-Token': objOptimetaCitations.getCsrfToken(),
             },
             error(r) { },
             success(response) {
                 optimetaCitations = JSON.parse(response['citationsParsed']);
                 optimetaCitationsApp.citations = JSON.parse(response['citationsParsed']);
-                optimetaCitationsApp.helper = optimetaCitationsGetHelperArray(JSON.parse(response['citationsParsed']));
+                optimetaCitationsApp.helper = objOptimetaCitations.getHelperArray(JSON.parse(response['citationsParsed']));
             }
         });
     }
@@ -243,13 +245,15 @@
                                   v-if="!optimetaCitationsApp.citations[i].openalex_id">OpenAlex</span>
                         </div>
                     </td>
-                    <td>
+                    <td class="optimetaScrollableDiv-actions">
                         <a v-show="!row.editRow"
                            v-on:click="row.editRow = !row.editRow"
-                           class="pkpButton" label="Edit"> Edit </a>
+                           class="pkpButton" label="Edit"> <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
                         <a v-show="row.editRow"
                            v-on:click="row.editRow = !row.editRow"
-                           class="pkpButton" label="Close"> Close </a>
+                           class="pkpButton" label="Close"> <i class="fa fa-check" aria-hidden="true"></i>
+                        </a>
                     </td>
                 </tr>
             </tbody>
