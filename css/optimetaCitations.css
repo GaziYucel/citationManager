@@ -18,6 +18,7 @@
 
 #optimetaCitations .header table td:last-of-type {
 	text-align: end;
+	vertical-align: bottom;
 }
 
 #optimetaCitations .pkpForm {
@@ -37,6 +38,24 @@
 	overflow-y: auto;
 }
 
+.optimetaScrollableDivEmpty {
+	background-color: #f1f1f1;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.optimetaScrollableDivLoading {
+	background-color: #f1f1f1;
+	height: 100%;
+	display: grid;
+}
+.optimetaScrollableDivLoading img {
+	align-self: center;
+	margin: 0 auto;
+}
+.optimetaScrollableDivValue {}
+
 .optimetaScrollableDiv table {
 	border-collapse: collapse;
 	width: 100%;
@@ -52,6 +71,11 @@
 	position: -webkit-sticky;
 	top: 0;
 	z-index: 2;
+}
+.optimetaScrollableDiv-nr  {}
+.optimetaScrollableDiv-parts .pkpButton  {
+	line-height: 25px;
+	height: 25px;
 }
 .optimetaScrollableDiv-actions {
 	text-align: center;
@@ -82,7 +106,6 @@
 .optimetaRow .optimetaTag {
 	background-color: #ededed;
 	padding: 0 .5em;
-	/*margin: 0 .5em 0 0;*/
 	line-height: 20px;
 }
 .optimetaInput { }
@@ -103,4 +126,8 @@
 .optimetaDisabled {
 	pointer-events: none;
 	cursor: default;
+	opacity:0.6;
+}
+.optimetaHide {
+	display: none !important;
 }

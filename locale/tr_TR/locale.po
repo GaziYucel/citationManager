@@ -12,64 +12,64 @@ msgstr ""
 "Language: \n"
 
 msgid "plugins.generic.optimetaCitationsPlugin.name"
-msgstr "Optimeta Citations Plugin"
+msgstr "Optimeta Atıflar Eklentisi"
 
 msgid "plugins.generic.optimetaCitationsPlugin.description"
-msgstr "Optimeta Citations Plugin"
+msgstr "Optimeta Atıflar Eklentisi"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement"
-msgstr "Declaración de publicación"
+msgstr "Yayın Beyanı"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement.description"
-msgstr "Añade una declaración de publicación que te gustaría que apareciera en la página de destino de cada publicación"
+msgstr "Her yayının açılış sayfasında görünmesini istediğiniz bir yayın açıklaması ekleyin"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
-msgstr "Citas"
+msgstr "Atıflar"
 
 msgid "plugins.generic.optimetaCitationsPlugin.clear.button"
-msgstr "Borrar"
+msgstr "Temizle"
 
 msgid "plugins.generic.optimetaCitationsPlugin.clear.question"
-msgstr "Las citas actuales analizadas se eliminarán si hace clic en OK. Are you sure?"
+msgstr "Tamam'a tıklarsanız mevcut ayrıştırılmış alıntılar kaldırılacaktır. Emin misiniz?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.citations.empty.description"
-msgstr "Las citas analizadas están vacías. Por favor use el boton de arriba para parsear y enriquecer las citas."
+msgstr "Ayrıştırılan alıntılar boş. Alıntıları ayrıştırmak ve zenginleştirmek için lütfen yukarıdaki düğmeyi kullanın."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.button"
-msgstr "Procesar"
+msgstr "İşlem"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.label"
-msgstr "Referencias analizadas"
+msgstr "Ayrıştırılmış referanslar"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.description"
-msgstr "Por favor, utilice el botón de la derecha para analizar las referencias en diferentes partes. Despues de extraer los DOIs, los metadatos adicionales seran adquiridos de sitios web externos y mostrados a continuacion. La presentacion de estos metadatos se hara automaticamente, cuando esta presentacion sea publicada y reciba un DOI."
+msgstr "Referansları farklı parçalara ayırmak için lütfen sağdaki düğmeyi kullanın. DOI'ler çıkarıldıktan sonra, harici web sitelerinden ekstra meta veriler elde edilecek ve aşağıda gösterilecektir. Bu meta verilerin gönderimi, bu gönderim yayınlandığında ve bir DOI aldığında otomatik olarak yapılacaktır."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
-msgstr "Las citas actuales analizadas se sobreescribirán si hace clic en OK. Todas sus modificaciones se perderan. ¿Está seguro?"
+msgstr "Tamam'a tıklarsanız mevcut ayrıştırılmış alıntıların üzerine yazılacaktır. Tüm değişiklikleriniz kaybolacaktır. Emin misiniz?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.submit.question"
-msgstr "Las citas actuales en sitios de acceso abierto externos se sobrescribirán si hace clic en OK. ¿Está seguro?"
+msgstr "Tamam'a tıklarsanız harici açık erişim sitelerindeki mevcut alıntıların üzerine yazılacaktır. Emin misiniz?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.enrich.question"
-msgstr "Las citas actuales analizadas se sobrescribirán de fuentes externas si hace clic en OK. ¿Está seguro?"
+msgstr "Tamam'a tıklarsanız mevcut ayrıştırılmış alıntıların üzerine harici kaynaklardan yazılacaktır. Emin misiniz?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.parse.question"
-msgstr "Las citas actuales parseadas se sobrescribirán si hace clic en OK. Are you sure?"
+msgstr "Tamam'a tıklarsanız mevcut ayrıştırılmış alıntıların üzerine yazılacaktır. Emin misiniz?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
-msgstr "Las citas han sido actualizadas."
+msgstr "Alıntılar güncellendi."
 
 msgid "plugins.generic.optimetaCitations.settings.form.saved"
-msgstr "Ajustes guardados con éxito"
+msgstr "Ayarlar başarıyla kaydedildi"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_title"
 msgstr "Wikidata"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_username"
-msgstr "Wikidata bot username"
+msgstr "Wikidata bot kullanıcı adı"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_password"
-msgstr "Wikidata bot password"
+msgstr "Wikidata bot şifresi"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url"
 msgstr "Wikidata api url"
