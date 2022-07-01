@@ -1,0 +1,36 @@
+version: '3.6' 
+
+networks:
+  inside:
+
+services: 
+
+    db:
+        image: mariadb:10.2
+        env_file:
+            - .env
+        container_name: "${OJS_DB_HOST}"
+        environment:
+            MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+            MYSQL_DATABASE: "${MYSQL_DATABASE}"
+            MYSQL_USER: "${MYSQL_USER}"
+            MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+        restart: always
+        networks:
+            - inside
+    
+    ojs:
+        image: "pkpofficial/ojs:${OJS_VERSION}"
+        container_name: ojs
+        env_file:
+            - .env
+        restart: always
+        ports:
+            - "${OJS_PORT:-8080}:80"
+        volumes:
+            - ./logs:/var/log/apache2
+            - ../:/var/www/html/plugins/generic/optimetaCitations
+        depends_on:
+            - db
+        networks:
+            - inside

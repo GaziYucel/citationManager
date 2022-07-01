@@ -18,6 +18,19 @@ Screenshot(s)
 ---------------------
 ![OPTIMETA screenshot add submission](.project/screenshots/optimeta-citations-submission-edit.gif)
 
+Tests
+---------------------
+
+```bash
+npm install
+
+# start containers
+npm run-script test_compose
+
+# run tests with UI (new console)
+npm run-script test_open
+```
+
 Contribute
 ---------------------
 All help is welcome: asking questions, providing documentation, testing, or even development.
