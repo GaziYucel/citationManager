@@ -13,125 +13,121 @@
 /*jshint esversion: 6 */
 
 /**
- * @desc Main OptimetaCitations Class
+ * @desc Gets CSRF Token
+ * @returns string
  */
-class OptimetaCitations {
-    /**
-     * @desc Gets CSRF Token
-     * @returns string
-     */
-    getCsrfToken(){
-        // ojs version 3.2.1
-        if(typeof $ !== "undefined" && typeof $.pkp !== "undefined" &&
-            typeof $.pkp.currentUser !== "undefined" &&
-            typeof $.pkp.currentUser.csrfToken !== "undefined"){
-            return $.pkp.currentUser.csrfToken;
-        }
 
-        // ojs version 3.3.0
-        if(typeof pkp !== "undefined" && typeof pkp.currentUser !== "undefined" &&
-            typeof pkp.currentUser.csrfToken !== "undefined"){
-            return pkp.currentUser.csrfToken;
-        }
-
-        return "";
+function optimetaCitationsGetCsrfToken(){
+    // ojs version 3.2.1
+    if(typeof $ !== "undefined" && typeof $.pkp !== "undefined" &&
+        typeof $.pkp.currentUser !== "undefined" &&
+        typeof $.pkp.currentUser.csrfToken !== "undefined"){
+        return $.pkp.currentUser.csrfToken;
     }
 
-    /**
-     * @desc Gets citations raw value
-     * @returns string
-     */
-    getCitationsRaw(){
-        // submission wizard
-        if(typeof document !== "undefined" &&
-            typeof document.getElementsByName("citationsRaw") !== "undefined" &&
-            typeof document.getElementsByName("citationsRaw")[0] !== "undefined" &&
-            typeof document.getElementsByName("citationsRaw")[0]["value"] !== "undefined"){
-            return document.getElementsByName("citationsRaw")[0]["value"];
-        }
-        
-        // submission edit
-        if(typeof document !== "undefined" &&
-            typeof document.getElementsByName("citations-citationsRaw-control") !== "undefined" &&
-            typeof document.getElementsByName("citations-citationsRaw-control")["value"] !== "undefined"){
-            return document.getElementById("citations-citationsRaw-control")["value"];
-        }
-        
-        return "";
-    }
-    
-    /**
-     * @desc Gets Helper Array
-     * @param baseArray array
-     * @returns array
-     */
-    getHelperArray(baseArray){
-        let helperArray = JSON.parse(JSON.stringify(baseArray));
-        for(let i = 0;i < baseArray.length; i++){
-            for(let key of Object.keys(helperArray[i])){
-                helperArray[i]["_edit_" + key] = false;
-            }
-            helperArray[i]["editRow"] = false;
-        }
-        return helperArray;
+    // ojs version 3.3.0
+    if(typeof pkp !== "undefined" && typeof pkp.currentUser !== "undefined" &&
+        typeof pkp.currentUser.csrfToken !== "undefined"){
+        return pkp.currentUser.csrfToken;
     }
 
-    /**
-     * @desc Check if string is json
-     * @param str string
-     * @returns boolean
-     */
-    isStringJson(str) {
-        try {
-            JSON.parse(str);
-        } catch (e) {
+    return "";
+}
+
+/**
+ * @desc Gets citations raw value
+ * @returns string
+ */
+function optimetaCitationsGetCitationsRaw(){
+    // submission wizard
+    if(typeof document !== "undefined" &&
+        typeof document.getElementsByName("citationsRaw") !== "undefined" &&
+        typeof document.getElementsByName("citationsRaw")[0] !== "undefined" &&
+        typeof document.getElementsByName("citationsRaw")[0]["value"] !== "undefined"){
+        return document.getElementsByName("citationsRaw")[0]["value"];
+    }
+
+    // submission edit
+    if(typeof document !== "undefined" &&
+        typeof document.getElementsByName("citations-citationsRaw-control") !== "undefined" &&
+        typeof document.getElementsByName("citations-citationsRaw-control")["value"] !== "undefined"){
+        return document.getElementById("citations-citationsRaw-control")["value"];
+    }
+
+    return "";
+}
+
+/**
+ * @desc Gets Helper Array
+ * @param baseArray array
+ * @returns array
+ */
+function optimetaCitationsGetHelperArray(baseArray){
+    let helperArray = JSON.parse(JSON.stringify(baseArray));
+    for(let i = 0;i < baseArray.length; i++){
+        for(let key of Object.keys(helperArray[i])){
+            helperArray[i]["_edit_" + key] = false;
+        }
+        helperArray[i]["editRow"] = false;
+    }
+    return helperArray;
+}
+
+/**
+ * @desc Check if string is json
+ * @param str string
+ * @returns boolean
+ */
+function optimetaCitationsIsStringJson(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+
+/**
+ *
+ * @param obj object
+ * @param key string
+ * @returns string
+ */
+function optimetaCitationsFindPathInArray (obj, key) {
+    const path = [];
+    const keyExists = (obj) => {
+        if (!obj || (typeof obj !== "object" && !Array.isArray(obj))) {
             return false;
         }
-        return true;
-    }
+        else if (obj.hasOwnProperty(key)) {
+            return true;
+        }
+        else if (Array.isArray(obj)) {
+            let parentKey = path.length ? path.pop() : "";
 
-    /**
-     *
-     * @param obj object
-     * @param key string
-     * @returns string
-     */
-    findPathInArray (obj, key) {
-        const path = [];
-        const keyExists = (obj) => {
-            if (!obj || (typeof obj !== "object" && !Array.isArray(obj))) {
-                return false;
-            }
-            else if (obj.hasOwnProperty(key)) {
-                return true;
-            }
-            else if (Array.isArray(obj)) {
-                let parentKey = path.length ? path.pop() : "";
-
-                for (let i = 0; i < obj.length; i++) {
-                    path.push(`${parentKey}[${i}]`);
-                    const result = keyExists(obj[i], key);
-                    if (result) {
-                        return result;
-                    }
-                    path.pop();
+            for (let i = 0; i < obj.length; i++) {
+                path.push(`${parentKey}[${i}]`);
+                const result = keyExists(obj[i], key);
+                if (result) {
+                    return result;
                 }
+                path.pop();
             }
-            else {
-                for (const k in obj) {
-                    path.push(k);
-                    const result = keyExists(obj[k], key);
-                    if (result) {
-                        return result;
-                    }
-                    path.pop();
+        }
+        else {
+            for (const k in obj) {
+                path.push(k);
+                const result = keyExists(obj[k], key);
+                if (result) {
+                    return result;
                 }
+                path.pop();
             }
-            return false;
-        };
+        }
+        return false;
+    };
 
-        keyExists(ob);
+    keyExists(ob);
 
-        return path.join(".");
-    }
+    return path.join(".");
 }

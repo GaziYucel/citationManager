@@ -42,19 +42,16 @@ msgid "plugins.generic.optimetaCitationsPlugin.process.label"
 msgstr "Referencias analizadas"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.description"
-msgstr "Por favor, utilice el botón de la derecha para analizar las referencias en diferentes partes. Despues de extraer los DOIs, los metadatos adicionales seran adquiridos de sitios web externos y mostrados a continuacion. La presentacion de estos metadatos se hara automaticamente, cuando esta presentacion sea publicada y reciba un DOI."
+msgstr "Por favor, utilice el botón de la derecha para analizar las referencias en diferentes partes. Despues de extraer los DOIs, los metadatos adicionales seran adquiridos de sitios web externos y se mostraran a continuacion. La presentacion de estos metadatos se hara automaticamente, cuando esta presentacion sea publicada y reciba un DOI."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
 msgstr "Las citas actuales analizadas se sobreescribirán si hace clic en OK. Todas sus modificaciones se perderan. ¿Está seguro?"
 
-msgid "plugins.generic.optimetaCitationsPlugin.submit.question"
-msgstr "Las citas actuales en sitios de acceso abierto externos se sobrescribirán si hace clic en OK. ¿Está seguro?"
+msgid "plugins.generic.optimetaCitationsPlugin.author.add.button"
+msgstr "Añadir Autor"
 
-msgid "plugins.generic.optimetaCitationsPlugin.enrich.question"
-msgstr "Las citas actuales analizadas se sobrescribirán de fuentes externas si hace clic en OK. ¿Está seguro?"
-
-msgid "plugins.generic.optimetaCitationsPlugin.parse.question"
-msgstr "Las citas actuales parseadas se sobrescribirán si hace clic en OK. Are you sure?"
+msgid "plugins.generic.optimetaCitationsPlugin.author.remove.question"
+msgstr "¿Seguro que quiere eliminar este autor?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
 msgstr "Las citas han sido actualizadas."

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  * TaskScheduler.xml
+  *
+  * Copyright (c) 2021+ TIB Hannover
+  * Copyright (c) 2021+ Gazi Yucel
+  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+  *
+  * OptimetaCitationsPlugin Task Scheduler
+  *
+  * This file describes the scheduled task that will submit citations to external OA websites
+  *
+  -->
+<!DOCTYPE scheduled_tasks SYSTEM "../../../lib/pkp/dtd/scheduledTasks.dtd">
+<scheduled_tasks>
+	<task class="plugins.generic.optimetaCitations.classes.TaskScheduler.TaskScheduler">
+		<descr>Submit citations to external Open Access Websites</descr>
+		<frequency minute="*/15"/>
+	</task>
+</scheduled_tasks>

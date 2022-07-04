@@ -26,7 +26,7 @@ use NotificationManager;
 class SettingsForm extends \Form
 {
     /**
-     * @var OptimetaCitations
+     * @var $plugin OptimetaCitationsPlugin
      */
     public $plugin;
 

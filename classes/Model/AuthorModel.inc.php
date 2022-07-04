@@ -17,7 +17,7 @@ class AuthorModel
      * @see
      * @example "Jason Priem"
      */
-    public $display_name;
+    public $name;
 
     /**
      * @var integer

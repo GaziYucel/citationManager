@@ -47,14 +47,11 @@ msgstr "Bitte benutzen Sie die Schaltfläche rechts, um die Referenzen in versch
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
 msgstr "Die aktuell geparsten Zitate werden überschrieben, wenn Sie auf OK klicken. Alle Ihre Änderungen gehen dabei verloren. Sind Sie sicher?"
 
-msgid "plugins.generic.optimetaCitationsPlugin.submit.question"
-msgstr "Die aktuellen Zitate auf externen Open-Access-Seiten werden überschrieben, wenn Sie auf OK klicken. Are you sure?"
+msgid "plugins.generic.optimetaCitationsPlugin.author.add.button"
+msgstr "Autor hinzufügen"
 
-msgid "plugins.generic.optimetaCitationsPlugin.enrich.question"
-msgstr "Die aktuellen geparsten Zitate aus externen Quellen werden überschrieben, wenn Sie auf OK klicken. Are you sure?"
-
-msgid "plugins.generic.optimetaCitationsPlugin.parse.question"
-msgstr "Die aktuell geparsten Zitate werden überschrieben, wenn Sie auf OK klicken. Are you sure?"
+msgid "plugins.generic.optimetaCitationsPlugin.author.remove.question"
+msgstr "Sind Sie sicher, dass Sie diesen Autor löschen wollen?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
 msgstr "Die Zitate wurden aktualisiert."

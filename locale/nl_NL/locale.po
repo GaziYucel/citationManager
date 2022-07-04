@@ -47,14 +47,11 @@ msgstr "Gebruik de knop aan de rechterkant om de referenties in verschillende de
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
 msgstr "De huidige geparseerde citaten zullen worden overschreven als je op OK klikt. Al je wijzigingen zullen verloren gaan. Weet je het zeker?"
 
-msgid "plugins.generic.optimetaCitationsPlugin.submit.question"
-msgstr "De huidige citaties op externe open access sites zullen worden overschreven als je op OK klikt. Weet je het zeker?"
+msgid "plugins.generic.optimetaCitationsPlugin.author.add.button"
+msgstr "Auteur toevoegen"
 
-msgid "plugins.generic.optimetaCitationsPlugin.enrich.question"
-msgstr "De huidige geparseerde citaties van externe bronnen worden overschreven als je op OK klikt. Weet je het zeker?"
-
-msgid "plugins.generic.optimetaCitationsPlugin.parse.question"
-msgstr "De huidige geparseerde citaten zullen worden overschreven als je op OK klikt. Weet je het zeker?"
+msgid "plugins.generic.optimetaCitationsPlugin.author.remove.question"
+msgstr "Weet je zeker dat je deze auteur wilt verwijderen?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
 msgstr "De citaties zijn bijgewerkt."

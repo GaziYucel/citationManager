@@ -5,11 +5,12 @@ import('plugins.generic.optimetaCitations.classes.Helpers');
 import('plugins.generic.optimetaCitations.classes.Model.AuthorModel');
 import('plugins.generic.optimetaCitations.classes.Model.CitationModel');
 
+use GuzzleHttp\Exception\GuzzleException;
 use Optimeta\Citations\Helpers;
 use Optimeta\Citations\Model\AuthorModel;
 use Optimeta\Citations\Model\CitationModel;
 use Optimeta\Shared\WikiData\WikiDataBase;
-use GuzzleHttp\Exception\GuzzleException;
+use Optimeta\Shared\GitHub\GitHubBase;
 
 class Submitter
 {

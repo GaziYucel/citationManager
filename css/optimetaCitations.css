@@ -11,11 +11,6 @@
  * @brief Main stylesheet for the plugin.
  */
 
-#optimetaCitations .header table td:first-of-type {
-    font-size: 1rem;
-    font-weight: 700;
-}
-
 #optimetaCitations .header table td:last-of-type {
 	text-align: end;
 	vertical-align: bottom;
@@ -36,17 +31,17 @@
 	height: 500px;
 	overflow-x: hidden;
 	overflow-y: auto;
+	border: 1px solid #bbb;
+	margin-top: 5px;
 }
 
 .optimetaScrollableDivEmpty {
-	background-color: #f1f1f1;
 	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 .optimetaScrollableDivLoading {
-	background-color: #f1f1f1;
 	height: 100%;
 	display: grid;
 }
@@ -72,17 +67,21 @@
 	top: 0;
 	z-index: 2;
 }
-.optimetaScrollableDiv-nr  {}
+.optimetaScrollableDiv-nr  {
+	text-align: center;
+}
 .optimetaScrollableDiv-parts .pkpButton  {
 	line-height: 25px;
 	height: 25px;
 }
 .optimetaScrollableDiv-actions {
 	text-align: center;
+	vertical-align: top;
 }
 .optimetaScrollableDiv-actions a {
 	width: 34px;
 	height: 34px;
+	margin-top: 10px;
 }
 
 .optimetaRow { border-bottom: 1px solid #eee; }
@@ -97,6 +96,7 @@
 .optimetaRow .optimetaButton span { display: block; }
 .optimetaRow .optimetaButtonGreen { background-color: #60a917; }
 .optimetaRow .optimetaButtonGrey { background-color: #cccccc; }
+.optimetaRow .optimetaButtonRed { background-color: #00ffff; }
 .optimetaRow .optimetaRawText {
 	font-size: 12px;
 	line-height: 14px;

@@ -183,8 +183,13 @@ class WikiDataBase
 
         try{
             $response = json_decode($this->actionQueryGet($query), true);
-            $entity = $response['query']['search'][0]['title'];
-            if($entity === null) $entity = '';
+            if($response !== null &&
+                !empty($response['query']) &&
+                !empty($response['query']['search']) &&
+                !empty($response['query']['search'][0]) &&
+                !empty($response['query']['search'][0]['title'])){
+                $entity = $response['query']['search'][0]['title'];
+            }
         }
         catch(\Exception $ex){}
 
