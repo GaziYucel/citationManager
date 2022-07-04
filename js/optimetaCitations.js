@@ -38,6 +38,29 @@ class OptimetaCitations {
     }
 
     /**
+     * @desc Gets citations raw value
+     * @returns string
+     */
+    getCitationsRaw(){
+        // submission wizard
+        if(typeof document !== "undefined" &&
+            typeof document.getElementsByName("citationsRaw") !== "undefined" &&
+            typeof document.getElementsByName("citationsRaw")[0] !== "undefined" &&
+            typeof document.getElementsByName("citationsRaw")[0]["value"] !== "undefined"){
+            return document.getElementsByName("citationsRaw")[0]["value"];
+        }
+        
+        // submission edit
+        if(typeof document !== "undefined" &&
+            typeof document.getElementsByName("citations-citationsRaw-control") !== "undefined" &&
+            typeof document.getElementsByName("citations-citationsRaw-control")["value"] !== "undefined"){
+            return document.getElementById("citations-citationsRaw-control")["value"];
+        }
+        
+        return "";
+    }
+    
+    /**
      * @desc Gets Helper Array
      * @param baseArray array
      * @returns array

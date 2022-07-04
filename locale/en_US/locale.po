@@ -26,6 +26,27 @@ msgstr "Add a publication statement that you would like to appear on every publi
 msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
 msgstr "Citations"
 
+msgid "plugins.generic.optimetaCitationsPlugin.clear.button"
+msgstr "Clear"
+
+msgid "plugins.generic.optimetaCitationsPlugin.clear.question"
+msgstr "The current parsed citations will be removed if you click OK. Are you sure?"
+
+msgid "plugins.generic.optimetaCitationsPlugin.citations.empty.description"
+msgstr "Parsed citations are empty. Please use the button above to parse and enrich the citations."
+
+msgid "plugins.generic.optimetaCitationsPlugin.process.button"
+msgstr "Process"
+
+msgid "plugins.generic.optimetaCitationsPlugin.process.label"
+msgstr "Parsed references"
+
+msgid "plugins.generic.optimetaCitationsPlugin.process.description"
+msgstr "Please use the button at the right to parse the references into different parts. After extracting DOIs, extra metadata will be acquired from external websites and shown below. Submission of this metadata will be done automatically, when this submission is published and received a DOI."
+
+msgid "plugins.generic.optimetaCitationsPlugin.process.question"
+msgstr "The current parsed citations will be overwritten if you click OK. All your modifications will be lost. Are you sure?"
+
 msgid "plugins.generic.optimetaCitationsPlugin.submit.question"
 msgstr "The current citations on external open access sites will be overwritten if you click OK. Are you sure?"
 
