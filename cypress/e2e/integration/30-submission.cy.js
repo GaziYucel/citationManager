@@ -49,7 +49,7 @@ describe('OPTIMETA Citations in Submission', function () {
       cy.get('textarea[id^="citationsRaw"]').clear().type(references);
     });
 
-    cy.get('#buttonParse').click();
+    cy.get('#buttonProcess').click();
     cy.on('window:confirm', () => true);
     cy.get('.optimetaRow').should('have.length', 3);
   });
