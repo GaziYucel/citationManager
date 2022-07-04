@@ -33,15 +33,14 @@ class PluginAPIHandler extends APIHandler
 
     private $submissionId = '';
     private $citationsRaw = '';
-    private $citationsParsed = [];
-    private $citationsEnriched = [];
-    private $citationsSubmitted = [];
+    private $citations = [];
 
     private $responseBody = [
-        'submissionId' => '',
-        'citationsRaw' => '',
-        'citationsParsed' => '[]',
-        'message' => ''];
+        'status' => 'ok',
+        'message-type' => '',
+        'message-version' => '1',
+        'message' => ''
+    ];
 
     public function __construct()
     {
@@ -50,18 +49,8 @@ class PluginAPIHandler extends APIHandler
         $this->_endpoints = [
             'POST' => [
                 [
-                    'pattern' => $this->getEndpointPattern() . '/parse',
-                    'handler' => [$this, 'parse'],
-                    'roles' => [ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR, ROLE_ID_ASSISTANT, ROLE_ID_REVIEWER, ROLE_ID_AUTHOR],
-                ],
-                [
-                    'pattern' => $this->getEndpointPattern() . '/enrich',
-                    'handler' => [$this, 'enrich'],
-                    'roles' => [ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR, ROLE_ID_ASSISTANT, ROLE_ID_REVIEWER, ROLE_ID_AUTHOR],
-                ],
-                [
-                    'pattern' => $this->getEndpointPattern() . '/submit',
-                    'handler' => [$this, 'submit'],
+                    'pattern' => $this->getEndpointPattern() . '/process',
+                    'handler' => [$this, 'process'],
                     'roles' => [ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR, ROLE_ID_ASSISTANT, ROLE_ID_REVIEWER, ROLE_ID_AUTHOR],
                 ]
             ],
@@ -87,15 +76,18 @@ class PluginAPIHandler extends APIHandler
     }
 
     /**
-     * @desc Parse raw citations and return
-     * @param $slimRequest
+     * @desc Parse and enrich citations and return
+     * @param $slimeRequest
      * @param $response
      * @param $args
      * @return mixed
+     * @throws GuzzleException
      */
-    public function parse($slimRequest, $response, $args)
+    public function process($slimeRequest, $response, $args)
     {
         $request = $this->getRequest();
+
+        $this->responseBody['message-type'] = 'citations';
 
         // check if GET/POST filled
         if ($request->getUserVars() && sizeof($request->getUserVars()) > 0) {
@@ -107,103 +99,21 @@ class PluginAPIHandler extends APIHandler
             }
         }
 
-        // add submissionId to responseBody
-        $this->responseBody['submissionId'] = $this->submissionId;
-
-        // citationsRaw not found, response with message
+        // citationsRaw empty, response empty array
         if (strlen($this->citationsRaw) === 0) {
-            $this->responseBody['message'] = 'citationsRaw not found';
-            return $response->withJson($this->responseBody, 404);
+            $this->responseBody['status'] = 'ok';
+            return $response->withJson($this->responseBody, 200);
         }
-
-        // citationsRaw found, assign to response and parse
-        $this->responseBody['citationsRaw'] = $this->citationsRaw;
 
         // parse citations
         $parser = new Parser($this->citationsRaw);
-        $this->citationsParsed = $parser->getCitations();
-
-        // citations parsed, assign to response
-        $this->responseBody['citationsParsed'] = json_encode($this->citationsParsed);
-
-        $this->responseBody['message'] = 'parse successful';
-
-        return $response->withJson($this->responseBody, 200);
-    }
-
-    /**
-     * @desc Enrich parsed citations and return
-     * @param $slimRequest
-     * @param $response
-     * @param $args
-     * @return mixed
-     * @throws GuzzleException
-     */
-    public function enrich($slimRequest, $response, $args)
-    {
-        $request = $this->getRequest();
-
-        // check if GET/POST filled
-        if ($request->getUserVars() && sizeof($request->getUserVars()) > 0) {
-            if(isset($request->getUserVars()['submissionId'])){
-                $this->submissionId = trim($request->getUserVars()['submissionId']);
-            }
-            if(isset($request->getUserVars()['citationsRaw'])){
-                $this->citationsRaw = trim($request->getUserVars()['citationsRaw']);
-            }
-            if(isset($request->getUserVars()['citationsParsed'])){
-                $this->citationsParsed = json_decode(trim($request->getUserVars()['citationsParsed']));
-            }
-        }
+        $this->citations = $parser->getCitations();
 
         // enrich citations
-        $enricher = new Enricher($this->citationsParsed);
-        $this->citationsEnriched = $enricher->getCitations();
+        $enricher = new Enricher($this->citations);
+        $this->citations = $enricher->getCitations();
 
-        // response body
-        $this->responseBody['submissionId'] = $this->submissionId;
-        $this->responseBody['citationsRaw'] = $this->citationsRaw;
-        $this->responseBody['citationsParsed'] = json_encode($this->citationsEnriched);
-        $this->responseBody['message'] = 'enrich successful';
-
-        return $response->withJson($this->responseBody, 200);
-    }
-
-    /**
-     * @desc Submit enriched citations and return
-     * @param $slimRequest
-     * @param $response
-     * @param $args
-     * @return mixed
-     * @throws GuzzleException
-     */
-    public function submit($slimRequest, $response, $args)
-    {
-        $request = $this->getRequest();
-
-        // check if GET/POST filled
-        if ($request->getUserVars() && sizeof($request->getUserVars()) > 0) {
-            if(isset($request->getUserVars()['submissionId'])){
-                $this->submissionId = trim($request->getUserVars()['submissionId']);
-            }
-            if(isset($request->getUserVars()['citationsRaw'])){
-                $this->citationsRaw = trim($request->getUserVars()['citationsRaw']);
-            }
-            if(isset($request->getUserVars()['citationsParsed'])){
-                $this->citationsParsed = json_decode(trim($request->getUserVars()['citationsParsed']));
-            }
-        }
-
-        // enrich citations
-        $submitter = new Submitter($this->citationsParsed);
-        $this->citationsSubmitted = $submitter->getCitations();
-
-        // response body
-        $this->responseBody['submissionId'] = $this->submissionId;
-        $this->responseBody['citationsRaw'] = $this->citationsRaw;
-        $this->responseBody['citationsParsed'] = json_encode($this->citationsSubmitted);
-        $this->responseBody['message'] = 'submit successful';
-
+        $this->responseBody['message'] = $this->citations;
         return $response->withJson($this->responseBody, 200);
     }
 }

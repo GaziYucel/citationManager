@@ -47,14 +47,11 @@ msgstr "Referansları farklı parçalara ayırmak için lütfen sağdaki düğme
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
 msgstr "Tamam'a tıklarsanız mevcut ayrıştırılmış alıntıların üzerine yazılacaktır. Tüm değişiklikleriniz kaybolacaktır. Emin misiniz?"
 
-msgid "plugins.generic.optimetaCitationsPlugin.submit.question"
-msgstr "Tamam'a tıklarsanız harici açık erişim sitelerindeki mevcut alıntıların üzerine yazılacaktır. Emin misiniz?"
+msgid "plugins.generic.optimetaCitationsPlugin.author.add.button"
+msgstr "Yazar Ekle"
 
-msgid "plugins.generic.optimetaCitationsPlugin.enrich.question"
-msgstr "Tamam'a tıklarsanız mevcut ayrıştırılmış alıntıların üzerine harici kaynaklardan yazılacaktır. Emin misiniz?"
-
-msgid "plugins.generic.optimetaCitationsPlugin.parse.question"
-msgstr "Tamam'a tıklarsanız mevcut ayrıştırılmış alıntıların üzerine yazılacaktır. Emin misiniz?"
+msgid "plugins.generic.optimetaCitationsPlugin.author.remove.question"
+msgstr "Bu yazarı silmek istediğinizden emin misiniz?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
 msgstr "Alıntılar güncellendi."

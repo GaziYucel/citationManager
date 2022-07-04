@@ -82,6 +82,9 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
             // Is triggered only on the page defined in Handler method/class
             HookRegistry::register('Dispatcher::dispatch', array($this, 'apiHandler'));
+
+            // Register scheduled task
+            HookRegistry::register('AcronPlugin::parseCronTab', array($this, 'taskScheduler'));
         }
 
         return $success;
@@ -304,6 +307,25 @@ class OptimetaCitationsPlugin extends GenericPlugin
                 }
         }
         return parent::manage($args, $request);
+    }
+
+    /**
+     * @see AcronPlugin::parseCronTab()
+     * @param $hookName string
+     * @param $args array [
+     * @option array Task files paths
+     * @return boolean
+     */
+    function taskScheduler($hookName, $args): bool
+    {
+        if ($this->getEnabled() || !Config::getVar('general', 'installed')) {
+            $taskFilesPath =& $args[0]; // Reference needed.
+            $taskFilesPath[] = $this->getPluginPath() .
+                DIRECTORY_SEPARATOR . 'classes' .
+                DIRECTORY_SEPARATOR . 'ScheduledTasks' .
+                DIRECTORY_SEPARATOR . 'ScheduledTasks.xml';
+        }
+        return false;
     }
 
     /* *********************** */

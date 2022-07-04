@@ -47,14 +47,11 @@ msgstr "Please use the button at the right to parse the references into differen
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
 msgstr "The current parsed citations will be overwritten if you click OK. All your modifications will be lost. Are you sure?"
 
-msgid "plugins.generic.optimetaCitationsPlugin.submit.question"
-msgstr "The current citations on external open access sites will be overwritten if you click OK. Are you sure?"
+msgid "plugins.generic.optimetaCitationsPlugin.author.add.button"
+msgstr "Add Author"
 
-msgid "plugins.generic.optimetaCitationsPlugin.enrich.question"
-msgstr "The current parsed citations will be overwritten from external sources if you click OK. Are you sure?"
-
-msgid "plugins.generic.optimetaCitationsPlugin.parse.question"
-msgstr "The current parsed citations will be overwritten if you click OK. Are you sure?"
+msgid "plugins.generic.optimetaCitationsPlugin.author.remove.question"
+msgstr "Are you sure you want to delete this author?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
 msgstr "The citations have been updated."
