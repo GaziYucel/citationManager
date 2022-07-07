@@ -51,6 +51,7 @@ describe('OPTIMETA Citations in Submission', function () {
 
     cy.get('#buttonProcess').click();
     cy.on('window:confirm', () => true);
+    cy.wait(30000);
     cy.get('.optimetaRow').should('have.length', 3);
   });
 
