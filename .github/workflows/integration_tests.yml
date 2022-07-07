@@ -18,6 +18,7 @@ jobs:
   citationplugin:
     name: ${{ matrix.pkp-application }} version ${{ matrix.pkp-version }} with ${{ matrix.dbs }}
     runs-on: ubuntu-20.04
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
