@@ -3,22 +3,13 @@
 
 <script>
     var optimetaCitations = JSON.parse(`{$citationsParsed}`);
+
     var optimetaCitationsApp = new pkp.Vue({
         el: '#optimetaCitations',
         data: {
             citations: optimetaCitations,
             helper: optimetaCitationsGetHelperArray(optimetaCitations),
-            author: {
-                orcid: null,
-                name: null,
-                works_count: null,
-                cited_by_count:null,
-                counts_by_year: null,
-                updated_date: null,
-                created_date: null,
-                wikidata_qid: null,
-                openalex_id: null
-            }
+            author: { {$authorModel} }
         },
         computed: {
             citationsJsonComputed: function() {

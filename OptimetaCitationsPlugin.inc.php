@@ -47,7 +47,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
         'pluginJavaScriptURL' => '',
         'pluginImagesURL' => '',
         'citationsKeyForm' => '',
-        'pluginApiUrl' => ''
+        'pluginApiUrl' => '',
+        'authorModel' => ''
     ];
 
     /**
@@ -69,6 +70,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $this->templateParameters['pluginImagesURL'] = $request->getBaseUrl() . '/' . $this->getPluginPath() . '/images';
         $this->templateParameters['citationsKeyForm'] = $this->citationsKeyForm;
         $this->templateParameters['pluginApiUrl'] = '';
+        foreach (new Optimeta\Citations\Model\AuthorModel() as $name => $value) $this->templateParameters['authorModel'] .= "$name: null, ";
+        $this->templateParameters['authorModel'] = trim($this->templateParameters['authorModel'], ', ');
 
         if ($success && $this->getEnabled())
         {

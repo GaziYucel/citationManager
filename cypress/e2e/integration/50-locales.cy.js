@@ -61,7 +61,7 @@ describe('OPTIMETA Citation Plugin Locales', function () {
 
 describe('OPTIMETA Citation Plugin Locale Files', function () {
 
-  it('Has the same number of entries and no erorrs in the locale files', function () {
+  it('Has the same number of entries and no errors in the locale files', function () {
     const reference = 'en_US';
 
     cy.readFile('locale/' + reference + '/locale.po').then((text) => {
