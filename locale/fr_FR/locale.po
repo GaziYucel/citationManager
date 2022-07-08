@@ -12,73 +12,73 @@ msgstr ""
 "Language: \n"
 
 msgid "plugins.generic.optimetaCitationsPlugin.name"
-msgstr "Optimeta Zitate Plugin"
+msgstr "Optimeta Citations Plugin"
 
 msgid "plugins.generic.optimetaCitationsPlugin.description"
-msgstr "Optimeta Zitate Plugin"
+msgstr "Optimeta Citations Plugin"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement"
-msgstr "Veröffentlichungserklärung"
+msgstr "Déclaration de publication"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement.description"
-msgstr "Fügen Sie eine Publikationsbeschreibung hinzu, die auf jeder Landing Page einer Publikation erscheinen soll"
+msgstr "Ajoutez une déclaration de publication que vous souhaitez voir apparaître sur la page de destination de chaque publication"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
-msgstr "Zitate"
+msgstr "Citations"
 
 msgid "plugins.generic.optimetaCitationsPlugin.clear.button"
-msgstr "Löschen"
+msgstr "Clear"
 
 msgid "plugins.generic.optimetaCitationsPlugin.clear.question"
-msgstr "Die aktuell geparsten Zitate werden entfernt, wenn Sie auf OK klicken. Are you sure?"
+msgstr "Les citations analysées actuelles seront supprimées si vous cliquez sur OK. Are you sure ?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.citations.empty.description"
-msgstr "Eingelesene Zitate sind leer. Bitte benutzen Sie die Schaltfläche oben, um die Zitate zu analysieren und anzureichern."
+msgstr "Les citations analysées sont vides. Veuillez utiliser le bouton ci-dessus pour analyser et enrichir les citations."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.button"
-msgstr "Verarbeiten"
+msgstr "Process"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.label"
-msgstr "Geprüfte Referenzen"
+msgstr "Références analysées"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.description"
-msgstr "Bitte benutzen Sie die Schaltfläche rechts, um die Referenzen in verschiedene Teile zu zerlegen. Nach dem Extrahieren der DOIs werden zusätzliche Metadaten von externen Websites erfasst und unten angezeigt. Die Übermittlung dieser Metadaten erfolgt automatisch, wenn dieser Beitrag veröffentlicht wird und einen DOI erhält."
+msgstr "Veuillez utiliser le bouton à droite pour analyser les références en différentes parties. Après avoir extrait les DOI, des métadonnées supplémentaires seront acquises à partir de sites Web externes et affichées ci-dessous. La soumission de ces métadonnées sera faite automatiquement, lorsque cette soumission sera publiée et recevra un DOI."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
-msgstr "Die aktuell geparsten Zitate werden überschrieben, wenn Sie auf OK klicken. Alle Ihre Änderungen gehen dabei verloren. Sind Sie sicher?"
+msgstr "Les citations actuellement analysées seront écrasées si vous cliquez sur OK. Toutes vos modifications seront perdues. Are you sure ?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.author.add.button"
-msgstr "Autor hinzufügen"
+msgstr "Ajouter un auteur"
 
 msgid "plugins.generic.optimetaCitationsPlugin.author.remove.question"
-msgstr "Sind Sie sicher, dass Sie diesen Autor löschen wollen?"
+msgstr "Êtes-vous sûr de vouloir supprimer cet auteur ?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
-msgstr "Die Zitate wurden aktualisiert."
+msgstr "Les citations ont été mises à jour"
 
 msgid "plugins.generic.optimetaCitations.settings.description"
-msgstr "Hier eine Beschreibung hinzufügen"
+msgstr "Add some description here"
 
 msgid "plugins.generic.optimetaCitations.settings.form.saved"
-msgstr "Einstellungen erfolgreich gespeichert"
+msgstr "Paramètres enregistrés avec succès"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_title"
 msgstr "Wikidata"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_username"
-msgstr "Wikidata-Bot-Benutzername"
+msgstr "Nom d'utilisateur du robot de Wikidata"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_password"
-msgstr "Wikidata-Bot-Passwort"
+msgstr "Mot de passe du robot de Wikidata"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url"
-msgstr "Wikidata api url"
+msgstr "url de l'api de Wikidata"
 
 msgid "plugins.generic.optimetaCitations.settings.open_citations_title"
-msgstr "Zitate öffnen"
+msgstr "Open Citations"
 
 msgid "plugins.generic.optimetaCitations.settings.open_citations_token"
-msgstr "Github Token für OpenCitations Einlagen"
+msgstr "Token Github pour dépôts OpenCitations"
 
 msgid "plugins.generic.optimetaCitations.settings.open_citations_url"
-msgstr "Github URL für OpenCitations-Einlagen"
+msgstr "URL de Github pour les dépôts OpenCitations"

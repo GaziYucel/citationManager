@@ -56,6 +56,9 @@ msgstr "Are you sure you want to delete this author?"
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
 msgstr "The citations have been updated."
 
+msgid "plugins.generic.optimetaCitations.settings.description"
+msgstr "Add some description here"
+
 msgid "plugins.generic.optimetaCitations.settings.form.saved"
 msgstr "Settings saved successfully"
 
@@ -70,3 +73,12 @@ msgstr "Wikidata bot password"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url"
 msgstr "Wikidata api url"
+
+msgid "plugins.generic.optimetaCitations.settings.open_citations_title"
+msgstr "Open Citations"
+
+msgid "plugins.generic.optimetaCitations.settings.open_citations_token"
+msgstr "Github Token for OpenCitations deposits"
+
+msgid "plugins.generic.optimetaCitations.settings.open_citations_url"
+msgstr "Github URL for OpenCitations deposits"

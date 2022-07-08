@@ -2,7 +2,6 @@
 /**
  * @desc Venues are where works are hosted.
  */
-
 namespace Optimeta\Shared\OpenAlex\Model;
 
 class Venue

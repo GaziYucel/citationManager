@@ -12,21 +12,17 @@ use GuzzleHttp\Exception\GuzzleException;
 
 class OpenAlex
 {
-    public function getCitation()
-    {
-
-    }
-
     /**
      * @desc Get all information from OpenAlex and return as CitationModel
      * @param object $citation
      * @return object
      * @throws GuzzleException
      */
-    public function getOpenAlexWork(object $citation): object
+    public function getWork(object $citation): object
     {
-        $openAlex = new OpenAlexBase(Helpers::removeDoiOrgPrefixFromUrl($citation->doi));
-        $openAlexWork = $openAlex->getWorkFromApiAsObject(); // \Optimeta\Shared\OpenAlex\Model\Work()
+        $doi = Helpers::removeDoiOrgPrefixFromUrl($citation->doi);
+        $openAlex = new OpenAlexBase();
+        $openAlexWork = $openAlex->getWorkFromApiAsObjectWithDoi($doi); // \Optimeta\Shared\OpenAlex\Model\Work()
 
         $citation->title = $openAlexWork->title;
         $citation->publication_year = $openAlexWork->publication_year;

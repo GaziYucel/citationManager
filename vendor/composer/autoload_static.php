@@ -43,7 +43,7 @@ class ComposerStaticInit200829ab8bee596dd1cb14a0a59c8510
         ),
         'Optimeta\\Shared\\' => 
         array (
-            0 => __DIR__ . '/..' . '/tibhannover/optimeta',
+            0 => __DIR__ . '/..' . '/tibhannover/optimeta/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (

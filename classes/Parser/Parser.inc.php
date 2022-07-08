@@ -13,48 +13,19 @@ use Optimeta\Citations\Model\CitationModel;
 class Parser
 {
     /**
-     * @desc String which will hold the raw citations
-     * @var string
-     */
-    protected $citationsRaw = "";
-
-    /**
-     * @desc Array which hold the parsed citations
-     * @var array
-     */
-    protected $citationsParsed = [];
-
-    /**
-     * @desc Constructor
-     * @param string $citationsRaw an unparsed citation string
-     */
-    function __construct(string $citationsRaw = "")
-    {
-        $this->citationsRaw = $citationsRaw;
-    }
-
-    /**
-     * @desc Returns parsed citations as an array
-     * @return array citationsParsed
-     */
-    public function getCitations(): array
-    {
-        $this->execute();
-
-        return $this->citationsParsed;
-    }
-
-    /**
      * @desc Parse and save parsed citations to citationsParsed
-     * @return void
+     * @param string $citationsRaw
+     * @return array
      */
-    private function execute(): void
+    public function executeAndReturnCitations(string $citationsRaw): array
     {
+        $citations = [];
+
         // cleanup citationsRaw
-        $citationsRaw = $this->cleanCitationsRaw($this->citationsRaw);
+        $citationsRaw = $this->cleanCitationsRaw($citationsRaw);
 
         // return if input is empty
-        if (empty($citationsRaw)) { return; }
+        if (empty($citationsRaw)) { return $citations; }
 
         // break up at line endings
         $citationsArray = explode("\n", $citationsRaw);
@@ -92,8 +63,10 @@ class Parser
             $objRowParsed->raw = $rowRaw;
 
             // push to citations parsed array
-            $this->citationsParsed[] = (array)$objRowParsed;
+            $citations[] = (array)$objRowParsed;
         }
+
+        return $citations;
     }
 
     /**
@@ -104,7 +77,7 @@ class Parser
     private function cleanCitationsRaw(string $citationsRaw): string
     {
         // strip whitespace
-        $citationsRaw = trim($this->citationsRaw);
+        $citationsRaw = trim($citationsRaw);
 
         // strip slashes
         $citationsRaw = stripslashes($citationsRaw);

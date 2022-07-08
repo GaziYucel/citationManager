@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '81ba9bb3c233d8cd8479e8bca26af86aee2dbeb8',
+        'reference' => '4a45879b9c6392f6cad80e57a5ba41a4926ca815',
         'name' => 'optimeta/citations',
         'dev' => false,
     ),
@@ -43,7 +43,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '81ba9bb3c233d8cd8479e8bca26af86aee2dbeb8',
+            'reference' => '4a45879b9c6392f6cad80e57a5ba41a4926ca815',
             'dev_requirement' => false,
         ),
         'psr/http-client' => array(
@@ -101,8 +101,8 @@
             'dev_requirement' => false,
         ),
         'symfony/deprecation-contracts' => array(
-            'pretty_version' => 'v2.5.1',
-            'version' => '2.5.1.0',
+            'pretty_version' => 'v2.5.2',
+            'version' => '2.5.2.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/deprecation-contracts',
             'aliases' => array(),

@@ -36,7 +36,7 @@ msgid "plugins.generic.optimetaCitationsPlugin.citations.empty.description"
 msgstr "Geparseerde citaten zijn leeg. Gebruik alsjeblieft de knop hierboven om de citaten te ontleden en te verrijken."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.button"
-msgstr "Verwerken"
+msgstr "Proces"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.label"
 msgstr "Geparsed referenties"
@@ -56,6 +56,9 @@ msgstr "Weet je zeker dat je deze auteur wilt verwijderen?"
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
 msgstr "De citaties zijn bijgewerkt."
 
+msgid "plugins.generic.optimetaCitations.settings.description"
+msgstr "Voeg hier een beschrijving toe"
+
 msgid "plugins.generic.optimetaCitations.settings.form.saved"
 msgstr "Instellingen succesvol opgeslagen"
 
@@ -70,3 +73,12 @@ msgstr "Wikidata bot wachtwoord"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url"
 msgstr "Wikidata api url"
+
+msgid "plugins.generic.optimetaCitations.settings.open_citations_title"
+msgstr "Open Citations"
+
+msgid "plugins.generic.optimetaCitations.settings.open_citations_token"
+msgstr "Github Token voor OpenCitations stortingen"
+
+msgid "plugins.generic.optimetaCitations.settings.open_citations_url"
+msgstr "Github URL voor OpenCitations stortingen"

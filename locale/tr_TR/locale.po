@@ -56,6 +56,9 @@ msgstr "Bu yazarı silmek istediğinizden emin misiniz?"
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
 msgstr "Alıntılar güncellendi."
 
+msgid "plugins.generic.optimetaCitations.settings.description"
+msgstr "Buraya biraz açıklama ekleyin"
+
 msgid "plugins.generic.optimetaCitations.settings.form.saved"
 msgstr "Ayarlar başarıyla kaydedildi"
 
@@ -70,3 +73,12 @@ msgstr "Wikidata bot şifresi"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url"
 msgstr "Wikidata api url"
+
+msgid "plugins.generic.optimetaCitations.settings.open_citations_title"
+msgstr "Açık Atıflar"
+
+msgid "plugins.generic.optimetaCitations.settings.open_citations_token"
+msgstr "Github Token for OpenCitations deposits"
+
+msgid "plugins.generic.optimetaCitations.settings.open_citations_url"
+msgstr "OpenCitations birikimleri için Github URL'si"

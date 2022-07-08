@@ -208,8 +208,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $citationsParsed = $publication->getData($this->citationsKeyDb);
         $citationsRaw = $publication->getData('citationsRaw');
         if ($citationsParsed == '' && $citationsRaw != '') {
-            $parser = new Parser($citationsRaw);
-            $citationsParsed = json_encode($parser->getCitations());
+            $parser = new Parser();
+            $citationsParsed = json_encode($parser->getCitations($citationsRaw));
         }
         if ($citationsParsed == null || $citationsParsed == '') {
             $citationsParsed = '[]';
