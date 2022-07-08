@@ -42,7 +42,7 @@ msgid "plugins.generic.optimetaCitationsPlugin.process.label"
 msgstr "Geprüfte Referenzen"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.description"
-msgstr "Bitte benutzen Sie die Schaltfläche rechts, um die Referenzen in verschiedene Teile zu zerlegen. Nach dem Extrahieren der DOIs werden zusätzliche Metadaten von externen Websites erfasst und unten angezeigt. Die Übermittlung dieser Metadaten erfolgt automatisch, wenn dieser Beitrag veröffentlicht wird und einen DOI erhält."
+msgstr "Bitte benutzen Sie die Schaltfläche rechts, um die Referenzen in verschiedene Teile zu zerlegen.<br/>Nach dem Extrahieren der DOIs werden zusätzliche Metadaten von externen Websites erfasst und unten angezeigt.<br/>Die Übermittlung dieser Metadaten erfolgt automatisch, wenn dieser Beitrag veröffentlicht wird und einen DOI erhält."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
 msgstr "Die aktuell geparsten Zitate werden überschrieben, wenn Sie auf OK klicken. Alle Ihre Änderungen gehen dabei verloren. Sind Sie sicher?"

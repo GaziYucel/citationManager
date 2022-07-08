@@ -42,7 +42,7 @@ msgid "plugins.generic.optimetaCitationsPlugin.process.label"
 msgstr "Referencias analizadas"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.description"
-msgstr "Por favor, utilice el botón de la derecha para analizar las referencias en diferentes partes. Despues de extraer los DOIs, los metadatos adicionales seran adquiridos de sitios web externos y se mostraran a continuacion. La presentacion de estos metadatos se hara automaticamente, cuando esta presentacion sea publicada y reciba un DOI."
+msgstr "Por favor, utilice el botón de la derecha para analizar las referencias en diferentes partes.<br/>Despues de extraer los DOIs, los metadatos adicionales seran adquiridos de sitios web externos y se mostraran a continuacion.<br/>La presentacion de estos metadatos se hara automaticamente, cuando esta presentacion sea publicada y reciba un DOI."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
 msgstr "Las citas actuales analizadas se sobreescribirán si hace clic en OK. Todas sus modificaciones se perderan. ¿Está seguro?"
