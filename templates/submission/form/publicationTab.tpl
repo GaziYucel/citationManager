@@ -107,7 +107,7 @@
     }
 
     function optimetaSubmitCitations (){
-        let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.process.question"}';
+        let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.submit.question"}';
         if (confirm(questionText) !== true) { return; }
 
         optimetaLoadingImage(true);
@@ -159,7 +159,8 @@
                     <span class="optimetaButton optimetaButtonGrey">OpenCitations</span>
                 </td>
                 <td class="optimetaAlignRight">
-                    <a href="javascript:optimetaSubmitCitations()" id="buttonSubmit" class="pkpButton">Submit</a>
+                    <a href="javascript:optimetaSubmitCitations()" id="buttonSubmit" class="pkpButton"
+                       :class="(optimetaCitationsApp.optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitationsPlugin.submit.button"}</a>
                     <a href="javascript:optimetaClearCitations()" id="buttonClear" class="pkpButton"
                        :class="(optimetaCitationsApp.optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitationsPlugin.clear.button"}</a>
                     <a href="javascript:optimetaProcessCitations()" id="buttonProcess" class="pkpButton">{translate key="plugins.generic.optimetaCitationsPlugin.process.button"}</a>

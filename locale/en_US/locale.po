@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2021-09-01T23:59:59+00:00\n"
-"PO-Revision-Date: 2021-09-01T23:59:59+00:00\n"
+"PO-Revision-Date: 2022-07-01T23:59:59+00:00\n"
 "Language: \n"
 
 msgid "plugins.generic.optimetaCitationsPlugin.name"
@@ -25,6 +25,12 @@ msgstr "Add a publication statement that you would like to appear on every publi
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
 msgstr "Citations"
+
+msgid "plugins.generic.optimetaCitationsPlugin.submit.button"
+msgstr "Submit"
+
+msgid "plugins.generic.optimetaCitationsPlugin.submit.question"
+msgstr "Are you sure you want to submit the citations to the predefined external websites?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.clear.button"
 msgstr "Clear"
