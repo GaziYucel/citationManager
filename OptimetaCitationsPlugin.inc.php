@@ -73,6 +73,9 @@ class OptimetaCitationsPlugin extends GenericPlugin
         foreach (new Optimeta\Citations\Model\AuthorModel() as $name => $value) $this->templateParameters['authorModel'] .= "$name: null, ";
         $this->templateParameters['authorModel'] = trim($this->templateParameters['authorModel'], ', ');
 
+        // Register scheduled task
+        HookRegistry::register('AcronPlugin::parseCronTab', array($this, 'callbackParseCronTab'));
+
         if ($success && $this->getEnabled())
         {
             // Is triggered with every request from anywhere
@@ -85,9 +88,6 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
             // Is triggered only on the page defined in Handler method/class
             HookRegistry::register('Dispatcher::dispatch', array($this, 'apiHandler'));
-
-            // Register scheduled task
-            HookRegistry::register('AcronPlugin::parseCronTab', array($this, 'taskScheduler'));
         }
 
         return $success;
@@ -319,14 +319,11 @@ class OptimetaCitationsPlugin extends GenericPlugin
      * @option array Task files paths
      * @return boolean
      */
-    function taskScheduler($hookName, $args): bool
+    function callbackParseCronTab($hookName, $args): bool
     {
         if ($this->getEnabled() || !Config::getVar('general', 'installed')) {
-            $taskFilesPath =& $args[0]; // Reference needed.
-            $taskFilesPath[] = $this->getPluginPath() .
-                DIRECTORY_SEPARATOR . 'classes' .
-                DIRECTORY_SEPARATOR . 'ScheduledTasks' .
-                DIRECTORY_SEPARATOR . 'ScheduledTasks.xml';
+            $taskFilesPath = &$args[0];
+            $taskFilesPath[] = $this->getPluginPath() . DIRECTORY_SEPARATOR . 'scheduledTasks.xml';
         }
         return false;
     }

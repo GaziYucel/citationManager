@@ -14,8 +14,8 @@
   -->
 <!DOCTYPE scheduled_tasks SYSTEM "../../../lib/pkp/dtd/scheduledTasks.dtd">
 <scheduled_tasks>
-	<task class="plugins.generic.optimetaCitations.classes.TaskScheduler.TaskScheduler">
+	<task class="plugins.generic.optimetaCitations.classes.ScheduledTasks.Submitter">
 		<descr>Submit citations to external Open Access Websites</descr>
-		<frequency minute="*/5"/>
+		<frequency minute="0"/>
 	</task>
 </scheduled_tasks>

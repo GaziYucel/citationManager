@@ -1,3 +1,19 @@
+github.com repository issue
+--
+subject
+syntax:
+```
+deposit {{domain}} {{pid}}
+```
+
+example: 
+```
+deposit localhost:330 doi:10.1007/978-3-662-07918-8_3
+```
+
+body
+
+```
 "id","title","author","pub_date","venue","volume","issue","page","type","publisher","editor"
 "doi:10.1007/978-3-662-07918-8_3","Influence of Dielectric Properties, State, and Electrodes on Electric Strength","Ushakov, Vasily Y.","2004","Insulation of High-Voltage Equipment [isbn:9783642058530 isbn:9783662079188]","","","27-82","book chapter","Springer Science and Business Media LLC [crossref:297]",""
 "doi:10.1016/0021-9991(73)90147-2","Flux-corrected transport. I. SHASTA, a fluid transport algorithm that works","Boris, Jay P; Book, David L","1973-1","Journal of Computational Physics [issn:0021-9991]","11","1","38-69","journal article","Elsevier BV [crossref:78]",""
@@ -26,3 +42,4 @@
 "doi:10.1007/s42835-022-01029-y","2022-02-28","doi:10.1088/0022-3727/39/14/017",""
 "doi:10.1007/s42835-022-01029-y","2022-02-28","doi:10.1007/978-3-663-14090-0","1985"
 "doi:10.1007/s42835-022-01029-y","2022-02-28","doi:10.1016/0021-9991(82)90026-2",""
+```

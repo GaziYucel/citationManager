@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2021-09-01T23:59:59+00:00\n"
-"PO-Revision-Date: 2021-09-01T23:59:59+00:00\n"
+"PO-Revision-Date: 2022-07-01T23:59:59+00:00\n"
 "Language: \n"
 
 msgid "plugins.generic.optimetaCitationsPlugin.name"
@@ -18,49 +18,55 @@ msgid "plugins.generic.optimetaCitationsPlugin.description"
 msgstr "Optimeta Citations Plugin"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement"
-msgstr "Declaración de publicación"
+msgstr "Publication Statement"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement.description"
-msgstr "Añade una declaración de publicación que te gustaría que apareciera en la página de destino de cada publicación"
+msgstr "Add a publication statement that you would like to appear on every publication's landing page"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
-msgstr "Citas"
+msgstr "Citations"
+
+msgid "plugins.generic.optimetaCitationsPlugin.submit.button"
+msgstr "Submit"
+
+msgid "plugins.generic.optimetaCitationsPlugin.submit.question"
+msgstr "Are you sure you want to submit the citations to the predefined external websites?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.clear.button"
-msgstr "Borrar"
+msgstr "Clear"
 
 msgid "plugins.generic.optimetaCitationsPlugin.clear.question"
-msgstr "Las citas actuales analizadas se eliminarán si hace clic en OK. Are you sure?"
+msgstr "The current parsed citations will be removed if you click OK. Are you sure?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.citations.empty.description"
-msgstr "Las citas analizadas están vacías. Por favor use el boton de arriba para parsear y enriquecer las citas."
+msgstr "Parsed citations are empty. Please use the button above to parse and enrich the citations."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.button"
-msgstr "Procesar"
+msgstr "Process"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.label"
-msgstr "Referencias analizadas"
+msgstr "Parsed references"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.description"
-msgstr "Por favor, utilice el botón de la derecha para analizar las referencias en diferentes partes.<br/>Despues de extraer los DOIs, los metadatos adicionales seran adquiridos de sitios web externos y se mostraran a continuacion.<br/>La presentacion de estos metadatos se hara automaticamente, cuando esta presentacion sea publicada y reciba un DOI."
+msgstr "Please use the button at the right to parse the references into different parts.<br/>After extracting DOIs, extra metadata will be acquired from external websites and shown below.<br/>Submission of this metadata will be done automatically, when this submission is published and received a DOI."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
-msgstr "Las citas actuales analizadas se sobreescribirán si hace clic en OK. Todas sus modificaciones se perderan. ¿Está seguro?"
+msgstr "The current parsed citations will be overwritten if you click OK. All your modifications will be lost. Are you sure?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.author.add.button"
-msgstr "Añadir Autor"
+msgstr "Add Author"
 
 msgid "plugins.generic.optimetaCitationsPlugin.author.remove.question"
-msgstr "¿Seguro que quiere eliminar este autor?"
+msgstr "Are you sure you want to delete this author?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
-msgstr "Las citas han sido actualizadas."
+msgstr "The citations have been updated."
 
 msgid "plugins.generic.optimetaCitations.settings.description"
-msgstr "Agregue alguna descripcion aqui"
+msgstr "Add some description here"
 
 msgid "plugins.generic.optimetaCitations.settings.form.saved"
-msgstr "Ajustes guardados con éxito"
+msgstr "Settings saved successfully"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_title"
 msgstr "Wikidata"
@@ -75,10 +81,10 @@ msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url"
 msgstr "Wikidata api url"
 
 msgid "plugins.generic.optimetaCitations.settings.open_citations_title"
-msgstr "Abrir citas"
+msgstr "Open Citations"
 
 msgid "plugins.generic.optimetaCitations.settings.open_citations_token"
-msgstr "Token de Github para depósitos de OpenCitations"
+msgstr "Github Token for OpenCitations deposits"
 
 msgid "plugins.generic.optimetaCitations.settings.open_citations_url"
-msgstr "URL de Github para depósitos de OpenCitations"
+msgstr "Github URL for OpenCitations deposits"

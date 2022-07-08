@@ -1,7 +1,7 @@
 <?php
 namespace Optimeta\Shared\OpenCitations\Model;
 
-class Citation
+class WorkCitation
 {
     public $citing_id;
     public $citing_publication_date;

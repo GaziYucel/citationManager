@@ -1,7 +1,7 @@
 <?php
 namespace Optimeta\Shared\OpenCitations\Model;
 
-class Work
+class WorkMetaData
 {
     public $id;
     public $title;

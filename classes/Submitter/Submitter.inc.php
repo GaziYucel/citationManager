@@ -10,9 +10,9 @@ class Submitter
 {
     /**
      * @desc Submit enriched citations and return citations
+     * @param string $submissionId
      * @param array $citationsParsed
      * @return array $citations
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function executeAndReturnCitations(string $submissionId, array $citationsParsed): array
     {

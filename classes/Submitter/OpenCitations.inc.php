@@ -3,8 +3,8 @@ namespace Optimeta\Citations\Submitter;
 
 use Optimeta\Citations\Helpers;
 use Optimeta\Citations\Model\WorkModel;
-use Optimeta\Shared\OpenCitations\Model\Citation;
-use Optimeta\Shared\OpenCitations\Model\Work;
+use Optimeta\Shared\OpenCitations\Model\WorkCitation;
+use Optimeta\Shared\OpenCitations\Model\WorkMetaData;
 use Optimeta\Shared\OpenCitations\OpenCitationsBase;
 
 class OpenCitations
@@ -52,7 +52,7 @@ class OpenCitations
 
     public function getWorkAsCsv(WorkModel $workModel): string
     {
-        $work = new Work();
+        $work = new WorkMetaData();
         $work->id = $workModel->doi;
         $work->title = '';
         $work->author = '';
@@ -84,7 +84,7 @@ class OpenCitations
     public function getCitationsAsCsv(array $citations): string
     {
         $names = '';
-        foreach (new Citation() as $name => $value) {
+        foreach (new WorkCitation() as $name => $value) {
             $names .= '"' . str_replace('"', '\"', $name) . '",';
         }
         $names = trim($names, ',');
@@ -92,7 +92,7 @@ class OpenCitations
 
         $values = '';
         foreach ($citations as $index => $row) {
-            $citation = new Citation();
+            $citation = new WorkCitation();
             $citation->cited_id = '';
             $citation->cited_publication_date = '';
             $citation->citing_id = '';
