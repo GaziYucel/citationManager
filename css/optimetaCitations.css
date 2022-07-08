@@ -11,11 +11,6 @@
  * @brief Main stylesheet for the plugin.
  */
 
-#optimetaCitations .header table td:last-of-type {
-	text-align: end;
-	vertical-align: bottom;
-}
-
 #optimetaCitations .pkpForm {
 	border: 0 !important;
 }
@@ -86,24 +81,24 @@
 
 .optimetaRow { border-bottom: 1px solid #eee; }
 .optimetaRow div { line-height: 1.65rem; }
-.optimetaRow .optimetaButton {
+.optimetaButton {
 	display: inline-block;
 	color: #ffffff;
 	text-decoration: none;
 	padding: 0 .5em;
 	line-height: 20px;
 }
-.optimetaRow .optimetaButton span { display: block; }
-.optimetaRow .optimetaButtonGreen { background-color: #60a917; }
-.optimetaRow .optimetaButtonGrey { background-color: #cccccc; }
-.optimetaRow .optimetaButtonRed { background-color: #00ffff; }
-.optimetaRow .optimetaRawText {
+.optimetaButton span { display: block; }
+.optimetaButtonGreen { background-color: #60a917; }
+.optimetaButtonGrey { background-color: #cccccc; }
+.optimetaButtonRed { background-color: #00ffff; }
+.optimetaRawText {
 	font-size: 12px;
 	line-height: 14px;
 	padding: 3px 0;
 	border: 1px dotted #ccc;
 }
-.optimetaRow .optimetaTag {
+.optimetaTag {
 	background-color: #ededed;
 	padding: 0 .5em;
 	line-height: 20px;
@@ -130,4 +125,8 @@
 }
 .optimetaHide {
 	display: none !important;
+}
+
+.optimetaAlignRight {
+	text-align: end !important;
 }

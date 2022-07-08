@@ -148,11 +148,17 @@
     <div class="header">
         <table>
             <tr>
-                <td>
+                <td colspan="2">
                     <label class="pkpFormFieldLabel">{translate key="plugins.generic.optimetaCitationsPlugin.process.label"}</label> <br/>
                     <div class="pkpFormField__description">{translate key="plugins.generic.optimetaCitationsPlugin.process.description"}</div>
                 </td>
+            </tr>
+            <tr>
                 <td>
+                    <span class="optimetaButton optimetaButtonGrey">Wikidata</span>
+                    <span class="optimetaButton optimetaButtonGrey">OpenCitations</span>
+                </td>
+                <td class="optimetaAlignRight">
                     <a href="javascript:optimetaSubmitCitations()" id="buttonSubmit" class="pkpButton">Submit</a>
                     <a href="javascript:optimetaClearCitations()" id="buttonClear" class="pkpButton"
                        :class="(optimetaCitationsApp.optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitationsPlugin.clear.button"}</a>

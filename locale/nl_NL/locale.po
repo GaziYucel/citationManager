@@ -42,7 +42,7 @@ msgid "plugins.generic.optimetaCitationsPlugin.process.label"
 msgstr "Geparsed referenties"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.description"
-msgstr "Gebruik de knop aan de rechterkant om de referenties in verschillende delen te ontleden. Na het extraheren van DOI's, zullen extra metadata worden verkregen van externe websites en hieronder getoond worden. Indienen van deze metadata zal automatisch worden gedaan, wanneer deze indiening is gepubliceerd en een DOI heeft ontvangen."
+msgstr "Gebruik de knop aan de rechterkant om de referenties in verschillende delen te ontleden.<br/>Na het extraheren van DOI's, zullen extra metadata worden verkregen van externe websites en hieronder getoond worden.<br/>Indienen van deze metadata zal automatisch worden gedaan, wanneer deze indiening is gepubliceerd en een DOI heeft ontvangen."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
 msgstr "De huidige geparseerde citaten zullen worden overschreven als je op OK klikt. Al je wijzigingen zullen verloren gaan. Weet je het zeker?"

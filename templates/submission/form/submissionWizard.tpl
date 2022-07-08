@@ -150,12 +150,18 @@
     <div class="header">
         <table>
             <tr>
-                <td>
+                <td colspan="2">
                     <span class="label">{translate key="plugins.generic.optimetaCitationsPlugin.process.label"}</span> <br/>
                     <span class="description">{translate key="plugins.generic.optimetaCitationsPlugin.process.description"}</span>
                 </td>
+            </tr>
+            <tr>
                 <td>
-{*                    <a href="javascript:optimetaSubmitCitations()" id="buttonSubmit" class="pkpButton">Submit</a>*}
+                    <span class="optimetaButton optimetaButtonGrey">Wikidata</span>
+                    <span class="optimetaButton optimetaButtonGrey">OpenCitations</span>
+                </td>
+                <td class="optimetaAlignRight">
+                    {* <a href="javascript:optimetaSubmitCitations()" id="buttonSubmit" class="pkpButton">Submit</a> *}
                     <a href="javascript:optimetaClearCitations()" id="buttonClear" class="pkpButton"
                        :class="(optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitationsPlugin.clear.button"}</a>
                     <a href="javascript:optimetaProcessCitations()" id="buttonProcess" class="pkpButton">{translate key="plugins.generic.optimetaCitationsPlugin.process.button"}</a>

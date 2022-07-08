@@ -42,7 +42,7 @@ msgid "plugins.generic.optimetaCitationsPlugin.process.label"
 msgstr "Ayrıştırılmış referanslar"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.description"
-msgstr "Referansları farklı parçalara ayırmak için lütfen sağdaki düğmeyi kullanın. DOI'ler çıkarıldıktan sonra, harici web sitelerinden ekstra meta veriler elde edilecek ve aşağıda gösterilecektir. Bu meta verilerin gönderimi, bu gönderim yayınlandığında ve bir DOI aldığında otomatik olarak yapılacaktır."
+msgstr "Referansları farklı parçalara ayırmak için lütfen sağdaki düğmeyi kullanın.<br/>DOI'ler çıkarıldıktan sonra, harici web sitelerinden ekstra meta veriler elde edilecek ve aşağıda gösterilecektir.<br/>Bu meta verilerin gönderimi, bu gönderim yayınlandığında ve bir DOI aldığında otomatik olarak yapılacaktır."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
 msgstr "Tamam'a tıklarsanız mevcut ayrıştırılmış alıntıların üzerine yazılacaktır. Tüm değişiklikleriniz kaybolacaktır. Emin misiniz?"
