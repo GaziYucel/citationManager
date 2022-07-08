@@ -15,13 +15,14 @@ class WikiData
      * @return object
      * @throws GuzzleException
      */
-    public function getWikiDataItem(object $citation): object
+    public function getItem(object $citation): object
     {
+        $doi = Helpers::removeDoiOrgPrefixFromUrl($citation->doi);
         $wikiData = new WikiDataBase();
-        $wikiDataQid = $wikiData->getEntity(Helpers::removeDoiOrgPrefixFromUrl($citation->doi));
+        $wikiDataQid = $wikiData->getEntity($doi);
         $doiWD = '';
         if(!empty($wikiDataQid)) { $doiWD = $wikiData->getDoi($wikiDataQid); }
-        if(strtolower(Helpers::removeDoiOrgPrefixFromUrl($citation->doi)) == strtolower($doiWD)) {
+        if(strtolower($doi) == strtolower($doiWD)) {
             $citation->wikidata_qid = $wikiDataQid; }
 
         return $citation;

@@ -31,10 +31,6 @@ class PluginAPIHandler extends APIHandler
 {
     private $apiEndpoint = OPTIMETA_CITATIONS_API_ENDPOINT;
 
-    private $submissionId = '';
-    private $citationsRaw = '';
-    private $citations = [];
-
     private $responseBody = [
         'status' => 'ok',
         'message-type' => '',
@@ -51,6 +47,11 @@ class PluginAPIHandler extends APIHandler
                 [
                     'pattern' => $this->getEndpointPattern() . '/process',
                     'handler' => [$this, 'process'],
+                    'roles' => [ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR, ROLE_ID_ASSISTANT, ROLE_ID_REVIEWER, ROLE_ID_AUTHOR],
+                ],
+                [
+                    'pattern' => $this->getEndpointPattern() . '/submit',
+                    'handler' => [$this, 'submit'],
                     'roles' => [ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR, ROLE_ID_ASSISTANT, ROLE_ID_REVIEWER, ROLE_ID_AUTHOR],
                 ]
             ],
@@ -86,34 +87,76 @@ class PluginAPIHandler extends APIHandler
     public function process($slimeRequest, $response, $args)
     {
         $request = $this->getRequest();
+        $submissionId = '';
+        $citationsRaw = '';
+        $citationsOut = [];
 
         $this->responseBody['message-type'] = 'citations';
 
         // check if GET/POST filled
         if ($request->getUserVars() && sizeof($request->getUserVars()) > 0) {
             if(isset($request->getUserVars()['submissionId'])){
-                $this->submissionId = trim($request->getUserVars()['submissionId']);
+                $submissionId = trim($request->getUserVars()['submissionId']);
             }
             if(isset($request->getUserVars()['citationsRaw'])){
-                $this->citationsRaw = trim($request->getUserVars()['citationsRaw']);
+                $citationsRaw = trim($request->getUserVars()['citationsRaw']);
             }
         }
 
         // citationsRaw empty, response empty array
-        if (strlen($this->citationsRaw) === 0) {
-            $this->responseBody['status'] = 'ok';
+        if (strlen($citationsRaw) === 0) {
             return $response->withJson($this->responseBody, 200);
         }
 
         // parse citations
-        $parser = new Parser($this->citationsRaw);
-        $this->citations = $parser->getCitations();
+        $parser = new Parser();
+        $citationsOut = $parser->executeAndReturnCitations($citationsRaw);
 
         // enrich citations
-        $enricher = new Enricher($this->citations);
-        $this->citations = $enricher->getCitations();
+        $enricher = new Enricher();
+        $citationsOut = $enricher->executeAndReturnCitations($citationsOut);
 
-        $this->responseBody['message'] = $this->citations;
+        $this->responseBody['message'] = $citationsOut;
+        return $response->withJson($this->responseBody, 200);
+    }
+
+    /**
+     * @desc
+     * @param $slimeRequest
+     * @param $response
+     * @param $args
+     * @return mixed
+     * @throws GuzzleException
+     */
+    public function submit($slimeRequest, $response, $args)
+    {
+        $request = $this->getRequest();
+        $submissionId = '';
+        $citationsIn = [];
+        $citationsOut = [];
+
+        $this->responseBody['message-type'] = 'citations';
+
+        // check if GET/POST filled
+        if ($request->getUserVars() && sizeof($request->getUserVars()) > 0) {
+            if(isset($request->getUserVars()['submissionId'])){
+                $submissionId = trim($request->getUserVars()['submissionId']);
+            }
+            if(isset($request->getUserVars()['citations'])){
+                $citationsIn = json_decode(trim($request->getUserVars()['citations']), true);
+            }
+        }
+
+        // citations empty, response empty array
+        if (empty($citationsIn)) {
+            return $response->withJson($this->responseBody, 200);
+        }
+
+        // submit citations
+        $submitter = new Submitter();
+        $citationsOut = $submitter->executeAndReturnCitations($submissionId, $citationsIn);
+
+        $this->responseBody['message'] = $citationsOut;
         return $response->withJson($this->responseBody, 200);
     }
 }

@@ -41,7 +41,7 @@ class TaskScheduler extends ScheduledTask
     {
         if (!$this->plugin) return false;
 
-        error_log('task executed at ' . date('yyyy-MM-dd hh:mm:ss'));
+        error_log('task executed at ' . date('Y-m-d H:i:s'));
 
         return true;
     }

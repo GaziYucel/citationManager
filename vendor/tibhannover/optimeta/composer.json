@@ -6,11 +6,11 @@
   "keywords": ["Optimeta", "Shared"],
   "require": {
     "php": ">=7.3",
-    "guzzlehttp/guzzle": "^7.4.1"
+    "guzzlehttp/guzzle": "^7.4.5"
   },
   "autoload": {
     "psr-4": {
-      "Optimeta\\Shared\\":"/"
+      "Optimeta\\Shared\\":"/src/"
     }
   }
 }

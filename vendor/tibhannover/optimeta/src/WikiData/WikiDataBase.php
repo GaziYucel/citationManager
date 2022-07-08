@@ -3,27 +3,10 @@ namespace Optimeta\Shared\WikiData;
 
 use GuzzleHttp\Exception\GuzzleException;
 use Http\Client\Exception;
+use Optimeta\Shared\OptimetaBase;
 
-class WikiDataBase
+class WikiDataBase extends OptimetaBase
 {
-    /**
-     * @desc User agent name to identify our bot
-     * @var string
-     */
-    protected $userAgent = 'OJS Optimeta Plugin';
-
-    /**
-     * @desc The bots username
-     * @var string
-     */
-    protected $username = '';
-
-    /**
-     * @desc The bots password
-     * @var string
-     */
-    protected $password = '';
-
     /**
      * @desc Whether the bot is logged in
      * @var bool
@@ -31,32 +14,14 @@ class WikiDataBase
     protected $isLoggedIn = false;
 
     /**
-     * @desc Token for editing (see http://www.mediawiki.org/wiki/Manual:Edit_token)
-     * @var string
-     */
-    protected $token = '';
-
-    /**
      * @desc The url to the api
      * @var string
      */
     protected $url = 'https://www.wikidata.org/w/api.php';
 
-    /**
-     * @desc Contains the last error the bot had.
-     * @var string
-     */
-    protected $lastError;
-
-    /**
-     * @desc GuzzleHttp object
-     * @var object (class)
-     */
-    protected $client;
-
     public function __construct()
     {
-        $this->client = new \GuzzleHttp\Client();
+        parent::__construct();
     }
 
     /**
@@ -105,21 +70,12 @@ class WikiDataBase
      * @returns mixed - Returns the account's token on success or false on failure.
      * @throws GuzzleException
      */
-    public function getToken($force = false)
+    public function getToken(bool $force = false)
     {
         if ($this->token != null && $force == false)
             return $this->token;
         $x = $this->query(array('action' => 'query', 'meta' => 'tokens'));
         return $x['query']['tokens']['csrftoken'];
-    }
-
-    /**
-     * @desc Returns the last error the script ran into.
-     * @returns string
-     */
-    public function getLastError(): string
-    {
-        return $this->lastError;
     }
 
     /**

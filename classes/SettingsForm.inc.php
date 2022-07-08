@@ -37,7 +37,9 @@ class SettingsForm extends \Form
     private $settings = [
         'optimetaCitations_wikidata_username',
         'optimetaCitations_wikidata_password',
-        'optimetaCitations_wikidata_api_url'
+        'optimetaCitations_wikidata_api_url',
+        'optimetaCitations_open_citations_url',
+        'optimetaCitations_open_citations_token'
     ];
 
     /**

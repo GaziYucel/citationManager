@@ -16,6 +16,6 @@
 <scheduled_tasks>
 	<task class="plugins.generic.optimetaCitations.classes.TaskScheduler.TaskScheduler">
 		<descr>Submit citations to external Open Access Websites</descr>
-		<frequency minute="*/15"/>
+		<frequency minute="*/5"/>
 	</task>
 </scheduled_tasks>
