@@ -12,7 +12,7 @@ Download & Installation
 ---------------------
 1. Download the plugin from https://github.com/TIBHannover/optimetaCitations and unzip the folder into `/plugins/generic/optimetaCitations` in OJS
 2. Activate the plugin in the OJS plug-in settings
-3. Fill in your username/password for all Open Access websites where you are registered (registration is on external sites)(**not yet implemented**)
+3. Fill in your authentication info (such as username/password or tokens) for all Open Access websites where you are registered (registration is on external sites, see below)
 
 Screenshot(s)
 ---------------------
@@ -40,3 +40,25 @@ Please note that this project is released with a [Contributor Code of Conduct](C
 License
 ---------------------
 This project is published under GNU General Public License, Version 3.
+
+Registering at external sites
+-
+
+**OpenCitations.org CROCI**
+
+Depositing at OpenCitations will be done through GitHub issues of OpenCitations. For this you need a GitHub account, if you have none please register one through https://github.com/signup.
+
+1. Login at https://github.com and navigate to https://github.com/settings/tokens
+2. Click "Generate new token" button at the right top
+3. At the input field "Note" typ in "OpenCitations CROCI"
+4. Select "No expiration" at Expiration selectbox
+5. Check the checkbox "repo"; leave all other checkboxes unchecked
+6. Click on the button "Generate token"
+7. You will be provided the token; save this token, as you will not shown this again
+8. Login to your OJS with an administrator account
+9. Navigate to Settings > Website > Plugins and find "Optimeta Citations Plugin" on the page
+10. Click on the arrow at the left and click "Settings"
+11. Fill in the address "https://github.com/GaziYucel/open_citations_croci_depot"
+12. Fill in your token, which you generated above
+13. Click Save
+
