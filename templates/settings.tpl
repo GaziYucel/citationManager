@@ -42,7 +42,6 @@
         {/fbvFormSection}
         <!-- OpenCitations -->
 
-        {*
         <!-- Wikidata -->
         {fbvFormSection label="plugins.generic.optimetaCitations.settings.wikidata_title"}
             {fbvElement
@@ -73,7 +72,6 @@
             }
         {/fbvFormSection}
         <!-- Wikidata -->
-        *}
 
     {/fbvFormArea}
 
