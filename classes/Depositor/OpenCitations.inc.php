@@ -18,15 +18,15 @@ class OpenCitations
         $citationsOut = $citations;
 
         $work = new WorkModel();
-//        $work = $this->getCurrentSubmission($submissionId);
+        $work = $this->getSubmission($submissionId);
 
         $plugin = new \OptimetaCitationsPlugin();
         $request = $plugin->getRequest();
         $context = $request->getContext();
 
         $openCitations = new OpenCitationsBase();
-        $openCitations->setUrl($plugin->getSetting($context->getId(), 'optimetaCitations_open_citations_url'));
-        $openCitations->setToken($plugin->getSetting($context->getId(), 'optimetaCitations_open_citations_token'));
+        $openCitations->setUrl($plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_URL));
+        $openCitations->setToken($plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN));
 
         $title = $this->titleSyntax;
         $title = str_replace('{{domain}}', $_SERVER['SERVER_NAME'], $title);
@@ -38,12 +38,12 @@ class OpenCitations
             $this->separator . PHP_EOL .
             $this->getCitationsAsCsv($citations);
 
-        $openCitations->depositCitations($title, $body);
+        //$openCitations->depositCitations($title, $body);
 
         return $citationsOut;
     }
 
-    public function getCurrentSubmission(string $submissionId): object
+    public function getSubmission(string $submissionId): WorkModel
     {
         $workModel = new WorkModel();
 

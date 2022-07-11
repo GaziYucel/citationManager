@@ -19,26 +19,25 @@
 
         <!-- OpenCitations -->
         {fbvFormSection label="plugins.generic.optimetaCitations.settings.open_citations_title"}
-
             <p>
-            {fbvElement
-                type="text"
-                id="optimetaCitations_open_citations_url"
-                value=$optimetaCitations_open_citations_url
-                label="plugins.generic.optimetaCitations.settings.open_citations_url"
-                description="plugins.generic.optimetaCitations.settings.open_citations_url"
-                placeholder="plugins.generic.optimetaCitations.settings.open_citations_url"
-            }
+                {fbvElement
+                    type="text"
+                    id="{$smarty.const.OPTIMETA_CITATIONS_OPEN_CITATIONS_URL}"
+                    value=${$smarty.const.OPTIMETA_CITATIONS_OPEN_CITATIONS_URL}
+                    label="plugins.generic.optimetaCitations.settings.open_citations_url"
+                    description="plugins.generic.optimetaCitations.settings.open_citations_url"
+                    placeholder="plugins.generic.optimetaCitations.settings.open_citations_url"
+                }
             </p>
             <p>
-            {fbvElement
-                type="text"
-                id="optimetaCitations_open_citations_token"
-                value=$optimetaCitations_open_citations_token
-                label="plugins.generic.optimetaCitations.settings.open_citations_token"
-                description="plugins.generic.optimetaCitations.settings.open_citations_token"
-                placeholder="plugins.generic.optimetaCitations.settings.open_citations_token"
-            }
+                {fbvElement
+                    type="text"
+                    id="{$smarty.const.OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN}"
+                    value=${$smarty.const.OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN}
+                    label="plugins.generic.optimetaCitations.settings.open_citations_token"
+                    description="plugins.generic.optimetaCitations.settings.open_citations_token"
+                    placeholder="plugins.generic.optimetaCitations.settings.open_citations_token"
+                }
             </p>
         {/fbvFormSection}
         <!-- OpenCitations -->
@@ -48,8 +47,8 @@
         {fbvFormSection label="plugins.generic.optimetaCitations.settings.wikidata_title"}
             {fbvElement
                 type="text"
-                id="optimetaCitations_wikidata_username"
-                value=$optimetaCitations_wikidata_username
+                id="{$smarty.const.OPTIMETA_CITATIONS_WIKIDATA_USERNAME}"
+                value=${$smarty.const.OPTIMETA_CITATIONS_WIKIDATA_USERNAME}
                 label="plugins.generic.optimetaCitations.settings.wikidata_username"
                 description="plugins.generic.optimetaCitations.settings.wikidata_username"
                 placeholder="plugins.generic.optimetaCitations.settings.wikidata_username"
@@ -57,8 +56,8 @@
             <br/>
             {fbvElement
                 type="text"
-                id="optimetaCitations_wikidata_password"
-                value=$optimetaCitations_wikidata_password
+                id="{$smarty.const.OPTIMETA_CITATIONS_WIKIDATA_PASSWORD}"
+                value=${$smarty.const.OPTIMETA_CITATIONS_WIKIDATA_PASSWORD}
                 label="plugins.generic.optimetaCitations.settings.wikidata_password"
                 description="plugins.generic.optimetaCitations.settings.wikidata_password"
                 placeholder="plugins.generic.optimetaCitations.settings.wikidata_password"
@@ -66,8 +65,8 @@
             <br/>
             {fbvElement
                 type="text"
-                id="optimetaCitations_wikidata_api_url"
-                value=$optimetaCitations_wikidata_api_url
+                id="{$smarty.const.OPTIMETA_CITATIONS_WIKIDATA_API_URL}"
+                value=${$smarty.const.OPTIMETA_CITATIONS_WIKIDATA_API_URL}
                 label="plugins.generic.optimetaCitations.settings.wikidata_api_url"
                 description="plugins.generic.optimetaCitations.settings.wikidata_api_url"
                 placeholder="plugins.generic.optimetaCitations.settings.wikidata_api_url"

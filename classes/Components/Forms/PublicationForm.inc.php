@@ -31,9 +31,6 @@ class PublicationForm extends FormComponent
     /** @copydoc FormComponent::$successMessage */
     public $successMessage = '';
 
-    private $citationsKeyDb = OPTIMETA_CITATIONS_PARSED_KEY_DB;
-    private $citationsKeyForm = OPTIMETA_CITATIONS_PARSED_KEY_FORM;
-
     /**
      * Constructor
      *
@@ -45,10 +42,10 @@ class PublicationForm extends FormComponent
         $this->action = $action;
         $this->successMessage = $successMessage;
 
-        $value = $publication->getData($this->citationsKeyDb);
+        $value = $publication->getData(OPTIMETA_CITATIONS_PARSED_KEY_DB);
 
         $this->addField(new FieldText(
-            $this->citationsKeyForm, [
+            OPTIMETA_CITATIONS_PARSED_KEY_FORM, [
                 'label' => '',
                 'description' => '',
                 'isMultilingual' => false,

@@ -35,12 +35,11 @@ class SettingsForm extends \Form
      * @var string[]
      */
     private $settings = [
-        'optimetaCitations_wikidata_username',
-        'optimetaCitations_wikidata_password',
-        'optimetaCitations_wikidata_api_url',
-        'optimetaCitations_open_citations_url',
-        'optimetaCitations_open_citations_token'
-    ];
+        OPTIMETA_CITATIONS_WIKIDATA_USERNAME,
+        OPTIMETA_CITATIONS_WIKIDATA_PASSWORD,
+        OPTIMETA_CITATIONS_WIKIDATA_API_URL,
+        OPTIMETA_CITATIONS_OPEN_CITATIONS_URL,
+        OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN ];
 
     /**
      * @copydoc Form::__construct()
@@ -57,10 +56,8 @@ class SettingsForm extends \Form
     }
 
     /**
+     * @desc Load settings already saved in the database Settings are stored by context, so that each journal or press can have different settings.
      * @copydoc Form::initData()
-     * Load settings already saved in the database
-     * Settings are stored by context, so that each journal or press
-     * can have different settings.
      */
     public function initData() {
         $context = Application::get()->getRequest()->getContext();
@@ -73,8 +70,8 @@ class SettingsForm extends \Form
     }
 
     /**
+     * @desc Load data that was submitted with the form
      * @copydoc Form::readInputData()
-     * Load data that was submitted with the form
      */
     public function readInputData() {
         foreach($this->settings as $key){
@@ -84,11 +81,8 @@ class SettingsForm extends \Form
     }
 
     /**
+     * @desc Fetch any additional data needed for your form. Data assigned to the form using $this->setData() during the initData() or readInputData() methods will be passed to the template.
      * @copydoc Form::fetch()
-     * Fetch any additional data needed for your form.
-     * Data assigned to the form using $this->setData() during the
-     * initData() or readInputData() methods will be passed to the
-     * template.
      */
     public function fetch($request, $template = null, $display = false) {
         // Pass the plugin name to the template so that it can be
@@ -100,9 +94,8 @@ class SettingsForm extends \Form
     }
 
     /**
+     * @desc Save the settings
      * @copydoc Form::execute()
-     * Save the settings
-     *
      * @return null|mixed
      */
     public function execute(...$functionArgs) {

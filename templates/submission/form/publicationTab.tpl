@@ -113,7 +113,7 @@
         optimetaLoadingImage(true);
 
         $.ajax({
-            url: '{$pluginApiUrl}/submit',
+            url: '{$pluginApiUrl}/deposit',
             method: 'POST',
             data: {
                 submissionId: {$submissionId},

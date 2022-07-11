@@ -113,7 +113,7 @@
         optimetaLoadingImage(true);
 
         $.ajax({
-            url: '{$pluginApiUrl}/submit',
+            url: '{$pluginApiUrl}/deposit',
             method: 'POST',
             data: {
                 submissionId: {$submissionId},
@@ -308,7 +308,7 @@
         </div>
 
         <div>
-            <textarea name="{$citationsKeyForm}" style="display: none;">{{ citationsJsonComputed }}</textarea>
+            <textarea name="{$smarty.const.OPTIMETA_CITATIONS_PARSED_KEY_FORM}" style="display: none;">{{ citationsJsonComputed }}</textarea>
         </div>
 
     </div>
