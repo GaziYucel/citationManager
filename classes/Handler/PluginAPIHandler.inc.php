@@ -29,8 +29,6 @@ use Optimeta\Citations\Enricher\Enricher;
 
 class PluginAPIHandler extends APIHandler
 {
-    private $apiEndpoint = OPTIMETA_CITATIONS_API_ENDPOINT;
-
     private $responseBody = [
         'status' => 'ok',
         'message-type' => '',
@@ -40,7 +38,7 @@ class PluginAPIHandler extends APIHandler
 
     public function __construct()
     {
-        $this->_handlerPath = $this->apiEndpoint;
+        $this->_handlerPath = OPTIMETA_CITATIONS_API_ENDPOINT;
 
         $this->_endpoints = [
             'POST' => [
