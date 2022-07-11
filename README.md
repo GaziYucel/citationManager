@@ -44,7 +44,8 @@ This project is published under GNU General Public License, Version 3.
 Registering at external sites
 ---------------------
 
-**OpenCitations.org CROCI**
+Registering for OpenCitations.org CROCI
+---------------------
 
 Depositing at OpenCitations will be done through GitHub issues of OpenCitations. For this you need a GitHub account, if you have none please register one through https://github.com/signup.
 
