@@ -43,13 +43,21 @@ describe('OPTIMETA Citations Plugin Configuration', function () {
     cy.get('a[id^="component-grid-settings-plugins-settingsplugingrid-category-generic-row-optimetacitationsplugin-settings-button"]').click();
 
     // Fill out settings form
-    cy.get('form[id="optimetaCitationsSettings"] input[name^="optimetaCitations_wikidata_username"]')
+    // Open Citations
+    cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Open_Citations_Url"]')
+        .clear()
+        .type('https://opencitations.url');
+    cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Open_Citations_Token"]')
+        .clear()
+        .type('opencitations-token');
+    // Wikidata
+    cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Wikidata_Username"]')
       .clear()
       .type('wikidata-username');
-    cy.get('form[id="optimetaCitationsSettings"] input[name="optimetaCitations_wikidata_password"]')
+    cy.get('form[id="optimetaCitationsSettings"] input[name="OptimetaCitations_Wikidata_Password"]')
       .clear()
       .type('wikidata-password');
-      cy.get('form[id="optimetaCitationsSettings"] input[name="optimetaCitations_wikidata_api_url"]')
+    cy.get('form[id="optimetaCitationsSettings"] input[name="OptimetaCitations_Wikidata_Api_Url"]')
       .clear()
       .type('https://wikidata.url');
 
