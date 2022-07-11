@@ -42,10 +42,10 @@ class OptimetaBase
     protected $client;
 
     /**
-     * @desc Contains the last error
+     * @desc Contains the errors
      * @var string
      */
-    protected $lastError;
+    protected $errors;
 
     public function __construct()
     {
@@ -113,11 +113,11 @@ class OptimetaBase
     }
 
     /**
-     * @desc Returns the last error the script ran into.
+     * @desc Returns the errors the script ran into.
      * @returns string
      */
-    public function getLastError(): string
+    public function getErrors(): string
     {
-        return $this->lastError;
+        return $this->errors;
     }
 }

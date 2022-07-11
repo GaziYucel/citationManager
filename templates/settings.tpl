@@ -14,6 +14,37 @@
     {csrf}
 
     {fbvFormArea id="optimetaCitationsSettingsArea" title="plugins.generic.optimetaCitations.settings.description"}
+
+        <br/>
+
+        <!-- OpenCitations -->
+        {fbvFormSection label="plugins.generic.optimetaCitations.settings.open_citations_title"}
+
+            <p>
+            {fbvElement
+                type="text"
+                id="optimetaCitations_open_citations_url"
+                value=$optimetaCitations_open_citations_url
+                label="plugins.generic.optimetaCitations.settings.open_citations_url"
+                description="plugins.generic.optimetaCitations.settings.open_citations_url"
+                placeholder="plugins.generic.optimetaCitations.settings.open_citations_url"
+            }
+            </p>
+            <p>
+            {fbvElement
+                type="text"
+                id="optimetaCitations_open_citations_token"
+                value=$optimetaCitations_open_citations_token
+                label="plugins.generic.optimetaCitations.settings.open_citations_token"
+                description="plugins.generic.optimetaCitations.settings.open_citations_token"
+                placeholder="plugins.generic.optimetaCitations.settings.open_citations_token"
+            }
+            </p>
+        {/fbvFormSection}
+        <!-- OpenCitations -->
+
+        {*
+        <!-- Wikidata -->
         {fbvFormSection label="plugins.generic.optimetaCitations.settings.wikidata_title"}
             {fbvElement
                 type="text"
@@ -42,28 +73,10 @@
                 placeholder="plugins.generic.optimetaCitations.settings.wikidata_api_url"
             }
         {/fbvFormSection}
-
-        {fbvFormSection label="plugins.generic.optimetaCitations.settings.open_citations_title"}
-
-            {fbvElement
-                type="text"
-                id="optimetaCitations_open_citations_url"
-                value=$optimetaCitations_open_citations_url
-                label="plugins.generic.optimetaCitations.settings.open_citations_url"
-                description="plugins.generic.optimetaCitations.settings.open_citations_url"
-                placeholder="plugins.generic.optimetaCitations.settings.open_citations_url"
-            }
-            <br/>
-            {fbvElement
-                type="text"
-                id="optimetaCitations_open_citations_token"
-                value=$optimetaCitations_open_citations_token
-                label="plugins.generic.optimetaCitations.settings.open_citations_token"
-                description="plugins.generic.optimetaCitations.settings.open_citations_token"
-                placeholder="plugins.generic.optimetaCitations.settings.open_citations_token"
-            }
-        {/fbvFormSection}
+        <!-- Wikidata -->
+        *}
 
     {/fbvFormArea}
+
     {fbvFormButtons submitText="common.save"}
 </form>

@@ -45,11 +45,9 @@ class GitHubBase extends OptimetaBase
                     'labels' => ['Deposit']
                 ]
             ]);
-
-            $this->lastError = var_export($response, true);
         }
         catch(\Exception $ex){
-            $this->lastError = $ex;
+            $this->errors = $ex;
         }
 
         return true;
