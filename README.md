@@ -42,7 +42,7 @@ License
 This project is published under GNU General Public License, Version 3.
 
 Registering at external sites
--
+---------------------
 
 **OpenCitations.org CROCI**
 
