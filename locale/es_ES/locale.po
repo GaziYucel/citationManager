@@ -27,7 +27,7 @@ msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
 msgstr "Citations"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.button"
-msgstr "Submit"
+msgstr "Deposit"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.question"
 msgstr "Are you sure you want to submit the citations to the predefined external websites?"
