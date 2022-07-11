@@ -47,7 +47,7 @@ class WikiDataBase extends OptimetaBase
             } elseif ($return['login']['result'] == 'NeedToken') {
                 $post['lgtoken'] = $return['login']['token'];
             } else {
-                $this->lastError = $return['login']['code'];
+                $this->errors = $return['login']['code'];
                 return false;
             }
         }
@@ -60,7 +60,7 @@ class WikiDataBase extends OptimetaBase
     {
         $this->query(array('action' => 'logout'));
         $this->token = null;
-        $this->lastError = null;
+        $this->errors = null;
         $this->isLoggedIn = false;
     }
 

@@ -63,7 +63,7 @@ msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
 msgstr "The citations have been updated."
 
 msgid "plugins.generic.optimetaCitations.settings.description"
-msgstr "Add some description here"
+msgstr "Fill in your authentication info for Open Access websites where you want to deposit citations"
 
 msgid "plugins.generic.optimetaCitations.settings.form.saved"
 msgstr "Settings saved successfully"
@@ -81,7 +81,7 @@ msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url"
 msgstr "Wikidata api url"
 
 msgid "plugins.generic.optimetaCitations.settings.open_citations_title"
-msgstr "Open Citations"
+msgstr "Open Citations CROCI <a href='https://github.com/TIBHannover/optimetaCitations/blob/main/README.md#registering-for-opencitationsorg-croci' target='_blank'><i class='fa fa-question-circle' aria-hidden='true'></i></a>"
 
 msgid "plugins.generic.optimetaCitations.settings.open_citations_token"
 msgstr "Github Token for OpenCitations deposits"
