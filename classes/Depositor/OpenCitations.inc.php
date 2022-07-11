@@ -1,5 +1,5 @@
 <?php
-namespace Optimeta\Citations\Submitter;
+namespace Optimeta\Citations\Depositor;
 
 use Optimeta\Citations\Helpers;
 use Optimeta\Citations\Model\WorkModel;

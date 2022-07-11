@@ -17,10 +17,10 @@ namespace Optimeta\Citations\Handler;
 import('lib.pkp.classes.security.authorization.PolicySet');
 import('lib.pkp.classes.security.authorization.RoleBasedHandlerOperationPolicy');
 import('plugins.generic.optimetaCitations.classes.Enricher.Enricher');
-import('plugins.generic.optimetaCitations.classes.Submitter.Submitter');
+import('plugins.generic.optimetaCitations.classes.Depositor.Depositor');
 
 use APIHandler;
-use Optimeta\Citations\Submitter\Submitter;
+use Optimeta\Citations\Depositor\Depositor;
 use RoleBasedHandlerOperationPolicy;
 use PolicySet;
 use GuzzleHttp\Exception\GuzzleException;
@@ -50,8 +50,8 @@ class PluginAPIHandler extends APIHandler
                     'roles' => [ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR, ROLE_ID_ASSISTANT, ROLE_ID_REVIEWER, ROLE_ID_AUTHOR],
                 ],
                 [
-                    'pattern' => $this->getEndpointPattern() . '/submit',
-                    'handler' => [$this, 'submit'],
+                    'pattern' => $this->getEndpointPattern() . '/deposit',
+                    'handler' => [$this, 'deposit'],
                     'roles' => [ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR, ROLE_ID_ASSISTANT, ROLE_ID_REVIEWER, ROLE_ID_AUTHOR],
                 ]
             ],
@@ -128,7 +128,7 @@ class PluginAPIHandler extends APIHandler
      * @return mixed
      * @throws GuzzleException
      */
-    public function submit($slimeRequest, $response, $args)
+    public function deposit($slimeRequest, $response, $args)
     {
         $request = $this->getRequest();
         $submissionId = '';
@@ -153,8 +153,8 @@ class PluginAPIHandler extends APIHandler
         }
 
         // submit citations
-        $submitter = new Submitter();
-        $citationsOut = $submitter->executeAndReturnCitations($submissionId, $citationsIn);
+        $depositor = new Depositor();
+        $citationsOut = $depositor->executeAndReturnCitations($submissionId, $citationsIn);
 
         $this->responseBody['message'] = $citationsOut;
         return $response->withJson($this->responseBody, 200);

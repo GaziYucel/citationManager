@@ -26,10 +26,10 @@ msgstr "Add a publication statement that you would like to appear on every publi
 msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
 msgstr "Citations"
 
-msgid "plugins.generic.optimetaCitationsPlugin.submit.button"
+msgid "plugins.generic.optimetaCitationsPlugin.deposit.button"
 msgstr "Submit"
 
-msgid "plugins.generic.optimetaCitationsPlugin.submit.question"
+msgid "plugins.generic.optimetaCitationsPlugin.deposit.question"
 msgstr "Are you sure you want to submit the citations to the predefined external websites?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.clear.button"

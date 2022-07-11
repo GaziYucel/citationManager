@@ -1,12 +1,12 @@
 <?php
-namespace Optimeta\Citations\Submitter;
+namespace Optimeta\Citations\Depositor;
 
 import('plugins.generic.optimetaCitations.classes.Helpers');
 import('plugins.generic.optimetaCitations.classes.Model.AuthorModel');
 import('plugins.generic.optimetaCitations.classes.Model.WorkModel');
-import('plugins.generic.optimetaCitations.classes.Submitter.OpenCitations');
+import('plugins.generic.optimetaCitations.classes.Depositor.OpenCitations');
 
-class Submitter
+class Depositor
 {
     /**
      * @desc Submit enriched citations and return citations
