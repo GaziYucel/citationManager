@@ -38,7 +38,7 @@ class OpenCitations
             $this->separator . PHP_EOL .
             $this->getCitationsAsCsv($citations);
 
-        //$openCitations->depositCitations($title, $body);
+        $openCitations->depositCitations($title, $body);
 
         return $citationsOut;
     }
