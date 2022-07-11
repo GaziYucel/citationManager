@@ -1,15 +1,15 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/ScheduledTasks/Submitter.inc.php
+ * @file plugins/generic/optimetaCitations/classes/ScheduledTasks/DepositorTask.inc.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class Submitter
+ * @class DepositorTask
  * @ingroup
  *
- * @brief Main TaskScheduler class
+ * @brief Main DepositorTask class
  *
  */
 namespace Optimeta\Citations\ScheduledTasks;
@@ -20,7 +20,7 @@ use OptimetaCitationsPlugin;
 use PluginRegistry;
 use ScheduledTask;
 
-class Submitter extends ScheduledTask
+class DepositorTask extends ScheduledTask
 {
     /**
      * @var $plugin OptimetaCitationsPlugin
