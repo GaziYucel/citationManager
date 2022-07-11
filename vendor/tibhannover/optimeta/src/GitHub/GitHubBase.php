@@ -6,10 +6,16 @@ use Optimeta\Shared\OptimetaBase;
 class GitHubBase extends OptimetaBase
 {
     /**
-     * @desc The url to the api
+     * @desc The base url to the public issues
      * @var string
      */
-    protected $baseUrlIssues = 'https://api.github.com/repos/%s/%s/issues';
+    protected $baseUrlIssues = 'https://github.com/%s/%s/issues';
+
+    /**
+     * @desc The base url to the api issues
+     * @var string
+     */
+    protected $baseApiUrlIssues = 'https://api.github.com/repos/%s/%s/issues';
 
     public function __construct()
     {
@@ -48,6 +54,7 @@ class GitHubBase extends OptimetaBase
         }
         catch(\Exception $ex){
             $this->errors = $ex;
+            return false;
         }
 
         return true;
