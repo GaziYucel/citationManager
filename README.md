@@ -58,7 +58,7 @@ Depositing at OpenCitations will be done through GitHub issues of OpenCitations.
 8. Login to your OJS with an administrator account
 9. Navigate to Settings > Website > Plugins and find "Optimeta Citations Plugin" on the page
 10. Click on the arrow at the left and click "Settings"
-11. Fill in the address "https://github.com/GaziYucel/open_citations_croci_depot"
+11. Fill in the address "https://api.github.com/repos/GaziYucel/openCitations_deposit/issues"
 12. Fill in your token, which you generated above
 13. Click Save
 
