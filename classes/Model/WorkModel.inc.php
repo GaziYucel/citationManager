@@ -232,14 +232,6 @@ class WorkModel
 
     /**
      * @var string
-     * @desc The remainder of raw citation after parsing
-     * @see
-     * @example
-     */
-    public $rawRemainder;
-
-    /**
-     * @var string
      * @desc The unchanged raw citation
      * @see
      * @example

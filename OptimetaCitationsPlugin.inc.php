@@ -37,10 +37,12 @@ import('plugins.generic.optimetaCitations.classes.Handler.PluginAPIHandler');
 import('plugins.generic.optimetaCitations.classes.SettingsForm');
 import('plugins.generic.optimetaCitations.classes.Model.AuthorModel');
 import('plugins.generic.optimetaCitations.classes.Model.WorkModel');
+import('plugins.generic.optimetaCitations.classes.Model.CitationModelHelpers');
 
 use Optimeta\Citations\Components\Forms\PublicationForm;
 use Optimeta\Citations\Dao\PluginDAO;
 use Optimeta\Citations\Handler\PluginAPIHandler;
+use Optimeta\Citations\Model\CitationModelHelpers;
 use Optimeta\Citations\SettingsForm;
 
 class OptimetaCitationsPlugin extends GenericPlugin
@@ -157,7 +159,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $this->templateParameters['submissionId'] = $submissionId;
 
         $pluginDAO = new PluginDAO();
-        $citationsParsed = $pluginDAO->getCitations($publication);
+        $citationsParsed = json_encode(CitationModelHelpers::migrate($pluginDAO->getCitations($publication)));
         $this->templateParameters['citationsParsed'] = $citationsParsed;
 
         $templateMgr->assign($this->templateParameters);
@@ -208,7 +210,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $this->templateParameters['submissionId'] = $submissionId;
 
         $pluginDAO = new PluginDAO();
-        $citationsParsed = $pluginDAO->getCitations($publication);
+        $citationsParsed = json_encode(CitationModelHelpers::migrate($pluginDAO->getCitations($publication)));
         $this->templateParameters['citationsParsed'] = $citationsParsed;
 
         $templateMgr->assign($this->templateParameters);
