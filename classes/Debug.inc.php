@@ -1,4 +1,5 @@
 <?php
+// import('plugins.generic.optimetaCitations.classes.Debug'); $debug = new \Optimeta\Citations\Debug();
 namespace Optimeta\Citations;
 
 class Debug

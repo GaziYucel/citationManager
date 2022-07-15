@@ -48,9 +48,6 @@ class OpenCitations
      */
     public function submitWork(string $submissionId, array $citations): string
     {
-        import('plugins.generic.optimetaCitations.classes.Debug');
-        $debug = new \Optimeta\Citations\Debug();
-
         $plugin = new \OptimetaCitationsPlugin();
         $request = $plugin->getRequest();
         $context = $request->getContext();
@@ -170,11 +167,12 @@ class OpenCitations
             $work = new WorkMetaData();
 
             if(!empty($row['doi'])) $work->id .= 'doi:' . Helpers::removeDoiOrgPrefixFromUrl($row['doi']) . ' ';
-//            if(!empty($row['url'])) $work->id .= 'url:' . str_replace(' ', '', $row['url']) . ' ';
+            if(!empty($row['url'])) $work->id .= 'url:' . str_replace(' ', '', $row['url']) . ' ';
             if(!empty($row['urn'])) $work->id .= 'urn:' . str_replace(' ', '', $row['urn']) . ' ';
             $work->id = trim($work->id);
 
             $work->title = $row['title'];
+            if(!$row['$isProcessed']) $work->title = $row['raw'];
 
             foreach(json_decode($row['authors'], true) as $index2 => $author){
                 $work->author .= $author['name'];
@@ -194,11 +192,6 @@ class OpenCitations
             $work->type = $row['type'];
             $work->publisher = $row['venue_publisher'];
             $work->editor = '';
-
-            // add title if all values are empty
-            $allEmpty = false;
-            foreach ($work as $name => $value) { if(!empty($value)) $allEmpty = true; }
-            if(!$allEmpty) $work->title = $row['raw'];
 
             // replace " by \"
             foreach ($work as $name => $value) {
@@ -225,16 +218,17 @@ class OpenCitations
             if(!empty($row['doi'])) $citation->cited_id .= 'doi:' . Helpers::removeDoiOrgPrefixFromUrl($row['doi']) . ' ';
             if(!empty($row['url'])) $citation->cited_id .= 'url:' . str_replace(' ', '', $row['url']) . ' ';
             if(!empty($row['urn'])) $citation->cited_id .= 'urn:' . str_replace(' ', '', $row['urn']) . ' ';
-            $citation->cited_publication_date = $row['publication_date'];
+            $citation->cited_id = trim($citation->cited_id);
 
+            $citation->cited_publication_date = $row['publication_date'];
 
             foreach ($citation as $name => $value) {
                 $values .= '"' . str_replace('"', '\"', $value) . '",';
             }
-
+            $values = trim($values, ',');
             $values = $values . PHP_EOL;
         }
 
-        return $names . $values;
+        return $values;
     }
 }
