@@ -21,12 +21,22 @@
         {fbvFormSection label="plugins.generic.optimetaCitations.settings.open_citations_title"}
             <p>
                 {fbvElement
+                type="text"
+                id="{$smarty.const.OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER}"
+                value=${$smarty.const.OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER}
+                label="plugins.generic.optimetaCitations.settings.open_citations_owner"
+                description="plugins.generic.optimetaCitations.settings.open_citations_owner"
+                placeholder="plugins.generic.optimetaCitations.settings.open_citations_owner"
+                }
+            </p>
+            <p>
+                {fbvElement
                     type="text"
-                    id="{$smarty.const.OPTIMETA_CITATIONS_OPEN_CITATIONS_URL}"
-                    value=${$smarty.const.OPTIMETA_CITATIONS_OPEN_CITATIONS_URL}
-                    label="plugins.generic.optimetaCitations.settings.open_citations_url"
-                    description="plugins.generic.optimetaCitations.settings.open_citations_url"
-                    placeholder="plugins.generic.optimetaCitations.settings.open_citations_url"
+                    id="{$smarty.const.OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY}"
+                    value=${$smarty.const.OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY}
+                    label="plugins.generic.optimetaCitations.settings.open_citations_repository"
+                    description="plugins.generic.optimetaCitations.settings.open_citations_repository"
+                    placeholder="plugins.generic.optimetaCitations.settings.open_citations_repository"
                 }
             </p>
             <p>

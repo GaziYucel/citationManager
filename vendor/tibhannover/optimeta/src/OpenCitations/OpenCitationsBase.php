@@ -14,15 +14,23 @@ class OpenCitationsBase extends OptimetaBase
     /**
      * @param string $title
      * @param string $body
-     * @return bool
+     * @return int
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function depositCitations(string $title, string $body): bool
+    public function depositCitations(string $title, string $body): int
     {
+        $issueId = 0;
+
+        if(empty($title) || empty($body)) return $issueId;
+
         $github = new GitHubBase();
         $github->setUrl($this->url);
         $github->setToken($this->token);
 
-        return $github->addIssue($title, $body);
+        $issueId = $github->addIssue($title, $body);
+
+        if(empty($issueId)) return 0;
+
+        return $issueId;
     }
 }

@@ -1,9 +1,7 @@
 <?php
-namespace Optimeta\Citations\Enricher;
+namespace Optimeta\Citations\Enrich;
 
 import('plugins.generic.optimetaCitations.classes.Helpers');
-import('plugins.generic.optimetaCitations.classes.Model.AuthorModel');
-import('plugins.generic.optimetaCitations.classes.Model.CitationModel');
 
 use Optimeta\Citations\Helpers;
 use Optimeta\Citations\Model\AuthorModel;

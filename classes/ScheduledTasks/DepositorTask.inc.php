@@ -12,13 +12,10 @@
  * @brief Main DepositorTask class
  *
  */
-namespace Optimeta\Citations\ScheduledTasks;
+//namespace Optimeta\Citations\ScheduledTasks;
 
 import('lib.pkp.classes.scheduledTask.ScheduledTask');
-
-use OptimetaCitationsPlugin;
-use PluginRegistry;
-use ScheduledTask;
+import('plugins.generic.optimetaCitations.OptimetaCitationsPlugin');
 
 class DepositorTask extends ScheduledTask
 {
@@ -29,7 +26,7 @@ class DepositorTask extends ScheduledTask
 
     /**
      * Constructor.
-     * @param $args array task arguments
+     * @param $args array
      */
     function __construct($args)
     {
@@ -37,9 +34,11 @@ class DepositorTask extends ScheduledTask
 
         parent::__construct($args);
 
-        error_log('Optimeta\Citations\Scheduler\TaskScheduler->plugin->getEnabled: ' . $this->plugin->getEnabled());
+        error_log('Optimeta\Citations\ScheduledTasks\DepositorTask\__construct: ' .
+            date('Y-m-d H:i:s'));
+
         if ($this->plugin->getEnabled()) {
-            // todo: do something useful
+            /* do something usefull */
         }
     }
 
@@ -49,9 +48,8 @@ class DepositorTask extends ScheduledTask
     public function executeActions(): bool
     {
         if (!$this->plugin->getEnabled()) return false;
-
-        error_log('task executed at ' . date('Y-m-d H:i:s'));
-
+        error_log('Optimeta\Citations\ScheduledTasks\DepositorTask\executeActions: ' .
+            date('Y-m-d H:i:s'));
         return true;
     }
 }

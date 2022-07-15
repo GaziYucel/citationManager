@@ -44,9 +44,12 @@ describe('OPTIMETA Citations Plugin Configuration', function () {
 
     // Fill out settings form
     // Open Citations
-    cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Open_Citations_Url"]')
+    cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Open_Citations_Owner"]')
         .clear()
-        .type('https://opencitations.url');
+        .type('https://opencitations.owner');
+    cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Open_Citations_Repository"]')
+        .clear()
+        .type('https://opencitations.repository');
     cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Open_Citations_Token"]')
         .clear()
         .type('opencitations-token');

@@ -83,8 +83,11 @@ msgstr "Wikidata api url"
 msgid "plugins.generic.optimetaCitations.settings.open_citations_title"
 msgstr "Open Citations CROCI <a href='https://github.com/TIBHannover/optimetaCitations/blob/main/README.md#registering-for-opencitationsorg-croci' target='_blank'><i class='fa fa-question-circle' aria-hidden='true'></i></a>"
 
+msgid "plugins.generic.optimetaCitations.settings.open_citations_owner"
+msgstr "Github Owner for OpenCitations deposits"
+
+msgid "plugins.generic.optimetaCitations.settings.open_citations_repository"
+msgstr "Github Repository name for OpenCitations deposits"
+
 msgid "plugins.generic.optimetaCitations.settings.open_citations_token"
 msgstr "Github Token for OpenCitations deposits"
-
-msgid "plugins.generic.optimetaCitations.settings.open_citations_url"
-msgstr "Github URL for OpenCitations deposits"

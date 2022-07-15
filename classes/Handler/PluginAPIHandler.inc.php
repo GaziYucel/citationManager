@@ -7,7 +7,7 @@
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class PluginAPIHandler
- * @ingroup Handler
+ * @ingroup plugins_generic_optimetacitations
  *
  * @brief Extended class of base request API handler
  *
@@ -16,16 +16,18 @@ namespace Optimeta\Citations\Handler;
 
 import('lib.pkp.classes.security.authorization.PolicySet');
 import('lib.pkp.classes.security.authorization.RoleBasedHandlerOperationPolicy');
-import('plugins.generic.optimetaCitations.classes.Enricher.Enricher');
-import('plugins.generic.optimetaCitations.classes.Depositor.Depositor');
+import('plugins.generic.optimetaCitations.classes.Deposit.Depositor');
+import('plugins.generic.optimetaCitations.classes.Enrich.Enricher');
+import('plugins.generic.optimetaCitations.classes.Parse.Parser');
 
 use APIHandler;
-use Optimeta\Citations\Depositor\Depositor;
 use RoleBasedHandlerOperationPolicy;
 use PolicySet;
 use GuzzleHttp\Exception\GuzzleException;
-use Optimeta\Citations\Parser\Parser;
-use Optimeta\Citations\Enricher\Enricher;
+
+use Optimeta\Citations\Deposit\Depositor;
+use Optimeta\Citations\Enrich\Enricher;
+use Optimeta\Citations\Parse\Parser;
 
 class PluginAPIHandler extends APIHandler
 {
@@ -131,9 +133,9 @@ class PluginAPIHandler extends APIHandler
         $request = $this->getRequest();
         $submissionId = '';
         $citationsIn = [];
-        $citationsOut = [];
+        $message = [];
 
-        $this->responseBody['message-type'] = 'citations';
+        $this->responseBody['message-type'] = 'deposit';
 
         // check if GET/POST filled
         if ($request->getUserVars() && sizeof($request->getUserVars()) > 0) {
@@ -150,11 +152,11 @@ class PluginAPIHandler extends APIHandler
             return $response->withJson($this->responseBody, 200);
         }
 
-        // submit citations
+        // deposit work + citations
         $depositor = new Depositor();
-        $citationsOut = $depositor->executeAndReturnCitations($submissionId, $citationsIn);
+        $message = $depositor->executeAndReturnCitations($submissionId, $citationsIn);
 
-        $this->responseBody['message'] = $citationsOut;
+        $this->responseBody['message'] = $message;
         return $response->withJson($this->responseBody, 200);
     }
 }
