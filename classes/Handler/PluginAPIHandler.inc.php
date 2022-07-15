@@ -84,7 +84,7 @@ class PluginAPIHandler extends APIHandler
      * @return mixed
      * @throws GuzzleException
      */
-    public function process($slimeRequest, $response, $args)
+    public function process($slimRequest, $response, $args)
     {
         $request = $this->getRequest();
         $submissionId = '';
@@ -128,7 +128,7 @@ class PluginAPIHandler extends APIHandler
      * @return mixed
      * @throws GuzzleException
      */
-    public function deposit($slimeRequest, $response, $args)
+    public function deposit($slimRequest, $response, $args)
     {
         $request = $this->getRequest();
         $submissionId = '';
