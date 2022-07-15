@@ -50,7 +50,7 @@ class OpenCitations
     {
         $plugin = new \OptimetaCitationsPlugin();
         $request = $plugin->getRequest();
-        $context = $request->getContext();
+        $context = $request->getContext(); // journal
 
         $submissionDao = \DAORegistry::getDAO('SubmissionDAO');
         $submission = $submissionDao->getById($submissionId);
@@ -60,13 +60,15 @@ class OpenCitations
 
         $issueDao = \DAORegistry::getDAO('IssueDAO');
         $issueId = $publication->getData('issueId');
-        $issue = $issueDao->getById($issueId);
-
-        $journalDao = \DAORegistry::getDAO('JournalDAO');
-        $journal = $journalDao->getById($issue->getData('journalId'));
 
         $doi = $submission->getStoredPubId('doi');
-        $publicationDate = date('Y-m-d', strtotime($issue->getData('datePublished')));
+
+        $issue = null;
+        $publicationDate = '';
+        if(!is_null($issueDao->getById($issueId))){
+            $issue = $issueDao->getById($issueId);
+            $publicationDate = date('Y-m-d', strtotime($issue->getData('datePublished')));
+        }
 
         // title of github issue
         $title = str_replace('{{domain}} {{pid}}',
@@ -76,7 +78,7 @@ class OpenCitations
         // body of github issue
         $body =
             $this->getColumnNamesAsCsv(new WorkMetaData()) .
-            $this->getWorkAsCsv($submission, $publication, $authors, $issue, $journal) .
+            $this->getWorkAsCsv($submission, $publication, $authors, $issue, $context) .
             $this->getCitationsAsWorkAsCsv($citations) .
             $this->separator . PHP_EOL .
             $this->getColumnNamesAsCsv(new WorkCitation()) .
@@ -134,15 +136,20 @@ class OpenCitations
         }
         $work->author = trim($work->author, '; ');
 
-        $work->pub_date = date('Y-m-d', strtotime($issue->getData('datePublished')));
+        $work->pub_date = '';
+        if(!is_null($issue)) $work->pub_date = date('Y-m-d', strtotime($issue->getData('datePublished')));
 
         $work->venue = $journal->getData('name')[$locale];
         if(!empty($journal->getData('onlineIssn'))) $work->venue .= ' ' . '[issn:' . $journal->getData('onlineIssn') . ']';
         if(!empty($journal->getData('printIssn'))) $work->venue .= ' ' . '[issn:' . $journal->getData('printIssn') . ']';
         $work->venue = trim($work->venue);
 
-        $work->volume = $issue->getData('volume');
-        $work->issue = $issue->getData('number');
+        $work->volume = '';
+        if(!is_null($issue)) $work->volume = $issue->getData('volume');
+
+        $work->issue = '';
+        if(!is_null($issue)) $work->issue = $issue->getData('number');
+
         $work->page = '';
         $work->type = $this->defaultType;
         $work->publisher = $journal->getData('publisherInstitution');
@@ -172,14 +179,17 @@ class OpenCitations
             $work->id = trim($work->id);
 
             $work->title = $row['title'];
-            if(!$row['$isProcessed']) $work->title = $row['raw'];
+            if(!$row['isProcessed']) $work->title = $row['raw'];
 
-            foreach(json_decode($row['authors'], true) as $index2 => $author){
-                $work->author .= $author['name'];
-                if(!empty($author['orcid'])) $work->author .= ' [orcid:' . $author['orcid'] . ']';
-                $work->author .= '; ';
+            $work->author = '';
+            if(!empty($row['authors'])){
+                foreach($row['authors'] as $index2 => $author){
+                    $work->author .= $author['name'];
+                    if(!empty($author['orcid'])) $work->author .= ' [orcid:' . $author['orcid'] . ']';
+                    $work->author .= '; ';
+                }
+                $work->author = trim($work->author, '; ');
             }
-            $work->author = trim($work->author, '; ');
 
             $work->pub_date = $row['publication_date'];
 

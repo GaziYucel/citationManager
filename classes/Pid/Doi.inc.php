@@ -20,6 +20,7 @@ class Doi
      * @var string[]
      */
     public $prefixInCorrect = [
+        'http://dx.doi.org/',
         'http://doi.org/',
         'http://www.doi.org/',
         'https://www.doi.org/',
