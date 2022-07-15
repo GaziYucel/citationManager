@@ -1,14 +1,17 @@
 <?php
-namespace Optimeta\Citations\Parser;
+namespace Optimeta\Citations\Parse;
 
 import('plugins.generic.optimetaCitations.classes.Helpers');
 import('plugins.generic.optimetaCitations.classes.Model.CitationModel');
-import('plugins.generic.optimetaCitations.classes.Parser.ParserDOI');
-import('plugins.generic.optimetaCitations.classes.Parser.ParserURL');
-import('plugins.generic.optimetaCitations.classes.Parser.ParserURN');
+import('plugins.generic.optimetaCitations.classes.Pid.Doi');
+import('plugins.generic.optimetaCitations.classes.Pid.Url');
+import('plugins.generic.optimetaCitations.classes.Pid.Urn');
 
 use Optimeta\Citations\Helpers;
 use Optimeta\Citations\Model\CitationModel;
+use Optimeta\Citations\Pid\Doi;
+use Optimeta\Citations\Pid\Url;
+use Optimeta\Citations\Pid\Urn;
 
 class Parser
 {
@@ -33,37 +36,31 @@ class Parser
         // loop through citations and parse every citation
         foreach ($citationsArray as $index => $rowRaw) {
 
+            // get data model and fill citation raw
+            $citation = new CitationModel();
+            $citation->raw = $rowRaw;
+
             // clean single citation
-            $rowRaw = $this->cleanCitation($rowRaw);
+            $citation->raw = $this->cleanCitation($citation->raw);
 
             // remove numbers from the beginning of each citation
-            $rowRaw = Helpers::removeNumberPrefixFromString($rowRaw);
+            $citation->raw = Helpers::removeNumberPrefixFromString($citation->raw);
 
-            // get data model and fill empty objRowParsed
-            $objRowParsed = new CitationModel();
+            // parse doi
+            $objDoi = new Doi();
+            $citation->doi = $objDoi->getDoiParsed($citation->raw);
+            $citation->raw = $objDoi->normalizeDoi($citation->raw, $citation->doi);
 
-            // doi parser
-            $doiParser = new ParserDOI();
-            $objDoi = $doiParser->getParsed($rowRaw); // CitationModel
-            $objRowParsed->doi = $objDoi->doi;
-            $objRowParsed->rawRemainder = $this->cleanCitation($objDoi->rawRemainder);
-
-            // url parser (after parsing doi)
-            $urlParser = new ParserURL();
-            $objUrl = $urlParser->getParsed($objRowParsed->rawRemainder); // CitationModel
-            $objRowParsed->url = $objUrl->url;
-            $objRowParsed->rawRemainder = $this->cleanCitation($objUrl->rawRemainder);
+            // parse url (after parsing doi)
+            $objUrl = new Url();
+            $citation->url = $objUrl->getUrlParsed(str_replace($citation->doi, '', $citation->raw));
 
             // urn parser
-            $urnParser = new ParserURN();
-            $objUrn = $urnParser->getParsed($objRowParsed->rawRemainder); // CitationModel
-            $objRowParsed->urn = $objUrn->urn;
-            $objRowParsed->rawRemainder = $this->cleanCitation($objUrn->rawRemainder);
-
-            $objRowParsed->raw = $rowRaw;
+            $objUrn = new Urn();
+            $citation->urn = $objUrn->getUrnParsed($citation->raw);
 
             // push to citations parsed array
-            $citations[] = (array)$objRowParsed;
+            $citations[] = (array)$citation;
         }
 
         return $citations;

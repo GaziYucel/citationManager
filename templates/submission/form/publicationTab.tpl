@@ -9,7 +9,10 @@
         data: {
             citations: optimetaCitations,
             helper: optimetaCitationsGetHelperArray(optimetaCitations),
-            author: { {$authorModel} }
+            author: { {$authorModel} },
+            deposit: {
+                opencitations_url: ''
+            }
         },
         computed: {
             citationsJsonComputed: function() {
@@ -107,8 +110,8 @@
     }
 
     function optimetaDepositCitations (){
-        let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.deposit.question"}';
-        if (confirm(questionText) !== true) { return; }
+        {*let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.deposit.question"}';*}
+        // if (confirm(questionText) !== true) { return; }
 
         optimetaLoadingImage(true);
 
@@ -124,10 +127,7 @@
             },
             error(r) { },
             success(response) {
-                // optimetaCitations = JSON.parse(JSON.stringify(response['message']));
-                // optimetaCitationsApp.citations = JSON.parse(JSON.stringify(response['message']));
-                // optimetaCitationsApp.helper = optimetaCitationsGetHelperArray(JSON.parse(JSON.stringify(response['message'])));
-
+                optimetaCitationsApp.deposit = JSON.parse(JSON.stringify(response['message']));
                 optimetaLoadingImage(false);
             }
         });
@@ -156,7 +156,13 @@
             <tr>
                 <td>
                     <span class="optimetaButton optimetaButtonGrey">Wikidata</span>
-                    <span class="optimetaButton optimetaButtonGrey">OpenCitations</span>
+                    <a class="optimetaButton optimetaButtonGreen"
+                       v-if="optimetaCitationsApp.deposit.opencitations_url"
+                       :href="optimetaCitationsApp.deposit.opencitations_url"
+                       target="_blank"><span>OpenCitations</span></a>
+                    <span class="optimetaButton optimetaButtonGrey"
+                          v-if="!optimetaCitationsApp.deposit.opencitations_url">OpenCitations</span>
+
                 </td>
                 <td class="optimetaAlignRight">
                     <a href="javascript:optimetaDepositCitations()" id="buttonSubmit" class="pkpButton"
@@ -306,7 +312,7 @@
     </div>
 
     <div>
-        <span style="display: none;">{{ components.OptimetaCitations_PublicationForm.fields[0]['value'] = optimetaCitationsApp.citationsJsonComputed }}</span>
+        <span style="display: none;">{{ components.{$smarty.const.OPTIMETA_CITATIONS_PUBLICATION_FORM}.fields[0]['value'] = optimetaCitationsApp.citationsJsonComputed }}</span>
         <pkp-form v-bind="components.{$smarty.const.OPTIMETA_CITATIONS_PUBLICATION_FORM}" @set="set"/>
     </div>
 

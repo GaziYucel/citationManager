@@ -1,4 +1,7 @@
 <?php
+/**
+ * @desc Authors are people who create works.
+ */
 namespace Optimeta\Citations\Model;
 
 class AuthorModel

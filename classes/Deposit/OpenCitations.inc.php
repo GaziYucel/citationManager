@@ -1,0 +1,240 @@
+<?php
+namespace Optimeta\Citations\Deposit;
+
+import('plugins.generic.optimetaCitations.classes.Helpers');
+
+use Optimeta\Citations\Helpers;
+use Optimeta\Shared\OpenCitations\Model\WorkCitation;
+use Optimeta\Shared\OpenCitations\Model\WorkMetaData;
+use Optimeta\Shared\OpenCitations\OpenCitationsBase;
+
+class OpenCitations
+{
+    /**
+     * @desc The base url to the public issues
+     * @var string
+     */
+    protected $urlIssues = 'https://github.com/{{owner}}/{{repository}}/issues';
+
+    /**
+     * @desc The base url to the api issues
+     * @var string
+     */
+    protected $urlIssuesApi = 'https://api.github.com/repos/{{owner}}/{{repository}}/issues';
+
+    /**
+     * @desc The syntax for the title of the issue
+     * @var string
+     */
+    protected $titleSyntax = 'deposit {{domain}} {{pid}}';
+
+    /**
+     * @desc The separator to separate the work and the citations CSV
+     * @var string
+     */
+    protected $separator = '===###===@@@===';
+
+    /**
+     * @desc Default article type
+     * @var string
+     */
+    protected $defaultType = 'journal-article';
+
+    /**
+     * @param string $submissionId
+     * @param array $citations
+     * @return string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function submitWork(string $submissionId, array $citations): string
+    {
+        import('plugins.generic.optimetaCitations.classes.Debug');
+        $debug = new \Optimeta\Citations\Debug();
+
+        $plugin = new \OptimetaCitationsPlugin();
+        $request = $plugin->getRequest();
+        $context = $request->getContext();
+
+        $submissionDao = \DAORegistry::getDAO('SubmissionDAO');
+        $submission = $submissionDao->getById($submissionId);
+
+        $publication = $submission->getLatestPublication();
+        $authors = $submission->getAuthors();
+
+        $issueDao = \DAORegistry::getDAO('IssueDAO');
+        $issueId = $publication->getData('issueId');
+        $issue = $issueDao->getById($issueId);
+
+        $journalDao = \DAORegistry::getDAO('JournalDAO');
+        $journal = $journalDao->getById($issue->getData('journalId'));
+
+        $doi = $submission->getStoredPubId('doi');
+        $publicationDate = date('Y-m-d', strtotime($issue->getData('datePublished')));
+
+        // title of github issue
+        $title = str_replace('{{domain}} {{pid}}',
+            $_SERVER['SERVER_NAME'] . ' ' . 'doi:' . Helpers::removeDoiOrgPrefixFromUrl($doi),
+            $this->titleSyntax);
+
+        // body of github issue
+        $body =
+            $this->getColumnNamesAsCsv(new WorkMetaData()) .
+            $this->getWorkAsCsv($submission, $publication, $authors, $issue, $journal) .
+            $this->getCitationsAsWorkAsCsv($citations) .
+            $this->separator . PHP_EOL .
+            $this->getColumnNamesAsCsv(new WorkCitation()) .
+            $this->getCitationsAsCsv($citations, $doi, $publicationDate);
+
+        // prepare open citations and deposit
+        $openCitations = new OpenCitationsBase();
+        $openCitations->setUrl(
+            str_replace('{{owner}}/{{repository}}',
+                $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER) . '/' .
+                $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY),
+                $this->urlIssuesApi));
+        $openCitations->setToken($plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN));
+
+        $githubIssueId = $openCitations->depositCitations($title, $body);
+
+        $githubIssueUrl = str_replace('{{owner}}/{{repository}}',
+            $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER) . '/' .
+            $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY),
+            $this->urlIssues);
+
+        if(!empty($githubIssueId) && $githubIssueId != 0) return $githubIssueUrl . '/' . $githubIssueId;
+
+        return '';
+    }
+
+    public function getColumnNamesAsCsv($object): string
+    {
+        $names = '';
+        foreach ($object as $name => $value) {
+            $names .= '"' . str_replace('"', '\"', $name) . '",';
+        }
+        $names = trim($names, ',');
+        $names = $names . PHP_EOL;
+
+        return $names;
+    }
+
+    public function getWorkAsCsv($submission, $publication, $authors, $issue, $journal): string
+    {
+        $work = new WorkMetaData();
+
+        $locale = $submission->getData('locale');
+
+        $work->id = 'doi:' . Helpers::removeDoiOrgPrefixFromUrl($submission->getStoredPubId('doi'));
+
+        $work->title = $publication->getData('title')[$locale];
+
+        foreach($authors as $index => $data){
+            $work->author .= $data->getData('familyName')[$locale] . ', ' . $data->getData('givenName')[$locale];
+            if(!empty($data->getData('orcid'))) {
+                $work->author .= ' [orcid:' . Helpers::removeOrcidOrgPrefixFromUrl($data->getData('orcid')) . ']';
+            }
+            $work->author .= '; ';
+        }
+        $work->author = trim($work->author, '; ');
+
+        $work->pub_date = date('Y-m-d', strtotime($issue->getData('datePublished')));
+
+        $work->venue = $journal->getData('name')[$locale];
+        if(!empty($journal->getData('onlineIssn'))) $work->venue .= ' ' . '[issn:' . $journal->getData('onlineIssn') . ']';
+        if(!empty($journal->getData('printIssn'))) $work->venue .= ' ' . '[issn:' . $journal->getData('printIssn') . ']';
+        $work->venue = trim($work->venue);
+
+        $work->volume = $issue->getData('volume');
+        $work->issue = $issue->getData('number');
+        $work->page = '';
+        $work->type = $this->defaultType;
+        $work->publisher = $journal->getData('publisherInstitution');
+        $work->editor = '';
+
+        $values = '';
+        foreach ($work as $name => $value) {
+            $values .= '"' . str_replace('"', '\"', $value) . '",';
+        }
+        $values = trim($values, ',');
+        $values = $values . PHP_EOL;
+
+        return $values;
+    }
+
+    public function getCitationsAsWorkAsCsv(array $citations): string
+    {
+        $values = '';
+
+        foreach ($citations as $index1 => $row){
+
+            $work = new WorkMetaData();
+
+            if(!empty($row['doi'])) $work->id .= 'doi:' . Helpers::removeDoiOrgPrefixFromUrl($row['doi']) . ' ';
+//            if(!empty($row['url'])) $work->id .= 'url:' . str_replace(' ', '', $row['url']) . ' ';
+            if(!empty($row['urn'])) $work->id .= 'urn:' . str_replace(' ', '', $row['urn']) . ' ';
+            $work->id = trim($work->id);
+
+            $work->title = $row['title'];
+
+            foreach(json_decode($row['authors'], true) as $index2 => $author){
+                $work->author .= $author['name'];
+                if(!empty($author['orcid'])) $work->author .= ' [orcid:' . $author['orcid'] . ']';
+                $work->author .= '; ';
+            }
+            $work->author = trim($work->author, '; ');
+
+            $work->pub_date = $row['publication_date'];
+
+            $work->venue = $row['venue_name'];
+            if(!empty($row['venue_issn_l'])) $work->venue .= ' [issn:' . $row['venue_issn_l'] . ']';
+
+            $work->volume = $row['volume'];
+            $work->issue = $row['issue'];
+            $work->page = '';
+            $work->type = $row['type'];
+            $work->publisher = $row['venue_publisher'];
+            $work->editor = '';
+
+            // add title if all values are empty
+            $allEmpty = false;
+            foreach ($work as $name => $value) { if(!empty($value)) $allEmpty = true; }
+            if(!$allEmpty) $work->title = $row['raw'];
+
+            // replace " by \"
+            foreach ($work as $name => $value) {
+                $values .= '"' . str_replace('"', '\"', $value) . '",';
+            }
+
+            $values = trim($values, ',');
+            $values = $values . PHP_EOL;
+        }
+
+        return $values;
+    }
+
+    public function getCitationsAsCsv(array $citations, $doi, $publicationDate): string
+    {
+        $values = '';
+        foreach ($citations as $index => $row) {
+            $citation = new WorkCitation();
+
+            $citation->citing_id = 'doi:' . $doi;
+            $citation->citing_publication_date = $publicationDate;
+
+            $citation->cited_id = '';
+            if(!empty($row['doi'])) $citation->cited_id .= 'doi:' . Helpers::removeDoiOrgPrefixFromUrl($row['doi']) . ' ';
+            if(!empty($row['url'])) $citation->cited_id .= 'url:' . str_replace(' ', '', $row['url']) . ' ';
+            if(!empty($row['urn'])) $citation->cited_id .= 'urn:' . str_replace(' ', '', $row['urn']) . ' ';
+            $citation->cited_publication_date = $row['publication_date'];
+
+
+            foreach ($citation as $name => $value) {
+                $values .= '"' . str_replace('"', '\"', $value) . '",';
+            }
+
+            $values = $values . PHP_EOL;
+        }
+
+        return $names . $values;
+    }
+}

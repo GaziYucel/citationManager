@@ -1,11 +1,22 @@
 <?php
-namespace Optimeta\Citations\Enricher;
+/**
+ * @file plugins/generic/optimetaCitations/classes/Enrich/Enricher.inc.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class Enricher
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief Enricher class
+ *
+ */
+namespace Optimeta\Citations\Enrich;
 
-import('plugins.generic.optimetaCitations.classes.Helpers');
-import('plugins.generic.optimetaCitations.classes.Model.AuthorModel');
+import('plugins.generic.optimetaCitations.classes.Enrich.OpenAlex');
+import('plugins.generic.optimetaCitations.classes.Enrich.WikiData');
 import('plugins.generic.optimetaCitations.classes.Model.CitationModel');
-import('plugins.generic.optimetaCitations.classes.Enricher.OpenAlex');
-import('plugins.generic.optimetaCitations.classes.Enricher.WikiData');
 
 use Optimeta\Citations\Model\CitationModel;
 use GuzzleHttp\Exception\GuzzleException;

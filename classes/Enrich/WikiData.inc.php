@@ -1,5 +1,5 @@
 <?php
-namespace Optimeta\Citations\Enricher;
+namespace Optimeta\Citations\Enrich;
 
 import('plugins.generic.optimetaCitations.classes.Helpers');
 

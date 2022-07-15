@@ -1,4 +1,7 @@
 <?php
+/**
+ * @desc Works are scholarly documents like journal articles, books, datasets, and theses.
+ */
 namespace Optimeta\Citations\Model;
 
 class WorkModel

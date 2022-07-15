@@ -14,8 +14,10 @@
 
 namespace Optimeta\Citations\Components\Forms;
 
+use Optimeta\Citations\Dao\PluginDAO;
 use \PKP\components\forms\FormComponent;
 use \PKP\components\forms\FieldText;
+use Publication;
 
 class PublicationForm extends FormComponent
 {
@@ -42,7 +44,8 @@ class PublicationForm extends FormComponent
         $this->action = $action;
         $this->successMessage = $successMessage;
 
-        $value = $publication->getData(OPTIMETA_CITATIONS_PARSED_KEY_DB);
+        $pluginDAO = new PluginDAO();
+        $value = $pluginDAO->getCitations($publication);
 
         $this->addField(new FieldText(
             OPTIMETA_CITATIONS_PARSED_KEY_FORM, [
