@@ -45,14 +45,13 @@ class PublicationForm extends FormComponent
         $this->successMessage = $successMessage;
 
         $pluginDAO = new PluginDAO();
-        $value = $pluginDAO->getCitations($publication);
 
         $this->addField(new FieldText(
-            OPTIMETA_CITATIONS_PARSED_KEY_FORM, [
+            OPTIMETA_CITATIONS_PARSED_SETTING_NAME, [
                 'label' => '',
                 'description' => '',
                 'isMultilingual' => false,
-                'value' => $value]
-        ));
+                'value' => $pluginDAO->getCitations($publication)
+            ]));
     }
 }

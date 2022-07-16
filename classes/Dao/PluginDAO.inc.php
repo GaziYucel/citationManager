@@ -9,55 +9,30 @@ class PluginDAO
 {
     public function addToSchema(object $schema)
     {
-        $schema->properties->{OPTIMETA_CITATIONS_PARSED_KEY_DB} = (object)[
+        $schema->properties->{OPTIMETA_CITATIONS_PARSED_SETTING_NAME} = (object)[
             "type" => "string",
             "multilingual" => false,
             "apiSummary" => true,
             "validation" => ["nullable"]
         ];
-
-        $schema->properties->{OPTIMETA_CITATIONS_PARSED_KEY_DB_COUNT} = (object)[
-            "type" => "string",
-            "multilingual" => false,
-            "apiSummary" => true,
-            "validation" => ["nullable"]
-        ];
-
-//        for($i = 0; $i < 100; $i++){
-//            $schema->properties->{OPTIMETA_CITATIONS_PARSED_KEY_DB . $i} = (object)[
-//                "type" => "string",
-//                "multilingual" => false,
-//                "apiSummary" => true,
-//                "validation" => ["nullable"]
-//            ];
-//        }
     }
 
     public function saveCitations($publication, $citations)
     {
-        $this->saveCitationsSingleRow($publication, $citations);
+        $publication->setData(OPTIMETA_CITATIONS_PARSED_SETTING_NAME, $citations);
     }
 
-    public function getCitations($publication)
+    public function getCitations($publication): array
     {
-        $citations = $this->getCitationsSingleRow($publication);
-        if ($citations == null || $citations == '') { $citations = '[]'; }
-        return $citations;
-    }
+        $citations = $publication->getData(OPTIMETA_CITATIONS_PARSED_SETTING_NAME);
 
-    /* Citations saved in single row */
-    private function saveCitationsSingleRow($publication, $citations)
-    {
-        $publication->setData(OPTIMETA_CITATIONS_PARSED_KEY_DB, $citations);
-    }
+        if(empty($citations)) $citations = [];
 
-    private function getCitationsSingleRow($publication)
-    {
-        return $publication->getData(OPTIMETA_CITATIONS_PARSED_KEY_DB);
+        return CitationModelHelpers::migrate($citations);
     }
 
     /* Citations saved in multiple rows */
-    private function saveCitationsMultiRow(object $publication, string $citationsJson): bool
+    public function saveCitationsMultiRow($publication, $citationsJson): bool
     {
         if(!is_object($publication) || empty($citationsJson) || !is_array(json_decode($citationsJson, true))){
             $citationsJson = '[]';
@@ -66,12 +41,12 @@ class PluginDAO
         $citations = json_decode($citationsJson, true);
         $citationsCount = count($citations);
         $citationsCountBefore = $this->getCitationsCountDb($publication);
-
-        $publication->setData( OPTIMETA_CITATIONS_PARSED_KEY_DB_COUNT, $citationsCount);
+        
+        $publication->setData( OPTIMETA_CITATIONS_PARSED_SETTING_NAME . '_Count', $citationsCount);
 
         for($i = 0; $i < $citationsCount; $i++){
             $publication->setData(
-                OPTIMETA_CITATIONS_PARSED_KEY_DB . $i,
+                OPTIMETA_CITATIONS_PARSED_SETTING_NAME . $i,
                 json_encode($citations[$i]));
         }
 
@@ -80,17 +55,16 @@ class PluginDAO
         return true;
     }
 
-    private function getCitationsMultiRow(object $publication): array
+    public function getCitationsMultiRow($publication): array
     {
         $citations = '';
 
         if(!is_object($publication)) return [];
 
-        $citationsCount = $publication->getData(OPTIMETA_CITATIONS_PARSED_KEY_DB_COUNT);
-        if(empty($citationsCount)) $citationsCount = 0;
+        $citationsCount = $this->getCitationsCountDb($publication);
 
         for($i = 0; $i < $citationsCount; $i++){
-            $citations .= $publication->getData(OPTIMETA_CITATIONS_PARSED_KEY_DB . $i) . ',';
+            $citations .= $publication->getData(OPTIMETA_CITATIONS_PARSED_SETTING_NAME . $i) . ',';
         }
 
         $citations = '[' . trim($citations, ',') . ']';
@@ -98,20 +72,20 @@ class PluginDAO
         return CitationModelHelpers::migrate($citations);
     }
 
-    private function cleanUpCitations(object $publication, int $citationsCount, int $citationsCountBefore)
+    public function cleanUpCitations($publication, $citationsCount, $citationsCountBefore)
     {
         if($citationsCountBefore > $citationsCount){
             for($i = $citationsCount; $i < $citationsCountBefore; $i++){
                 $publication->setData(
-                    OPTIMETA_CITATIONS_PARSED_KEY_DB . $i,
+                    OPTIMETA_CITATIONS_PARSED_SETTING_NAME . $i,
                     null);
             }
         }
     }
 
-    private function getCitationsCountDb(object $publication): int
+    public function getCitationsCountDb($publication): int
     {
-        $count = $publication->getData(OPTIMETA_CITATIONS_PARSED_KEY_DB_COUNT);
+        $count = $publication->getData(OPTIMETA_CITATIONS_PARSED_SETTING_NAME . '_Count');
         if(empty($count)) $count = 0;
         return $count;
     }

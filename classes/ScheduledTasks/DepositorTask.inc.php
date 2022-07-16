@@ -34,12 +34,8 @@ class DepositorTask extends ScheduledTask
 
         parent::__construct($args);
 
-        error_log('Optimeta\Citations\ScheduledTasks\DepositorTask\__construct: ' .
-            date('Y-m-d H:i:s'));
-
-        if ($this->plugin->getEnabled()) {
-            /* do something usefull */
-        }
+        error_log(
+            'Optimeta\Citations\ScheduledTasks\DepositorTask\__construct: ' . date('Y-m-d H:i:s'));
     }
 
     /**
@@ -48,8 +44,9 @@ class DepositorTask extends ScheduledTask
     public function executeActions(): bool
     {
         if (!$this->plugin->getEnabled()) return false;
-        error_log('Optimeta\Citations\ScheduledTasks\DepositorTask\executeActions: ' .
-            date('Y-m-d H:i:s'));
+
+        error_log(
+            'Optimeta\Citations\ScheduledTasks\DepositorTask\executeActions: ' . date('Y-m-d H:i:s'));
         return true;
     }
 }

@@ -12,9 +12,7 @@
  * @brief Plugin for parsing Citations and submitting to Open Access websites.
  */
 
-const OPTIMETA_CITATIONS_PARSED_KEY_DB             = 'OptimetaCitations__CitationsParsed';
-const OPTIMETA_CITATIONS_PARSED_KEY_DB_COUNT       = 'OptimetaCitations__CitationsParsed_Count';
-const OPTIMETA_CITATIONS_PARSED_KEY_FORM           = 'OptimetaCitations__CitationsParsed';
+const OPTIMETA_CITATIONS_PARSED_SETTING_NAME       = 'OptimetaCitations__CitationsParsed';
 const OPTIMETA_CITATIONS_API_ENDPOINT              = 'OptimetaCitations';
 const OPTIMETA_CITATIONS_PUBLICATION_FORM          = 'OptimetaCitations_PublicationForm';
 
@@ -37,12 +35,10 @@ import('plugins.generic.optimetaCitations.classes.Handler.PluginAPIHandler');
 import('plugins.generic.optimetaCitations.classes.SettingsForm');
 import('plugins.generic.optimetaCitations.classes.Model.AuthorModel');
 import('plugins.generic.optimetaCitations.classes.Model.WorkModel');
-import('plugins.generic.optimetaCitations.classes.Model.CitationModelHelpers');
 
 use Optimeta\Citations\Components\Forms\PublicationForm;
 use Optimeta\Citations\Dao\PluginDAO;
 use Optimeta\Citations\Handler\PluginAPIHandler;
-use Optimeta\Citations\Model\CitationModelHelpers;
 use Optimeta\Citations\SettingsForm;
 
 class OptimetaCitationsPlugin extends GenericPlugin
@@ -159,8 +155,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $this->templateParameters['submissionId'] = $submissionId;
 
         $pluginDAO = new PluginDAO();
-        $citationsParsed = json_encode(CitationModelHelpers::migrate($pluginDAO->getCitations($publication)));
-        $this->templateParameters['citationsParsed'] = $citationsParsed;
+        $this->templateParameters['citationsParsed'] = json_encode($pluginDAO->getCitations($publication));
 
         $templateMgr->assign($this->templateParameters);
 
@@ -181,9 +176,9 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $publication = $args[0];
         $request = $this->getRequest();
 
-        if ($request->getuserVar(OPTIMETA_CITATIONS_PARSED_KEY_FORM)) {
+        if ($request->getuserVar(OPTIMETA_CITATIONS_PARSED_SETTING_NAME)) {
             $pluginDao = new PluginDAO();
-            $pluginDao->saveCitations($publication, $request->getuserVar(OPTIMETA_CITATIONS_PARSED_KEY_FORM));
+            $pluginDao->saveCitations($publication, $request->getuserVar(OPTIMETA_CITATIONS_PARSED_SETTING_NAME));
         }
     }
 
@@ -210,8 +205,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $this->templateParameters['submissionId'] = $submissionId;
 
         $pluginDAO = new PluginDAO();
-        $citationsParsed = json_encode(CitationModelHelpers::migrate($pluginDAO->getCitations($publication)));
-        $this->templateParameters['citationsParsed'] = $citationsParsed;
+        $this->templateParameters['citationsParsed'] = json_encode($pluginDAO->getCitations($publication));
 
         $templateMgr->assign($this->templateParameters);
 
