@@ -12,9 +12,7 @@
  * @brief Plugin for parsing Citations and submitting to Open Access websites.
  */
 
-const OPTIMETA_CITATIONS_PARSED_KEY_DB             = 'OptimetaCitations__CitationsParsed';
-const OPTIMETA_CITATIONS_PARSED_KEY_DB_COUNT       = 'OptimetaCitations__CitationsParsed_Count';
-const OPTIMETA_CITATIONS_PARSED_KEY_FORM           = 'OptimetaCitations__CitationsParsed';
+const OPTIMETA_CITATIONS_PARSED_SETTING_NAME       = 'OptimetaCitations__CitationsParsed';
 const OPTIMETA_CITATIONS_API_ENDPOINT              = 'OptimetaCitations';
 const OPTIMETA_CITATIONS_PUBLICATION_FORM          = 'OptimetaCitations_PublicationForm';
 
@@ -178,9 +176,9 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $publication = $args[0];
         $request = $this->getRequest();
 
-        if ($request->getuserVar(OPTIMETA_CITATIONS_PARSED_KEY_FORM)) {
+        if ($request->getuserVar(OPTIMETA_CITATIONS_PARSED_SETTING_NAME)) {
             $pluginDao = new PluginDAO();
-            $pluginDao->saveCitations($publication, $request->getuserVar(OPTIMETA_CITATIONS_PARSED_KEY_FORM));
+            $pluginDao->saveCitations($publication, $request->getuserVar(OPTIMETA_CITATIONS_PARSED_SETTING_NAME));
         }
     }
 

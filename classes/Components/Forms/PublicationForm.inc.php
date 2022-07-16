@@ -47,7 +47,7 @@ class PublicationForm extends FormComponent
         $pluginDAO = new PluginDAO();
 
         $this->addField(new FieldText(
-            OPTIMETA_CITATIONS_PARSED_KEY_FORM, [
+            OPTIMETA_CITATIONS_PARSED_SETTING_NAME, [
                 'label' => '',
                 'description' => '',
                 'isMultilingual' => false,
