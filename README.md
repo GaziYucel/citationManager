@@ -52,7 +52,7 @@ Depositing at OpenCitations will be done through GitHub issues of OpenCitations.
 2. Click "Generate new token" button at the right top
 3. At the input field "Note" typ in "OpenCitations CROCI"
 4. Select "No expiration" at Expiration selectbox
-5. Check the checkbox "repo"; leave all other checkboxes unchecked
+5. Check the checkbox "public_repo"; leave all other checkboxes unchecked
 6. Click on the button "Generate token"
 7. You will be provided the token; save this token, as you will not shown this again
 8. Login to your OJS with an administrator account
