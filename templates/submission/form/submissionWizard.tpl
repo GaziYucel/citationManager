@@ -308,7 +308,7 @@
         </div>
 
         <div>
-            <textarea name="{$smarty.const.OPTIMETA_CITATIONS_PARSED_KEY_FORM}" style="display: none;">{{ citationsJsonComputed }}</textarea>
+            <textarea name="{$smarty.const.OPTIMETA_CITATIONS_PARSED_SETTING_NAME}" style="display: none;">{{ citationsJsonComputed }}</textarea>
         </div>
 
     </div>
