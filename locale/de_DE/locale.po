@@ -12,19 +12,19 @@ msgstr ""
 "Language: \n"
 
 msgid "plugins.generic.optimetaCitationsPlugin.name"
-msgstr "Optimeta Citations Plugin"
+msgstr "Optimeta Zitate Plugin"
 
 msgid "plugins.generic.optimetaCitationsPlugin.description"
-msgstr "Optimeta Citations Plugin"
+msgstr "Optimeta Zitate Plugin"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement"
-msgstr "Publication Statement"
+msgstr "Veröffentlichungserklärung"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement.description"
-msgstr "Add a publication statement that you would like to appear on every publication's landing page"
+msgstr "Fügen Sie eine Publikationsbeschreibung hinzu, die auf jeder Landing Page der Publikation erscheinen soll"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
-msgstr "Citations"
+msgstr "Zitate"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.button"
 msgstr "Deposit"
@@ -48,25 +48,27 @@ msgid "plugins.generic.optimetaCitationsPlugin.process.label"
 msgstr "Parsed references"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.description"
-msgstr "Please use the button at the right to parse the references into different parts.<br/>After extracting DOIs, extra metadata will be acquired from external websites and shown below.<br/>Submission of this metadata will be done automatically, when this submission is published and received a DOI."
+msgstr "Please use the button at the right to parse the references into different parts.<br/>"
+"Nach dem Extrahieren von DOIs werden zusätzliche Metadaten von externen Websites erfasst und unten angezeigt.<br/>"
+"Die Übermittlung dieser Metadaten erfolgt automatisch, wenn dieser Beitrag veröffentlicht wird und einen DOI erhält."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
-msgstr "The current parsed citations will be overwritten if you click OK. All your modifications will be lost. Are you sure?"
+msgstr "Die aktuell geparsten Zitate werden überschrieben, wenn Sie auf OK klicken. Alle Ihre Änderungen gehen dabei verloren. Sind Sie sicher?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.author.add.button"
-msgstr "Add Author"
+msgstr "Autor hinzufügen"
 
 msgid "plugins.generic.optimetaCitationsPlugin.author.remove.question"
-msgstr "Are you sure you want to delete this author?"
+msgstr "Sind Sie sicher, dass Sie diesen Autor löschen wollen?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
-msgstr "The citations have been updated."
+msgstr "Die Zitate wurden aktualisiert."
 
 msgid "plugins.generic.optimetaCitations.settings.description"
-msgstr "Fill in your authentication info for Open Access websites where you want to deposit citations"
+msgstr "Geben Sie Ihre Authentifizierungsinformationen für Open-Access-Websites ein, auf denen Sie Zitate hinterlegen möchten"
 
 msgid "plugins.generic.optimetaCitations.settings.form.saved"
-msgstr "Settings saved successfully"
+msgstr "Einstellungen erfolgreich gespeichert"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_title"
 msgstr "Wikidata"

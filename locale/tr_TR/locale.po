@@ -48,7 +48,9 @@ msgid "plugins.generic.optimetaCitationsPlugin.process.label"
 msgstr "Parsed references"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.description"
-msgstr "Please use the button at the right to parse the references into different parts.<br/>After extracting DOIs, extra metadata will be acquired from external websites and shown below.<br/>Submission of this metadata will be done automatically, when this submission is published and received a DOI."
+msgstr "Please use the button at the right to parse the references into different parts.<br/>"
+"After extracting DOIs, extra metadata will be acquired from external websites and shown below.<br/>"
+"Submission of this metadata will be done automatically, when this submission is published and received a DOI."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
 msgstr "The current parsed citations will be overwritten if you click OK. All your modifications will be lost. Are you sure?"
