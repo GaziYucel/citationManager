@@ -15,6 +15,7 @@
 const OPTIMETA_CITATIONS_PARSED_SETTING_NAME       = 'OptimetaCitations__CitationsParsed';
 const OPTIMETA_CITATIONS_API_ENDPOINT              = 'OptimetaCitations';
 const OPTIMETA_CITATIONS_PUBLICATION_FORM          = 'OptimetaCitations_PublicationForm';
+const OPTIMETA_CITATIONS_SAVED_IS_ENABLED                = 'OptimetaCitations_IsEnabled';
 
 const OPTIMETA_CITATIONS_WIKIDATA_USERNAME         = 'OptimetaCitations_Wikidata_Username';
 const OPTIMETA_CITATIONS_WIKIDATA_PASSWORD         = 'OptimetaCitations_Wikidata_Password';
@@ -35,8 +36,10 @@ import('plugins.generic.optimetaCitations.classes.Handler.PluginAPIHandler');
 import('plugins.generic.optimetaCitations.classes.SettingsForm');
 import('plugins.generic.optimetaCitations.classes.Model.AuthorModel');
 import('plugins.generic.optimetaCitations.classes.Model.WorkModel');
+import('plugins.generic.optimetaCitations.classes.Dao.CitationsExtendedDAO');
 
 use Optimeta\Citations\Components\Forms\PublicationForm;
+use Optimeta\Citations\Dao\CitationsExtendedDAO;
 use Optimeta\Citations\Dao\PluginDAO;
 use Optimeta\Citations\Handler\PluginAPIHandler;
 use Optimeta\Citations\SettingsForm;
@@ -63,6 +66,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
         $this->ojsVersion = VersionCheck::getCurrentCodeVersion()->getVersionString(false);
 
+        $this->pluginActivationDeactivationActions();
+
         // Current Request / Context
         $request = $this->getRequest();
 
@@ -79,13 +84,13 @@ class OptimetaCitationsPlugin extends GenericPlugin
         // Is triggered post install on every install/upgrade.
         HookRegistry::register('Installer::postInstall', array(&$this, 'callbackPostInstall'));
 
-        // Is triggered in Acron Plugin for registering scheduled task //todo: does not work in 3.3.0-x
-        // Workaround can be found in callbackParseCronTabWorkAround
+        // does not work in 3.3.0-x workaround can be found in callbackParseCronTabWorkAround
+        // Is triggered in Acron Plugin for registering scheduled task
         HookRegistry::register('AcronPlugin::parseCronTab', array($this, 'callbackParseCronTab'));
 
         if ($success && $this->getEnabled()) {
-            // Is triggered prior to registering plugins for a category
-            HookRegistry::register('PluginRegistry::getCategories', [$this, 'callbackPluginRegistryGetCategories']);
+            $citationsExtendedDAO = new CitationsExtendedDAO();
+            DAORegistry::registerDAO('CitationsExtendedDAO', $citationsExtendedDAO);
 
             // Is triggered with every request from anywhere
             HookRegistry::register('Schema::get::publication', array($this, 'addToSchema'));
@@ -316,6 +321,11 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
         return false;
     }
+
+    /**
+     * @desc Workaround for hook AcronPlugin::parseCronTab not working in ojs 3.3.0-x
+     * @return void
+     */
     public function callbackParseCronTabWorkAround()
     {
         $taskName = 'plugins.generic.optimetaCitations.classes.ScheduledTasks.DepositorTask';
@@ -382,15 +392,6 @@ class OptimetaCitationsPlugin extends GenericPlugin
         return false;
     }
 
-    /**
-     * @desc callbackPluginRegistryGetCategories
-     * @return void
-     */
-    public function callbackPluginRegistryGetCategories()
-    {
-        $this->callbackParseCronTabWorkAround();
-    }
-
     /* Plugin required methods */
 
     /**
@@ -410,19 +411,37 @@ class OptimetaCitationsPlugin extends GenericPlugin
     }
 
     /**
-     * @copydoc Plugin::getInstallSitePluginSettingsFile()
-     */
-    public function getInstallSitePluginSettingsFile()
-    {
-        return $this->getPluginPath() . DIRECTORY_SEPARATOR . 'settings.xml';
-    }
-
-    /**
      * @copydoc Plugin::getInstallMigration()
      */
     public function getInstallMigration()
     {
-        import('plugins.generic.optimetaCitations.classes.Install.PluginMigration');
-        return new Optimeta\Citations\Install\PluginMigration();
+        import('plugins.generic.optimetaCitations.classes.Install.OptimetaCitationsMigration');
+        return new Optimeta\Citations\Install\OptimetaCitationsMigration();
+    }
+
+    public function pluginActivationDeactivationActions()
+    {
+        $isEnabledSaved = $this->getSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_SAVED_IS_ENABLED);
+
+        // plugin just got enabled
+        if(!$isEnabledSaved && $this->getEnabled()){
+            if (strstr($this->ojsVersion, '3.3.0')) {
+                // Workaround for hook AcronPlugin::parseCronTab not working in ojs 3.3.0-x
+                $this->callbackParseCronTabWorkAround();
+            }
+
+            // create / alter table required by plugin
+//            import('plugins.generic.optimetaCitations.classes.Install.OptimetaCitationsMigration');
+//            $migrate = new Optimeta\Citations\Install\OptimetaCitationsMigration();
+//            $migrate->createCitationsExtendedIfNotExists();
+
+            // save plugin is enabled to database
+            $this->updateSetting($this->getCurrentContextId(),OPTIMETA_CITATIONS_SAVED_IS_ENABLED, '1');
+        }
+        // plugin just got disabled
+        else if($isEnabledSaved && !$this->getEnabled()){
+            // save plugin is disabled to database
+            $this->updateSetting($this->getCurrentContextId(),OPTIMETA_CITATIONS_SAVED_IS_ENABLED, '0');
+        }
     }
 }
