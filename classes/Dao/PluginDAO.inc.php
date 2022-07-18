@@ -25,7 +25,7 @@ class PluginDAO
 
         $citations = $publication->getData(OPTIMETA_CITATIONS_PARSED_SETTING_NAME);
 
-        if(empty($citations)) $citations = [];
+        if(empty($citations)) $citations = '[]';
 
         return CitationModelHelpers::migrate($citations);
     }
