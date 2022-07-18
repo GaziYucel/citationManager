@@ -3,6 +3,7 @@ namespace Optimeta\Citations\Dao;
 
 import('plugins.generic.optimetaCitations.classes.Model.CitationModelHelpers');
 
+use DAORegistry;
 use Optimeta\Citations\Model\CitationModelHelpers;
 
 class PluginDAO
@@ -17,13 +18,11 @@ class PluginDAO
         ];
     }
 
-    public function saveCitations($publication, $citations)
+    public function getCitations($publication)
     {
-        $publication->setData(OPTIMETA_CITATIONS_PARSED_SETTING_NAME, $citations);
-    }
+//        $citationsExtendedDAO = DAORegistry::getDAO('CitationsExtendedDAO');
+//        $citations = $citationsExtendedDAO->getParsedCitationsByPublicationId($publication->getId());
 
-    public function getCitations($publication): array
-    {
         $citations = $publication->getData(OPTIMETA_CITATIONS_PARSED_SETTING_NAME);
 
         if(empty($citations)) $citations = [];
@@ -31,62 +30,14 @@ class PluginDAO
         return CitationModelHelpers::migrate($citations);
     }
 
-    /* Citations saved in multiple rows */
-    public function saveCitationsMultiRow($publication, $citationsJson): bool
+    public function saveCitations($publication, $citations)
     {
-        if(!is_object($publication) || empty($citationsJson) || !is_array(json_decode($citationsJson, true))){
-            $citationsJson = '[]';
-        }
+//        $citationsExtendedDAO = DAORegistry::getDAO('CitationsExtendedDAO');
+//        $citationsExtended = $citationsExtendedDAO->newDataObject();
+//        $citationsExtended->setPublicationId($publication->getId());
+//        $citationsExtended->setParsedCitations($citations);
+//        $citationsExtendedDAO->insertOrUpdateObject($citationsExtended);
 
-        $citations = json_decode($citationsJson, true);
-        $citationsCount = count($citations);
-        $citationsCountBefore = $this->getCitationsCountDb($publication);
-        
-        $publication->setData( OPTIMETA_CITATIONS_PARSED_SETTING_NAME . '_Count', $citationsCount);
-
-        for($i = 0; $i < $citationsCount; $i++){
-            $publication->setData(
-                OPTIMETA_CITATIONS_PARSED_SETTING_NAME . $i,
-                json_encode($citations[$i]));
-        }
-
-        $this->cleanUpCitations($publication, $citationsCount, $citationsCountBefore);
-
-        return true;
-    }
-
-    public function getCitationsMultiRow($publication): array
-    {
-        $citations = '';
-
-        if(!is_object($publication)) return [];
-
-        $citationsCount = $this->getCitationsCountDb($publication);
-
-        for($i = 0; $i < $citationsCount; $i++){
-            $citations .= $publication->getData(OPTIMETA_CITATIONS_PARSED_SETTING_NAME . $i) . ',';
-        }
-
-        $citations = '[' . trim($citations, ',') . ']';
-
-        return CitationModelHelpers::migrate($citations);
-    }
-
-    public function cleanUpCitations($publication, $citationsCount, $citationsCountBefore)
-    {
-        if($citationsCountBefore > $citationsCount){
-            for($i = $citationsCount; $i < $citationsCountBefore; $i++){
-                $publication->setData(
-                    OPTIMETA_CITATIONS_PARSED_SETTING_NAME . $i,
-                    null);
-            }
-        }
-    }
-
-    public function getCitationsCountDb($publication): int
-    {
-        $count = $publication->getData(OPTIMETA_CITATIONS_PARSED_SETTING_NAME . '_Count');
-        if(empty($count)) $count = 0;
-        return $count;
+        $publication->setData(OPTIMETA_CITATIONS_PARSED_SETTING_NAME, $citations);
     }
 }
