@@ -12,16 +12,23 @@
  * @brief Plugin for parsing Citations and submitting to Open Access websites.
  */
 
-import('lib.pkp.classes.site.VersionCheck');
-
-if (strstr(VersionCheck::getCurrentCodeVersion()->getVersionString(false), '3.2.1')) {
-    require_once(__DIR__ . '/classes/VersionSpecific/OptimetaCitationsPlugin_ojs_v321.inc.php');
-    return;
-}
-
 import('plugins.generic.optimetaCitations.OptimetaCitationsPluginBase');
 
 class OptimetaCitationsPlugin extends OptimetaCitationsPluginBase
 {
+    protected $versionSpecificNameState = 'workflowData';
 
+    public function pluginActivationActions()
+    {
+        import('classes.install.Upgrade');
+        $installer = new Upgrade(array());
+        $conn = DBConnection::getInstance();
+        $installer->dbconn = $conn->getDBConn();
+        $this->updateSchema('Installer::postInstall', [$installer]);
+    }
+
+    function getInstallSchemaFile()
+    {
+        return $this->getPluginPath() . '/schema.xml';
+    }
 }
