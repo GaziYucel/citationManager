@@ -22,7 +22,7 @@ class CitationsExtended extends DataObject
     }
 
     /**
-     * @desc Get Parsed Citations
+     * @desc Get ParsedCitations
      * @return string
      */
     function getParsedCitations() {
@@ -30,7 +30,7 @@ class CitationsExtended extends DataObject
     }
 
     /**
-     * @desc Set Parsed Citations
+     * @desc Set ParsedCitations
      * @param $parsedCitations string
      */
     function setParsedCitations($parsedCitations) {

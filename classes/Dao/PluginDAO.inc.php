@@ -20,10 +20,10 @@ class PluginDAO
 
     public function getCitations($publication)
     {
-//        $citationsExtendedDAO = DAORegistry::getDAO('CitationsExtendedDAO');
-//        $citations = $citationsExtendedDAO->getParsedCitationsByPublicationId($publication->getId());
+        $citationsExtendedDAO = DAORegistry::getDAO('CitationsExtendedDAO');
+        $citations = $citationsExtendedDAO->getParsedCitationsByPublicationId($publication->getId());
 
-        $citations = $publication->getData(OPTIMETA_CITATIONS_PARSED_SETTING_NAME);
+//        $citations = $publication->getData(OPTIMETA_CITATIONS_PARSED_SETTING_NAME);
 
         if(empty($citations)) $citations = '[]';
 
@@ -32,12 +32,12 @@ class PluginDAO
 
     public function saveCitations($publication, $citations)
     {
-//        $citationsExtendedDAO = DAORegistry::getDAO('CitationsExtendedDAO');
-//        $citationsExtended = $citationsExtendedDAO->newDataObject();
-//        $citationsExtended->setPublicationId($publication->getId());
-//        $citationsExtended->setParsedCitations($citations);
-//        $citationsExtendedDAO->insertOrUpdateObject($citationsExtended);
+        $citationsExtendedDAO = DAORegistry::getDAO('CitationsExtendedDAO');
+        $citationsExtended = $citationsExtendedDAO->newDataObject();
+        $citationsExtended->setPublicationId($publication->getId());
+        $citationsExtended->setParsedCitations($citations);
+        $citationsExtendedDAO->insertOrUpdateObject($citationsExtended);
 
-        $publication->setData(OPTIMETA_CITATIONS_PARSED_SETTING_NAME, $citations);
+//        $publication->setData(OPTIMETA_CITATIONS_PARSED_SETTING_NAME, $citations);
     }
 }

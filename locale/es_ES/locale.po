@@ -93,3 +93,15 @@ msgstr "Github Repository name for OpenCitations deposits"
 
 msgid "plugins.generic.optimetaCitations.settings.open_citations_token"
 msgstr "Github Token for OpenCitations deposits"
+
+msgid "plugins.generic.optimetaCitations.settings.test.button"
+msgstr "Test Settings"
+
+msgid "plugins.generic.optimetaCitations.not_implemented"
+msgstr "This function is not implemented yet"
+
+msgid "plugins.generic.optimetaCitations.settings.initialise.button"
+msgstr "Initialise Plugin"
+
+msgid "plugins.generic.optimetaCitations.settings.initialise.notification"
+msgstr "Initialising Plugin successful"
