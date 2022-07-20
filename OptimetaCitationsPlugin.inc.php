@@ -15,7 +15,7 @@
 import('lib.pkp.classes.site.VersionCheck');
 
 if (strstr(VersionCheck::getCurrentCodeVersion()->getVersionString(false), '3.2.1')) {
-    require_once(__DIR__ . '/classes/VersionSpecific/OptimetaCitationsPlugin_ojs_v321.inc.php');
+    require_once(__DIR__ . '/classes/VersionSpecific/v321/OptimetaCitationsPlugin.inc.php');
     return;
 }
 
