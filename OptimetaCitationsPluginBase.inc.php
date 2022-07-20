@@ -31,6 +31,7 @@ require_once (__DIR__ . '/vendor/autoload.php');
 import('lib.pkp.classes.plugins.GenericPlugin');
 import('lib.pkp.classes.site.VersionCheck');
 import('lib.pkp.classes.handler.APIHandler');
+import('lib.pkp.classes.linkAction.request.AjaxAction');
 
 import('plugins.generic.optimetaCitations.classes.Components.Forms.PublicationForm');
 import('plugins.generic.optimetaCitations.classes.Dao.PluginDAO');
@@ -424,7 +425,6 @@ class OptimetaCitationsPluginBase extends GenericPlugin
      */
     public function pluginActivationActions()
     {
-        // Workaround for hook AcronPlugin::parseCronTab not working in ojs 3.3.0-x
         $this->callbackParseCronTabWorkAround();
 
         // create / alter table required by plugin
@@ -439,6 +439,6 @@ class OptimetaCitationsPluginBase extends GenericPlugin
      */
     public function pluginDeactivationActions()
     {
-        // do something usefull
+        error_log('OptimetaCitationsPlugin was disabled');
     }
 }
