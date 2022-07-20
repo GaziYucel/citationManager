@@ -18,8 +18,15 @@ class OptimetaCitationsPlugin extends OptimetaCitationsPluginBase
 {
     protected $versionSpecificNameState = 'workflowData';
 
+    /**
+     * @desc This method is called after the plugin is activated
+     * @return void
+     */
     public function pluginActivationActions()
     {
+        $this->callbackParseCronTabWorkAround();
+
+        // create / alter table required by plugin
         import('classes.install.Upgrade');
         $installer = new Upgrade(array());
         $conn = DBConnection::getInstance();
