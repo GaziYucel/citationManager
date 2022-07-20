@@ -9,11 +9,15 @@
         data: {
             citations: optimetaCitations,
             helper: optimetaCitationsGetHelperArray(optimetaCitations),
-            author: { {$authorModel} }
+            author: JSON.parse(`{$authorModel}`),
+            publicationWork: JSON.parse(`{$workModel}`)
         },
         computed: {
             citationsJsonComputed: function() {
                 return JSON.stringify(this.citations);
+            },
+            publicationWorkJsonComputed: function() {
+                return JSON.stringify(this.publicationWork);
             },
             optimetaCitationsIsParsed: function() {
                 if(this.citations.length === 0){
@@ -124,10 +128,7 @@
             },
             error(r) { },
             success(response) {
-                // optimetaCitations = JSON.parse(JSON.stringify(response['message']));
-                // optimetaCitationsApp.citations = JSON.parse(JSON.stringify(response['message']));
-                // optimetaCitationsApp.helper = optimetaCitationsGetHelperArray(JSON.parse(JSON.stringify(response['message'])));
-
+                optimetaCitationsApp.publicationWork = JSON.parse(JSON.stringify(response['message']));
                 optimetaLoadingImage(false);
             }
         });
@@ -145,50 +146,55 @@
 
 {if $citationsEnabled}
 
-<div class="section" id="optimetaCitations" style="clear:both;">
+    <div class="section" id="optimetaCitations" style="clear:both;">
 
-    <div class="header">
-        <table>
-            <tr>
-                <td colspan="2">
-                    <span class="label">{translate key="plugins.generic.optimetaCitationsPlugin.process.label"}</span> <br/>
-                    <span class="description">{translate key="plugins.generic.optimetaCitationsPlugin.process.description"}</span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="optimetaButton optimetaButtonGrey">Wikidata</span>
-                    <span class="optimetaButton optimetaButtonGrey">OpenCitations</span>
-                </td>
-                <td class="optimetaAlignRight">
-                    <a href="javascript:optimetaDepositCitations()" id="buttonSubmit" class="pkpButton"
-                       :class="(optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitationsPlugin.deposit.button"}</a>
-                    <a href="javascript:optimetaClearCitations()" id="buttonClear" class="pkpButton"
-                       :class="(optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitationsPlugin.clear.button"}</a>
-                    <a href="javascript:optimetaProcessCitations()" id="buttonProcess" class="pkpButton">{translate key="plugins.generic.optimetaCitationsPlugin.process.button"}</a>
-                </td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="optimetaScrollableDiv">
-
-        <div id="optimetaScrollableDivLoading" class="optimetaScrollableDivLoading optimetaHide">
-            <img src="{$pluginImagesURL}/loading-transparent.gif"/>
+        <div class="header">
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <span class="label">{translate key="plugins.generic.optimetaCitationsPlugin.process.label"}</span> <br/>
+                        <span class="description">{translate key="plugins.generic.optimetaCitationsPlugin.process.description"}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="optimetaButton optimetaButtonGrey">Wikidata</span>
+                        <a class="optimetaButton optimetaButtonGreen"
+                           v-if="publicationWork.opencitations_url"
+                           :href="publicationWork.opencitations_url"
+                           target="_blank"><span>OpenCitations</span></a>
+                        <span class="optimetaButton optimetaButtonGrey"
+                              v-if="!publicationWork.opencitations_url">OpenCitations</span>
+                    </td>
+                    <td class="optimetaAlignRight">
+                        <a href="javascript:optimetaDepositCitations()" id="buttonSubmit" class="pkpButton"
+                           :class="(optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitationsPlugin.deposit.button"}</a>
+                        <a href="javascript:optimetaClearCitations()" id="buttonClear" class="pkpButton"
+                           :class="(optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitationsPlugin.clear.button"}</a>
+                        <a href="javascript:optimetaProcessCitations()" id="buttonProcess" class="pkpButton">{translate key="plugins.generic.optimetaCitationsPlugin.process.button"}</a>
+                    </td>
+                </tr>
+            </table>
         </div>
 
-        <div id="optimetaScrollableDivEmpty" class="optimetaScrollableDivEmpty" v-show="!optimetaCitationsIsParsed">
-            {translate key="plugins.generic.optimetaCitationsPlugin.citations.empty.description"}
-        </div>
+        <div class="optimetaScrollableDiv">
 
-        <div id="optimetaScrollableDivValue" class="optimetaScrollableDivValue">
-            <table v-show="optimetaCitationsIsParsed">
-                <colgroup>
-                    <col class="grid-column column-nr" style="width: 2%;">
-                    <col class="grid-column column-parts" style="">
-                    <col class="grid-column column-action" style="width: 6%;">
-                </colgroup>
-                <tbody>
+            <div id="optimetaScrollableDivLoading" class="optimetaScrollableDivLoading optimetaHide">
+                <img src="{$pluginImagesURL}/loading-transparent.gif"/>
+            </div>
+
+            <div id="optimetaScrollableDivEmpty" class="optimetaScrollableDivEmpty" v-show="!optimetaCitationsIsParsed">
+                {translate key="plugins.generic.optimetaCitationsPlugin.citations.empty.description"}
+            </div>
+
+            <div id="optimetaScrollableDivValue" class="optimetaScrollableDivValue">
+                <table v-show="optimetaCitationsIsParsed">
+                    <colgroup>
+                        <col class="grid-column column-nr" style="width: 2%;">
+                        <col class="grid-column column-parts" style="">
+                        <col class="grid-column column-action" style="width: 6%;">
+                    </colgroup>
+                    <tbody>
                     <tr v-for="(row, i) in helper" class="optimetaRow">
                         <td class="optimetaScrollableDiv-nr">{{ i + 1 }}</td>
                         <td class="optimetaScrollableDiv-parts">
@@ -235,8 +241,8 @@
                                         <i class="fa fa-trash" aria-hidden="true"></i> </a>
                                         <br v-show="row.editRow"/>
                                     </span>
-                                <a class="pkpButton" v-show="row.editRow"
-                                   v-on:click="addAuthor(i)">{translate key="plugins.generic.optimetaCitationsPlugin.author.add.button"}</a>
+                                    <a class="pkpButton" v-show="row.editRow"
+                                       v-on:click="addAuthor(i)">{translate key="plugins.generic.optimetaCitationsPlugin.author.add.button"}</a>
                                 </div>
 
                                 <div>
@@ -295,12 +301,12 @@
                                       v-if="!citations[i].openalex_id">OpenAlex</span>
                             </div>
                         </td>
-                    <td class="optimetaScrollableDiv-actions">
-                        <a v-show="!row.editRow" v-on:click="startEdit(i)"
-                           class="pkpButton"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                        <a v-show="row.editRow" v-on:click="endEdit(i)"
-                           class="pkpButton"><i class="fa fa-check" aria-hidden="true"></i></a>
-                    </td>
+                        <td class="optimetaScrollableDiv-actions">
+                            <a v-show="!row.editRow" v-on:click="startEdit(i)"
+                               class="pkpButton"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <a v-show="row.editRow" v-on:click="endEdit(i)"
+                               class="pkpButton"><i class="fa fa-check" aria-hidden="true"></i></a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -308,7 +314,8 @@
         </div>
 
         <div>
-            <textarea name="{$smarty.const.OPTIMETA_CITATIONS_PARSED_SETTING_NAME}" style="display: none;">{{ citationsJsonComputed }}</textarea>
+            <textarea name="{$smarty.const.OPTIMETA_CITATIONS_FORM_FIELD_PARSED}" style="display: none;">{{ citationsJsonComputed }}</textarea>
+            <textarea name="{$smarty.const.OPTIMETA_CITATIONS_PUBLICATION_WORK}" style="display: none;">{{ publicationWorkJsonComputed }}</textarea>
         </div>
 
     </div>

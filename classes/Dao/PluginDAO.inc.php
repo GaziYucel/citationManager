@@ -10,7 +10,14 @@ class PluginDAO
 {
     public function addToSchema(object $schema)
     {
-        $schema->properties->{OPTIMETA_CITATIONS_PARSED_SETTING_NAME} = (object)[
+        $schema->properties->{OPTIMETA_CITATIONS_FORM_FIELD_PARSED} = (object)[
+            "type" => "string",
+            "multilingual" => false,
+            "apiSummary" => true,
+            "validation" => ["nullable"]
+        ];
+
+        $schema->properties->{OPTIMETA_CITATIONS_PUBLICATION_WORK} = (object)[
             "type" => "string",
             "multilingual" => false,
             "apiSummary" => true,
@@ -22,8 +29,6 @@ class PluginDAO
     {
         $citationsExtendedDAO = DAORegistry::getDAO('CitationsExtendedDAO');
         $citations = $citationsExtendedDAO->getParsedCitationsByPublicationId($publication->getId());
-
-//        $citations = $publication->getData(OPTIMETA_CITATIONS_PARSED_SETTING_NAME);
 
         if(empty($citations)) $citations = '[]';
 
@@ -37,7 +42,5 @@ class PluginDAO
         $citationsExtended->setPublicationId($publication->getId());
         $citationsExtended->setParsedCitations($citations);
         $citationsExtendedDAO->insertOrUpdateObject($citationsExtended);
-
-//        $publication->setData(OPTIMETA_CITATIONS_PARSED_SETTING_NAME, $citations);
     }
 }

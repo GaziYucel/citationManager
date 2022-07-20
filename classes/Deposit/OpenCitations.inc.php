@@ -4,6 +4,7 @@ namespace Optimeta\Citations\Deposit;
 import('plugins.generic.optimetaCitations.classes.Helpers');
 
 use Optimeta\Citations\Helpers;
+use Optimeta\Citations\Model\WorkModel;
 use Optimeta\Shared\OpenCitations\Model\WorkCitation;
 use Optimeta\Shared\OpenCitations\Model\WorkMetaData;
 use Optimeta\Shared\OpenCitations\OpenCitationsBase;

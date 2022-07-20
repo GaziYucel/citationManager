@@ -133,7 +133,7 @@ class PluginAPIHandler extends APIHandler
         $request = $this->getRequest();
         $submissionId = '';
         $citationsIn = [];
-        $message = [];
+        $workOut = [];
 
         $this->responseBody['message-type'] = 'deposit';
 
@@ -154,9 +154,9 @@ class PluginAPIHandler extends APIHandler
 
         // deposit work + citations
         $depositor = new Depositor();
-        $message = $depositor->executeAndReturnCitations($submissionId, $citationsIn);
+        $workOut = $depositor->executeAndReturnCitations($submissionId, $citationsIn);
 
-        $this->responseBody['message'] = $message;
+        $this->responseBody['message'] = $workOut;
         return $response->withJson($this->responseBody, 200);
     }
 }
