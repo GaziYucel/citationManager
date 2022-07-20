@@ -72,16 +72,22 @@ class OptimetaCitationsPluginBase extends GenericPlugin
 
         $this->ojsVersion = VersionCheck::getCurrentCodeVersion()->getVersionString(false);
 
-        // check if plugin is being activated/deactivated and execute actions
+        // get value of isEnabled from database
         $this->isEnabledSaved = $this->getSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_SAVED_IS_ENABLED);
         // plugin just got enabled
         if (!$this->isEnabledSaved && $this->getEnabled()) {
+            // change database value first in case this is called again
             $this->updateSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_SAVED_IS_ENABLED, '1');
-            $this->pluginActivationActions();            
+
+            // plugin was just activated, execute actions
+            $this->pluginActivationActions();
         } // plugin just got disabled
         else if ($this->isEnabledSaved && !$this->getEnabled()) {
+            // change database value first in case this is called again
             $this->updateSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_SAVED_IS_ENABLED, '0');
-            $this->pluginDeactivationActions();            
+
+            // plugin just got deactivated, execute actions
+            $this->pluginDeactivationActions();
         }
 
         // Current Request / Context
