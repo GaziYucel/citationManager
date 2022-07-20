@@ -195,16 +195,10 @@ class OptimetaCitationsPluginBase extends GenericPlugin
 
         $pluginDao = new PluginDAO();
 
-        $parsedCitations = null;
+        $parsedCitations = $request->getuserVar(OPTIMETA_CITATIONS_PARSED_SETTING_NAME);
 
-        if (!array_key_exists(OPTIMETA_CITATIONS_PARSED_SETTING_NAME, $params) && !$request->getuserVar(OPTIMETA_CITATIONS_PARSED_SETTING_NAME)) {
-            return;
-        }
-        else if(array_key_exists(OPTIMETA_CITATIONS_PARSED_SETTING_NAME, $params) && !$request->getuserVar(OPTIMETA_CITATIONS_PARSED_SETTING_NAME)){
+        if(array_key_exists(OPTIMETA_CITATIONS_PARSED_SETTING_NAME, $params)){
             $parsedCitations = $params[OPTIMETA_CITATIONS_PARSED_SETTING_NAME];
-        }
-        else if(!array_key_exists(OPTIMETA_CITATIONS_PARSED_SETTING_NAME, $params) && $request->getuserVar(OPTIMETA_CITATIONS_PARSED_SETTING_NAME)){
-            $parsedCitations = $request->getuserVar(OPTIMETA_CITATIONS_PARSED_SETTING_NAME);
         }
 
         $pluginDao->saveCitations($publication, $parsedCitations);
