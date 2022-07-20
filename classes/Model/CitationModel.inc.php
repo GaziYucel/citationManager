@@ -8,5 +8,11 @@ import('plugins.generic.optimetaCitations.classes.Model.WorkModel');
 
 class CitationModel extends WorkModel
 {
-
+    /**
+     * @var string
+     * @desc The unchanged raw citation
+     * @see
+     * @example
+     */
+    public $raw;
 }

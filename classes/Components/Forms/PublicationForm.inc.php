@@ -22,7 +22,7 @@ use Publication;
 class PublicationForm extends FormComponent
 {
     /** @copydoc FormComponent::$id */
-    public $id = OPTIMETA_CITATIONS_PUBLICATION_FORM;
+    public $id = OPTIMETA_CITATIONS_FORM_NAME;
 
     /** @copydoc FormComponent::$method */
     public $method = 'PUT';
@@ -47,11 +47,19 @@ class PublicationForm extends FormComponent
         $pluginDAO = new PluginDAO();
 
         $this->addField(new FieldText(
-            OPTIMETA_CITATIONS_PARSED_SETTING_NAME, [
+            OPTIMETA_CITATIONS_FORM_FIELD_PARSED, [
                 'label' => '',
                 'description' => '',
                 'isMultilingual' => false,
                 'value' => $pluginDAO->getCitations($publication)
             ]));
+
+        $this->addField(new FieldText(
+            OPTIMETA_CITATIONS_PUBLICATION_WORK, [
+            'label' => '',
+            'description' => '',
+            'isMultilingual' => false,
+            'value' => $publication->getData(OPTIMETA_CITATIONS_PUBLICATION_WORK)
+        ]));
     }
 }

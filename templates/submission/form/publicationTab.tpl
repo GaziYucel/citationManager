@@ -9,14 +9,15 @@
         data: {
             citations: optimetaCitations,
             helper: optimetaCitationsGetHelperArray(optimetaCitations),
-            author: { {$authorModel} },
-            deposit: {
-                opencitations_url: ''
-            }
+            author: JSON.parse(`{$authorModel}`),
+            publicationWork: JSON.parse(`{$workModel}`)
         },
         computed: {
             citationsJsonComputed: function() {
                 return JSON.stringify(this.citations);
+            },
+            publicationWorkJsonComputed: function() {
+                return JSON.stringify(this.publicationWork);
             },
             optimetaCitationsIsParsed: function() {
                 if(this.citations.length === 0){
@@ -127,7 +128,7 @@
             },
             error(r) { },
             success(response) {
-                optimetaCitationsApp.deposit = JSON.parse(JSON.stringify(response['message']));
+                optimetaCitationsApp.publicationWork = JSON.parse(JSON.stringify(response['message']));
                 optimetaLoadingImage(false);
             }
         });
@@ -157,12 +158,11 @@
                 <td>
                     <span class="optimetaButton optimetaButtonGrey">Wikidata</span>
                     <a class="optimetaButton optimetaButtonGreen"
-                       v-if="optimetaCitationsApp.deposit.opencitations_url"
-                       :href="optimetaCitationsApp.deposit.opencitations_url"
+                       v-if="optimetaCitationsApp.publicationWork.opencitations_url"
+                       :href="optimetaCitationsApp.publicationWork.opencitations_url"
                        target="_blank"><span>OpenCitations</span></a>
                     <span class="optimetaButton optimetaButtonGrey"
-                          v-if="!optimetaCitationsApp.deposit.opencitations_url">OpenCitations</span>
-
+                          v-if="!optimetaCitationsApp.publicationWork.opencitations_url">OpenCitations</span>
                 </td>
                 <td class="optimetaAlignRight">
                     <a href="javascript:optimetaDepositCitations()" id="buttonSubmit" class="pkpButton"
@@ -312,8 +312,9 @@
     </div>
 
     <div>
-        <span style="display: none;">{{ components.{$smarty.const.OPTIMETA_CITATIONS_PUBLICATION_FORM}.fields[0]['value'] = optimetaCitationsApp.citationsJsonComputed }}</span>
-        <pkp-form v-bind="components.{$smarty.const.OPTIMETA_CITATIONS_PUBLICATION_FORM}" @set="set"/>
+        <span style="display: none;">{{ components.{$smarty.const.OPTIMETA_CITATIONS_FORM_NAME}.fields[0]['value'] = optimetaCitationsApp.citationsJsonComputed }}</span>
+        <span style="display: none;">{{ components.{$smarty.const.OPTIMETA_CITATIONS_FORM_NAME}.fields[1]['value'] = optimetaCitationsApp.publicationWorkJsonComputed }}</span>
+        <pkp-form v-bind="components.{$smarty.const.OPTIMETA_CITATIONS_FORM_NAME}" @set="set"/>
     </div>
 
 </tab>

@@ -208,6 +208,14 @@ class WorkModel
 
     /**
      * @var string
+     * @desc The OpenAlex URL for this work
+     * @see https://docs.openalex.org/about-the-data#the-openalex-id
+     * @example https://docs.openalex.org/about-the-data#W2741809807
+     */
+    public $openalex_url;
+
+    /**
+     * @var string
      * @desc The Wikidata QID for this work
      * @see https://www.wikidata.org/wiki/Q43649390
      * @example Q43649390
@@ -216,25 +224,33 @@ class WorkModel
 
     /**
      * @var string
-     * @desc The OpenCitations ID (OCI) for this work
-     * @see https://opencitations.net/index/api/v1#/citations/{doi}
+     * @desc The Wikidata URL for this work
+     * @see https://www.wikidata.org/wiki/Q43649390
+     * @example https://www.wikidata.org/wiki/Q43649390
+     */
+    public $wikidata_url;
+
+    /**
+     * @var string
+     * @desc The OpenCitations URL for this work
+     * @see https://opencitations.net/index/api/v1#/citations/{oci}
      * @example 0200100000236102818370204030309-020070701073625141427193701090900
      */
     public $opencitations_id;
 
     /**
+     * @var string
+     * @desc The OpenCitations URL for this work
+     * @see https://opencitations.net/index/api/v1#/citations/{oci}
+     * @example https://opencitations.net/index/api/v1#/citations/0200100000236102818370204030309-020070701073625141427193701090900
+     */
+    public $opencitations_url;
+
+    /**
      * @var boolean
-     * @desc Is this citation processed or to be processed
+     * @desc Is this work processed or to be processed
      * @see
      * @example false
      */
     public $isProcessed;
-
-    /**
-     * @var string
-     * @desc The unchanged raw citation
-     * @see
-     * @example
-     */
-    public $raw;
 }

@@ -39,4 +39,19 @@ class CitationModelHelpers
 
         return $citationsOut;
     }
+
+    /**
+     * @desc Return CitationModel as an associative array with null values
+     * @return array
+     */
+    public static function getModelAsArrayNullValues(): array
+    {
+        $workModel = [];
+
+        foreach (new CitationModel() as $name => $value){
+            $workModel[$name] = null;
+        }
+
+        return $workModel;
+    }
 }

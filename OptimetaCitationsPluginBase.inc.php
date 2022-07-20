@@ -12,9 +12,10 @@
  * @brief Plugin for parsing Citations and submitting to Open Access websites.
  */
 
-const OPTIMETA_CITATIONS_PARSED_SETTING_NAME       = 'OptimetaCitations__CitationsParsed';
 const OPTIMETA_CITATIONS_API_ENDPOINT              = 'OptimetaCitations';
-const OPTIMETA_CITATIONS_PUBLICATION_FORM          = 'OptimetaCitations_PublicationForm';
+const OPTIMETA_CITATIONS_PUBLICATION_WORK          = 'OptimetaCitations_PublicationWork';
+const OPTIMETA_CITATIONS_FORM_NAME                 = 'OptimetaCitations_PublicationForm';
+const OPTIMETA_CITATIONS_FORM_FIELD_PARSED         = 'OptimetaCitations_CitationsParsed';
 const OPTIMETA_CITATIONS_SAVED_IS_ENABLED          = 'OptimetaCitations_IsEnabled';
 
 const OPTIMETA_CITATIONS_WIKIDATA_USERNAME         = 'OptimetaCitations_Wikidata_Username';
@@ -38,13 +39,16 @@ import('plugins.generic.optimetaCitations.classes.Dao.PluginDAO');
 import('plugins.generic.optimetaCitations.classes.Handler.PluginAPIHandler');
 import('plugins.generic.optimetaCitations.classes.SettingsForm');
 import('plugins.generic.optimetaCitations.classes.Model.AuthorModel');
-import('plugins.generic.optimetaCitations.classes.Model.WorkModel');
+import('plugins.generic.optimetaCitations.classes.Model.AuthorModelHelpers');
+import('plugins.generic.optimetaCitations.classes.Model.WorkModelHelpers');
 import('plugins.generic.optimetaCitations.classes.Dao.CitationsExtendedDAO');
 
 use Optimeta\Citations\Components\Forms\PublicationForm;
 use Optimeta\Citations\Dao\CitationsExtendedDAO;
 use Optimeta\Citations\Dao\PluginDAO;
 use Optimeta\Citations\Handler\PluginAPIHandler;
+use Optimeta\Citations\Model\AuthorModelHelpers;
+use Optimeta\Citations\Model\WorkModelHelpers;
 use Optimeta\Citations\SettingsForm;
 
 class OptimetaCitationsPluginBase extends GenericPlugin
@@ -61,7 +65,8 @@ class OptimetaCitationsPluginBase extends GenericPlugin
         'pluginImagesURL' => '',
         'pluginApiUrl' => '',
         'authorModel' => '',
-        'workModel' => ''];
+        'workModel' => '',
+        'publicationWork' => ''];
 
     /**
      * @copydoc Plugin::register
@@ -99,15 +104,12 @@ class OptimetaCitationsPluginBase extends GenericPlugin
         $this->templateParameters['pluginJavaScriptURL'] = $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js';
         $this->templateParameters['pluginImagesURL'] = $request->getBaseUrl() . '/' . $this->getPluginPath() . '/images';
         $this->templateParameters['pluginApiUrl'] = '';
-        foreach (new Optimeta\Citations\Model\AuthorModel() as $name => $value) $this->templateParameters['authorModel'] .= "$name: null, ";
-        $this->templateParameters['authorModel'] = trim($this->templateParameters['authorModel'], ', ');
-        foreach (new Optimeta\Citations\Model\WorkModel() as $name => $value) $this->templateParameters['workModel'] .= "$name: null, ";
-        $this->templateParameters['workModel'] = trim($this->templateParameters['workModel'], ', ');
+        $this->templateParameters['authorModel'] = json_encode(AuthorModelHelpers::getModelAsArrayNullValues());
+        $this->templateParameters['workModel'] = json_encode(WorkModelHelpers::getModelAsArrayNullValues());
 
         // Is triggered post install on every install/upgrade.
         HookRegistry::register('Installer::postInstall', array(&$this, 'callbackPostInstall'));
 
-        // does not work in 3.3.0-x workaround can be found in callbackParseCronTabWorkAround
         // Is triggered in Acron Plugin for registering scheduled task
         HookRegistry::register('AcronPlugin::parseCronTab', array($this, 'callbackParseCronTab'));
 
@@ -168,7 +170,7 @@ class OptimetaCitationsPluginBase extends GenericPlugin
             __('plugins.generic.optimetaCitationsPlugin.publication.success'));
 
         $state = $templateMgr->getTemplateVars($this->versionSpecificNameState);
-        $state['components'][OPTIMETA_CITATIONS_PUBLICATION_FORM] = $form->getConfig();
+        $state['components'][OPTIMETA_CITATIONS_FORM_NAME] = $form->getConfig();
         $templateMgr->assign($this->versionSpecificNameState, $state);
 
         $publicationDao = DAORegistry::getDAO('PublicationDAO');
@@ -179,6 +181,11 @@ class OptimetaCitationsPluginBase extends GenericPlugin
 
         $pluginDAO = new PluginDAO();
         $this->templateParameters['citationsParsed'] = json_encode($pluginDAO->getCitations($publication));
+
+        $publicationWorkDb = $publication->getData(OPTIMETA_CITATIONS_PUBLICATION_WORK);
+        if(!empty($publicationWorkDb) && $publicationWorkDb !== '[]'){
+            $this->templateParameters['workModel'] = $publicationWorkDb;
+        }
 
         $templateMgr->assign($this->templateParameters);
 
@@ -202,13 +209,13 @@ class OptimetaCitationsPluginBase extends GenericPlugin
 
         $pluginDao = new PluginDAO();
 
-        $parsedCitations = $request->getuserVar(OPTIMETA_CITATIONS_PARSED_SETTING_NAME);
-
-        if(array_key_exists(OPTIMETA_CITATIONS_PARSED_SETTING_NAME, $params)){
-            $parsedCitations = $params[OPTIMETA_CITATIONS_PARSED_SETTING_NAME];
-        }
-
+        $parsedCitations = $request->getuserVar(OPTIMETA_CITATIONS_FORM_FIELD_PARSED);
+        if(array_key_exists(OPTIMETA_CITATIONS_FORM_FIELD_PARSED, $params)) $parsedCitations = $params[OPTIMETA_CITATIONS_FORM_FIELD_PARSED];
         $pluginDao->saveCitations($publication, $parsedCitations);
+
+        $publicationWork = $request->getuserVar(OPTIMETA_CITATIONS_PUBLICATION_WORK);
+        if(array_key_exists(OPTIMETA_CITATIONS_PUBLICATION_WORK, $params)) $parsedCitations = $params[OPTIMETA_CITATIONS_PUBLICATION_WORK];
+        $publication->setData(OPTIMETA_CITATIONS_PUBLICATION_WORK, $publicationWork);
     }
 
     /**
@@ -235,6 +242,11 @@ class OptimetaCitationsPluginBase extends GenericPlugin
 
         $pluginDAO = new PluginDAO();
         $this->templateParameters['citationsParsed'] = json_encode($pluginDAO->getCitations($publication));
+
+        $publicationWorkDb = $publication->getData(OPTIMETA_CITATIONS_PUBLICATION_WORK);
+        if(!empty($publicationWorkDb) && $publicationWorkDb !== '[]'){
+            $this->templateParameters['workModel'] = $publicationWorkDb;
+        }
 
         $templateMgr->assign($this->templateParameters);
 

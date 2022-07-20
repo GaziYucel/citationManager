@@ -15,6 +15,9 @@
 namespace Optimeta\Citations\Deposit;
 
 import('plugins.generic.optimetaCitations.classes.Deposit.OpenCitations');
+import('plugins.generic.optimetaCitations.classes.Model.WorkModelHelpers');
+
+use Optimeta\Citations\Model\WorkModelHelpers;
 
 class Depositor
 {
@@ -24,21 +27,38 @@ class Depositor
      * @param array $citationsParsed
      * @return array $citations
      */
-    public function executeAndReturnCitations(string $submissionId, array $citationsParsed): array
+    public function executeAndReturnCitations(string $submissionId, array $citationsParsed)
     {
-        $response = [
-            'opencitations_url' => '-1-'
-        ];
+        $submissionDao = \DAORegistry::getDAO('SubmissionDAO');
+        $submission = $submissionDao->getById($submissionId);
+        $publication = $submission->getLatestPublication();
+
+        $publicationDao = \DAORegistry::getDAO('PublicationDAO');
+        $publication = $publicationDao->getById($submission->getLatestPublication()->getId());
+
+        $publicationWorkDb = $publication->getData(OPTIMETA_CITATIONS_PUBLICATION_WORK);
+
+        $publicationWork = WorkModelHelpers::getModelAsArrayNullValues();
+
+        if(!empty($publicationWorkDb) && $publicationWorkDb !== '[]'){
+            $publicationWork = json_decode($publicationWorkDb, true);
+        }
 
         // return if input is empty
-        if (empty($citationsParsed)) { return $response; }
+        if (empty($citationsParsed)) { return $publicationWork; }
 
         // OpenCitations
         $openCitations = new OpenCitations();
-        $response['opencitations_url'] = $openCitations->submitWork($submissionId, $citationsParsed);
+        $openCitationsUrl = $openCitations->submitWork($submissionId, $citationsParsed);
 
-        return $response;
+        $publicationWork['opencitations_url'] = $openCitationsUrl;
+
+        $publicationWorkJson = json_encode($publicationWork);
+
+        // save to database
+        $publication->setData(OPTIMETA_CITATIONS_PUBLICATION_WORK, $publicationWorkJson);
+        $publicationDao->updateObject($publication);
+
+        return $publicationWork;
     }
-
-
 }
