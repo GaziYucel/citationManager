@@ -76,12 +76,12 @@ class OptimetaCitationsPluginBase extends GenericPlugin
         $this->isEnabledSaved = $this->getSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_SAVED_IS_ENABLED);
         // plugin just got enabled
         if (!$this->isEnabledSaved && $this->getEnabled()) {
-            $this->pluginActivationActions();
             $this->updateSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_SAVED_IS_ENABLED, '1');
+            $this->pluginActivationActions();            
         } // plugin just got disabled
         else if ($this->isEnabledSaved && !$this->getEnabled()) {
-            $this->pluginDeactivationActions();
             $this->updateSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_SAVED_IS_ENABLED, '0');
+            $this->pluginDeactivationActions();            
         }
 
         // Current Request / Context
