@@ -12,7 +12,7 @@ use VersionCheck;
 class CitationsExtendedDAOBase extends DAO
 {
     /**
-     * Get CitationsExtended by Publication ID
+     * @desc Get CitationsExtended by Publication ID
      * @param $publicationId int Publication ID
      * @return DAOResultFactory
      */
@@ -25,9 +25,10 @@ class CitationsExtendedDAOBase extends DAO
     }
 
     /**
-     * Get parsed citations by Publication ID
+     * @desc Get parsed citations by Publication ID
      * @param $publicationId int Publication ID
      * @return array
+     * @see OJS version 3.2.1-x: classes/VersionSpecific/v321/CitationsExtendedDAO
      */
     function getParsedCitationsByPublicationId($publicationId) {
         $citationsParsed = '';
@@ -44,6 +45,11 @@ class CitationsExtendedDAOBase extends DAO
         return $citationsParsed;
     }
 
+    /**
+     * @desc Checks if citationsParsed exists for this publication
+     * @param $publicationId
+     * @return bool
+     */
     function doesParsedCitationsByPublicationIdExists($publicationId)
     {
         $result = $this->retrieve(
@@ -57,7 +63,7 @@ class CitationsExtendedDAOBase extends DAO
     }
 
     /**
-     * Insert or update a CitationsExtended.
+     * @desc Insert or update a CitationsExtended.
      * @param $citationsExtended CitationsExtended
      * @return int Inserted CitationsExtended ID or 0 if Updated
      */
@@ -74,7 +80,7 @@ class CitationsExtendedDAOBase extends DAO
     }
 
     /**
-     * Insert a CitationsExtended.
+     * @desc Insert a CitationsExtended.
      * @param $citationsExtended CitationsExtended
      * @return int Inserted CitationsExtended ID
      */
@@ -93,7 +99,7 @@ class CitationsExtendedDAOBase extends DAO
     }
 
     /**
-     * Update the database with a CitationsExtended object
+     * @desc Update the database with a CitationsExtended object
      * @param $citationsExtended CitationsExtended
      */
     function updateObject($citationsExtended) {
@@ -107,7 +113,7 @@ class CitationsExtendedDAOBase extends DAO
     }
 
     /**
-     * Delete CitationsExtended by ID.
+     * @desc Delete CitationsExtended by ID.
      * @param $citationsExtendedId int
      */
     function deleteById($citationsExtendedId) {
@@ -118,7 +124,7 @@ class CitationsExtendedDAOBase extends DAO
     }
 
     /**
-     * Delete a CitationsExtended object.
+     * @desc Delete a CitationsExtended object.
      * @param $citationsExtended CitationsExtended
      */
     function deleteObject($citationsExtended) {
@@ -126,7 +132,7 @@ class CitationsExtendedDAOBase extends DAO
     }
 
     /**
-     * Delete CitationsExtended by Publication ID
+     * @desc Delete CitationsExtended by Publication ID
      * @param $publicationId int Publication ID
      */
     function deleteByPublicationId($publicationId) {
@@ -137,7 +143,7 @@ class CitationsExtendedDAOBase extends DAO
     }
 
     /**
-     * Generate a new CitationsExtended object.
+     * @desc Generate a new CitationsExtended object.
      * @return CitationsExtended
      */
     function newDataObject() {
@@ -145,7 +151,7 @@ class CitationsExtendedDAOBase extends DAO
     }
 
     /**
-     * Return a new CitationsExtended object from a given row.
+     * @desc Return a new CitationsExtended object from a given row.
      * @return CitationsExtended
      */
     function _fromRow($row) {
@@ -159,7 +165,7 @@ class CitationsExtendedDAOBase extends DAO
     }
 
     /**
-     * Get the insert ID for the last inserted CitationsExtended.
+     * @desc Get the insert ID for the last inserted CitationsExtended.
      * @return int
      */
     function getInsertId() {
@@ -167,7 +173,7 @@ class CitationsExtendedDAOBase extends DAO
     }
 
     /**
-     * Get the additional field names.
+     * @desc Get the additional field names.
      * @return array
      */
     function getAdditionalFieldNames() {

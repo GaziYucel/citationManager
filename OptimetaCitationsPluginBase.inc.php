@@ -332,8 +332,6 @@ class OptimetaCitationsPluginBase extends GenericPlugin
                 return DAO::getDataChangedEvent();
             case 'initialise_plugin':
                 $this->pluginActivationActions();
-                $this->callbackParseCronTab('AcronPlugin::parseCronTab', []);
-
                 $notificationManager = new NotificationManager();
                 $user = $request->getUser();
                 $notificationManager->createTrivialNotification(
@@ -368,56 +366,9 @@ class OptimetaCitationsPluginBase extends GenericPlugin
      */
     public function callbackParseCronTabWorkAround()
     {
-        $taskName = 'plugins.generic.optimetaCitations.classes.ScheduledTasks.DepositorTask';
-        $acronPlugin = new \AcronPlugin();
-        $xmlParser = new PKPXMLParser();
-        $taskFilesPath = array();
-
-        // get schedule of current plugin
-        $taskFilesPath[] = $this->getPluginPath() . DIRECTORY_SEPARATOR . 'scheduledTasks.xml';
-
-        // get current schedule from database
-        $tasks = (array)$acronPlugin->getSetting(0, 'crontab');
-
-        if (strstr(json_encode($tasks), $taskName)) {
-            error_log($taskName . ' already scheduled');
-        } else {
-            foreach ($taskFilesPath as $filePath) {
-                $tree = $xmlParser->parse($filePath);
-
-                if (!$tree) {
-                    fatalError('Error parsing scheduled tasks XML file: ' . $filePath);
-                }
-
-                foreach ($tree->getChildren() as $task) {
-                    $frequency = $task->getChildByName('frequency');
-
-                    $args = ScheduledTaskHelper::getTaskArgs($task);
-
-                    $setDefaultFrequency = true;
-                    $minHoursRunPeriod = 24;
-                    if ($frequency) {
-                        $frequencyAttributes = $frequency->getAttributes();
-                        if (is_array($frequencyAttributes)) {
-                            foreach ($frequencyAttributes as $key => $value) {
-                                if ($value != 0) {
-                                    $setDefaultFrequency = false;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    $tasks[] = array(
-                        'className' => $task->getAttribute('class'),
-                        'frequency' => $setDefaultFrequency ? array('hour' => $minHoursRunPeriod) : $frequencyAttributes,
-                        'args' => $args
-                    );
-                }
-            }
-
-            // Store the object.
-            $acronPlugin->updateSetting(0, 'crontab', $tasks, 'object');
-        }
+        import('plugins.generic.acron.AcronPlugin');
+        $acron = new AcronPlugin();
+        $acron->_parseCrontab();
     }
 
     /**
@@ -460,11 +411,15 @@ class OptimetaCitationsPluginBase extends GenericPlugin
         return new Optimeta\Citations\Install\OptimetaCitationsMigration();
     }
 
+    /**
+     * @desc This method is called after the plugin is activated
+     * @return void
+     * @see OJS version 3.2.1-x: classes/VersionSpecific/v321/OptimetaCitationsPlugin
+     */
     public function pluginActivationActions()
     {
         // Workaround for hook AcronPlugin::parseCronTab not working in ojs 3.3.0-x
-//        $this->callbackParseCronTabWorkAround();
-        $this->callbackParseCronTab('AcronPlugin::parseCronTab', []);
+        $this->callbackParseCronTabWorkAround();
 
         // create / alter table required by plugin
         import('plugins.generic.optimetaCitations.classes.Install.OptimetaCitationsMigration');
@@ -472,6 +427,10 @@ class OptimetaCitationsPluginBase extends GenericPlugin
         $migrate->createCitationsExtendedIfNotExists();
     }
 
+    /**
+     * @desc This method is called after the plugin is activated
+     * @return void
+     */
     public function pluginDeactivationActions()
     {
         // do something usefull
