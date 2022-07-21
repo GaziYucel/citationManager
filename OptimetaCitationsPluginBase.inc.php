@@ -46,6 +46,7 @@ import('plugins.generic.optimetaCitations.classes.Dao.CitationsExtendedDAO');
 use Optimeta\Citations\Components\Forms\PublicationForm;
 use Optimeta\Citations\Dao\CitationsExtendedDAO;
 use Optimeta\Citations\Dao\PluginDAO;
+use Optimeta\Citations\Deposit\Depositor;
 use Optimeta\Citations\Handler\PluginAPIHandler;
 use Optimeta\Citations\Model\AuthorModelHelpers;
 use Optimeta\Citations\Model\WorkModelHelpers;
@@ -206,15 +207,28 @@ class OptimetaCitationsPluginBase extends GenericPlugin
         $publication = $args[0];
         $params = $args[2];
         $request = $this->getRequest();
-
         $pluginDao = new PluginDAO();
 
+        // parsedCitations
         $parsedCitations = $request->getuserVar(OPTIMETA_CITATIONS_FORM_FIELD_PARSED);
-        if(array_key_exists(OPTIMETA_CITATIONS_FORM_FIELD_PARSED, $params)) $parsedCitations = $params[OPTIMETA_CITATIONS_FORM_FIELD_PARSED];
-        $pluginDao->saveCitations($publication, $parsedCitations);
+        if (array_key_exists(OPTIMETA_CITATIONS_FORM_FIELD_PARSED, $params) &&
+            !empty($params[OPTIMETA_CITATIONS_FORM_FIELD_PARSED])) {
+            $parsedCitations = $params[OPTIMETA_CITATIONS_FORM_FIELD_PARSED];
+        }
 
+        if (!empty($parsedCitations) && $parsedCitations !== '[]') {
+            $pluginDao->saveCitations($publication, $parsedCitations);
+        } else {
+            error_log('publicationSave>parsedCitations: empty and not "[]"');
+        }
+
+        // publicationWork
         $publicationWork = $request->getuserVar(OPTIMETA_CITATIONS_PUBLICATION_WORK);
-        if(array_key_exists(OPTIMETA_CITATIONS_PUBLICATION_WORK, $params)) $parsedCitations = $params[OPTIMETA_CITATIONS_PUBLICATION_WORK];
+        if (array_key_exists(OPTIMETA_CITATIONS_PUBLICATION_WORK, $params) &&
+            !empty($params[OPTIMETA_CITATIONS_FORM_FIELD_PARSED])) {
+            $publicationWork = $params[OPTIMETA_CITATIONS_PUBLICATION_WORK];
+        }
+
         $publication->setData(OPTIMETA_CITATIONS_PUBLICATION_WORK, $publicationWork);
     }
 
@@ -313,6 +327,15 @@ class OptimetaCitationsPluginBase extends GenericPlugin
             __('plugins.generic.optimetaCitations.settings.initialise.button'),
             null);
 
+        $linkAction[] = new LinkAction(
+            'batch_deposit',
+            new AjaxAction(
+                $router->url(
+                    $request, null, null, 'manage', null,
+                    array('verb' => 'batch_deposit', 'plugin' => $this->getName(), 'category' => 'generic'))),
+            __('plugins.generic.optimetaCitations.settings.deposit.button'),
+            null);
+
         array_unshift($actions, ...$linkAction);
 
         return $actions;
@@ -357,6 +380,16 @@ class OptimetaCitationsPluginBase extends GenericPlugin
                     $user->getId(),
                     NOTIFICATION_TYPE_SUCCESS,
                     array('contents' => __('plugins.generic.optimetaCitations.settings.initialise.notification')));
+                return DAO::getDataChangedEvent();
+            case 'batch_deposit':
+                $depositor = new Depositor();
+                $depositor->batchDeposit();
+                $notificationManager = new NotificationManager();
+                $user = $request->getUser();
+                $notificationManager->createTrivialNotification(
+                    $user->getId(),
+                    NOTIFICATION_TYPE_SUCCESS,
+                    array('contents' => __('plugins.generic.optimetaCitations.settings.deposit.notification')));
                 return DAO::getDataChangedEvent();
         }
         return parent::manage($args, $request);

@@ -32,6 +32,9 @@ msgstr "Deposit"
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.question"
 msgstr "Sind Sie sicher, dass Sie die Zitate bei den vordefinierten externen Websites einreichen wollen?"
 
+msgid "plugins.generic.optimetaCitationsPlugin.deposit.message.not_published"
+msgstr "Die Publikation muss einer Ausgabe zugeordnet werden, benötigt einen DOI und muss veröffentlicht werden, bevor eine Einreichung möglich ist."
+
 msgid "plugins.generic.optimetaCitationsPlugin.clear.button"
 msgstr "Löschen"
 
@@ -105,3 +108,9 @@ msgstr "Plugin initialisieren"
 
 msgid "plugins.generic.optimetaCitations.settings.initialise.notification"
 msgstr "Initialisierung des Plugins war erfolgreich"
+
+msgid "plugins.generic.optimetaCitations.settings.deposit.button"
+msgstr "Deposit all published"
+
+msgid "plugins.generic.optimetaCitations.settings.deposit.notification"
+msgstr "Alle veröffentlichten Publikationen sind deposited"

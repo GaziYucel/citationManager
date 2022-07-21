@@ -12,10 +12,11 @@
  * @brief Main DepositorTask class
  *
  */
-//namespace Optimeta\Citations\ScheduledTasks;
 
 import('lib.pkp.classes.scheduledTask.ScheduledTask');
 import('plugins.generic.optimetaCitations.OptimetaCitationsPlugin');
+
+use Optimeta\Citations\Deposit\Depositor;
 
 class DepositorTask extends ScheduledTask
 {
@@ -32,21 +33,25 @@ class DepositorTask extends ScheduledTask
     {
         $this->plugin = PluginRegistry::getPlugin('generic', 'optimetacitationsplugin');
 
-        parent::__construct($args);
-
-        error_log(
-            'Optimeta\Citations\ScheduledTasks\DepositorTask\__construct: ' . date('Y-m-d H:i:s'));
-    }
+        parent::__construct($args);}
 
     /**
      * @copydoc ScheduledTask::executeActions()
      */
     public function executeActions(): bool
     {
-        if (!$this->plugin->getEnabled()) return false;
+        if(is_null($this->plugin)) return false;
+        if(!$this->plugin->getEnabled()) return false;
+
+        $result = false;
+
+        $depositor = new Depositor();
+        $result = $depositor->batchDeposit();
 
         error_log(
-            'Optimeta\Citations\ScheduledTasks\DepositorTask\executeActions: ' . date('Y-m-d H:i:s'));
-        return true;
+            'Optimeta\Citations\ScheduledTasks\DepositorTask\executeActions: ' .
+            date('Y-m-d H:i:s'));
+
+        return $result;
     }
 }
