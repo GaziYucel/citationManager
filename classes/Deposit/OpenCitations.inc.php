@@ -4,7 +4,6 @@ namespace Optimeta\Citations\Deposit;
 import('plugins.generic.optimetaCitations.classes.Helpers');
 
 use Optimeta\Citations\Helpers;
-use Optimeta\Citations\Model\WorkModel;
 use Optimeta\Shared\OpenCitations\Model\WorkCitation;
 use Optimeta\Shared\OpenCitations\Model\WorkMetaData;
 use Optimeta\Shared\OpenCitations\OpenCitationsBase;
@@ -62,7 +61,8 @@ class OpenCitations
         $issueDao = \DAORegistry::getDAO('IssueDAO');
         $issueId = $publication->getData('issueId');
 
-        $doi = $submission->getStoredPubId('doi');
+        $doi = '';
+        if(!empty($submission->getStoredPubId('doi'))) $doi = $submission->getStoredPubId('doi');
 
         $issue = null;
         $publicationDate = '';
@@ -70,6 +70,8 @@ class OpenCitations
             $issue = $issueDao->getById($issueId);
             $publicationDate = date('Y-m-d', strtotime($issue->getData('datePublished')));
         }
+
+        if(empty($doi) || empty($issue)) return '';
 
         // title of github issue
         $title = str_replace('{{domain}} {{pid}}',
@@ -122,7 +124,7 @@ class OpenCitations
     {
         $work = new WorkMetaData();
 
-        $locale = $submission->getData('locale');
+        $locale = $publication->getData('locale');
 
         $work->id = 'doi:' . Helpers::removeDoiOrgPrefixFromUrl($submission->getStoredPubId('doi'));
 
@@ -138,7 +140,7 @@ class OpenCitations
         $work->author = trim($work->author, '; ');
 
         $work->pub_date = '';
-        if(!is_null($issue)) $work->pub_date = date('Y-m-d', strtotime($issue->getData('datePublished')));
+        if(!empty($issue->getData('datePublished'))) $work->pub_date = date('Y-m-d', strtotime($issue->getData('datePublished')));
 
         $work->venue = $journal->getData('name')[$locale];
         if(!empty($journal->getData('onlineIssn'))) $work->venue .= ' ' . '[issn:' . $journal->getData('onlineIssn') . ']';
@@ -146,14 +148,15 @@ class OpenCitations
         $work->venue = trim($work->venue);
 
         $work->volume = '';
-        if(!is_null($issue)) $work->volume = $issue->getData('volume');
+        if(!empty($issue->getData('volume'))) $work->volume = $issue->getData('volume');
 
         $work->issue = '';
-        if(!is_null($issue)) $work->issue = $issue->getData('number');
+        if(!empty($issue->getData('number'))) $work->issue = $issue->getData('number');
+        if(!empty($issue->getStoredPubId('doi'))) $work->venue .= ' [doi:' . $issue->getStoredPubId('doi') . ']';
 
         $work->page = '';
         $work->type = $this->defaultType;
-        $work->publisher = $journal->getData('publisherInstitution');
+        if(!empty($journal->getData('publisherInstitution'))) $work->publisher = $journal->getData('publisherInstitution');
         $work->editor = '';
 
         $values = '';

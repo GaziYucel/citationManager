@@ -110,9 +110,9 @@
         });
     }
 
-    function optimetaDepositCitations (){
-        {*let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.deposit.question"}';*}
-        // if (confirm(questionText) !== true) { return; }
+    function optimetaDepositCitations(){
+        let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.deposit.question"}';
+        if (confirm(questionText) !== true) { return; }
 
         optimetaLoadingImage(true);
 

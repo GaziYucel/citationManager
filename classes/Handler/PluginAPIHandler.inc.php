@@ -148,13 +148,13 @@ class PluginAPIHandler extends APIHandler
         }
 
         // citations empty, response empty array
-        if (empty($citationsIn)) {
+        if (empty($submissionId) || empty($citationsIn)) {
             return $response->withJson($this->responseBody, 200);
         }
 
         // deposit work + citations
         $depositor = new Depositor();
-        $workOut = $depositor->executeAndReturnCitations($submissionId, $citationsIn);
+        $workOut = $depositor->executeAndReturnWork($submissionId, $citationsIn);
 
         $this->responseBody['message'] = $workOut;
         return $response->withJson($this->responseBody, 200);
