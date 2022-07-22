@@ -36,6 +36,6 @@ class OptimetaCitationsPlugin extends OptimetaCitationsPluginBase
 
     function getInstallSchemaFile()
     {
-        return $this->getPluginPath() . '/schema.xml';
+        return $this->getPluginPath() . '/classes/VersionSpecific/v321/schema.xml';
     }
 }

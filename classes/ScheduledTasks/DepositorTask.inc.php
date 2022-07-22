@@ -31,26 +31,40 @@ class DepositorTask extends ScheduledTask
      */
     function __construct($args)
     {
-        $this->plugin = PluginRegistry::getPlugin('generic', 'optimetacitationsplugin');
+        $plugin = PluginRegistry::getPlugin('generic', 'optimetacitationsplugin');
+        $this->plugin = $plugin;
 
         parent::__construct($args);}
 
     /**
      * @copydoc ScheduledTask::executeActions()
      */
-    public function executeActions(): bool
+    public function executeActions()
     {
-        if(is_null($this->plugin)) return false;
-        if(!$this->plugin->getEnabled()) return false;
+        $plugin = $this->plugin;
+        if (!$plugin->getEnabled()) {
+            $this->addExecutionLogEntry(
+                'Optimeta\Citations\ScheduledTasks\DepositorTask\executeActions>pluginEnabled=false' .
+                ' [' . date('Y-m-d H:i:s') . ']',
+                SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
+            return false;
+        }
 
         $result = false;
 
         $depositor = new Depositor();
         $result = $depositor->batchDeposit();
 
-        error_log(
-            'Optimeta\Citations\ScheduledTasks\DepositorTask\executeActions: ' .
-            date('Y-m-d H:i:s'));
+        if (!$result) {
+            $this->addExecutionLogEntry(
+                'Optimeta\Citations\ScheduledTasks\DepositorTask\executeActions>result=false' .
+                ' [' . date('Y-m-d H:i:s') . ']',
+                SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
+        }
+
+        $this->addExecutionLogEntry(
+            'Optimeta\Citations\ScheduledTasks\DepositorTask\executeActions>result=' . $result,
+            SCHEDULED_TASK_MESSAGE_TYPE_COMPLETED);
 
         return $result;
     }
