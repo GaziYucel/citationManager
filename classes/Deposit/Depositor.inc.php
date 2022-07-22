@@ -71,6 +71,8 @@ class Depositor
         import('plugins.generic.optimetaCitations.classes.Debug');
         $debug = new \Optimeta\Citations\Debug();
 
+        $result = true;
+
         foreach($this->getContextIds() as $contextId){
             $debug->Add('$contextId: ' . $contextId);
             foreach($this->getPublishedSubmissionIds($contextId) as $submissionId){
@@ -83,13 +85,13 @@ class Depositor
                 $pluginDao = new PluginDAO();
                 $citations = $pluginDao->getCitations($publication);
 
-                $publicationWork = $this->executeAndReturnWork($submissionId, $pluginDao->getCitations($publication));
+                $publicationWork = $this->executeAndReturnWork($submissionId, $citations);
 
                 $debug->Add('$publicationWork>opencitations_url: ' . $publicationWork['opencitations_url']);
             }
         }
 
-        return true;
+        return $result;
     }
 
     /**

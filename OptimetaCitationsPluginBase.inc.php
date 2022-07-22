@@ -216,10 +216,8 @@ class OptimetaCitationsPluginBase extends GenericPlugin
             $parsedCitations = $params[OPTIMETA_CITATIONS_FORM_FIELD_PARSED];
         }
 
-        if (!empty($parsedCitations) && $parsedCitations !== '[]') {
+        if ((!empty($parsedCitations) && $parsedCitations !== '[]') || $parsedCitations === '[]') {
             $pluginDao->saveCitations($publication, $parsedCitations);
-        } else {
-            error_log('publicationSave>parsedCitations: empty and not "[]"');
         }
 
         // publicationWork
