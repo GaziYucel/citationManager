@@ -51,11 +51,11 @@ class Depositor
         }
 
         // OpenCitations
-        if(empty($publicationWork['opencitations_url'])){
+//        if(empty($publicationWork['opencitations_url'])){
             $openCitations = new OpenCitations();
             $openCitationsUrl = $openCitations->submitWork($submissionId, $citationsParsed);
             $publicationWork['opencitations_url'] = $openCitationsUrl;
-        }
+//        }
 
         $publicationWorkJson = json_encode($publicationWork);
 

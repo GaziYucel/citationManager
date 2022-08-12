@@ -9,7 +9,9 @@ import('plugins.generic.optimetaCitations.classes.Pid.Urn');
 
 use Optimeta\Citations\Helpers;
 use Optimeta\Citations\Model\CitationModel;
+use Optimeta\Citations\Pid\Arxiv;
 use Optimeta\Citations\Pid\Doi;
+use Optimeta\Citations\Pid\Handle;
 use Optimeta\Citations\Pid\Url;
 use Optimeta\Citations\Pid\Urn;
 
@@ -54,6 +56,12 @@ class Parser
             // parse url (after parsing doi)
             $objUrl = new Url();
             $citation->url = $objUrl->getUrlParsed(str_replace($citation->doi, '', $citation->raw));
+
+            // replace incorrect url by correct url
+            $objHandle = new Handle();
+            $citation->url = str_replace($objHandle->prefixInCorrect, $objHandle->prefix, $citation->url);
+            $objArxiv = new Arxiv();
+            $citation->url = str_replace($objArxiv->prefixInCorrect, $objArxiv->prefix, $citation->url);
 
             // urn parser
             $objUrn = new Urn();

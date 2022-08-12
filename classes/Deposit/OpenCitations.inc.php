@@ -2,7 +2,12 @@
 namespace Optimeta\Citations\Deposit;
 
 import('plugins.generic.optimetaCitations.classes.Helpers');
+import('plugins.generic.optimetaCitations.classes.Pid.Arxiv');
+import('plugins.generic.optimetaCitations.classes.Pid.Handle');
 
+use Optimeta\Citations\Debug;
+use Optimeta\Citations\Pid\Arxiv;
+use Optimeta\Citations\Pid\Handle;
 use Optimeta\Citations\Helpers;
 use Optimeta\Shared\OpenCitations\Model\WorkCitation;
 use Optimeta\Shared\OpenCitations\Model\WorkMetaData;
@@ -38,7 +43,7 @@ class OpenCitations
      * @desc Default article type
      * @var string
      */
-    protected $defaultType = 'journal-article';
+    protected $defaultType = 'journal article';
 
     /**
      * @param string $submissionId
@@ -143,16 +148,17 @@ class OpenCitations
         if(!empty($issue->getData('datePublished'))) $work->pub_date = date('Y-m-d', strtotime($issue->getData('datePublished')));
 
         $work->venue = $journal->getData('name')[$locale];
-        if(!empty($journal->getData('onlineIssn'))) $work->venue .= ' ' . '[issn:' . $journal->getData('onlineIssn') . ']';
-        if(!empty($journal->getData('printIssn'))) $work->venue .= ' ' . '[issn:' . $journal->getData('printIssn') . ']';
-        $work->venue = trim($work->venue);
+        $venueIds = '';
+        if(!empty($journal->getData('onlineIssn'))) $venueIds .= 'issn:' . $journal->getData('onlineIssn') . ' ';
+        if(!empty($journal->getData('printIssn')))  $venueIds .= 'issn:' . $journal->getData('printIssn') . ' ';
+        if(!empty($issue->getStoredPubId('doi'))) $venueIds .= 'doi:' . $issue->getStoredPubId('doi') . ' ';
+        if(!empty($venueIds)) $work->venue = trim($work->venue) . ' ' . '[' . trim($venueIds) . ']';
 
         $work->volume = '';
         if(!empty($issue->getData('volume'))) $work->volume = $issue->getData('volume');
 
         $work->issue = '';
         if(!empty($issue->getData('number'))) $work->issue = $issue->getData('number');
-        if(!empty($issue->getStoredPubId('doi'))) $work->venue .= ' [doi:' . $issue->getStoredPubId('doi') . ']';
 
         $work->page = '';
         $work->type = $this->defaultType;
@@ -178,18 +184,19 @@ class OpenCitations
             $work = new WorkMetaData();
 
             if(!empty($row['doi'])) $work->id .= 'doi:' . Helpers::removeDoiOrgPrefixFromUrl($row['doi']) . ' ';
-            if(!empty($row['url'])) $work->id .= 'url:' . str_replace(' ', '', $row['url']) . ' ';
+            if(!empty($row['url'])) $work->id .= $this->getUrl($row['url']) . ' ';
             if(!empty($row['urn'])) $work->id .= 'urn:' . str_replace(' ', '', $row['urn']) . ' ';
             $work->id = trim($work->id);
 
             $work->title = $row['title'];
-            if(!$row['isProcessed']) $work->title = $row['raw'];
 
             $work->author = '';
             if(!empty($row['authors'])){
                 foreach($row['authors'] as $index2 => $author){
                     $work->author .= $author['name'];
-                    if(!empty($author['orcid'])) $work->author .= ' [orcid:' . $author['orcid'] . ']';
+                    if(!empty($author['orcid'])){
+                        $work->author .= ' [orcid:' . Helpers::removeOrcidOrgPrefixFromUrl($author['orcid']) . ']';
+                    }
                     $work->author .= '; ';
                 }
                 $work->author = trim($work->author, '; ');
@@ -203,17 +210,17 @@ class OpenCitations
             $work->volume = $row['volume'];
             $work->issue = $row['issue'];
             $work->page = '';
-            $work->type = $row['type'];
+            $work->type = str_replace('-', ' ', $row['type']);
             $work->publisher = $row['venue_publisher'];
             $work->editor = '';
 
-            // replace " by \"
-            foreach ($work as $name => $value) {
-                $values .= '"' . str_replace('"', '\"', $value) . '",';
+            if(!empty($work->id)){
+                foreach ($work as $name => $value) {
+                    $values .= '"' . str_replace('"', '\"', $value) . '",';
+                }
+                $values = trim($values, ',');
+                $values = $values . PHP_EOL;
             }
-
-            $values = trim($values, ',');
-            $values = $values . PHP_EOL;
         }
 
         return $values;
@@ -230,19 +237,39 @@ class OpenCitations
 
             $citation->cited_id = '';
             if(!empty($row['doi'])) $citation->cited_id .= 'doi:' . Helpers::removeDoiOrgPrefixFromUrl($row['doi']) . ' ';
-            if(!empty($row['url'])) $citation->cited_id .= 'url:' . str_replace(' ', '', $row['url']) . ' ';
+            if(!empty($row['url'])) $citation->cited_id .= $this->getUrl($row['url']) . ' ';
             if(!empty($row['urn'])) $citation->cited_id .= 'urn:' . str_replace(' ', '', $row['urn']) . ' ';
             $citation->cited_id = trim($citation->cited_id);
 
             $citation->cited_publication_date = $row['publication_date'];
 
-            foreach ($citation as $name => $value) {
-                $values .= '"' . str_replace('"', '\"', $value) . '",';
+            if(!empty($citation->cited_id)){
+                foreach ($citation as $name => $value) {
+                    $values .= '"' . str_replace('"', '\"', $value) . '",';
+                }
+                $values = trim($values, ',');
+                $values = $values . PHP_EOL;
             }
-            $values = trim($values, ',');
-            $values = $values . PHP_EOL;
         }
 
         return $values;
+    }
+    
+    private function getUrl(string $url){
+        $local = '';
+        
+        $objArxiv = new Arxiv();
+        $objHandle = new Handle();
+        if(strpos($url, $objArxiv->prefix) !== false) {
+            $local .= 'arxiv:' . $objArxiv->removePrefixFromUrl($url) . ' ';
+        }
+        else if (strpos($url, $objHandle->prefix) !== false){
+            $local .= 'handle:' . $objHandle->removePrefixFromUrl($url) . ' ';
+        }
+        else {
+            $local .= 'url:' . str_replace(' ', '', $url) . ' ';
+        }
+
+        return trim($local);
     }
 }
