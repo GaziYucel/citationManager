@@ -95,5 +95,36 @@ describe('OPTIMETA Citations Plugin Configuration', function () {
     // checking contents
     cy.get('#optimetaCitations').should('exist');
   });
-  
+
+  it('Enable DOI Plugin', function () {
+    cy.login('admin', 'admin', Cypress.env('contextPath'));
+
+    cy.get('nav[class="app__nav"] a:contains("Website")').click();
+    cy.get('button[id="plugins-button"]').click();
+    // Find and enable the plugin
+    cy.get('input[id^="select-cell-doipubidplugin-enabled"]').check();
+  });
+
+  it('Configure DOI Plugin', function () {
+    cy.login('admin', 'admin', Cypress.env('contextPath'));
+
+    cy.get('nav[class="app__nav"] a:contains("Website")').click();
+    cy.get('button[id="plugins-button"]').click();
+
+    // Open the settings form
+    cy.get('tr[id="component-grid-settings-plugins-settingsplugingrid-category-pubIds-row-doipubidplugin"] a[class="show_extras"]').click();
+    cy.get('a[id^="component-grid-settings-plugins-settingsplugingrid-category-pubIds-row-doipubidplugin-settings-button"]').click();
+
+    // Fill out settings form
+    cy.get('form[id="doiSettingsForm"] input[name^="enableIssueDoi"]').check();
+    cy.get('form[id="doiSettingsForm"] input[name^="enablePublicationDoi"]').check();
+    cy.get('form[id="doiSettingsForm"] input[name^="enableRepresentationDoi"]').check();
+    cy.get('form[id="doiSettingsForm"] input[name^="doiPrefix"]').clear().type('10.1234');
+    cy.get('form[id="doiSettingsForm"] input[id^="doiSuffixDefault"]').click();
+
+    // submit settings form
+    cy.get('form[id="doiSettingsForm"] button[id^="submitFormButton"]').click();
+    cy.waitJQuery();
+  });
+
 });
