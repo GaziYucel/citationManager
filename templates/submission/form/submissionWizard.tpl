@@ -167,8 +167,8 @@
                               v-if="!publicationWork.opencitations_url">OpenCitations</span>
                     </td>
                     <td class="optimetaAlignRight">
-                        <a href="javascript:optimetaDepositCitations()" id="buttonSubmit" class="pkpButton"
-                           :class="(optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitationsPlugin.deposit.button"}</a>
+                        {* <a href="javascript:optimetaDepositCitations()" id="buttonDeposit" class="pkpButton"
+                           :class="(optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitationsPlugin.deposit.button"}</a> *}
                         <a href="javascript:optimetaClearCitations()" id="buttonClear" class="pkpButton"
                            :class="(optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitationsPlugin.clear.button"}</a>
                         <a href="javascript:optimetaProcessCitations()" id="buttonProcess" class="pkpButton">{translate key="plugins.generic.optimetaCitationsPlugin.process.button"}</a>
