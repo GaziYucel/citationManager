@@ -27,8 +27,8 @@ Cypress.Commands.add('install', function () {
 
     // Administrator information
     cy.get('input[name=adminUsername]').type('admin', { delay: 0 });
-    cy.get('input[name=adminPassword]').type('admin', { delay: 0 });
-    cy.get('input[name=adminPassword2]').type('admin', { delay: 0 });
+    cy.get('input[name=adminPassword]').type('adminadmin', { delay: 0 });
+    cy.get('input[name=adminPassword2]').type('adminadmin', { delay: 0 });
     cy.get('input[name=adminEmail]').type('pkpadmin@mailinator.com', { delay: 0 });
 
     // Database configuration
@@ -64,7 +64,7 @@ Cypress.Commands.add('install', function () {
 
 // from https://github.com/pkp/ojs/blob/stable-3_3_0/cypress/tests/data/20-CreateContext.spec.js
 Cypress.Commands.add('createContext', () => {
-    cy.login('admin', 'admin');
+    cy.login('admin');
 
     // Create a new context
     cy.get('div[id=contextGridContainer]').find('a').contains('Create').click();
@@ -127,7 +127,7 @@ Cypress.Commands.add('register', data => {
 
 Cypress.Commands.add('createIssues', (data, context) => {
     // create and publish issue
-    cy.login('admin', 'admin');
+    cy.login('admin');
     cy.get('a:contains("admin"):visible').click();
     cy.get('a:contains("Dashboard")').click({ force: true });
     cy.get('.app__nav a').contains('Issues').click();

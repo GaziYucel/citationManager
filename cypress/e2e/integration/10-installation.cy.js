@@ -1,5 +1,5 @@
 /**
- * @file cypress/tests/integration/10-installation.cy.js
+ * @file cypress/e2e/integration/10-installation.cy.js
  *
  * Copyright (c) 2022 OPTIMETA project
  * Copyright (c) 2022 Daniel Nüst, Gazi Yücel
@@ -47,7 +47,7 @@ describe('OPTIMETA Citations Plugin Installation', function () {
       'affiliation': 'University of Science',
       'roles': ['Journal manager', 'Journal editor', 'Section editor']
     }
-    cy.login('admin', 'admin');
+    cy.login('admin');
     cy.get('a:contains("admin"):visible').click();
     cy.get('a:contains("Dashboard")').click({ force: true });
     cy.get('a:contains("Users & Roles")').click();
