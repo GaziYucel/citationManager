@@ -1,8 +1,8 @@
 /**
- * @file cypress/tests/integration/html_head.cy.js
+ * @file cypress/e2e/integration/50-locales.cy.js
  *
  * Copyright (c) 2022 OPTIMETA project
- * Copyright (c) 2022 Daniel Nüst
+ * Copyright (c) 2022 Daniel Nüst, Gazi Yücel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  */
@@ -10,7 +10,10 @@
 describe('OPTIMETA Citation Plugin Locales', function () {
 
   before(() => {
-    cy.login('admin', 'admin', Cypress.env('contextPath'));
+    cy.login('admin');
+    cy.get('a:contains("admin")').click();
+    cy.get('a:contains("Dashboard")').click();
+    cy.wait(2000);
 
     cy.get('nav[class="app__nav"] a:contains("Website")').click();
     cy.get('#setup-button').click();
@@ -34,6 +37,7 @@ describe('OPTIMETA Citation Plugin Locales', function () {
   afterEach(() => {
     cy.get('.pkpDropdown > .pkpButton').click();
     cy.get('a:contains("English")').click();
+
     cy.logout();
   });
 

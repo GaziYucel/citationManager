@@ -1,5 +1,5 @@
 /**
- * @file cypress/tests/integration/configuration.cy.js
+ * @file cypress/e2e/integration/30-submission.cy.js
  *
  * Copyright (c) 2022 OPTIMETA project
  * Copyright (c) 2022 Daniel Nüst, Gazi Yücel
@@ -26,10 +26,9 @@ describe('OPTIMETA Citations in Submission', function () {
 
     // Login
     cy.login('eeditor');
-
-    // Go to Dashboard and Submission Wizard
     cy.get('a:contains("eeditor")').click();
     cy.get('a:contains("Dashboard")').click();
+    cy.wait(2000);
 
     // New Submission
     cy.get('a:contains("New Submission"):visible').click();
@@ -125,12 +124,8 @@ describe('OPTIMETA Citations in Submission', function () {
     cy.get('a:contains("Assign"):visible').click();
 
     cy.get('#addParticipantForm').within(() => {
-      // cy.get('#searchUserFilter-grid-users-userselect-userselectgrid').within(() => {
-      cy.get('select#filterUserGroupIdgrid-users-userselect-userselectgrid')
-          .select('5');
-      // });
+      cy.get('select#filterUserGroupIdgrid-users-userselect-userselectgrid').select('5');
       cy.get('button.submitFormButton').contains('Search').click();
-      cy.wait(2000);
       cy.wait(2000);
       cy.get('input[id="user_3"]').click();
       cy.wait(2000);
@@ -198,10 +193,8 @@ describe('OPTIMETA Citations in Submission', function () {
 
     // Select tab Citations > Deposit
     cy.get('button#optimetaCitations-button').click();
-    // cy.get('#buttonDeposit').click();
-    // cy.on('window:confirm', () => true);
-    cy.wait(10000);
-
+    cy.get('#buttonDeposit').click();
+    cy.on('window:confirm', () => true);
   });
 
 });
