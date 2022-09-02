@@ -15,13 +15,10 @@
 import('lib.pkp.classes.site.VersionCheck');
 
 if (strstr(VersionCheck::getCurrentCodeVersion()->getVersionString(false), '3.2.1')) {
-    require_once(__DIR__ . '/classes/VersionSpecific/v321/OptimetaCitationsPlugin.inc.php');
-    return;
+    import('plugins.generic.optimetaCitations.classes.VersionSpecific.v321.OptimetaCitationsPluginv321');
+    class OptimetaCitationsPlugin extends OptimetaCitationsPluginv321 {}
 }
-
-import('plugins.generic.optimetaCitations.OptimetaCitationsPluginBase');
-
-class OptimetaCitationsPlugin extends OptimetaCitationsPluginBase
-{
-
+else {
+    import('plugins.generic.optimetaCitations.OptimetaCitationsPluginBase');
+    class OptimetaCitationsPlugin extends OptimetaCitationsPluginBase {}
 }

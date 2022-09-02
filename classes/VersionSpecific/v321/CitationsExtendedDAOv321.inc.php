@@ -11,7 +11,7 @@ use DAO;
 use DAOResultFactory;
 use VersionCheck;
 
-class CitationsExtendedDAO extends CitationsExtendedDAOBase
+class CitationsExtendedDAOv321 extends CitationsExtendedDAOBase
 {
     /**
      * Get parsed citations by Publication ID

@@ -14,7 +14,7 @@
 
 import('plugins.generic.optimetaCitations.OptimetaCitationsPluginBase');
 
-class OptimetaCitationsPlugin extends OptimetaCitationsPluginBase
+class OptimetaCitationsPluginv321 extends OptimetaCitationsPluginBase
 {
     protected $versionSpecificNameState = 'workflowData';
 
