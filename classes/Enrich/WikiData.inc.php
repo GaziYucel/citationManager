@@ -5,7 +5,6 @@ import('plugins.generic.optimetaCitations.classes.Helpers');
 
 use Optimeta\Citations\Helpers;
 use Optimeta\Shared\WikiData\WikiDataBase;
-use GuzzleHttp\Exception\GuzzleException;
 
 class WikiData
 {
@@ -13,7 +12,6 @@ class WikiData
      * @desc Get information from Wikidata and return as CitationModel
      * @param object $citation
      * @return object
-     * @throws GuzzleException
      */
     public function getItem(object $citation): object
     {

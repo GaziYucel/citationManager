@@ -21,7 +21,6 @@ class OpenAlexBase extends OptimetaBase
     /**
      * @param $doi
      * @return object (Work)
-     * @throws GuzzleException
      */
     public function getWorkFromApiAsObjectWithDoi($doi): object
     {
@@ -41,7 +40,7 @@ class OpenAlexBase extends OptimetaBase
                 }
             }
         }
-        catch(\Exception $ex){}
+        catch(GuzzleException | \Exception $ex){}
 
         return $work;
     }

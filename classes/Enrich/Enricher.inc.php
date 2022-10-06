@@ -19,14 +19,12 @@ import('plugins.generic.optimetaCitations.classes.Enrich.WikiData');
 import('plugins.generic.optimetaCitations.classes.Model.CitationModel');
 
 use Optimeta\Citations\Model\CitationModel;
-use GuzzleHttp\Exception\GuzzleException;
 
 class Enricher
 {
     /**
      * @desc Enrich citations and save results to citations
      * @return void
-     * @throws GuzzleException
      */
     public function executeAndReturnCitations(array $citationsParsed): array
     {

@@ -23,7 +23,6 @@ import('plugins.generic.optimetaCitations.classes.Parse.Parser');
 use APIHandler;
 use RoleBasedHandlerOperationPolicy;
 use PolicySet;
-use GuzzleHttp\Exception\GuzzleException;
 
 use Optimeta\Citations\Deposit\Depositor;
 use Optimeta\Citations\Enrich\Enricher;
@@ -82,7 +81,6 @@ class PluginAPIHandler extends APIHandler
      * @param $response
      * @param $args
      * @return mixed
-     * @throws GuzzleException
      */
     public function process($slimRequest, $response, $args)
     {
@@ -126,7 +124,6 @@ class PluginAPIHandler extends APIHandler
      * @param $response
      * @param $args
      * @return mixed
-     * @throws GuzzleException
      */
     public function deposit($slimRequest, $response, $args)
     {

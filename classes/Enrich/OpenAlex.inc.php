@@ -6,7 +6,6 @@ import('plugins.generic.optimetaCitations.classes.Helpers');
 use Optimeta\Citations\Helpers;
 use Optimeta\Citations\Model\AuthorModel;
 use Optimeta\Shared\OpenAlex\OpenAlexBase;
-use GuzzleHttp\Exception\GuzzleException;
 
 class OpenAlex
 {
@@ -14,7 +13,6 @@ class OpenAlex
      * @desc Get all information from OpenAlex and return as CitationModel
      * @param object $citation
      * @return object
-     * @throws GuzzleException
      */
     public function getWork(object $citation): object
     {

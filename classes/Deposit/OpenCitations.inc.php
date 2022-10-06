@@ -49,7 +49,6 @@ class OpenCitations
      * @param string $submissionId
      * @param array $citations
      * @return string
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function submitWork(string $submissionId, array $citations): string
     {
