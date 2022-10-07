@@ -1,7 +1,7 @@
 <?php
 namespace Optimeta\Citations\Enrich;
 
-use Optimeta\Citations\Helpers;
+use Optimeta\Citations\Pid\Doi;
 use Optimeta\Shared\WikiData\WikiDataBase;
 
 class WikiData
@@ -13,7 +13,8 @@ class WikiData
      */
     public function getItem(object $citation): object
     {
-        $doi = Helpers::removeDoiOrgPrefixFromUrl($citation->doi);
+        $objDoi = new Doi();
+        $doi = $objDoi->removePrefixFromUrl($citation->doi);
         $wikiData = new WikiDataBase();
         $wikiDataQid = $wikiData->getEntity($doi);
         $doiWD = '';

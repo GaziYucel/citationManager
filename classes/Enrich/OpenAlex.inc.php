@@ -1,8 +1,8 @@
 <?php
 namespace Optimeta\Citations\Enrich;
 
-use Optimeta\Citations\Helpers;
 use Optimeta\Citations\Model\AuthorModel;
+use Optimeta\Citations\Pid\Doi;
 use Optimeta\Shared\OpenAlex\OpenAlexBase;
 
 class OpenAlex
@@ -14,7 +14,8 @@ class OpenAlex
      */
     public function getWork(object $citation): object
     {
-        $doi = Helpers::removeDoiOrgPrefixFromUrl($citation->doi);
+        $objDoi = new Doi();
+        $doi = $objDoi->removePrefixFromUrl($citation->doi);
         $openAlex = new OpenAlexBase();
         $openAlexWork = $openAlex->getWorkFromApiAsObjectWithDoi($doi); // \Optimeta\Shared\OpenAlex\Model\Work()
 
@@ -26,7 +27,7 @@ class OpenAlex
             $author = new AuthorModel();
             $author->orcid = $openAlexWork->authorships[$i]['author']['orcid'];
             $author->name = $openAlexWork->authorships[$i]['author']['display_name'];
-            $author->openalex_id = Helpers::removeOpenAlexOrgFromUrl($openAlexWork->authorships[$i]['author']['id']);
+            $author->openalex_id = $this->removeOpenAlexOrgFromUrl($openAlexWork->authorships[$i]['author']['id']);
             $citation->authors[] = (array)$author;
         }
         $citation->cited_by_count = $openAlexWork->cited_by_count;
@@ -45,11 +46,22 @@ class OpenAlex
         if(!empty($openAlexWork->host_venue['display_name'])) $citation->venue_name = $openAlexWork->host_venue['display_name'];
         if(!empty($openAlexWork->host_venue['publisher'])) $citation->venue_publisher = $openAlexWork->host_venue['publisher'];
         if(!empty($openAlexWork->host_venue['is_oa'])) $citation->venue_is_oa = $openAlexWork->host_venue['is_oa'];
-        if(!empty($openAlexWork->host_venue['id'])) $citation->venue_openalex_id = Helpers::removeOpenAlexOrgFromUrl($openAlexWork->host_venue['id']);
+        if(!empty($openAlexWork->host_venue['id'])) $citation->venue_openalex_id = $this->removeOpenAlexOrgFromUrl($openAlexWork->host_venue['id']);
 
-        $citation->openalex_id = Helpers::removeOpenAlexOrgFromUrl($openAlexWork->id);
+        $citation->openalex_id = $this->removeOpenAlexOrgFromUrl($openAlexWork->id);
         if(!empty($citation->openalex_id)) { $citation->isProcessed = true; }
 
         return $citation;
+    }
+
+    /**
+     * @desc Remove https://openalex.org/ from OpenAlex URL
+     * @param string $url
+     * @return string
+     */
+    public function removeOpenAlexOrgFromUrl(?string $url): string
+    {
+        if(empty($url)) { return ''; }
+        return str_replace('https://openalex.org/', '', $url);
     }
 }
