@@ -8,7 +8,7 @@ use DAO;
 use DAOResultFactory;
 use VersionCheck;
 
-class CitationsExtendedDao extends \Optimeta\Citations\VersionSpecific\Main\Dao\CitationsExtendedDAO
+class CitationsExtendedDAO extends \Optimeta\Citations\VersionSpecific\Main\Dao\CitationsExtendedDAO
 {
     /**
      * Get parsed citations by Publication ID
