@@ -24,9 +24,10 @@ class Depositor
      * @desc Submit enriched citations and return citations
      * @param string $submissionId
      * @param array $citationsParsed
-     * @return array $citations
+     * @param bool $isBatch
+     * @return array|mixed
      */
-    public function executeAndReturnWork(string $submissionId, array $citationsParsed)
+    public function executeAndReturnWork(string $submissionId, array $citationsParsed, bool $isBatch = false)
     {
         $publicationWork = WorkModelHelpers::getModelAsArrayNullValues();
 
@@ -47,12 +48,12 @@ class Depositor
             $publicationWork = json_decode($publicationWorkDb, true);
         }
 
-        // OpenCitations
-//        if(empty($publicationWork['opencitations_url'])){
+        // OpenCitations: deposit if not batch or empty
+        if(!$isBatch || empty($publicationWork['opencitations_url'])){
             $openCitations = new OpenCitations();
             $openCitationsUrl = $openCitations->submitWork($submissionId, $citationsParsed);
             $publicationWork['opencitations_url'] = $openCitationsUrl;
-//        }
+        }
 
         $publicationWorkJson = json_encode($publicationWork);
 
@@ -67,6 +68,7 @@ class Depositor
     {
         $result = true;
 
+        $debug = new \Optimeta\Citations\Debug();
         foreach($this->getContextIds() as $contextId){
             $debug->Add('$contextId: ' . $contextId);
             foreach($this->getPublishedSubmissionIds($contextId) as $submissionId){
@@ -79,7 +81,7 @@ class Depositor
                 $pluginDao = new PluginDAO();
                 $citations = $pluginDao->getCitations($publication);
 
-                $publicationWork = $this->executeAndReturnWork($submissionId, $citations);
+                $publicationWork = $this->executeAndReturnWork($submissionId, $citations, true);
 
                 $debug->Add('$publicationWork>opencitations_url: ' . $publicationWork['opencitations_url']);
             }
