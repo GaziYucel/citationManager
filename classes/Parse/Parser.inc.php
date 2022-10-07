@@ -1,12 +1,6 @@
 <?php
 namespace Optimeta\Citations\Parse;
 
-import('plugins.generic.optimetaCitations.classes.Helpers');
-import('plugins.generic.optimetaCitations.classes.Model.CitationModel');
-import('plugins.generic.optimetaCitations.classes.Pid.Doi');
-import('plugins.generic.optimetaCitations.classes.Pid.Url');
-import('plugins.generic.optimetaCitations.classes.Pid.Urn');
-
 use Optimeta\Citations\Helpers;
 use Optimeta\Citations\Model\CitationModel;
 use Optimeta\Citations\Pid\Arxiv;

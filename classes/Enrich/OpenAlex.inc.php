@@ -1,8 +1,6 @@
 <?php
 namespace Optimeta\Citations\Enrich;
 
-import('plugins.generic.optimetaCitations.classes.Helpers');
-
 use Optimeta\Citations\Helpers;
 use Optimeta\Citations\Model\AuthorModel;
 use Optimeta\Shared\OpenAlex\OpenAlexBase;

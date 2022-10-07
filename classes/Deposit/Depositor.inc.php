@@ -14,9 +14,6 @@
  */
 namespace Optimeta\Citations\Deposit;
 
-import('plugins.generic.optimetaCitations.classes.Deposit.OpenCitations');
-import('plugins.generic.optimetaCitations.classes.Model.WorkModelHelpers');
-
 use Optimeta\Citations\Dao\PluginDAO;
 use Optimeta\Citations\Model\WorkModelHelpers;
 use Services;
@@ -68,9 +65,6 @@ class Depositor
 
     public function batchDeposit(): bool
     {
-        import('plugins.generic.optimetaCitations.classes.Debug');
-        $debug = new \Optimeta\Citations\Debug();
-
         $result = true;
 
         foreach($this->getContextIds() as $contextId){

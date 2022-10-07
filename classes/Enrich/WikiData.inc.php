@@ -1,8 +1,6 @@
 <?php
 namespace Optimeta\Citations\Enrich;
 
-import('plugins.generic.optimetaCitations.classes.Helpers');
-
 use Optimeta\Citations\Helpers;
 use Optimeta\Shared\WikiData\WikiDataBase;
 

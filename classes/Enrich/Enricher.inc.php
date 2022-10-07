@@ -14,10 +14,6 @@
  */
 namespace Optimeta\Citations\Enrich;
 
-import('plugins.generic.optimetaCitations.classes.Enrich.OpenAlex');
-import('plugins.generic.optimetaCitations.classes.Enrich.WikiData');
-import('plugins.generic.optimetaCitations.classes.Model.CitationModel');
-
 use Optimeta\Citations\Model\CitationModel;
 
 class Enricher

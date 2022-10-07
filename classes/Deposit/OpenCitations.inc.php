@@ -1,10 +1,6 @@
 <?php
 namespace Optimeta\Citations\Deposit;
 
-import('plugins.generic.optimetaCitations.classes.Helpers');
-import('plugins.generic.optimetaCitations.classes.Pid.Arxiv');
-import('plugins.generic.optimetaCitations.classes.Pid.Handle');
-
 use Optimeta\Citations\Debug;
 use Optimeta\Citations\Pid\Arxiv;
 use Optimeta\Citations\Pid\Handle;
