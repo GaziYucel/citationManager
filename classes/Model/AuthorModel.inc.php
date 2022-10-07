@@ -23,6 +23,22 @@ class AuthorModel
     public $name;
 
     /**
+     * @var string
+     * @desc The given name of the author as a single string.
+     * @see
+     * @example "Jason"
+     */
+    public $given_name;
+
+    /**
+     * @var string
+     * @desc The family name of the author as a single string.
+     * @see
+     * @example "Priem"
+     */
+    public $family_name;
+
+    /**
      * @var integer
      * @desc The number of Works this this author has created.
      * @see
