@@ -12,13 +12,14 @@
  * @brief Main DepositorTask class
  *
  */
+namespace Optimeta\Citations\ScheduledTasks;
 
 import('lib.pkp.classes.scheduledTask.ScheduledTask');
 import('plugins.generic.optimetaCitations.OptimetaCitationsPlugin');
 
 use Optimeta\Citations\Deposit\Depositor;
 
-class DepositorTask extends ScheduledTask
+class DepositorTask extends \ScheduledTask
 {
     /**
      * @var $plugin OptimetaCitationsPlugin
@@ -31,7 +32,7 @@ class DepositorTask extends ScheduledTask
      */
     function __construct($args)
     {
-        $plugin = PluginRegistry::getPlugin('generic', 'optimetacitationsplugin');
+        $plugin = \PluginRegistry::getPlugin('generic', 'optimetacitationsplugin');
         $this->plugin = $plugin;
 
         parent::__construct($args);}
