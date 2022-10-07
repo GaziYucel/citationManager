@@ -1,17 +1,14 @@
 <?php
-namespace Optimeta\Citations\Dao;
+namespace Optimeta\Citations\VersionSpecific\V321\Dao;
 
 import('lib.pkp.classes.db.DAO');
-import('plugins.generic.optimetaCitations.classes.Dao.CitationsExtended');
 import('lib.pkp.classes.site.VersionCheck');
-
-import('plugins.generic.optimetaCitations.classes.Dao.CitationsExtendedDAOBase');
 
 use DAO;
 use DAOResultFactory;
 use VersionCheck;
 
-class CitationsExtendedDAOv321 extends CitationsExtendedDAOBase
+class CitationsExtendedDAO extends \Optimeta\Citations\VersionSpecific\Main\Dao\CitationsExtendedDAO
 {
     /**
      * Get parsed citations by Publication ID

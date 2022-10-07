@@ -1,13 +1,6 @@
 <?php
 namespace Optimeta\Citations\Parse;
 
-import('plugins.generic.optimetaCitations.classes.Helpers');
-import('plugins.generic.optimetaCitations.classes.Model.CitationModel');
-import('plugins.generic.optimetaCitations.classes.Pid.Doi');
-import('plugins.generic.optimetaCitations.classes.Pid.Url');
-import('plugins.generic.optimetaCitations.classes.Pid.Urn');
-
-use Optimeta\Citations\Helpers;
 use Optimeta\Citations\Model\CitationModel;
 use Optimeta\Citations\Pid\Arxiv;
 use Optimeta\Citations\Pid\Doi;
@@ -46,7 +39,7 @@ class Parser
             $citation->raw = $this->cleanCitation($citation->raw);
 
             // remove numbers from the beginning of each citation
-            $citation->raw = Helpers::removeNumberPrefixFromString($citation->raw);
+            $citation->raw = $this->removeNumberPrefixFromString($citation->raw);
 
             // parse doi
             $objDoi = new Doi();
@@ -88,7 +81,7 @@ class Parser
         $citationsRaw = stripslashes($citationsRaw);
 
         // normalize line endings.
-        $citationsRaw = Helpers::normalizeLineEndings($citationsRaw);
+        $citationsRaw = $this->normalizeLineEndings($citationsRaw);
 
         // remove trailing/leading line breaks.
         $citationsRaw = trim($citationsRaw, "\n");
@@ -113,8 +106,50 @@ class Parser
         $citation = stripslashes($citation);
 
         // normalize whitespace
-        $citation = Helpers::normalizeWhiteSpace($citation);
+        $citation = $this->normalizeWhiteSpace($citation);
 
         return $citation;
+    }
+
+    /**
+     * @desc Remove number from the beginning of string.
+     * @param $text
+     * @return string
+     */
+    public function removeNumberPrefixFromString(string $text): string
+    {
+        if(empty($text)) { return ''; }
+        return preg_replace(
+            '/^\s*[\[#]?[0-9]+[.)\]]?\s*/',
+            '',
+            $text);
+    }
+
+    /**
+     * @desc Normalize whitespace
+     * @param string $text
+     * @return string
+     */
+    public static function normalizeWhiteSpace(string $text): string
+    {
+        if(empty($text)) { return ''; }
+        return preg_replace(
+            '/[\s]+/',
+            ' ',
+            $text);
+    }
+
+    /**
+     * @desc Normalize line endings of string
+     * @param string $text
+     * @return string
+     */
+    public static function normalizeLineEndings(string $text): string
+    {
+        if(empty($text)) { return ''; }
+        return preg_replace(
+            '/[\r\n]+/s',
+            "\n",
+            $text);
     }
 }

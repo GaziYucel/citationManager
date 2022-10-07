@@ -11,10 +11,9 @@
  *
  * @brief Plugin for parsing Citations and submitting to Open Access websites.
  */
+namespace Optimeta\Citations\VersionSpecific\V321;
 
-import('plugins.generic.optimetaCitations.OptimetaCitationsPluginBase');
-
-class OptimetaCitationsPluginv321 extends OptimetaCitationsPluginBase
+class OptimetaCitationsPlugin extends \Optimeta\Citations\VersionSpecific\Main\OptimetaCitationsPlugin
 {
     protected $versionSpecificNameState = 'workflowData';
 
@@ -28,14 +27,14 @@ class OptimetaCitationsPluginv321 extends OptimetaCitationsPluginBase
 
         // create / alter table required by plugin
         import('classes.install.Upgrade');
-        $installer = new Upgrade(array());
-        $conn = DBConnection::getInstance();
+        $installer = new \Upgrade(array());
+        $conn = \DBConnection::getInstance();
         $installer->dbconn = $conn->getDBConn();
         $this->updateSchema('Installer::postInstall', [$installer]);
     }
 
     function getInstallSchemaFile()
     {
-        return $this->getPluginPath() . '/classes/VersionSpecific/v321/schema.xml';
+        return $this->getPluginPath() . '/classes/VersionSpecific/V321/schema.xml';
     }
 }

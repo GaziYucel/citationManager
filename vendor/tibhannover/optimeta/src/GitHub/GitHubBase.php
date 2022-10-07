@@ -1,6 +1,7 @@
 <?php
 namespace Optimeta\Shared\GitHub;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Optimeta\Shared\OptimetaBase;
 
 class GitHubBase extends OptimetaBase
@@ -15,7 +16,6 @@ class GitHubBase extends OptimetaBase
      * @param string $title
      * @param string $body
      * @return int
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function addIssue(string $title, string $body): int
     {
@@ -43,8 +43,7 @@ class GitHubBase extends OptimetaBase
                 ]);
 
             $issueId = $this->getIssueId($response);
-
-        } catch (\Exception $ex) {
+        } catch (GuzzleException | \Exception $ex) {
             $this->errors .= $ex;
         }
 

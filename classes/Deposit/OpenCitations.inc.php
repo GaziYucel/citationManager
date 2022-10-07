@@ -1,14 +1,11 @@
 <?php
 namespace Optimeta\Citations\Deposit;
 
-import('plugins.generic.optimetaCitations.classes.Helpers');
-import('plugins.generic.optimetaCitations.classes.Pid.Arxiv');
-import('plugins.generic.optimetaCitations.classes.Pid.Handle');
-
 use Optimeta\Citations\Debug;
 use Optimeta\Citations\Pid\Arxiv;
+use Optimeta\Citations\Pid\Doi;
 use Optimeta\Citations\Pid\Handle;
-use Optimeta\Citations\Helpers;
+use Optimeta\Citations\Pid\Orcid;
 use Optimeta\Shared\OpenCitations\Model\WorkCitation;
 use Optimeta\Shared\OpenCitations\Model\WorkMetaData;
 use Optimeta\Shared\OpenCitations\OpenCitationsBase;
@@ -46,10 +43,20 @@ class OpenCitations
     protected $defaultType = 'journal article';
 
     /**
+     * @desc Orcid object
+     * @var $object Orcid
+     */
+    protected $objOrcid;
+
+    function __construct()
+    {
+        $this->objOrcid = new Orcid();
+    }
+
+    /**
      * @param string $submissionId
      * @param array $citations
      * @return string
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function submitWork(string $submissionId, array $citations): string
     {
@@ -78,9 +85,10 @@ class OpenCitations
 
         if(empty($doi) || empty($issue)) return '';
 
+        $objDoi = new Doi();
         // title of github issue
         $title = str_replace('{{domain}} {{pid}}',
-            $_SERVER['SERVER_NAME'] . ' ' . 'doi:' . Helpers::removeDoiOrgPrefixFromUrl($doi),
+            $_SERVER['SERVER_NAME'] . ' ' . 'doi:' . $objDoi->removePrefixFromUrl($doi),
             $this->titleSyntax);
 
         // body of github issue
@@ -131,14 +139,15 @@ class OpenCitations
 
         $locale = $publication->getData('locale');
 
-        $work->id = 'doi:' . Helpers::removeDoiOrgPrefixFromUrl($submission->getStoredPubId('doi'));
+        $objDoi = new Doi();
+        $work->id = 'doi:' . $objDoi->removePrefixFromUrl($submission->getStoredPubId('doi'));
 
         $work->title = $publication->getData('title')[$locale];
 
         foreach($authors as $index => $data){
             $work->author .= $data->getData('familyName')[$locale] . ', ' . $data->getData('givenName')[$locale];
             if(!empty($data->getData('orcid'))) {
-                $work->author .= ' [orcid:' . Helpers::removeOrcidOrgPrefixFromUrl($data->getData('orcid')) . ']';
+                $work->author .= ' [orcid:' . $this->objOrcid->removePrefixFromUrl($data->getData('orcid')) . ']';
             }
             $work->author .= '; ';
         }
@@ -183,7 +192,8 @@ class OpenCitations
 
             $work = new WorkMetaData();
 
-            if(!empty($row['doi'])) $work->id .= 'doi:' . Helpers::removeDoiOrgPrefixFromUrl($row['doi']) . ' ';
+            $objDoi = new Doi();
+            if(!empty($row['doi'])) $work->id .= 'doi:' . $objDoi->removePrefixFromUrl($row['doi']) . ' ';
             if(!empty($row['url'])) $work->id .= $this->getUrl($row['url']) . ' ';
             if(!empty($row['urn'])) $work->id .= 'urn:' . str_replace(' ', '', $row['urn']) . ' ';
             $work->id = trim($work->id);
@@ -195,7 +205,7 @@ class OpenCitations
                 foreach($row['authors'] as $index2 => $author){
                     $work->author .= $author['name'];
                     if(!empty($author['orcid'])){
-                        $work->author .= ' [orcid:' . Helpers::removeOrcidOrgPrefixFromUrl($author['orcid']) . ']';
+                        $work->author .= ' [orcid:' . $this->objOrcid->removePrefixFromUrl($author['orcid']) . ']';
                     }
                     $work->author .= '; ';
                 }
@@ -235,8 +245,9 @@ class OpenCitations
             $citation->citing_id = 'doi:' . $doi;
             $citation->citing_publication_date = $publicationDate;
 
+            $objDoi = new Doi();
             $citation->cited_id = '';
-            if(!empty($row['doi'])) $citation->cited_id .= 'doi:' . Helpers::removeDoiOrgPrefixFromUrl($row['doi']) . ' ';
+            if(!empty($row['doi'])) $citation->cited_id .= 'doi:' . $objDoi->removePrefixFromUrl($row['doi']) . ' ';
             if(!empty($row['url'])) $citation->cited_id .= $this->getUrl($row['url']) . ' ';
             if(!empty($row['urn'])) $citation->cited_id .= 'urn:' . str_replace(' ', '', $row['urn']) . ' ';
             $citation->cited_id = trim($citation->cited_id);
@@ -258,8 +269,11 @@ class OpenCitations
     private function getUrl(string $url){
         $local = '';
         
-        $objArxiv = new Arxiv();
         $objHandle = new Handle();
+        $url = str_replace($objHandle->prefixInCorrect, $objHandle->prefix, $url);
+        $objArxiv = new Arxiv();
+        $url = str_replace($objArxiv->prefixInCorrect, $objArxiv->prefix, $url);
+
         if(strpos($url, $objArxiv->prefix) !== false) {
             $local .= 'arxiv:' . $objArxiv->removePrefixFromUrl($url) . ' ';
         }

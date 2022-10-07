@@ -1,8 +1,6 @@
 <?php
 namespace Optimeta\Citations\Dao;
 
-import('plugins.generic.optimetaCitations.classes.Model.CitationModelHelpers');
-
 use DAORegistry;
 use Optimeta\Citations\Model\CitationModelHelpers;
 

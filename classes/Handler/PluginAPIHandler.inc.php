@@ -16,14 +16,10 @@ namespace Optimeta\Citations\Handler;
 
 import('lib.pkp.classes.security.authorization.PolicySet');
 import('lib.pkp.classes.security.authorization.RoleBasedHandlerOperationPolicy');
-import('plugins.generic.optimetaCitations.classes.Deposit.Depositor');
-import('plugins.generic.optimetaCitations.classes.Enrich.Enricher');
-import('plugins.generic.optimetaCitations.classes.Parse.Parser');
 
 use APIHandler;
 use RoleBasedHandlerOperationPolicy;
 use PolicySet;
-use GuzzleHttp\Exception\GuzzleException;
 
 use Optimeta\Citations\Deposit\Depositor;
 use Optimeta\Citations\Enrich\Enricher;
@@ -82,7 +78,6 @@ class PluginAPIHandler extends APIHandler
      * @param $response
      * @param $args
      * @return mixed
-     * @throws GuzzleException
      */
     public function process($slimRequest, $response, $args)
     {
@@ -126,7 +121,6 @@ class PluginAPIHandler extends APIHandler
      * @param $response
      * @param $args
      * @return mixed
-     * @throws GuzzleException
      */
     public function deposit($slimRequest, $response, $args)
     {

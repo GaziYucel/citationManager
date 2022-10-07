@@ -15,7 +15,6 @@ class OpenCitationsBase extends OptimetaBase
      * @param string $title
      * @param string $body
      * @return int
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function depositCitations(string $title, string $body): int
     {

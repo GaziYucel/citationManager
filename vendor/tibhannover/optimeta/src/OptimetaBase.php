@@ -15,25 +15,31 @@ class OptimetaBase
      * @desc The url to the api
      * @var string
      */
-    protected $url = '';
+    protected $url;
 
     /**
      * @desc Access username
      * @var string
      */
-    protected $username = '';
+    protected $username;
 
     /**
      * @desc Access password
      * @var string
      */
-    protected $password = '';
+    protected $password;
 
     /**
      * @desc Access token
      * @var string
      */
-    protected $token = '';
+    protected $token;
+
+    /**
+     * @desc CSRF token
+     * @var string
+     */
+    protected $csrf;
 
     /**
      * @desc GuzzleHttp object
@@ -59,9 +65,7 @@ class OptimetaBase
      */
     public function setUserAgent(string $userAgent)
     {
-        if(!empty($userAgent)){
-            $this->userAgent = $userAgent;
-        }
+        $this->userAgent = $userAgent;
     }
 
     /**
@@ -71,9 +75,16 @@ class OptimetaBase
      */
     public function setUrl(string $url)
     {
-        if(!empty($url)){
-            $this->url = $url;
-        }
+        $this->url = $url;
+    }
+
+    /**
+     * @desc Gets the value of the property $url
+     * @return string|null
+     */
+    public function getUrl(): ?string
+    {
+        return $this->url;
     }
 
     /**
@@ -83,9 +94,16 @@ class OptimetaBase
      */
     public function setUsername(string $username)
     {
-        if(!empty($username)){
-            $this->username = $username;
-        }
+        $this->username = $username;
+    }
+
+    /**
+     * @desc Gets the value for property $username
+     * @return string|null
+     */
+    public function getUsername(): ?string
+    {
+        return $this->username;
     }
 
     /**
@@ -95,9 +113,16 @@ class OptimetaBase
      */
     public function setPassword(string $password)
     {
-        if(!empty($password)){
-            $this->password = $password;
-        }
+        $this->password = $password;
+    }
+
+    /**
+     * @desc Gets the value for property $password
+     * @return string|null
+     */
+    public function getPassword(): ?string
+    {
+        return $this->password;
     }
 
     /**
@@ -107,9 +132,35 @@ class OptimetaBase
      */
     public function setToken(string $token)
     {
-        if(!empty($token)){
-            $this->token = $token;
-        }
+        $this->token = $token;
+    }
+
+    /**
+     * @desc Gets the value for property $token
+     * @return string|null
+     */
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @desc Sets the value for property $csrf
+     * @param string $csrf
+     * @return void
+     */
+    public function setCsrf(string $csrf)
+    {
+        $this->csrf = $csrf;
+    }
+
+    /**
+     * @desc Gets the value for property $csrf
+     * @return string|null
+     */
+    public function getCsrf(): ?string
+    {
+        return $this->csrf;
     }
 
     /**

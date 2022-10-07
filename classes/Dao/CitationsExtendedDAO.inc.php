@@ -1,15 +1,12 @@
 <?php
 namespace Optimeta\Citations\Dao;
 
-import('lib.pkp.classes.site.VersionCheck');
-
-use VersionCheck;
-
-if (strstr(VersionCheck::getCurrentCodeVersion()->getVersionString(false), '3.2.1')) {
-    import('plugins.generic.optimetaCitations.classes.VersionSpecific.v321.CitationsExtendedDAOv321');
-    class CitationsExtendedDAO extends CitationsExtendedDAOv321  {}
+if (strstr(OPTIMETA_OJS_VERSION, OPTIMETA_COMPATIBLE_OJS_VERSION["V321"])) {
+    class CitationsExtendedDAO extends \Optimeta\Citations\VersionSpecific\V321\Dao\CitationsExtendedDAO {}
+}
+else if (strstr(OPTIMETA_OJS_VERSION, OPTIMETA_COMPATIBLE_OJS_VERSION["V330"])) {
+    class CitationsExtendedDAO extends \Optimeta\Citations\VersionSpecific\V330\Dao\CitationsExtendedDAO {}
 }
 else {
-    import('plugins.generic.optimetaCitations.classes.Dao.CitationsExtendedDAOBase');
-    class CitationsExtendedDAO extends CitationsExtendedDAOBase {}
+    class CitationsExtendedDAO extends \Optimeta\Citations\VersionSpecific\Main\Dao\CitationsExtendedDAO {}
 }

@@ -10,6 +10,9 @@
     "guzzlehttp/guzzle": "^7.4.5"
   },
   "autoload": {
+    "classmap": [
+      "classes/"
+    ],
     "psr-4": {
       "Optimeta\\Shared\\":"vendor/tibhannover/optimeta/src/"
     }
