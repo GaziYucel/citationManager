@@ -12,7 +12,7 @@
  * @brief Form for journal managers to setup the OptimetaCitations plugin
  */
 
-namespace Optimeta\Citations;
+namespace Optimeta\Citations\Components\Forms;
 
 import('lib.pkp.classes.form.Form');
 

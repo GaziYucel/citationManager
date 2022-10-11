@@ -25,7 +25,7 @@ use Optimeta\Citations\Deposit\Depositor;
 use Optimeta\Citations\Handler\PluginAPIHandler;
 use Optimeta\Citations\Model\AuthorModelHelpers;
 use Optimeta\Citations\Model\WorkModelHelpers;
-use Optimeta\Citations\SettingsForm;
+use Optimeta\Citations\Components\Forms\SettingsForm;
 use PKPRequest;
 
 class OptimetaCitationsPlugin extends \GenericPlugin
