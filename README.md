@@ -63,3 +63,23 @@ Depositing at OpenCitations will be done through GitHub issues of OpenCitations.
 13. Fill in your token, which you generated above
 14. Click Save
 
+### Registering for depositing at Wikidata.org
+
+Depositing at Wikidata.org will be done through the wikidata API. 
+For this you need an account on Wikidata.org. 
+If you have none please register one through https://www.wikidata.org/w/index.php?title=Special:CreateAccount.
+
+1. Login at https://www.wikidata.org and navigate to https://www.wikidata.org/wiki/Special:BotPasswords
+2. Type a name (e.g. OJSOptimetaCitations) at "Bot name" in the section "Create a new bot password"
+3. Check the following permissions: "High-volume editing", "Edit existing pages", Edit protected pages, "Create, edit, and move pages"
+4. Optionally, add your server IP address(es) into the field "Allowed IP ranges"
+5. Click on the button "Create"
+6. After creation, you will be redirected to a page where your credentials are shown
+7. Save these data somewhere safe
+8. Login to your OJS with an administrator account
+9. Navigate to Settings > Website > Plugins and find "Optimeta Citations Plugin" on the page
+10. Click on the arrow at the left and click "Settings"
+11. At "Wikidata bot username" field, fill in the username which you saved previously (e.g. GaziYucel@OJSOptimetaCitations)
+12. At "Wikidata bot password", fill in the password which you have saved previously
+13. At "Wikidata api url", select the environment (test for test.wikidata.org and production for www.wikidata.org)
+14. Click Save
