@@ -1,5 +1,5 @@
 /**
- * @file cypress/e2e/integration/20-configuration-plugin-citations.cy.js
+ * @file cypress/e2e/integration/22-configuration-plugin-citations.cy.js
  *
  * Copyright (c) 2022 OPTIMETA project
  * Copyright (c) 2022 Daniel Nüst, Gazi Yücel
