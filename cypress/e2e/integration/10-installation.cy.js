@@ -9,7 +9,7 @@
  *
  */
 
-describe('OPTIMETA Citations Plugin Installation', function () {
+describe('Install OJS and configure journal, issue and users', function () {
 
   it('Installs the software', function () {
     cy.install();

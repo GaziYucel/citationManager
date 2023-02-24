@@ -7,7 +7,7 @@
  *
  */
 
-describe('OPTIMETA Citation Plugin Locales', function () {
+describe('Plugin locales backend', function () {
 
   before(() => {
     cy.login('admin');
@@ -63,7 +63,7 @@ describe('OPTIMETA Citation Plugin Locales', function () {
 
 });
 
-describe('OPTIMETA Citation Plugin Locale Files', function () {
+describe('Plugin locale files', function () {
 
   it('Has the same number of entries and no errors in the locale files', function () {
     const reference = 'en_US';
