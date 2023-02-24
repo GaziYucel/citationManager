@@ -76,7 +76,9 @@ jobs:
 
       - name: Run Cypress
         env:
-          CYPRESS_REPO_TOKEN: ${{ secrets.CYPRESS_REPO_TOKEN }}
+          CYPRESS_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_OPEN_CITATIONS_OWNER: ${{ github.repository_owner }}
+          CYPRESS_OPEN_CITATIONS_REPOSITORY: ${{ github.event.repository.name }}
         run: | 
           npm run-script test_ci
 
