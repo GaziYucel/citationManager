@@ -71,11 +71,11 @@ describe('OPTIMETA Citations Plugin Configuration', function () {
 
     // Open Citations
     cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Open_Citations_Owner"]')
-        .clear().type('GaziYucel');
+        .clear().type(Cypress.env("OPEN_CITATIONS_OWNER"));
     cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Open_Citations_Repository"]')
-        .clear().type('open_citations_croci_depot');
+        .clear().type(Cypress.env("OPEN_CITATIONS_REPOSITORY"));
     cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Open_Citations_Token"]')
-        .clear().type(Cypress.env("REPO_TOKEN"));
+        .clear().type(Cypress.env("GITHUB_TOKEN"));
 
     // Wikidata
     cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Wikidata_Username"]')
