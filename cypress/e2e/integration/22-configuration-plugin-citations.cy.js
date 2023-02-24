@@ -75,7 +75,7 @@ describe('OPTIMETA Citations Plugin Configuration', function () {
     cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Open_Citations_Repository"]')
         .clear().type('open_citations_croci_depot');
     cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Open_Citations_Token"]')
-        .clear().type('optimeta-github-token');
+        .clear().type(Cypress.env("REPO_TOKEN"));
 
     // Wikidata
     cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Wikidata_Username"]')

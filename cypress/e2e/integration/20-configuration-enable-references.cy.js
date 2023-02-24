@@ -7,7 +7,7 @@
  *
  */
 
-describe('OPTIMETA Citations Plugin Configuration', function () {
+describe('Enable builtin references', function () {
 
   it('Enable References', function () {
     cy.login('admin');

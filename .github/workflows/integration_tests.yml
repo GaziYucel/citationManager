@@ -7,7 +7,7 @@
 #
 # Based on https://github.com/o2r-project/ojs-erc-plugin/blob/master/.github/workflows/cypress_test.yml
 #
-name: OPTIMETA Citation Plugin CI Tests
+name: OPTIMETA Citations Plugin CI Tests
 
 on:
   push:
@@ -26,16 +26,9 @@ jobs:
       fail-fast: false
       matrix:
         # php-versions: ["7.3","7.4","8.0"] # relies on PHP version from OJS image
-        dbs: [
-            #'pgsql',
-            "mysql",
-          ]
-        pkp-application: ["ojs"]
-        #'omp',
-        #'ops'
-        pkp-version: [
-            "3_3_0-11",
-          ]
+        dbs: [ "mysql" ] #'pgsql'
+        pkp-application: ["ojs"] #'omp' #'ops'
+        pkp-version: [ "3_3_0-14" ]
     env:
       OJS_VERSION: ${{ matrix.pkp-version }}
 
@@ -60,7 +53,7 @@ jobs:
       - name: Install PHP
         uses: "shivammathur/setup-php@v2"
         with:
-          php-version: "7.4"
+          php-version: "8.1"
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -81,7 +74,9 @@ jobs:
           docker-compose --file cypress/docker-compose-${{ matrix.dbs }}.yml up -d
 
       - name: Run Cypress
-        run: |
+        env:
+          CYPRESS_REPO_TOKEN: ${{ secrets.CYPRESS_REPO_TOKEN }}
+        run: | 
           npm run-script test_ci
 
       - name: Show logs

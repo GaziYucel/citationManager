@@ -7,7 +7,7 @@
  *
  */
 
-describe('OPTIMETA Citations in Submission', function () {
+describe('Submission, enrich and deposit', function () {
 
   var submission;
 
