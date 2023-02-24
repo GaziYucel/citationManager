@@ -9,20 +9,20 @@
 #
 name: OPTIMETA Citations Plugin CI Tests
 
-permissions:
-  actions: write
-  checks: write
-  contents: write
-  deployments: write
-  discussions: write
-  issues: write
-  id-token: read
-  packages: write
-  pages: write
-  pull-requests: write
-  repository-projects: write
-  security-events: write
-  statuses: write
+permissions: write-all
+#   actions: write
+#   checks: write
+#   contents: write
+#   deployments: write
+#   discussions: write
+#   id-token: read
+#   issues: write
+#   packages: write
+#   pages: write
+#   pull-requests: write
+#   repository-projects: write
+#   security-events: write
+#   statuses: write
 
 on:
   push:
