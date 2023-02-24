@@ -1,5 +1,5 @@
 /**
- * @file cypress/e2e/integration/22-configuration-plugin-doi.cy.js
+ * @file cypress/e2e/integration/21-configuration-plugin-doi.cy.js
  *
  * Copyright (c) 2022 OPTIMETA project
  * Copyright (c) 2022 Daniel Nüst, Gazi Yücel
