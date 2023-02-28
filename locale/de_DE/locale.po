@@ -12,25 +12,25 @@ msgstr ""
 "Language: \n"
 
 msgid "plugins.generic.optimetaCitationsPlugin.name"
-msgstr "Optimeta Zitate Plugin"
+msgstr "Optimeta Zitations-Plugin"
 
 msgid "plugins.generic.optimetaCitationsPlugin.description"
-msgstr "Optimeta Zitate-Plugin"
+msgstr "Optimeta Zitations-Plugin"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement"
 msgstr "Veröffentlichungserklärung"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement.description"
-msgstr "Fügen Sie eine Publikationsbeschreibung hinzu, die auf jeder Landing Page der Publikation erscheinen soll"
+msgstr "Fügen Sie eine Beschreibung der Publikation hinzu, die auf jeder Landing Page der Publikation erscheinen soll."
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
-msgstr "Zitate"
+msgstr "Zitationen"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.button"
 msgstr "Deposit"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.question"
-msgstr "Sind Sie sicher, dass Sie die Zitate bei den vordefinierten externen Websites einreichen wollen?"
+msgstr "Sind Sie sicher, dass Sie die Zitationen bei den vordefinierten externen Websites einreichen wollen?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.message.not_published"
 msgstr "Die Publikation muss einer Ausgabe zugeordnet werden, benötigt einen DOI und muss veröffentlicht werden, bevor eine Einreichung möglich ist."
@@ -39,10 +39,10 @@ msgid "plugins.generic.optimetaCitationsPlugin.clear.button"
 msgstr "Löschen"
 
 msgid "plugins.generic.optimetaCitationsPlugin.clear.question"
-msgstr "Die aktuell geparsten Zitate werden entfernt, wenn Sie auf OK klicken. Are you sure?"
+msgstr "Die aktuell geparsten Zitationen werden entfernt, wenn Sie auf OK klicken. Sind Sie sicher?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.citations.empty.description"
-msgstr "Extrahierte Zitate sind leer. Bitte verwenden Sie die Schaltfläche oben, um die Zitate zu analysieren und anzureichern."
+msgstr "Die extrahierten Zitationen sind leer. Bitte verwenden Sie die Schaltfläche oben, um die Zitationen zu analysieren und anzureichern."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.button"
 msgstr "Process"
@@ -56,7 +56,7 @@ msgstr "Bitte benutzen Sie den Button rechts, um die Referenzen in verschiedene 
 "Die Übermittlung dieser Metadaten erfolgt automatisch, wenn dieser Beitrag veröffentlicht wird und einen DOI erhält."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
-msgstr "Die aktuell geparsten Zitate werden überschrieben, wenn Sie auf OK klicken. Alle Ihre Änderungen gehen dabei verloren. Sind Sie sicher?"
+msgstr "Die aktuell geparsten Zitationen werden überschrieben, wenn Sie auf OK klicken. Alle Ihre Änderungen gehen dabei verloren. Sind Sie sicher?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.author.add.button"
 msgstr "Autor hinzufügen"
@@ -65,10 +65,10 @@ msgid "plugins.generic.optimetaCitationsPlugin.author.remove.question"
 msgstr "Sind Sie sicher, dass Sie diesen Autor löschen wollen?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
-msgstr "Die Zitate wurden aktualisiert."
+msgstr "Die Zitationen wurden aktualisiert."
 
 msgid "plugins.generic.optimetaCitations.settings.description"
-msgstr "Geben Sie Ihre Authentifizierungsinformationen für Open-Access-Websites ein, auf denen Sie Zitate hinterlegen möchten"
+msgstr "Geben Sie Ihre Authentifizierungsinformationen für Open-Access-Websites ein, auf denen Sie Zitationen hinterlegen möchten."
 
 msgid "plugins.generic.optimetaCitations.settings.form.saved"
 msgstr "Einstellungen erfolgreich gespeichert"
@@ -101,7 +101,7 @@ msgid "plugins.generic.optimetaCitations.settings.test.button"
 msgstr "Einstellungen testen"
 
 msgid "plugins.generic.optimetaCitations.not_implemented"
-msgstr "Diese Funktion ist noch nicht implementiert"
+msgstr "Diese Funktion ist noch nicht implementiert."
 
 msgid "plugins.generic.optimetaCitations.settings.initialise.button"
 msgstr "Plugin initialisieren"
@@ -113,4 +113,4 @@ msgid "plugins.generic.optimetaCitations.settings.deposit.button"
 msgstr "Deposit all published"
 
 msgid "plugins.generic.optimetaCitations.settings.deposit.notification"
-msgstr "Alle veröffentlichten Publikationen sind deposited"
+msgstr "Alle veröffentlichten Publikationen sind deposited."
