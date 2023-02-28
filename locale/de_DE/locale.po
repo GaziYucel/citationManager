@@ -30,7 +30,7 @@ msgid "plugins.generic.optimetaCitationsPlugin.deposit.button"
 msgstr "Deposit"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.question"
-msgstr "Sind Sie sicher, dass Sie die Zitationen bei den vordefinierten externen Websites einreichen wollen?"
+msgstr "Sind Sie sicher, dass Sie die Zitationen an die oben genannten Websites übermitteln wollen, um die Zitationen mit weiteren Informationen anzureichern?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.message.not_published"
 msgstr "Die Publikation muss einer Ausgabe zugeordnet werden, benötigt einen DOI und muss veröffentlicht werden, bevor eine Einreichung möglich ist."
@@ -39,7 +39,7 @@ msgid "plugins.generic.optimetaCitationsPlugin.clear.button"
 msgstr "Löschen"
 
 msgid "plugins.generic.optimetaCitationsPlugin.clear.question"
-msgstr "Die aktuell geparsten Zitationen werden entfernt, wenn Sie auf OK klicken. Sind Sie sicher?"
+msgstr "Die aktuell geparsten Zitationen werden entfernt, wenn Sie auf OK klicken. Sind Sie sich sicher?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.citations.empty.description"
 msgstr "Die extrahierten Zitationen sind leer. Bitte verwenden Sie die Schaltfläche oben, um die Zitationen zu analysieren und anzureichern."
@@ -56,13 +56,13 @@ msgstr "Bitte benutzen Sie den Button rechts, um die Referenzen in verschiedene 
 "Die Übermittlung dieser Metadaten erfolgt automatisch, wenn dieser Beitrag veröffentlicht wird und einen DOI erhält."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
-msgstr "Die aktuell geparsten Zitationen werden überschrieben, wenn Sie auf OK klicken. Alle Ihre Änderungen gehen dabei verloren. Sind Sie sicher?"
+msgstr "Die aktuell geparsten Zitationen werden überschrieben, wenn Sie auf OK klicken. Alle Ihre Änderungen gehen dabei verloren. Sind Sie sich sicher?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.author.add.button"
 msgstr "Autor hinzufügen"
 
 msgid "plugins.generic.optimetaCitationsPlugin.author.remove.question"
-msgstr "Sind Sie sicher, dass Sie diesen Autor löschen wollen?"
+msgstr "Sind Sie sich sicher, dass Sie diesen Autor löschen wollen?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
 msgstr "Die Zitationen wurden aktualisiert."
