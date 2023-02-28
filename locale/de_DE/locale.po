@@ -30,7 +30,7 @@ msgid "plugins.generic.optimetaCitationsPlugin.deposit.button"
 msgstr "Deposit"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.question"
-msgstr "Sind Sie sicher, dass Sie die Zitationen an die oben genannten Websites übermitteln wollen, um die Zitationen mit weiteren Informationen anzureichern?"
+msgstr "Sind Sie sich sicher, dass Sie die Zitationen an die oben genannten Websites übermitteln wollen, um die Zitationen mit weiteren Informationen anzureichern?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.message.not_published"
 msgstr "Die Publikation muss einer Ausgabe zugeordnet werden, benötigt einen DOI und muss veröffentlicht werden, bevor eine Einreichung möglich ist."
