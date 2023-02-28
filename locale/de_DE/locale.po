@@ -27,7 +27,7 @@ msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
 msgstr "Zitationen"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.button"
-msgstr "Deposit"
+msgstr "Übermitteln"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.question"
 msgstr "Sind Sie sich sicher, dass Sie die Zitationen an die oben genannten Websites übermitteln wollen, um die Zitationen mit weiteren Informationen anzureichern?"
@@ -42,13 +42,13 @@ msgid "plugins.generic.optimetaCitationsPlugin.clear.question"
 msgstr "Die aktuell geparsten Zitationen werden entfernt, wenn Sie auf OK klicken. Sind Sie sich sicher?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.citations.empty.description"
-msgstr "Die extrahierten Zitationen sind leer. Bitte verwenden Sie die Schaltfläche oben, um die Zitationen zu analysieren und anzureichern."
+msgstr "Die extrahierten Zitationen sind leer. Bitte verwenden Sie die Schaltfläche oben, um die Zitationen zu strukturieren und anzureichern."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.button"
-msgstr "Process"
+msgstr "Verarbeiten"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.label"
-msgstr "Parsed references"
+msgstr "Strukturierte Literaturhinweise/Zitationen"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.description"
 msgstr "Bitte benutzen Sie den Button rechts, um die Referenzen in verschiedene Teile zu zerlegen.<br/>"
@@ -77,13 +77,13 @@ msgid "plugins.generic.optimetaCitations.settings.wikidata_title"
 msgstr "Wikidata"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_username"
-msgstr "Wikidata bot username"
+msgstr "Wikidata Bot Benutzername"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_password"
-msgstr "Wikidata bot password"
+msgstr "Wikidata Bot Passwort"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url"
-msgstr "Wikidata api url"
+msgstr "Wikidata API URL"
 
 msgid "plugins.generic.optimetaCitations.settings.open_citations_title"
 msgstr "Open Citations CROCI <a href='https://github.com/TIBHannover/optimetaCitations/blob/main/README.md#registering-for-opencitationsorg-croci' target='_blank'><i class='fa fa-question-circle' aria-hidden='true'></i></a>"
@@ -110,7 +110,7 @@ msgid "plugins.generic.optimetaCitations.settings.initialise.notification"
 msgstr "Initialisierung des Plugins war erfolgreich"
 
 msgid "plugins.generic.optimetaCitations.settings.deposit.button"
-msgstr "Deposit all published"
+msgstr "Publikation übermitteln"
 
 msgid "plugins.generic.optimetaCitations.settings.deposit.notification"
-msgstr "Alle veröffentlichten Publikationen sind deposited."
+msgstr "Alle veröffentlichten Publikationen sind übermittelt."
