@@ -30,19 +30,19 @@ msgid "plugins.generic.optimetaCitationsPlugin.deposit.button"
 msgstr "Übermitteln"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.question"
-msgstr "Sind Sie sich sicher, dass Sie die Zitationen an die oben genannten Websites übermitteln wollen, um die Zitationen mit weiteren Informationen anzureichern?"
+msgstr "Sind Sie sich sicher, dass Sie die Zitationen an die oben genannten Websites übermitteln wollen?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.message.not_published"
-msgstr "Die Publikation muss einer Ausgabe zugeordnet werden, benötigt einen DOI und muss veröffentlicht werden, bevor eine Einreichung möglich ist."
+msgstr "Die Publikation muss einer Ausgabe zugeordnet werden, benötigt einen DOI und muss veröffentlicht werden, bevor eine Übermittlung an die Websites möglich ist."
 
 msgid "plugins.generic.optimetaCitationsPlugin.clear.button"
 msgstr "Löschen"
 
 msgid "plugins.generic.optimetaCitationsPlugin.clear.question"
-msgstr "Die aktuell geparsten Zitationen werden entfernt, wenn Sie auf OK klicken. Sind Sie sich sicher?"
+msgstr "Die strukturierten Zitationen werden entfernt, wenn Sie auf OK klicken. Sind Sie sich sicher?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.citations.empty.description"
-msgstr "Die extrahierten Zitationen sind leer. Bitte verwenden Sie die Schaltfläche oben, um die Zitationen zu strukturieren und anzureichern."
+msgstr "Es sind keine strukturierten Zitationen vorhanden. Bitte klicken Sie auf den oben stehenden Button \"Verarbeiten\", um die Zitationen zu strukturieren und anzureichern."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.button"
 msgstr "Verarbeiten"
@@ -51,12 +51,12 @@ msgid "plugins.generic.optimetaCitationsPlugin.process.label"
 msgstr "Strukturierte Literaturhinweise/Zitationen"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.description"
-msgstr "Bitte benutzen Sie den Button rechts, um die Referenzen in verschiedene Teile zu zerlegen.<br/>"
+msgstr "Bitte benutzen Sie den Button \"Verarbeiten\", um die Zitationen zu strukturieren und anzureichern.<br/>"
 "Nach der Extraktion der DOIs werden zusätzliche Metadaten von externen Websites erfasst und unten angezeigt.<br/>"
-"Die Übermittlung dieser Metadaten erfolgt automatisch, wenn dieser Beitrag veröffentlicht wird und einen DOI erhält."
+"Die Übermittlung dieser Metadaten erfolgt automatisch, wenn dieser Beitrag veröffentlicht wird und einen DOI erhält. Alternativ kann die Metadatenübermittlung manuell über den Button \"Übermitteln\" erfolgen.
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
-msgstr "Die aktuell geparsten Zitationen werden überschrieben, wenn Sie auf OK klicken. Alle Ihre Änderungen gehen dabei verloren. Sind Sie sich sicher?"
+msgstr "Die strukturierten Zitationen werden überschrieben, wenn Sie auf OK klicken. Alle Ihre Änderungen gehen dabei verloren. Sind Sie sich sicher?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.author.add.button"
 msgstr "Autor hinzufügen"
@@ -77,10 +77,10 @@ msgid "plugins.generic.optimetaCitations.settings.wikidata_title"
 msgstr "Wikidata"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_username"
-msgstr "Wikidata Bot Benutzername"
+msgstr "Wikidata Benutzername"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_password"
-msgstr "Wikidata Bot Passwort"
+msgstr "Wikidata Passwort"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url"
 msgstr "Wikidata API URL"
