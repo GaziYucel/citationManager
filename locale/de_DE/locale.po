@@ -53,7 +53,7 @@ msgstr "Strukturierte Literaturhinweise/Zitationen"
 msgid "plugins.generic.optimetaCitationsPlugin.process.description"
 msgstr "Bitte benutzen Sie den Button \"Verarbeiten\", um die Zitationen zu strukturieren und anzureichern.<br/>"
 "Nach der Extraktion der DOIs werden zusätzliche Metadaten von externen Websites erfasst und unten angezeigt.<br/>"
-"Die Übermittlung dieser Metadaten erfolgt automatisch, wenn dieser Beitrag veröffentlicht wird und einen DOI erhält. Alternativ kann die Metadatenübermittlung manuell über den Button \"Übermitteln\" erfolgen.
+"Die Übermittlung dieser Metadaten erfolgt automatisch, wenn dieser Beitrag veröffentlicht wird und einen DOI erhält. Alternativ kann die Metadatenübermittlung manuell über den Button \"Übermitteln\" erfolgen."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
 msgstr "Die strukturierten Zitationen werden überschrieben, wenn Sie auf OK klicken. Alle Ihre Änderungen gehen dabei verloren. Sind Sie sich sicher?"
