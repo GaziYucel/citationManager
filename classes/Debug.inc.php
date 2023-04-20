@@ -1,5 +1,4 @@
 <?php
-// import('plugins.generic.optimetaCitations.classes.Debug'); $debug = new \Optimeta\Citations\Debug();
 namespace Optimeta\Citations;
 
 class Debug
@@ -8,7 +7,7 @@ class Debug
      * @desc Path to debug file
      * @var string
      */
-    private $file = __DIR__ . '/' . '__debug.txt';
+    private $file = OPTIMETA_CITATIONS_PLUGIN_PATH . '/' . 'debug.txt';
 
     /**
      * @desc Add to debug file
@@ -22,15 +21,15 @@ class Debug
         if ($text == null) $textToWrite = 'null';
 
         $fp = fopen($this->file, 'a');
+
         try {
-            $date = new \DateTime();
-            fwrite($fp, $date->format('Y-m-d H:i:s') . ' ' . $textToWrite . "\n");
+            fwrite($fp, date('Y-m-d H:i:s') . ' ' . $textToWrite . "\n");
         }
         catch (\Exception $ex) {
+            error_log(var_export($ex, true));
         }
-        finally {
-            if ($fp) fclose($fp);
-        }
+
+        if ($fp) fclose($fp);
     }
 
     /**
@@ -52,14 +51,15 @@ class Debug
     function Clear(): void
     {
         $fp = fopen($this->file, 'w');
+
         try {
             fwrite($fp, '');
         }
         catch (\Exception $ex) {
+            error_log(var_export($ex, true));
         }
-        finally {
-            if ($fp) fclose($fp);
-        }
+
+        if ($fp) fclose($fp);
     }
 
     /**
