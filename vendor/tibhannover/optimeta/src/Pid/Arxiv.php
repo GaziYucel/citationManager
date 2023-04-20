@@ -1,5 +1,5 @@
 <?php
-namespace Optimeta\Citations\Pid;
+namespace Optimeta\Shared\Pid;
 
 class Arxiv
 {
@@ -7,13 +7,13 @@ class Arxiv
      * @desc Correct prefix
      * @var string
      */
-    public $prefix = 'https://arxiv.org/abs/';
+    public string $prefix = 'https://arxiv.org/abs/';
 
     /**
      * @desc Incorrect prefixes
-     * @var string[]
+     * @var array|string[]
      */
-    public $prefixInCorrect = [
+    public array $prefixInCorrect = [
         'http://arxiv.org/abs/'
     ];
 
@@ -27,5 +27,17 @@ class Arxiv
         if(empty($url)) { return ''; }
 
         return str_replace($this->prefix, '', $url);
+    }
+
+    /**
+     * Add prefix to URL
+     * @param string|null $url
+     * @return string
+     */
+    public function addPrefixToUrl(?string $url): string
+    {
+        if(empty($url)) { return ''; }
+
+        return $url . $this->prefix;
     }
 }

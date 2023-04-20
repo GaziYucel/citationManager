@@ -1,7 +1,7 @@
 <?php
 namespace Optimeta\Citations\Enrich;
 
-use Optimeta\Citations\Pid\Doi;
+use Optimeta\Citations\Shared\Doi;
 use Optimeta\Shared\WikiData\WikiDataBase;
 
 class WikiData

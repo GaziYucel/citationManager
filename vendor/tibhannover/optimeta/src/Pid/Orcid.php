@@ -1,5 +1,5 @@
 <?php
-namespace Optimeta\Citations\Pid;
+namespace Optimeta\Shared\Pid;
 
 class Orcid
 {
@@ -8,6 +8,14 @@ class Orcid
      * @var string
      */
     public $prefix = 'https://orcid.org/';
+
+    /**
+     * @desc Incorrect prefixes
+     * @var array|string[]
+     */
+    public array $prefixInCorrect = [
+        'http://orcid.org/'
+    ];
 
     /**
      * @desc Remove https://orcid.org/ from ORCID URL

@@ -1,5 +1,5 @@
 <?php
-namespace Optimeta\Citations\Pid;
+namespace Optimeta\Shared\Pid;
 
 class Url
 {
@@ -7,7 +7,7 @@ class Url
      * @desc Regex to extract URL
      * @var string
      */
-    public $regex = '%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s';
+    public string $regex = '%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s';
 
     /**
      * @param $raw
@@ -24,8 +24,6 @@ class Url
 
         if(empty($match)) return null;
 
-        $match = trim($match, '.');
-
-        return $match;
+        return trim($match, '.');
     }
 }

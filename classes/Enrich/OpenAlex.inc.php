@@ -2,7 +2,7 @@
 namespace Optimeta\Citations\Enrich;
 
 use Optimeta\Citations\Model\AuthorModel;
-use Optimeta\Citations\Pid\Doi;
+use Optimeta\Citations\Shared\Doi;
 use Optimeta\Shared\OpenAlex\OpenAlexBase;
 
 class OpenAlex

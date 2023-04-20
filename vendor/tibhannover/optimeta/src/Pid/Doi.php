@@ -1,5 +1,5 @@
 <?php
-namespace Optimeta\Citations\Pid;
+namespace Optimeta\Shared\Pid;
 
 class Doi
 {
@@ -7,19 +7,19 @@ class Doi
      * @desc Regex to extract DOI
      * @var string
      */
-    public $regex = '(10[.][0-9]{4,}[^\s"/<>]*/[^\s"<>]+)';
+    public string $regex = '(10[.][0-9]{4,}[^\s"/<>]*/[^\s"<>]+)';
 
     /**
      * @desc Correct prefix
      * @var string
      */
-    public $prefix = 'https://doi.org/';
+    public string $prefix = 'https://doi.org/';
 
     /**
      * @desc Incorrect prefixes
-     * @var string[]
+     * @var array|string[]
      */
-    public $prefixInCorrect = [
+    public array $prefixInCorrect = [
         'http://dx.doi.org/',
         'http://doi.org/',
         'http://www.doi.org/',
@@ -31,6 +31,7 @@ class Doi
     ];
 
     /**
+     * Extract doi from string
      * @param $raw
      * @return string|null
      */
@@ -47,9 +48,7 @@ class Doi
 
         $pidCorrect = $this->prefix . $match;
 
-        $match = trim($pidCorrect, '.');
-
-        return $match;
+        return trim($pidCorrect, '.');
     }
 
     /**
@@ -66,14 +65,12 @@ class Doi
             $doiIncorrect[] = $key . $this->removePrefixFromUrl($doi);
         }
 
-        $raw = str_replace( $doiIncorrect, $doi, $raw);
-
-        return $raw;
+        return str_replace( $doiIncorrect, $doi, $raw);
     }
 
     /**
-     * @desc Remove https://doi.org/ from DOI URL
-     * @param string $url
+     * @desc Remove $prefix from URL
+     * @param ?string $url
      * @return string
      */
     public function removePrefixFromUrl(?string $url): string
@@ -81,5 +78,17 @@ class Doi
         if(empty($url)) { return ''; }
 
         return str_replace($this->prefix, '', $url);
+    }
+
+    /**
+     * Add $prefix to URL
+     * @param string|null $url
+     * @return string
+     */
+    public function addPrefixToUrl(?string $url): string
+    {
+        if(empty($url)) { return ''; }
+
+        return $url . $this->prefix;
     }
 }

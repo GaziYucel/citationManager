@@ -1,11 +1,10 @@
 <?php
 namespace Optimeta\Citations\Deposit;
 
-use Optimeta\Citations\Debug;
-use Optimeta\Citations\Pid\Arxiv;
-use Optimeta\Citations\Pid\Doi;
-use Optimeta\Citations\Pid\Handle;
-use Optimeta\Citations\Pid\Orcid;
+use Optimeta\Shared\Pid\Arxiv;
+use Optimeta\Shared\Pid\Doi;
+use Optimeta\Shared\Pid\Handle;
+use Optimeta\Shared\Pid\Orcid;
 use Optimeta\Shared\OpenCitations\Model\WorkCitation;
 use Optimeta\Shared\OpenCitations\Model\WorkMetaData;
 use Optimeta\Shared\OpenCitations\OpenCitationsBase;

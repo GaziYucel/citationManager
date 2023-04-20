@@ -1,5 +1,5 @@
 <?php
-namespace Optimeta\Citations\Pid;
+namespace Optimeta\Shared\Pid;
 
 class Urn
 {
@@ -7,7 +7,7 @@ class Urn
      * @desc Regex to extract URN
      * @var string
      */
-    public $regex = '/urn:([a-z0-9][a-z0-9-]{1,31}):((?:[-a-z0-9()+,.:=@;$_!*\'&~\/]|%[0-9a-f]{2})+)(?:(\?\+)((?:(?!\?=)(?:[-a-z0-9()+,.:=@;$_!*\'&~\/\?]|%[0-9a-f]{2}))*))?(?:(\?=)((?:(?!#).)*))?(?:(#)((?:[-a-z0-9()+,.:=@;$_!*\'&~\/\?]|%[0-9a-f]{2})*))?$/i';
+    public string $regex = '/urn:([a-z0-9][a-z0-9-]{1,31}):((?:[-a-z0-9()+,.:=@;$_!*\'&~\/]|%[0-9a-f]{2})+)(?:(\?\+)((?:(?!\?=)(?:[-a-z0-9()+,.:=@;$_!*\'&~\/\?]|%[0-9a-f]{2}))*))?(?:(\?=)((?:(?!#).)*))?(?:(#)((?:[-a-z0-9()+,.:=@;$_!*\'&~\/\?]|%[0-9a-f]{2})*))?$/i';
 
     /**
      * @param $raw
@@ -24,8 +24,6 @@ class Urn
 
         if(empty($match)) return null;
 
-        $match = trim($match, '.');
-
-        return $match;
+        return trim($match, '.');
     }
 }

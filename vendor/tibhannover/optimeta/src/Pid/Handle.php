@@ -1,5 +1,5 @@
 <?php
-namespace Optimeta\Citations\Pid;
+namespace Optimeta\Shared\Pid;
 
 class Handle
 {
@@ -7,13 +7,13 @@ class Handle
      * @desc Correct prefix
      * @var string
      */
-    public $prefix = 'https://hdl.handle.net/';
+    public string $prefix = 'https://hdl.handle.net/';
 
     /**
      * @desc Incorrect prefixes
-     * @var string[]
+     * @var array|string[]
      */
-    public $prefixInCorrect = [
+    public array $prefixInCorrect = [
         'http://hdl.handle.net/'
     ];
 
