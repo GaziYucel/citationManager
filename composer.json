@@ -2,19 +2,24 @@
   "name": "optimeta/citations",
   "description": "Create and extract citation data and transfer to open access data sources",
   "license": "GPL-3.0-or-later",
-  "keywords": ["Optimeta","Citations"],
+  "keywords": [
+    "Optimeta",
+    "Citations"
+  ],
   "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/tibhannover/optimeta-plugin-shared.git"
+    }
   ],
   "require": {
-    "php": ">=7.3"
+    "php": ">=7.3",
+    "tibhannover/optimeta": "dev-main"
   },
   "autoload": {
     "classmap": [
       "classes/"
-    ],
-    "psr-4": {
-      "Optimeta\\Shared\\":"vendor/tibhannover/optimeta/src/"
-    }
+    ]
   },
   "config": {},
   "minimum-stability": "dev",
