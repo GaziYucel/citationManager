@@ -1,12 +1,10 @@
 <?php
 namespace Optimeta\Shared\CrossRef;
 
-use Optimeta\Shared\OptimetaBase;
-
-class CrossRefBase extends OptimetaBase
+class CrossRefBase
 {
     public function __construct()
     {
-        parent::__construct();
+
     }
 }

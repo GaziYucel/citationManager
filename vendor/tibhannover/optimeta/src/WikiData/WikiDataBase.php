@@ -1,330 +1,169 @@
 <?php
+
 namespace Optimeta\Shared\WikiData;
 
-use GuzzleHttp\Exception\GuzzleException;
-use Http\Client\Exception;
-use Optimeta\Shared\OptimetaBase;
+use Optimeta\Shared\WikiData\Model\Article;
+use Optimeta\Shared\WikiData\Model\Property;
 
-class WikiDataBase extends OptimetaBase
+class WikiDataBase
 {
     /**
-     * @desc Whether the bot is logged in
-     * @var bool
-     */
-    protected $isLoggedIn = false;
-
-    /**
-     * @desc The url to the api
+     * Log string
      * @var string
      */
-    protected $url = 'https://www.wikidata.org/w/api.php';
-
-    public function __construct(?string $url = '', ?string $username = '', ?string $password = '')
-    {
-        if (!empty($url)) $this->url = $url;
-        if (!empty($username)) $this->username = $username;
-        if (!empty($password)) $this->password = $password;
-
-        parent::__construct();
-    }
+    public string $log = '';
 
     /**
-     * @desc Logs the account.
-     * @param string $username - The account's username.
-     * @param string $password - The account's password.
-     * @returns bool - Returns true on success, false on failure.
+     * @var string|mixed
      */
-    public function login()
-    {
-        $args = [
-            'action' => 'login',
-            'format' => 'json',
-            'lgname' => $this->username,
-            'lgpassword' => $this->password,
-            'lgtoken' => $this->token
-        ];
-
-//        $response = $this->client->request();
-
-        try {
-            $response = $this->client->request('POST', $this->url, ['body' => http_build_query($args)]);
-            $res['headers'] = json_encode($response->getHeaders());
-            $res['body'] = (string)($response->getBody()->getContents());
-            return $res;
-        } catch (GuzzleException|\Exception $ex) {
-        }
-
-        return '--empty--';
-
-//        return $this->actionPost('login', $args);
-//        while (true) {
-//            $return = $this->actionQueryGet(array('action' => 'login'), $post);
-//            var_dump($return);
-//            if ($return['login']['result'] == 'Success') {
-//                $this->token = $return['login']['token'];
-//                $this->isLoggedIn = true;
-//                return true;
-//            } elseif ($return['login']['result'] == 'NeedToken') {
-//                $post['lgtoken'] = $return['login']['token'];
-//            } else {
-//                $this->errors = $return['login']['code'];
-//                return false;
-//            }
-//        }
-    }
+    public string $url = 'https://www.wikidata.org/w/api.php';
 
     /**
-     * @desc Logs the account out of the wiki and destroys all their session data.
+     * @var array|string[]
      */
-    public function logout()
-    {
-        $args = [
-            'action' => 'logout',
-            'format' => 'json',
-            'token' => $this->csrf
-        ];
-
-        try {
-            $response = $this->client->request('GET', $this->url . '?' . http_build_query($args));
-            $res['headers'] = json_encode($response->getHeaders());
-            $res['body'] = (string)($response->getBody()->getContents());
-            return $res;
-        } catch (GuzzleException|\Exception $ex) {
-        }
-
-        return '--empty--';
-
-//        $this->token = null;
-//        $this->csrf = null;
-//        $this->errors = null;
-//        $this->isLoggedIn = false;
-    }
+    public array $availableUrls = [
+        'prod' => 'https://www.wikidata.org/wiki/',
+        'test' => 'https://test.wikidata.org/wiki/',
+        'apiProd' => 'https://www.wikidata.org/w/api.php',
+        'apiTest' => 'https://test.wikidata.org/w/api.php'
+    ];
 
     /**
-     * @desc Returns login token.
-     * @param bool $force (default=false) $force - Force the script to get a fresh edit token.
+     * Optimeta\Shared\WikiData\Model\Property
+     * @var Property
      */
-    public function getLoginToken(bool $force = false)
-    {
-//        if ($this->token != null && $force === false) return $this->token;
-
-        $args = [
-            'meta' => 'tokens',
-            'type' => '*'
-        ];
-
-        $responseRaw = $this->client;
-        $args['action'] = 'query';
-        $args['format'] = 'json';
-
-        try {
-//            $response = json_decode($this->actionGet('query', $args), true);
-            $responseRaw = $this->client->request('GET', $this->url . '?' . http_build_query($args));
-            $response = json_decode($responseRaw->getBody(), true);
-            if ($response !== null &&
-                !empty($response['query']) &&
-                !empty($response['query']['tokens']) &&
-                !empty($response['query']['tokens']['logintoken'])) {
-
-                $this->token = $response['query']['tokens']['logintoken'];
-            }
-
-            $res['headers'] = json_encode($responseRaw->getHeaders());
-            $res['body'] = (string)($responseRaw->getBody()->getContents());
-
-            return $res;
-        } catch (GuzzleException|\Exception $ex) {
-        }
-
-        return '--empty--';
-
-//        return $this->token;
-    }
+    protected Property $property;
 
     /**
-     * @return array|string
+     *  Optimeta\Shared\WikiData\Api
+     * @var Api
      */
-    public function getCsrfToken()
+    protected Api $api;
+
+    function __construct(bool $isTest = false, ?string $username = '', ?string $password = '')
     {
-        $args = [
-            'meta' => 'tokens',
-            'type' => '*'
-        ];
+        $this->property = new Property($isTest);
 
-        $responseRaw = $this->client;
-        $args['action'] = 'query';
-        $args['format'] = 'json';
+        if ($isTest) $this->url = $this->availableUrls['apiTest'];
 
-        try {
-//            $response = json_decode($this->actionGet('query', $args), true);
-            $responseRaw = $this->client->request('GET', $this->url . '?' . http_build_query($args));
-            $response = json_decode($responseRaw->getBody(), true);
-            if ($response !== null &&
-                !empty($response['query']) &&
-                !empty($response['query']['tokens']) &&
-                !empty($response['query']['tokens']['csrftoken'])) {
-
-                $this->csrf = $response['query']['tokens']['csrftoken'];
-            }
-
-            $res['headers'] = json_encode($responseRaw->getHeaders());
-            $res['body'] = (string)$responseRaw->getBody()->getContents();
-            return $res;
-        } catch (GuzzleException|\Exception $ex) {
-        }
-
-        return '--empty--';
-
-//        return $this->csrf;
+        $this->api = new Api(
+            $this->url,
+            $username,
+            $password);
     }
 
     /**
-     * @param array $query
-     * @return array|string
-     */
-    public function getItem(array $query)
-    {
-        $query['action'] = 'wbgetentities';
-        $query['format'] = 'json';
-        $queryString = '';
-        if (!empty($query)) $queryString = '?' . http_build_query($query);
-
-        try {
-            $response = $this->client->request('GET', $this->url . $queryString);
-            $res['headers'] = json_encode($response->getHeaders());
-            $res['body'] = $response->getBody()->getContents();
-            return $res;
-        } catch (GuzzleException|\Exception $ex) {
-        }
-
-        return '--empty--';
-    }
-
-    /**
-     * @desc Get entity with action query
+     * Get entity with action query
+     * @param string $doi
      * @param string $searchString
      * @return string
      */
-    public function getEntity(string $searchString): string
+    public function getEntity(string $doi, string $searchString): string
     {
-        if (empty($searchString)) return '';
-        $entity = '';
+        if (empty($doi) && empty($searchString)) return '';
+
+        $qid = '';
+
+        $action = 'query';
         $query = [
             "prop" => "",
             "list" => "search",
-            "srsearch" => $searchString,
-            "srlimit" => "2"
-        ];
+            "srsearch" => $doi . ' ' . $searchString,
+            "srlimit" => "2"];
 
-        try {
-            $response = json_decode($this->actionQueryGet($query), true);
-            if ($response !== null &&
-                !empty($response['query']) &&
-                !empty($response['query']['search']) &&
-                !empty($response['query']['search'][0]) &&
-                !empty($response['query']['search'][0]['title'])) {
-                $entity = $response['query']['search'][0]['title'];
-            }
-        } catch (\Exception $ex) {
-        }
+        $response = json_decode($this->api->actionGet($action, $query), true);
 
-        return $entity;
-    }
+        if (empty($response)) return '';
 
-    /**
-     * * @desc Get doi with action get entities
-     * @param string $entity
-     * @return string
-     */
-    public function getDoi(string $entity): string
-    {
-        if (empty($entity)) return '';
-        $doi = '';
-        $query = ["ids" => $entity];
+        if (!empty($response['query']['search'][0]['title']))
+            $qid = $response['query']['search'][0]['title'];
 
-        try {
-            $response = json_decode($this->actionWbGetEntitiesGet($query), true);
-            $doi = $response['entities'][$entity]['claims']['P356'][0]['mainsnak']['datavalue']['value'];
-            if ($doi === null) $doi = '';
-        } catch (\Exception $ex) {
-        }
-
-        return $doi;
-    }
-
-    /**
-     * @desc Execute action query (GET) against API and return as array
-     * @param array $query
-     * @return string
-     */
-    public function actionQueryGet(array $query)
-    {
-        return $this->actionGet('query', $query);
-    }
-
-    /**
-     * @desc Execute action wbgetentities (GET) against API and return as array
-     * @param array $query
-     * @return string
-     */
-    public function actionWbGetEntitiesGet(array $query)
-    {
-        return $this->actionGet('wbgetentities', $query);
-    }
-
-    /**
-     * @desc Execute action (GET) against API and returns the body
-     * @param string $action
-     * @param array $query
-     * @return string
-     */
-    public function actionGet(string $action, ?array $query = null)
-    {
-        $response = '';
-        $query['action'] = $action;
-        $query['format'] = 'json';
-        $queryString = '';
-        if (!empty($query)) $queryString = '?' . http_build_query($query);
-
-        error_log($queryString);
-
-        try {
-            $response = $this->client->request('GET', $this->url . $queryString);
-        } catch (GuzzleException|\Exception $ex) {
-        }
-
-        if (!empty($response) && !empty($response->getBody())) {
-            return $response->getBody();
-        }
+        if (strtolower($doi) == strtolower($this->getDoi($qid)))
+            return $qid;
 
         return '';
     }
 
     /**
-     * @desc Execute action (POST) against API and returns the body
-     * @param string $action
-     * @param array|null $query
-     * @return \Psr\Http\Message\StreamInterface|string
+     * * Get doi with action get entities
+     * @param string $qid
+     * @return string
      */
-    public function actionPost(string $action, ?array $query = null)
+    public function getDoi(string $qid): string
     {
-        $response = '';
-        $query['action'] = $action;
-        $query['format'] = 'json';
-        $queryString = '';
-        if (!empty($query)) $queryString = '?' . http_build_query($query);
+        if (empty($qid)) return '';
 
-        error_log($queryString);
+        $action = 'wbgetentities';
+        $query = ["ids" => $qid];
 
-        try {
-            $response = $this->client->request('POST', $this->url, ['body' => $queryString]);
-        } catch (GuzzleException|\Exception $ex) {
-        }
+        $response = json_decode($this->api->actionGet($action, $query), true);
 
-        if (!empty($response) && !empty($response->getBody())) {
-            return $response->getBody();
-        }
+        $pid = $this->property->doi['pid'];
+
+        if (empty($response)) return '';
+
+        if (!empty($response['entities'][$qid]['claims'][$this->property->doi['pid']][0]['mainsnak']['datavalue']['value']))
+            return $response['entities'][$qid]['claims'][$this->property->doi['pid']][0]['mainsnak']['datavalue']['value'];
 
         return '';
+    }
+
+    public function submitWork(array $work): string
+    {
+        $action = "wbeditentity";
+        $query = [];
+        $qid = $work["qid"];
+        $data = [];
+
+        if (!empty($qid)) {
+            $query["id"] = $qid; // Q224871
+        } else {
+            $query["new"] = "item";
+        }
+
+        $article = new Article();
+
+        $labels = $article->getLabelAsJson($work["locale"], $work["label"]);
+
+        $claims = [];
+
+        if (!empty($work["claims"]["doi"])) {
+            $claims[] = $article->getDefaultClaimAsJson(
+                $this->property->doi['pid'],
+                $work["claims"]["doi"]);
+        }
+
+        if (!empty($work["claims"]["publicationDate"])) {
+            $claims[] = $article->getPointInTimeClaimAsJson(
+                $this->property->publicationDate['pid'],
+                $work["claims"]["publicationDate"]);
+        }
+
+        $data["labels"] = $labels;
+        if (!empty($claims)) $data["claims"] = $claims;
+
+        $form["data"] = json_encode($data);
+
+//        error_log('form -> ' . json_encode($form, JSON_UNESCAPED_SLASHES));
+
+        $response = $this->api->actionPost(
+            $action,
+            $query,
+            $form);
+
+        $responseArray = json_decode($response, true);
+
+        if (!empty($responseArray["entity"]["id"])) {
+            $qid = $responseArray["entity"]["id"];
+        }
+
+        $this->log .= $response;
+
+        return $qid;
+    }
+
+    function __destruct()
+    {
+        error_log('WikiDataBase->__destruct: ' . $this->log);
     }
 }

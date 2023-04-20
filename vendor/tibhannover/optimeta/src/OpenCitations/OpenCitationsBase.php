@@ -1,14 +1,20 @@
 <?php
+
 namespace Optimeta\Shared\OpenCitations;
 
 use Optimeta\Shared\GitHub\GitHubBase;
-use Optimeta\Shared\OptimetaBase;
 
-class OpenCitationsBase extends OptimetaBase
+class OpenCitationsBase
 {
-    public function __construct()
+    /**
+     * GitHubBase object
+     * @var GitHubBase
+     */
+    protected GitHubBase $github;
+
+    public function __construct(string $owner, string $repository, string $token)
     {
-        parent::__construct();
+        $this->github = new GitHubBase($owner, $repository, $token);
     }
 
     /**
@@ -20,15 +26,11 @@ class OpenCitationsBase extends OptimetaBase
     {
         $issueId = 0;
 
-        if(empty($title) || empty($body)) return $issueId;
+        if (empty($title) || empty($body)) return $issueId;
 
-        $github = new GitHubBase();
-        $github->setUrl($this->url);
-        $github->setToken($this->token);
+        $issueId = $this->github->addIssue($title, $body);
 
-        $issueId = $github->addIssue($title, $body);
-
-        if(empty($issueId)) return 0;
+        if (empty($issueId)) return 0;
 
         return $issueId;
     }
