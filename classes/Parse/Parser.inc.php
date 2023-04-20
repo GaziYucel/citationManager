@@ -2,11 +2,11 @@
 namespace Optimeta\Citations\Parse;
 
 use Optimeta\Citations\Model\CitationModel;
-use Optimeta\Citations\Pid\Arxiv;
-use Optimeta\Citations\Pid\Doi;
-use Optimeta\Citations\Pid\Handle;
-use Optimeta\Citations\Pid\Url;
-use Optimeta\Citations\Pid\Urn;
+use Optimeta\Shared\Pid\Arxiv;
+use Optimeta\Shared\Pid\Doi;
+use Optimeta\Shared\Pid\Handle;
+use Optimeta\Shared\Pid\Url;
+use Optimeta\Shared\Pid\Urn;
 
 class Parser
 {

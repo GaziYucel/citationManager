@@ -2,7 +2,8 @@
 namespace Optimeta\Citations\Enrich;
 
 use Optimeta\Citations\Model\AuthorModel;
-use Optimeta\Citations\Shared\Doi;
+use Optimeta\Citations\Model\CitationModel;
+use Optimeta\Shared\Pid\Doi;
 use Optimeta\Shared\OpenAlex\OpenAlexBase;
 
 class OpenAlex
@@ -23,10 +24,19 @@ class OpenAlex
         $citation->publication_year = $openAlexWork->publication_year;
         $citation->publication_date = $openAlexWork->publication_date;
         $citation->type = $openAlexWork->type;
+
+        $objOrcid = new \Optimeta\Shared\Pid\Orcid();
         for($i = 0; $i < count((array)$openAlexWork->authorships); $i++){
             $author = new AuthorModel();
-            $author->orcid = $openAlexWork->authorships[$i]['author']['orcid'];
-            $author->name = $openAlexWork->authorships[$i]['author']['display_name'];
+            $author->orcid = $objOrcid->removePrefixFromUrl(
+                $openAlexWork->authorships[$i]['author']['orcid']);
+
+            $author->display_name = $openAlexWork->authorships[$i]['author']['display_name'];
+            $authorDisplayNameParts = explode(' ', trim($author->display_name));
+            if(count($authorDisplayNameParts) > 1){
+                $author->family_name = array_pop($authorDisplayNameParts);
+                $author->given_name = implode(' ' , $authorDisplayNameParts);
+            }
             $author->openalex_id = $this->removeOpenAlexOrgFromUrl($openAlexWork->authorships[$i]['author']['id']);
             $citation->authors[] = (array)$author;
         }
