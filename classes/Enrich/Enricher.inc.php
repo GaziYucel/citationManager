@@ -20,7 +20,8 @@ class Enricher
 {
     /**
      * @desc Enrich citations and save results to citations
-     * @return void
+     * @param array $citationsParsed
+     * @return array
      */
     public function executeAndReturnCitations(array $citationsParsed): array
     {
@@ -54,6 +55,10 @@ class Enricher
                 // WikiData
                 $objWikiData = new WikiData();
                 $citation = $objWikiData->getItem($citation);
+
+                // Orcid
+                $objOrcid = new Orcid();
+                $citation = $objOrcid->getAuthors($citation);
 
                 // push to citations enriched array
                 $citations[] = (array)$citation;
