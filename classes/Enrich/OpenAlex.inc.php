@@ -65,13 +65,13 @@ class OpenAlex
     }
 
     /**
-     * @desc Remove https://openalex.org/ from OpenAlex URL
-     * @param string $url
+     * @desc Remove OpenAlex prefix from URL
+     * @param ?string $url
      * @return string
      */
     public function removeOpenAlexOrgFromUrl(?string $url): string
     {
         if(empty($url)) { return ''; }
-        return str_replace('https://openalex.org/', '', $url);
+        return str_replace(OPTIMETA_CITATIONS_OPENALEX_URL . '/', '', $url);
     }
 }
