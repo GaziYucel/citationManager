@@ -12,21 +12,28 @@
  * @brief Plugin for parsing Citations and submitting to Open Access websites.
  */
 
-const OPTIMETA_CITATIONS_PLUGIN_PATH               = __DIR__;
-
-const OPTIMETA_CITATIONS_API_ENDPOINT              = 'OptimetaCitations';
-const OPTIMETA_CITATIONS_PUBLICATION_WORK          = 'OptimetaCitations_PublicationWork';
-const OPTIMETA_CITATIONS_FORM_NAME                 = 'OptimetaCitations_PublicationForm';
-const OPTIMETA_CITATIONS_FORM_FIELD_PARSED         = 'OptimetaCitations_CitationsParsed';
-const OPTIMETA_CITATIONS_SAVED_IS_ENABLED          = 'OptimetaCitations_IsEnabled';
-
-const OPTIMETA_CITATIONS_WIKIDATA_USERNAME         = 'OptimetaCitations_Wikidata_Username';
-const OPTIMETA_CITATIONS_WIKIDATA_PASSWORD         = 'OptimetaCitations_Wikidata_Password';
-const OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER      = 'OptimetaCitations_Open_Citations_Owner';
+const OPTIMETA_CITATIONS_IS_TEST_ENVIRONMENT = true;
+const OPTIMETA_CITATIONS_PLUGIN_PATH = __DIR__;
+const OPTIMETA_CITATIONS_USER_AGENT = 'OJSOptimetaCitations';
+const OPTIMETA_CITATIONS_API_ENDPOINT = 'OptimetaCitations';
+const OPTIMETA_CITATIONS_PUBLICATION_WORK = 'OptimetaCitations_PublicationWork';
+const OPTIMETA_CITATIONS_FORM_NAME = 'OptimetaCitations_PublicationForm';
+const OPTIMETA_CITATIONS_FORM_FIELD_PARSED = 'OptimetaCitations_CitationsParsed';
+const OPTIMETA_CITATIONS_SAVED_IS_ENABLED = 'OptimetaCitations_IsEnabled';
+const OPTIMETA_CITATIONS_OPENALEX_URL = 'https://openalex.org';
+const OPTIMETA_CITATIONS_WIKIDATA_USERNAME = 'OptimetaCitations_Wikidata_Username';
+const OPTIMETA_CITATIONS_WIKIDATA_PASSWORD = 'OptimetaCitations_Wikidata_Password';
+const OPTIMETA_CITATIONS_WIKIDATA_URLS = [
+    'prod' => 'https://www.wikidata.org/wiki',
+    'test' => 'https://test.wikidata.org/wiki',
+    'apiProd' => 'https://www.wikidata.org/w/api.php',
+    'apiTest' => 'https://test.wikidata.org/w/api.php'
+];
+const OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER = 'OptimetaCitations_Open_Citations_Owner';
 const OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY = 'OptimetaCitations_Open_Citations_Repository';
-const OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN      = 'OptimetaCitations_Open_Citations_Token';
+const OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN = 'OptimetaCitations_Open_Citations_Token';
 
-require_once (OPTIMETA_CITATIONS_PLUGIN_PATH . '/vendor/autoload.php');
+require_once(OPTIMETA_CITATIONS_PLUGIN_PATH . '/vendor/autoload.php');
 
 import('lib.pkp.classes.plugins.GenericPlugin');
 import('lib.pkp.classes.site.VersionCheck');
@@ -128,7 +135,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
      * @return void
      */
     public function pluginActivationActions()
-    { 
+    {
         $this->callbackParseCronTabWorkAround();
 
         // create / alter table required by plugin
@@ -214,8 +221,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
         if (OPTIMETA_CITATIONS_IS_TEST_ENVIRONMENT) $this->templateParameters['wikidataURL'] = OPTIMETA_CITATIONS_WIKIDATA_URLS['test'];
 
-        if($publication->getData('status') === STATUS_PUBLISHED)
-            $this->templateParameters['customScript'] .= "window.onload = function(){ document.querySelector('#optimetaCitations button.pkpButton').disabled = true; }" .PHP_EOL;
+        if ($publication->getData('status') === STATUS_PUBLISHED)
+            $this->templateParameters['customScript'] .= "window.onload = function(){ document.querySelector('#optimetaCitations button.pkpButton').disabled = true; }" . PHP_EOL;
 
         $templateMgr->assign($this->templateParameters);
 
