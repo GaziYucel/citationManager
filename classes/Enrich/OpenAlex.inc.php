@@ -10,10 +10,10 @@ class OpenAlex
 {
     /**
      * @desc Get all information from OpenAlex and return as CitationModel
-     * @param object $citation
-     * @return object
+     * @param CitationModel $citation
+     * @return CitationModel
      */
-    public function getWork(object $citation): object
+    public function getWork(CitationModel $citation): CitationModel
     {
         $objDoi = new Doi();
         $doi = $objDoi->removePrefixFromUrl($citation->doi);

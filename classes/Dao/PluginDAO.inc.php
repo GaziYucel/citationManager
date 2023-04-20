@@ -2,7 +2,7 @@
 namespace Optimeta\Citations\Dao;
 
 use DAORegistry;
-use Optimeta\Citations\Model\CitationModelHelpers;
+use Optimeta\Citations\Model\CitationModel;
 
 class PluginDAO
 {
@@ -30,7 +30,9 @@ class PluginDAO
 
         if(empty($citations)) $citations = '[]';
 
-        return CitationModelHelpers::migrate($citations);
+        $citationModel = new CitationModel();
+
+        return $citationModel->migrate($citations);
     }
 
     public function saveCitations($publication, $citations)
