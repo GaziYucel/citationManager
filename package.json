@@ -41,6 +41,7 @@
   },
   "homepage": "https://github.com/TIBHannover/optimetaCitations#readme",
   "jshintConfig": {
-    "expr": true
+    "expr": true,
+    "esversion": 6
   }
 }
