@@ -12,124 +12,155 @@
  */
 
 #optimetaCitations .pkpForm {
-	border: 0 !important;
+    border: 0 !important;
 }
 
 #optimetaCitations .pkpFormGroup {
-	padding: 0 !important;
+    padding: 0 !important;
 }
 
 #optimetaCitations .header table {
-	width: 100%;
+    width: 100%;
 }
+
 .optimetaScrollableDiv {
-	height: 500px;
-	overflow-x: hidden;
-	overflow-y: auto;
-	border: 1px solid #bbb;
-	margin-top: 5px;
+    height: 500px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 1px solid #bbb;
+    margin-top: 5px;
 }
 
 .optimetaScrollableDivEmpty {
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
+
 .optimetaScrollableDivLoading {
-	height: 100%;
-	display: grid;
+    height: 100%;
+    display: grid;
 }
+
 .optimetaScrollableDivLoading img {
-	align-self: center;
-	margin: 0 auto;
+    align-self: center;
+    margin: 0 auto;
 }
-.optimetaScrollableDivValue {}
+
+.optimetaScrollableDivValue {
+}
 
 .optimetaScrollableDiv table {
-	border-collapse: collapse;
-	width: 100%;
+    border-collapse: collapse;
+    width: 100%;
 }
 
-.optimetaScrollableDiv tr:nth-child(even){
-	background-color: #f6f6f6;
+.optimetaScrollableDiv tr:nth-child(even) {
+    background-color: #f6f6f6;
 }
 
 .optimetaScrollableDiv th {
-	background-color: #eee;
-	position: sticky;
-	position: -webkit-sticky;
-	top: 0;
-	z-index: 2;
-}
-.optimetaScrollableDiv-nr  {
-	text-align: center;
-}
-.optimetaScrollableDiv-parts .pkpButton  {
-	line-height: 25px;
-	height: 25px;
-}
-.optimetaScrollableDiv-actions {
-	text-align: center;
-	vertical-align: top;
-}
-.optimetaScrollableDiv-actions a {
-	width: 34px;
-	height: 34px;
-	margin-top: 10px;
+    background-color: #eee;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 2;
 }
 
-.optimetaRow { border-bottom: 1px solid #eee; }
-.optimetaRow div { line-height: 1.65rem; }
+.optimetaScrollableDiv-nr {
+    text-align: center;
+}
+
+.optimetaScrollableDiv-parts .pkpButton {
+    line-height: 25px;
+    height: 25px;
+}
+
+.optimetaScrollableDiv-actions {
+    text-align: center;
+    vertical-align: top;
+}
+
+.optimetaScrollableDiv-actions a {
+    width: 34px;
+    height: 34px;
+    margin-top: 10px;
+}
+
+.optimetaRow {
+    border-bottom: 1px solid #eee;
+}
+
+.optimetaRow div {
+    line-height: 1.65rem;
+}
+
 .optimetaButton {
-	display: inline-block;
-	color: #ffffff;
-	text-decoration: none;
-	padding: 0 .5em;
-	line-height: 20px;
+    display: inline-block;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0 .5em;
+    line-height: 20px;
 }
-.optimetaButton span { display: block; }
-.optimetaButtonGreen { background-color: #60a917; }
-.optimetaButtonGrey { background-color: #cccccc; }
-.optimetaButtonRed { background-color: #00ffff; }
+
+.optimetaButton span {
+    display: block;
+}
+
+.optimetaButtonGreen {
+    background-color: #60a917;
+}
+
+.optimetaButtonGrey {
+    background-color: #cccccc;
+}
+
+.optimetaButtonRed {
+    background-color: #00ffff;
+}
+
 .optimetaRawText {
-	font-size: 12px;
-	line-height: 14px;
-	padding: 3px 0;
-	border: 1px dotted #ccc;
+    font-size: 12px;
+    line-height: 14px;
+    padding: 3px 0;
+    border: 1px dotted #ccc;
 }
+
 .optimetaTag {
-	background-color: #ededed;
-	padding: 0 .5em;
-	line-height: 20px;
+    background-color: #ededed;
+    padding: 0 .5em;
+    line-height: 20px;
 }
-.optimetaInput { }
+
+.optimetaInput {
+}
 
 #OptimetaCitations_PublicationForm-OptimetaCitations_CitationsParsed-control,
-#OptimetaCitations_PublicationForm-OptimetaCitations_PublicationWork-control
-{
-	display: none;
+#OptimetaCitations_PublicationForm-OptimetaCitations_PublicationWork-control {
+    display: none;
 }
 
 .optimetaCitationsDebug {
-	width: 100%;
-	height: 100px;
-	background-color: #000;
-	color: #fff;
-	overflow-x: hidden;
-	overflow-y: auto;
+    width: 100%;
+    height: 100px;
+    background-color: #000;
+    color: #fff;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .optimetaDisabled {
-	pointer-events: none;
-	cursor: default;
-	opacity:0.6;
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.6;
 }
+
 .optimetaHide {
-	display: none !important;
+    display: none !important;
 }
 
 .optimetaAlignRight {
-	text-align: end !important;
+    text-align: end !important;
 }
