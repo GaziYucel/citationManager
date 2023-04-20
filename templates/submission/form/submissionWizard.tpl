@@ -1,63 +1,63 @@
 <script src="{$pluginJavaScriptURL}/optimetaCitations.js"></script>
-<link rel="stylesheet" href="{$pluginStylesheetURL}/optimetaCitations.css" type="text/css" />
+<link rel="stylesheet" href="{$pluginStylesheetURL}/optimetaCitations.css" type="text/css"/>
 
 <script>
-    var optimetaCitations = JSON.parse(`{$citationsParsed}`);
+    var optimetaCitations = {$citationsParsed};
 
     var optimetaCitationsApp = new pkp.Vue({
         el: '#optimetaCitations',
         data: {
             citations: optimetaCitations,
             helper: optimetaCitationsGetHelperArray(optimetaCitations),
-            author: JSON.parse(`{$authorModel}`),
-            publicationWork: JSON.parse(`{$workModel}`)
+            author: {$authorModel},
+            publicationWork: {$workModel}
         },
         computed: {
-            citationsJsonComputed: function() {
+            citationsJsonComputed: function () {
                 return JSON.stringify(this.citations);
             },
-            publicationWorkJsonComputed: function() {
+            publicationWorkJsonComputed: function () {
                 return JSON.stringify(this.publicationWork);
             },
-            optimetaCitationsIsParsed: function() {
-                if(this.citations.length === 0){
+            optimetaCitationsIsParsed: function () {
+                if (this.citations.length === 0) {
                     return false;
                 }
                 return true;
             }
         },
         methods: {
-            startEdit: function(index){
+            startEdit: function (index) {
                 this.helper[index].editRow = true;
             },
-            endEdit: function(index){
-                if(this.citations[index].authors !== null){
+            endEdit: function (index) {
+                if (this.citations[index].authors !== null) {
                     this.cleanupEmptyAuthorRows(index);
                 }
                 this.helper[index].editRow = false;
             },
-            addAuthor: function(index){
-                if(this.citations[index].authors === null){
+            addAuthor: function (index) {
+                if (this.citations[index].authors === null) {
                     this.citations[index].authors = [];
                 }
                 this.citations[index].authors.push(this.author);
             },
-            removeAuthor: function(index, authorIndex){
+            removeAuthor: function (index, authorIndex) {
                 if (confirm('{translate key="plugins.generic.optimetaCitationsPlugin.author.remove.question"}') !== true) {
                     return;
                 }
                 this.citations[index].authors.splice(authorIndex, 1);
             },
-            cleanupEmptyAuthorRows: function(index){
+            cleanupEmptyAuthorRows: function (index) {
                 var iS = '';
-                for(let i = 0; i < this.citations[index].authors.length; i++){
+                for (let i = 0; i < this.citations[index].authors.length; i++) {
                     var rowIsNull = true;
-                    for(var key in this.citations[index].authors[i]){
-                        if(this.citations[index].authors[i][key] !== null){
+                    for (var key in this.citations[index].authors[i]) {
+                        if (this.citations[index].authors[i][key] !== null) {
                             rowIsNull = false;
                         }
                     }
-                    if(rowIsNull === true){
+                    if (rowIsNull === true) {
                         this.citations[index].authors.splice(i);
                     }
                 }
@@ -65,8 +65,8 @@
         }
     });
 
-    function optimetaLoadingImage(show){
-        show = (typeof show !== 'undefined') ?  show : true;
+    function optimetaLoadingImage(show) {
+        show = (typeof show !== 'undefined') ? show : true;
 
         let elEmpty = document.getElementById("optimetaScrollableDivEmpty");
         let elValue = document.getElementById("optimetaScrollableDivValue");
@@ -83,9 +83,11 @@
         }
     }
 
-    function optimetaProcessCitations(){
+    function optimetaProcessCitations() {
         let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.process.question"}';
-        if (confirm(questionText) !== true) { return; }
+        if (confirm(questionText) !== true) {
+            return;
+        }
 
         optimetaLoadingImage(true);
 
@@ -99,7 +101,8 @@
             headers: {
                 'X-Csrf-Token': optimetaCitationsGetCsrfToken(),
             },
-            error(r) { },
+            error(r) {
+            },
             success(response) {
                 optimetaCitations = JSON.parse(JSON.stringify(response['message']));
                 optimetaCitationsApp.citations = JSON.parse(JSON.stringify(response['message']));
@@ -110,9 +113,11 @@
         });
     }
 
-    function optimetaDepositCitations (){
+    function optimetaDepositCitations() {
         let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.deposit.question"}';
-        if (confirm(questionText) !== true) { return; }
+        if (confirm(questionText) !== true) {
+            return;
+        }
 
         optimetaLoadingImage(true);
 
@@ -126,7 +131,8 @@
             headers: {
                 'X-Csrf-Token': optimetaCitationsGetCsrfToken(),
             },
-            error(r) { },
+            error(r) {
+            },
             success(response) {
                 optimetaCitationsApp.publicationWork = JSON.parse(JSON.stringify(response['message']));
                 optimetaLoadingImage(false);
@@ -134,9 +140,11 @@
         });
     }
 
-    function optimetaClearCitations(){
+    function optimetaClearCitations() {
         let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.clear.question"}';
-        if (confirm(questionText) !== true) { return; }
+        if (confirm(questionText) !== true) {
+            return;
+        }
 
         optimetaCitations = [];
         optimetaCitationsApp.citations = [];
@@ -149,14 +157,14 @@
 </script>
 
 {if $citationsEnabled}
-
     <div class="section" id="optimetaCitations" style="clear:both;">
 
         <div class="header">
             <table>
                 <tr>
                     <td colspan="2">
-                        <span class="label">{translate key="plugins.generic.optimetaCitationsPlugin.process.label"}</span> <br/>
+                        <span class="label">{translate key="plugins.generic.optimetaCitationsPlugin.process.label"}</span>
+                        <br/>
                         <span class="description">{translate key="plugins.generic.optimetaCitationsPlugin.process.description"}</span>
                     </td>
                 </tr>
@@ -171,11 +179,12 @@
                               v-if="!publicationWork.opencitations_url">OpenCitations</span>
                     </td>
                     <td class="optimetaAlignRight">
-                        {* <a href="javascript:optimetaDepositCitations()" id="buttonDeposit" class="pkpButton"
-                           :class="(optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitationsPlugin.deposit.button"}</a> *}
+                        <a href="javascript:optimetaDepositCitations()" id="buttonDeposit" class="pkpButton"
+                           :class="(optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitationsPlugin.deposit.button"}</a>
                         <a href="javascript:optimetaClearCitations()" id="buttonClear" class="pkpButton"
                            :class="(optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitationsPlugin.clear.button"}</a>
-                        <a href="javascript:optimetaProcessCitations()" id="buttonProcess" class="pkpButton">{translate key="plugins.generic.optimetaCitationsPlugin.process.button"}</a>
+                        <a href="javascript:optimetaProcessCitations()" id="buttonProcess"
+                           class="pkpButton">{translate key="plugins.generic.optimetaCitationsPlugin.process.button"}</a>
                     </td>
                 </tr>
             </table>
@@ -208,42 +217,64 @@
                                        target="_blank">{{ citations[i].doi }}</a></span>
                                 <input id="doi-{{ i + 1 }}" placeholder="DOI" v-show="row.editRow"
                                        v-model="citations[i].doi"
-                                       class="optimetaInput" />
+                                       class="optimetaInput"/>
 
                                 <span v-show="!row.editRow">
                                     <a :href="citations[i].urn"
                                        target="_blank">{{ citations[i].urn }}</a></span>
                                 <input id="urn-{{ i + 1 }}" placeholder="URN" v-show="row.editRow"
                                        v-model="citations[i].urn"
-                                       class="optimetaInput" />
+                                       class="optimetaInput"/>
 
                                 <span v-show="!row.editRow">
                                     <a :href="citations[i].url"
                                        target="_blank">{{ citations[i].url }}</a></span>
                                 <input id="url-{{ i + 1 }}" placeholder="URL" v-show="row.editRow"
                                        v-model="citations[i].url"
-                                       class="optimetaInput" />
+                                       class="optimetaInput"/>
                             </div>
 
                             <div>
 
                                 <div>
                                     <span v-for="(author, j) in citations[i].authors">
-                                        <span v-show="!row.editRow" class="optimetaTag">{{ citations[i].authors[j].name }}</span>
-                                        <input id="display_name-{{ i + 1 }}-{{ j + 1 }}" placeholder="Author" v-show="row.editRow"
-                                               v-model="citations[i].authors[j].name"
-                                               class="optimetaInput" />
-                                        <input id="orcid-{{ i + 1 }}-{{ j + 1 }}" placeholder="Orcid" v-show="row.editRow"
+                                        {* <span v-show="!row.editRow" *}
+                                        {* class="optimetaTag">{{ citations[i].authors[j].display_name }}</span> *}
+                                        {* <input id="display_name-{{ i + 1 }}-{{ j + 1 }}" placeholder="Display name" *}
+                                        {* v-show="row.editRow" *}
+                                        {* v-model="citations[i].authors[j].display_name" *}
+                                        {* class="optimetaInput" /> *}
+
+                                        <span v-show="!row.editRow"
+                                              class="optimetaTag">{{ citations[i].authors[j].given_name }}</span>
+                                        <input id="given_name-{{ i + 1 }}-{{ j + 1 }}" placeholder="Given name"
+                                               v-show="row.editRow"
+                                               v-model="citations[i].authors[j].given_name"
+                                               class="optimetaInput"/>
+
+                                        <span v-show="!row.editRow"
+                                              class="optimetaTag">{{ citations[i].authors[j].family_name }}</span>
+                                        <input id="family_name-{{ i + 1 }}-{{ j + 1 }}" placeholder="Family name"
+                                               v-show="row.editRow"
+                                               v-model="citations[i].authors[j].family_name"
+                                               class="optimetaInput"/>
+
+                                        <input id="orcid-{{ i + 1 }}-{{ j + 1 }}" placeholder="Orcid"
+                                               v-show="row.editRow"
                                                v-model="citations[i].authors[j].orcid"
-                                               class="optimetaInput" />
+                                               class="optimetaInput"/>
+
+                                        <span class="optimetaButton optimetaButtonGrey"
+                                              v-if="!citations[i].authors[j].orcid">iD</span>
                                         <a class="optimetaButton optimetaButtonGreen"
                                            v-if="citations[i].authors[j].orcid"
-                                           :href="citations[i].authors[j].orcid"
+                                           :href="'https://{$orcidURL}/' + citations[i].authors[j].orcid"
                                            target="_blank">iD</a>
-                                    <a class="pkpButton" v-show="row.editRow"
-                                       v-on:click="removeAuthor(i, j)">
-                                        <i class="fa fa-trash" aria-hidden="true"></i> </a>
-                                        <br v-show="row.editRow"/>
+
+                                        <a class="pkpButton" v-show="row.editRow"
+                                           v-on:click="removeAuthor(i, j)">
+                                            <i class="fa fa-trash" aria-hidden="true"></i> </a>
+                                            <br v-show="row.editRow"/>
                                     </span>
                                     <a class="pkpButton" v-show="row.editRow"
                                        v-on:click="addAuthor(i)">{translate key="plugins.generic.optimetaCitationsPlugin.author.add.button"}</a>
@@ -255,35 +286,42 @@
 
                                     <span v-show="!row.editRow && citations[i].title"
                                           class="optimetaTag">{{ citations[i].title }}</span>
-                                    <input id="title-{{ i + 1 }}" placeholder="Title" v-show="row.editRow" class="optimetaInput"
-                                           v-model="citations[i].title" />
+                                    <input id="title-{{ i + 1 }}" placeholder="Title" v-show="row.editRow"
+                                           class="optimetaInput"
+                                           v-model="citations[i].title"/>
 
                                     <span v-show="!row.editRow && citations[i].venue_name"
                                           class="optimetaTag">{{ citations[i].venue_name }}</span>
-                                    <input id="venue_display_name-{{ i + 1 }}" placeholder="Venue" v-show="row.editRow" class="optimetaInput"
-                                           v-model="citations[i].venue_name" />
+                                    <input id="venue_display_name-{{ i + 1 }}" placeholder="Venue" v-show="row.editRow"
+                                           class="optimetaInput"
+                                           v-model="citations[i].venue_name"/>
 
                                     <span v-show="!row.editRow && citations[i].publication_year"
                                           class="optimetaTag">{{ citations[i].publication_year }}</span>
-                                    <input id="publication_year-{{ i + 1 }}" placeholder="Year" v-show="row.editRow" class="optimetaInput"
-                                           v-model="citations[i].publication_year" />
+                                    <input id="publication_year-{{ i + 1 }}" placeholder="Year" v-show="row.editRow"
+                                           class="optimetaInput"
+                                           v-model="citations[i].publication_year"/>
 
                                     <span v-show="!row.editRow && citations[i].volume"
                                           class="optimetaTag">Volume {{ citations[i].volume }}</span>
-                                    <input id="volume-{{ i + 1 }}" placeholder="Volume" v-show="row.editRow" class="optimetaInput"
-                                           v-model="citations[i].volume" />
+                                    <input id="volume-{{ i + 1 }}" placeholder="Volume" v-show="row.editRow"
+                                           class="optimetaInput"
+                                           v-model="citations[i].volume"/>
 
                                     <span v-show="!row.editRow && citations[i].issue"
                                           class="optimetaTag">Issue {{ citations[i].issue }}</span>
-                                    <input id="issue-{{ i + 1 }}" placeholder="Issue" v-show="row.editRow" class="optimetaInput"
-                                           v-model="citations[i].issue" />
+                                    <input id="issue-{{ i + 1 }}" placeholder="Issue" v-show="row.editRow"
+                                           class="optimetaInput"
+                                           v-model="citations[i].issue"/>
 
                                     <span v-show="!row.editRow && citations[i].first_page"
                                           class="optimetaTag">Pages {{ citations[i].first_page }} - {{ citations[i].last_page }}</span>
-                                    <input id="first_page-{{ i + 1 }}" placeholder="First page" v-show="row.editRow" class="optimetaInput"
-                                           v-model="citations[i].first_page" />
-                                    <input id="last_page-{{ i + 1 }}" placeholder="Last page" v-show="row.editRow" class="optimetaInput"
-                                           v-model="citations[i].last_page" />
+                                    <input id="first_page-{{ i + 1 }}" placeholder="First page" v-show="row.editRow"
+                                           class="optimetaInput"
+                                           v-model="citations[i].first_page"/>
+                                    <input id="last_page-{{ i + 1 }}" placeholder="Last page" v-show="row.editRow"
+                                           class="optimetaInput"
+                                           v-model="citations[i].last_page"/>
                                 </div>
 
                             </div>
@@ -293,13 +331,13 @@
                             <div>
                                 <a class="optimetaButton optimetaButtonGreen"
                                    v-if="citations[i].wikidata_qid"
-                                   :href="'https://www.wikidata.org/wiki/' + citations[i].wikidata_qid"
+                                   :href="'https://{$wikidataURL}/wiki/' + citations[i].wikidata_qid"
                                    target="_blank"><span>Wikidata</span></a>
                                 <span class="optimetaButton optimetaButtonGrey"
                                       v-if="!citations[i].wikidata_qid">Wikidata</span>
                                 <a class="optimetaButton optimetaButton optimetaButtonGreen"
                                    v-if="citations[i].openalex_id"
-                                   :href="'https://openalex.org/' + citations[i].openalex_id"
+                                   :href="'{$openAlexURL}/' + citations[i].openalex_id"
                                    target="_blank"><span>OpenAlex</span></a>
                                 <span class="optimetaButton optimetaButtonGrey"
                                       v-if="!citations[i].openalex_id">OpenAlex</span>
@@ -318,8 +356,10 @@
         </div>
 
         <div>
-            <textarea name="{$smarty.const.OPTIMETA_CITATIONS_FORM_FIELD_PARSED}" style="display: none;">{{ citationsJsonComputed }}</textarea>
-            <textarea name="{$smarty.const.OPTIMETA_CITATIONS_PUBLICATION_WORK}" style="display: none;">{{ publicationWorkJsonComputed }}</textarea>
+            <textarea name="{$smarty.const.OPTIMETA_CITATIONS_FORM_FIELD_PARSED}"
+                      style="display: none;">{{ citationsJsonComputed }}</textarea>
+            <textarea name="{$smarty.const.OPTIMETA_CITATIONS_PUBLICATION_WORK}"
+                      style="display: none;">{{ publicationWorkJsonComputed }}</textarea>
         </div>
 
     </div>
