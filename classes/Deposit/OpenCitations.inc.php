@@ -8,6 +8,7 @@ use Optimeta\Shared\Pid\Orcid;
 use Optimeta\Shared\OpenCitations\Model\WorkCitation;
 use Optimeta\Shared\OpenCitations\Model\WorkMetaData;
 use Optimeta\Shared\OpenCitations\OpenCitationsBase;
+use OptimetaCitationsPlugin;
 
 class OpenCitations
 {
@@ -42,24 +43,14 @@ class OpenCitations
     protected $defaultType = 'journal article';
 
     /**
-     * @desc Orcid object
-     * @var $object Orcid
-     */
-    protected $objOrcid;
-
-    function __construct()
-    {
-        $this->objOrcid = new Orcid();
-    }
-
-    /**
      * @param string $submissionId
      * @param array $citations
      * @return string
      */
     public function submitWork(string $submissionId, array $citations): string
     {
-        $plugin = new \OptimetaCitationsPlugin();
+        $plugin = new OptimetaCitationsPlugin();
+        
         $request = $plugin->getRequest();
         $context = $request->getContext(); // journal
 
@@ -100,13 +91,10 @@ class OpenCitations
             $this->getCitationsAsCsv($citations, $doi, $publicationDate);
 
         // prepare open citations and deposit
-        $openCitations = new OpenCitationsBase();
-        $openCitations->setUrl(
-            str_replace('{{owner}}/{{repository}}',
-                $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER) . '/' .
-                $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY),
-                $this->urlIssuesApi));
-        $openCitations->setToken($plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN));
+        $openCitations = new OpenCitationsBase(
+            $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER),
+            $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY),
+            $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN));
 
         $githubIssueId = $openCitations->depositCitations($title, $body);
 
@@ -115,23 +103,37 @@ class OpenCitations
             $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY),
             $this->urlIssues);
 
-        if(!empty($githubIssueId) && $githubIssueId != 0) return $githubIssueUrl . '/' . $githubIssueId;
+        if(!empty($githubIssueId) && $githubIssueId != 0)
+            return $githubIssueUrl . '/' . $githubIssueId;
 
         return '';
     }
 
-    public function getColumnNamesAsCsv($object): string
+    /**
+     * Get Column names in comma separated format
+     * @param object $object
+     * @return string
+     */
+    public function getColumnNamesAsCsv(object $object): string
     {
         $names = '';
+
         foreach ($object as $name => $value) {
             $names .= '"' . str_replace('"', '\"', $name) . '",';
         }
-        $names = trim($names, ',');
-        $names = $names . PHP_EOL;
 
-        return $names;
+        return trim($names, ',') . PHP_EOL;
     }
 
+    /**
+     * Get Work as WorkModel in comma separated format
+     * @param $submission
+     * @param $publication
+     * @param $authors
+     * @param $issue
+     * @param $journal
+     * @return string
+     */
     public function getWorkAsCsv($submission, $publication, $authors, $issue, $journal): string
     {
         $work = new WorkMetaData();
@@ -146,7 +148,8 @@ class OpenCitations
         foreach($authors as $index => $data){
             $work->author .= $data->getData('familyName')[$locale] . ', ' . $data->getData('givenName')[$locale];
             if(!empty($data->getData('orcid'))) {
-                $work->author .= ' [orcid:' . $this->objOrcid->removePrefixFromUrl($data->getData('orcid')) . ']';
+                $objOrcid = new Orcid();
+                $work->author .= ' [orcid:' . $objOrcid->removePrefixFromUrl($data->getData('orcid')) . ']';
             }
             $work->author .= '; ';
         }
@@ -174,15 +177,19 @@ class OpenCitations
         $work->editor = '';
 
         $values = '';
+
         foreach ($work as $name => $value) {
             $values .= '"' . str_replace('"', '\"', $value) . '",';
         }
-        $values = trim($values, ',');
-        $values = $values . PHP_EOL;
 
-        return $values;
+        return trim($values, ',') . PHP_EOL;
     }
 
+    /**
+     * Get Citations as WorkModel in comma separated format
+     * @param array $citations
+     * @return string
+     */
     public function getCitationsAsWorkAsCsv(array $citations): string
     {
         $values = '';
@@ -202,10 +209,14 @@ class OpenCitations
             $work->author = '';
             if(!empty($row['authors'])){
                 foreach($row['authors'] as $index2 => $author){
-                    $work->author .= $author['name'];
-                    if(!empty($author['orcid'])){
-                        $work->author .= ' [orcid:' . $this->objOrcid->removePrefixFromUrl($author['orcid']) . ']';
+                    if(empty($author['orcid'])){
+                        $work->author .= $author['display_name'];
                     }
+                    else{
+                        $work->author .= $author['family_name'] . ', ' .  $author['given_name'];
+                    }
+                    $objOrcid = new Orcid();
+                    $work->author .= ' [orcid:' . $objOrcid->removePrefixFromUrl($author['orcid']) . ']';
                     $work->author .= '; ';
                 }
                 $work->author = trim($work->author, '; ');
@@ -235,9 +246,17 @@ class OpenCitations
         return $values;
     }
 
+    /**
+     * Get Citations in comma separated format
+     * @param array $citations
+     * @param $doi
+     * @param $publicationDate
+     * @return string
+     */
     public function getCitationsAsCsv(array $citations, $doi, $publicationDate): string
     {
         $values = '';
+
         foreach ($citations as $index => $row) {
             $citation = new WorkCitation();
 
@@ -264,25 +283,32 @@ class OpenCitations
 
         return $values;
     }
-    
-    private function getUrl(string $url){
-        $local = '';
+
+    /**
+     * Get url as arxiv, handle or url
+     * @param string $url
+     * @return string
+     */
+    private function getUrl(string $url): string
+    {
+        $urlNew = '';
         
         $objHandle = new Handle();
         $url = str_replace($objHandle->prefixInCorrect, $objHandle->prefix, $url);
+
         $objArxiv = new Arxiv();
         $url = str_replace($objArxiv->prefixInCorrect, $objArxiv->prefix, $url);
 
-        if(strpos($url, $objArxiv->prefix) !== false) {
-            $local .= 'arxiv:' . $objArxiv->removePrefixFromUrl($url) . ' ';
+        if(str_contains($url, $objArxiv->prefix)) {
+            $urlNew .= 'arxiv:' . $objArxiv->removePrefixFromUrl($url) . ' ';
         }
-        else if (strpos($url, $objHandle->prefix) !== false){
-            $local .= 'handle:' . $objHandle->removePrefixFromUrl($url) . ' ';
+        else if (str_contains($url, $objHandle->prefix)){
+            $urlNew .= 'handle:' . $objHandle->removePrefixFromUrl($url) . ' ';
         }
         else {
-            $local .= 'url:' . str_replace(' ', '', $url) . ' ';
+            $urlNew .= 'url:' . str_replace(' ', '', $url) . ' ';
         }
 
-        return trim($local);
+        return trim($urlNew);
     }
 }
