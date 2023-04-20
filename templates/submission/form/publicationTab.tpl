@@ -142,6 +142,10 @@
         optimetaCitationsApp.citations = [];
         optimetaCitationsApp.helper = [];
     }
+
+    <!-- custom scripts -->
+    {$customScript}
+    <!-- custom scripts -->
 </script>
 
 <tab v-if="supportsReferences" id="optimetaCitations" label="{translate key="plugins.generic.optimetaCitationsPlugin.publication.label"}">

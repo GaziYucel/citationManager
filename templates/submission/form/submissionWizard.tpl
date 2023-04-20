@@ -142,6 +142,10 @@
         optimetaCitationsApp.citations = [];
         optimetaCitationsApp.helper = [];
     }
+
+    <!-- custom scripts -->
+    {$customScript}
+    <!-- custom scripts -->
 </script>
 
 {if $citationsEnabled}
