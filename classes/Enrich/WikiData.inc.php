@@ -22,12 +22,13 @@ class WikiData
 
         $objDoi = new Doi();
         $doi = $objDoi->removePrefixFromUrl($citation->doi);
-        $wikiData = new WikiDataBase();
-        $wikiDataQid = $wikiData->getEntity($doi);
-        $doiWD = '';
-        if(!empty($wikiDataQid)) { $doiWD = $wikiData->getDoi($wikiDataQid); }
-        if(strtolower($doi) == strtolower($doiWD)) {
-            $citation->wikidata_qid = $wikiDataQid; }
+
+        $wikiData = new WikiDataBase(
+            OPTIMETA_CITATIONS_IS_TEST_ENVIRONMENT,
+            $plugin->getSetting($contextId, OPTIMETA_CITATIONS_WIKIDATA_USERNAME),
+            $plugin->getSetting($contextId, OPTIMETA_CITATIONS_WIKIDATA_PASSWORD));
+
+        $citation->wikidata_qid = $wikiData->getEntity($doi, '');
 
         return $citation;
     }
