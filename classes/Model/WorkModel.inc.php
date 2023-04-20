@@ -253,4 +253,32 @@ class WorkModel
      * @example false
      */
     public $isProcessed;
+
+    /**
+     * @desc Migrates to current CitationModel
+     * @param string $publicationWork
+     * @return
+     */
+    public static function migrate(string $publicationWork)
+    {
+        if(empty($publicationWork) || !is_array(json_decode($publicationWork, true))) return (array)new WorkModel();
+
+        $publicationWorkIn = json_decode($publicationWork, true);
+        $publicationWorkOut = new WorkModel();
+
+        foreach($publicationWorkOut as $index => $key){
+            switch($key){
+                case '-_-add key here to do custom changes or mappings-_-':
+                    break;
+                default:
+                    if(property_exists($publicationWorkIn, $key)){
+                        $publicationWorkOut->$key = $publicationWorkIn->$key;
+                    }
+            }
+        }
+
+        error_log(json_encode($publicationWorkOut));
+
+        return $publicationWorkOut;
+    }
 }

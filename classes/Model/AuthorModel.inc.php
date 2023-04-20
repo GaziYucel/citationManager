@@ -20,7 +20,7 @@ class AuthorModel
      * @see
      * @example "Jason Priem"
      */
-    public $name;
+    public $display_name;
 
     /**
      * @var string
