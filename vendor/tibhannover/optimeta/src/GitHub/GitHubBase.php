@@ -1,14 +1,64 @@
 <?php
+/**
+ * @file plugins/generic/optimetaCitations/vendor/tibhannover/optimeta/src/GitHub/GitHubBase.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class GitHubBase
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief GitHubBase class
+ */
+
 namespace Optimeta\Shared\GitHub;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Optimeta\Shared\OptimetaBase;
 
-class GitHubBase extends OptimetaBase
+class GitHubBase
 {
-    public function __construct()
+    /**
+     * User agent name to identify us
+     * @var string
+     */
+    protected string $userAgent = 'OJSOptimetaCitations';
+
+    /**
+     * @desc The base url to the api issues
+     * @var string
+     */
+    protected $url = 'https://api.github.com/repos/{{owner}}/{{repository}}/issues';
+
+    /**
+     * @desc Access token
+     * @var string
+     */
+    protected $token;
+
+    /**
+     * @desc GuzzleHttp\Client
+     * @var object (class)
+     */
+    protected object $client;
+
+    public function __construct(string $owner, string $repository, string $token)
     {
-        parent::__construct();
+        if (!empty(OPTIMETA_CITATIONS_USER_AGENT))
+            $this->userAgent = OPTIMETA_CITATIONS_USER_AGENT;
+
+        $this->url = strtr($this->url, [
+            '{{owner}}' => $owner,
+            '{{repository}}' => $repository
+        ]);
+
+        $this->token = $token;
+
+        $this->client = new Client([
+            'headers' => ['User-Agent' => $this->userAgent],
+            'verify' => false
+        ]);
     }
 
     /**
@@ -43,8 +93,8 @@ class GitHubBase extends OptimetaBase
                 ]);
 
             $issueId = $this->getIssueId($response);
-        } catch (GuzzleException | \Exception $ex) {
-            $this->errors .= $ex;
+        } catch (GuzzleException|\Exception $ex) {
+            error_log($ex->getMessage(), true);
         }
 
         return $issueId;
@@ -59,22 +109,21 @@ class GitHubBase extends OptimetaBase
     {
         $issueId = 0;
 
-        if(empty($response)) return $issueId;
+        if (empty($response)) return $issueId;
 
-        try{
-            foreach((array)$response as $key => $value){
+        try {
+            foreach ((array)$response as $key => $value) {
 
-                if(stristr($key, 'stream')){
+                if (stristr($key, 'stream')) {
                     $objValue = json_decode($value, true);
 
-                    if(is_numeric($objValue['number'])){
+                    if (is_numeric($objValue['number'])) {
                         $issueId = (int)$objValue['number'];
                     }
                 }
             }
-        }
-        catch(\Exception $ex){
-            $this->errors .= $ex;
+        } catch (\Exception $ex) {
+            error_log($ex->getMessage(), true);
         }
 
         return $issueId;

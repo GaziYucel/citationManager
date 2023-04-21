@@ -1,8 +1,21 @@
 <?php
+/**
+ * @file plugins/generic/optimetaCitations/Dao/PluginDAO.inc.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class PluginDAO
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief DAO Schema
+ */
+
 namespace Optimeta\Citations\Dao;
 
 use DAORegistry;
-use Optimeta\Citations\Model\CitationModelHelpers;
+use Optimeta\Citations\Model\CitationModel;
 
 class PluginDAO
 {
@@ -28,9 +41,11 @@ class PluginDAO
         $citationsExtendedDAO = DAORegistry::getDAO('CitationsExtendedDAO');
         $citations = $citationsExtendedDAO->getParsedCitationsByPublicationId($publication->getId());
 
-        if(empty($citations)) $citations = '[]';
+        if (empty($citations)) $citations = '[]';
 
-        return CitationModelHelpers::migrate($citations);
+        $citationModel = new CitationModel();
+
+        return $citationModel->migrate($citations);
     }
 
     public function saveCitations($publication, $citations)

@@ -10,24 +10,22 @@
  *
  * @brief Main javascript for the plugin. *
  */
-/*jshint esversion: 6 */
 
 /**
  * @desc Gets CSRF Token
  * @returns string
  */
-
-function optimetaCitationsGetCsrfToken(){
+function optimetaCitationsGetCsrfToken() {
     // ojs version 3.2.1
-    if(typeof $ !== "undefined" && typeof $.pkp !== "undefined" &&
+    if (typeof $ !== "undefined" && typeof $.pkp !== "undefined" &&
         typeof $.pkp.currentUser !== "undefined" &&
-        typeof $.pkp.currentUser.csrfToken !== "undefined"){
+        typeof $.pkp.currentUser.csrfToken !== "undefined") {
         return $.pkp.currentUser.csrfToken;
     }
 
     // ojs version 3.3.0
-    if(typeof pkp !== "undefined" && typeof pkp.currentUser !== "undefined" &&
-        typeof pkp.currentUser.csrfToken !== "undefined"){
+    if (typeof pkp !== "undefined" && typeof pkp.currentUser !== "undefined" &&
+        typeof pkp.currentUser.csrfToken !== "undefined") {
         return pkp.currentUser.csrfToken;
     }
 
@@ -36,25 +34,27 @@ function optimetaCitationsGetCsrfToken(){
 
 /**
  * @desc Gets citations raw value
- * @returns string
+ * @returns {string}
  */
-function optimetaCitationsGetCitationsRaw(){
+function optimetaCitationsGetCitationsRaw() {
+    let element = null;
+    let citationsRaw = "";
+
     // submission wizard
-    if(typeof document !== "undefined" &&
-        typeof document.getElementsByName("citationsRaw") !== "undefined" &&
-        typeof document.getElementsByName("citationsRaw")[0] !== "undefined" &&
-        typeof document.getElementsByName("citationsRaw")[0]["value"] !== "undefined"){
-        return document.getElementsByName("citationsRaw")[0]["value"];
+    element = document.getElementsByName("citationsRaw")[0];
+    if (typeof element !== 'undefined' && element !== null &&
+        typeof element.value !== "undefined" && element.value !== null) {
+        citationsRaw = element.value;
     }
 
     // submission edit
-    if(typeof document !== "undefined" &&
-        typeof document.getElementsByName("citations-citationsRaw-control") !== "undefined" &&
-        typeof document.getElementsByName("citations-citationsRaw-control")["value"] !== "undefined"){
-        return document.getElementById("citations-citationsRaw-control")["value"];
+    element = document.getElementById("citations-citationsRaw-control");
+    if (typeof element !== 'undefined' && element !== null &&
+        typeof element.value !== "undefined" && element.value !== null) {
+        citationsRaw = element.value;
     }
 
-    return "";
+    return citationsRaw;
 }
 
 /**
@@ -62,13 +62,13 @@ function optimetaCitationsGetCitationsRaw(){
  * @param baseArray array
  * @returns array
  */
-function optimetaCitationsGetHelperArray(baseArray){
+function optimetaCitationsGetHelperArray(baseArray) {
     let helperArray = JSON.parse(JSON.stringify(baseArray));
-    for(let i = 0;i < baseArray.length; i++){
-        for(let key of Object.keys(helperArray[i])){
+    for (let i = 0; i < baseArray.length; i++) {
+        for (let key of Object.keys(helperArray[i])) {
             helperArray[i]["_edit_" + key] = false;
         }
-        helperArray[i]["editRow"] = false;
+        helperArray[i].editRow = false;
     }
     return helperArray;
 }
@@ -93,16 +93,14 @@ function optimetaCitationsIsStringJson(str) {
  * @param key string
  * @returns string
  */
-function optimetaCitationsFindPathInArray (obj, key) {
+function optimetaCitationsFindPathInArray(obj, key) {
     const path = [];
     const keyExists = (obj) => {
         if (!obj || (typeof obj !== "object" && !Array.isArray(obj))) {
             return false;
-        }
-        else if (obj.hasOwnProperty(key)) {
+        } else if (obj.hasOwnProperty(key)) {
             return true;
-        }
-        else if (Array.isArray(obj)) {
+        } else if (Array.isArray(obj)) {
             let parentKey = path.length ? path.pop() : "";
 
             for (let i = 0; i < obj.length; i++) {
@@ -113,8 +111,7 @@ function optimetaCitationsFindPathInArray (obj, key) {
                 }
                 path.pop();
             }
-        }
-        else {
+        } else {
             for (const k in obj) {
                 path.push(k);
                 const result = keyExists(obj[k], key);

@@ -30,7 +30,7 @@ jobs:
       matrix:
         # php-versions: ["7.3","7.4","8.0"] # relies on PHP version from OJS image
         dbs: [ "mysql" ] #'pgsql'
-        pkp-application: ["ojs"] #'omp' #'ops'
+        pkp-application: [ "ojs" ] #'omp' #'ops'
         pkp-version: [ "3_3_0-14" ]
     env:
       OJS_VERSION: ${{ matrix.pkp-version }}
@@ -81,7 +81,7 @@ jobs:
           CYPRESS_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_OPEN_CITATIONS_OWNER: ${{ github.repository_owner }}
           CYPRESS_OPEN_CITATIONS_REPOSITORY: ${{ github.event.repository.name }}
-        run: | 
+        run: |
           npm run-script test_ci
 
       - name: Show logs

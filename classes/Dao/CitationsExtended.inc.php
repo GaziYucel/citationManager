@@ -1,4 +1,17 @@
 <?php
+/**
+ * @file plugins/generic/optimetaCitations/Dao/CitationsExtended.inc.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class CitationsExtended
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief DataObject  for get/set PublicationId and ParsedCitations
+ */
+
 namespace Optimeta\Citations\Dao;
 
 use DataObject;
@@ -9,7 +22,8 @@ class CitationsExtended extends DataObject
      * @desc Get Publication ID
      * @return int
      */
-    function getPublicationId(){
+    function getPublicationId()
+    {
         return $this->getData('publicationId');
     }
 
@@ -17,7 +31,8 @@ class CitationsExtended extends DataObject
      * @desc Set Publication ID
      * @param $publicationId int
      */
-    function setPublicationId($publicationId) {
+    function setPublicationId($publicationId)
+    {
         return $this->setData('publicationId', $publicationId);
     }
 
@@ -25,7 +40,8 @@ class CitationsExtended extends DataObject
      * @desc Get ParsedCitations
      * @return string
      */
-    function getParsedCitations() {
+    function getParsedCitations()
+    {
         return $this->getData('parsedCitations');
     }
 
@@ -33,7 +49,8 @@ class CitationsExtended extends DataObject
      * @desc Set ParsedCitations
      * @param $parsedCitations string
      */
-    function setParsedCitations($parsedCitations) {
+    function setParsedCitations($parsedCitations)
+    {
         return $this->setData('parsedCitations', $parsedCitations);
     }
 }

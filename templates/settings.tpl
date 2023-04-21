@@ -73,19 +73,6 @@
             placeholder="plugins.generic.optimetaCitations.settings.wikidata_password"
             }
         </p>
-        <p>
-            {assign var=apiUrl value=[
-            "https://test.wikidata.org/w/api.php" => 'test.wikidata.org/w/api.php',
-            "https://www.wikidata.org/w/api.php" => "www.wikidata.org/w/api.php"]}
-            {fbvElement
-            type="select"
-            id="{$smarty.const.OPTIMETA_CITATIONS_WIKIDATA_API_URL}"
-            name="{$smarty.const.OPTIMETA_CITATIONS_WIKIDATA_API_URL}"
-            from=$apiUrl
-            selected=${$smarty.const.OPTIMETA_CITATIONS_WIKIDATA_API_URL}
-            label="plugins.generic.optimetaCitations.settings.wikidata_api_url"
-            }
-        </p>
     {/fbvFormSection}
     <!-- Wikidata -->
 

@@ -9,17 +9,23 @@
  * @class Depositor
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Depositor class
- *
+ * @brief Main Depositor class
  */
+
 namespace Optimeta\Citations\Deposit;
 
 use Optimeta\Citations\Dao\PluginDAO;
-use Optimeta\Citations\Model\WorkModelHelpers;
+use Optimeta\Citations\Model\WorkModel;
 use Services;
 
 class Depositor
 {
+    /**
+     * Log string
+     * @var string
+     */
+    public string $log = '';
+
     /**
      * @desc Submit enriched citations and return citations
      * @param string $submissionId
@@ -29,32 +35,42 @@ class Depositor
      */
     public function executeAndReturnWork(string $submissionId, array $citationsParsed, bool $isBatch = false)
     {
-        $publicationWork = WorkModelHelpers::getModelAsArrayNullValues();
+        $publicationWork = get_object_vars(new WorkModel());
 
         // return if input is empty
-        if (empty($submissionId) || empty($citationsParsed)) {
-            return $publicationWork;
-        }
+        if (empty($submissionId) || empty($citationsParsed)) return $publicationWork;
 
         $submissionDao = \DAORegistry::getDAO('SubmissionDAO');
         $submission = $submissionDao->getById($submissionId);
-        $publication = $submission->getLatestPublication();
 
         $publicationDao = \DAORegistry::getDAO('PublicationDAO');
         $publication = $publicationDao->getById($submission->getLatestPublication()->getId());
 
         $publicationWorkDb = $publication->getData(OPTIMETA_CITATIONS_PUBLICATION_WORK);
-        if(!empty($publicationWorkDb) && $publicationWorkDb !== '[]'){
+        if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]')
             $publicationWork = json_decode($publicationWorkDb, true);
-        }
 
         // OpenCitations: deposit if not batch or empty
-        if(!$isBatch || empty($publicationWork['opencitations_url'])){
+        if (!$isBatch || empty($publicationWork['opencitations_url'])) {
             $openCitations = new OpenCitations();
             $openCitationsUrl = $openCitations->submitWork($submissionId, $citationsParsed);
             $publicationWork['opencitations_url'] = $openCitationsUrl;
+            $this->log .= '[$publicationWork>opencitations_url: ' .
+                $publicationWork['opencitations_url'] . ']';
         }
 
+        // WikiData: deposit if not batch or empty
+        if (!$isBatch || empty($publicationWork['wikidata_url'])) {
+            $wikiData = new WikiData();
+            $wikiDataUrl = $wikiData->submitWork(
+                $submissionId,
+                $citationsParsed);
+            $publicationWork['wikidata_url'] = $wikiDataUrl;
+            $this->log .= '[$publicationWork>wikidata_url: ' .
+                $publicationWork['wikidata_url'] . ']';
+        }
+
+        // convert to json
         $publicationWorkJson = json_encode($publicationWork);
 
         // save to database
@@ -64,16 +80,18 @@ class Depositor
         return $publicationWork;
     }
 
+    /**
+     * Batch deposit
+     * @return bool
+     */
     public function batchDeposit(): bool
     {
         $result = true;
 
-        $debug = new \Optimeta\Citations\Debug();
-        foreach($this->getContextIds() as $contextId){
-            $debug->Add('$contextId: ' . $contextId);
-            foreach($this->getPublishedSubmissionIds($contextId) as $submissionId){
-                $debug->Add('$submissionId: ' . $submissionId);
-
+        foreach ($this->getContextIds() as $contextId) {
+            $this->log .= '[$contextId: ' . $contextId . ']';
+            foreach ($this->getPublishedSubmissionIds($contextId) as $submissionId) {
+                $this->log .= '[$submissionId: ' . $submissionId . ']';
                 $submissionDao = new \SubmissionDAO();
                 $submission = $submissionDao->getById($submissionId);
                 $publication = $submission->getLatestPublication();
@@ -83,7 +101,7 @@ class Depositor
 
                 $publicationWork = $this->executeAndReturnWork($submissionId, $citations, true);
 
-                $debug->Add('$publicationWork>opencitations_url: ' . $publicationWork['opencitations_url']);
+                $this->log .= '[$publicationWork>opencitations_url: ' . $publicationWork['opencitations_url'] . ']';
             }
         }
 
@@ -93,7 +111,8 @@ class Depositor
     /**
      * Get an array of all published submission IDs in the database
      */
-    public function getPublishedSubmissionIds($contextId) {
+    public function getPublishedSubmissionIds($contextId)
+    {
         import('classes.submission.Submission');
         $submissionsIterator = Services::get('submission')->getMany([
             'contextId' => $contextId,
@@ -119,5 +138,10 @@ class Depositor
         }
 
         return $contextIds;
+    }
+
+    function __destruct()
+    {
+        error_log('Depositor->__destruct: ' . $this->log);
     }
 }

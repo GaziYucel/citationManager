@@ -48,11 +48,11 @@ class PublicationForm extends FormComponent
 
         $this->addField(new FieldText(
             OPTIMETA_CITATIONS_FORM_FIELD_PARSED, [
-                'label' => '',
-                'description' => '',
-                'isMultilingual' => false,
-                'value' => $pluginDAO->getCitations($publication)
-            ]));
+            'label' => '',
+            'description' => '',
+            'isMultilingual' => false,
+            'value' => $pluginDAO->getCitations($publication)
+        ]));
 
         $this->addField(new FieldText(
             OPTIMETA_CITATIONS_PUBLICATION_WORK, [

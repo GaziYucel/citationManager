@@ -1,7 +1,17 @@
 <?php
 /**
- * @desc Authors are people who create works.
+ * @file plugins/generic/optimetaCitations/classes/Model/AuthorModel.inc.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class AuthorModel
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief Authors are people who create works.
  */
+
 namespace Optimeta\Citations\Model;
 
 class AuthorModel
@@ -20,7 +30,7 @@ class AuthorModel
      * @see
      * @example "Jason Priem"
      */
-    public $name;
+    public $display_name;
 
     /**
      * @var string

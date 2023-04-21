@@ -7,19 +7,17 @@
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class DepositorTask
- * @ingroup
+ * @ingroup plugins_generic_optimetacitations
  *
  * @brief Main DepositorTask class
- *
  */
-namespace Optimeta\Citations\ScheduledTasks;
 
 import('lib.pkp.classes.scheduledTask.ScheduledTask');
 import('plugins.generic.optimetaCitations.OptimetaCitationsPlugin');
 
 use Optimeta\Citations\Deposit\Depositor;
 
-class DepositorTask extends \ScheduledTask
+class DepositorTask extends ScheduledTask
 {
     /**
      * @var $plugin OptimetaCitationsPlugin
@@ -35,7 +33,8 @@ class DepositorTask extends \ScheduledTask
         $plugin = \PluginRegistry::getPlugin('generic', 'optimetacitationsplugin');
         $this->plugin = $plugin;
 
-        parent::__construct($args);}
+        parent::__construct($args);
+    }
 
     /**
      * @copydoc ScheduledTask::executeActions()

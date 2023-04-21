@@ -9,9 +9,9 @@
  * @class PluginAPIHandler
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Extended class of base request API handler
- *
+ * @brief Extended class of base request APIhandler
  */
+
 namespace Optimeta\Citations\Handler;
 
 import('lib.pkp.classes.security.authorization.PolicySet');
@@ -90,10 +90,10 @@ class PluginAPIHandler extends APIHandler
 
         // check if GET/POST filled
         if ($request->getUserVars() && sizeof($request->getUserVars()) > 0) {
-            if(isset($request->getUserVars()['submissionId'])){
+            if (isset($request->getUserVars()['submissionId'])) {
                 $submissionId = trim($request->getUserVars()['submissionId']);
             }
-            if(isset($request->getUserVars()['citationsRaw'])){
+            if (isset($request->getUserVars()['citationsRaw'])) {
                 $citationsRaw = trim($request->getUserVars()['citationsRaw']);
             }
         }
@@ -133,10 +133,10 @@ class PluginAPIHandler extends APIHandler
 
         // check if GET/POST filled
         if ($request->getUserVars() && sizeof($request->getUserVars()) > 0) {
-            if(isset($request->getUserVars()['submissionId'])){
+            if (isset($request->getUserVars()['submissionId'])) {
                 $submissionId = trim($request->getUserVars()['submissionId']);
             }
-            if(isset($request->getUserVars()['citations'])){
+            if (isset($request->getUserVars()['citations'])) {
                 $citationsIn = json_decode(trim($request->getUserVars()['citations']), true);
             }
         }

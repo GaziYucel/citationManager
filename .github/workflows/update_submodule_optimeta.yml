@@ -1,12 +1,14 @@
 name: update submodule vendor/optimeta from TIBHannover/optimeta-plugin-shared
-env:
-  GITHUB_TOKEN: ${{ github.token }}
-  GH_USERNAME: ${{ github.actor }}
+
 on:
   # schedule:
   # cron format: minute, hour, day of the month, month, day of the week
   # - cron: "0 6 * * *"
   workflow_dispatch: ~
+
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+  GH_USERNAME: ${{ github.actor }}
 
 jobs:
   main_job:
@@ -14,7 +16,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-        
+
       - name: all further steps
         run: |
 
@@ -30,7 +32,7 @@ jobs:
           
           echo "setup git email: $GH_USERNAME@users.noreply.github.com"
           git config user.name "$GH_USERNAME@users.noreply.github.com"
-         
+          
           echo "remove directory $subModulePath recursively"
           rm -rf $subModulePath
 

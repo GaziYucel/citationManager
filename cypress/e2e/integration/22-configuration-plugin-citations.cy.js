@@ -82,8 +82,6 @@ describe('OPTIMETA Citations Plugin Configuration', function () {
         .clear().type('wikidata-username');
     cy.get('form[id="optimetaCitationsSettings"] input[name="OptimetaCitations_Wikidata_Password"]')
         .clear().type('wikidata-password');
-    cy.get('form[id="optimetaCitationsSettings"] select[name="OptimetaCitations_Wikidata_Api_Url"]')
-        .select('https://test.wikidata.org/w/api.php');
 
     // submit settings form
     cy.get('form[id="optimetaCitationsSettings"] button[id^="submitFormButton"]').click();

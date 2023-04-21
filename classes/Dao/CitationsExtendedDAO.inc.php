@@ -1,12 +1,202 @@
 <?php
+/**
+ * @file plugins/generic/optimetaCitations/Dao/CitationsExtendedDao.inc.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class CitationsExtendedDAO
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief DAO for get/set PublicationId and ParsedCitations
+ */
+
 namespace Optimeta\Citations\Dao;
 
-if (strstr(OPTIMETA_OJS_VERSION, OPTIMETA_COMPATIBLE_OJS_VERSION["V321"])) {
-    class CitationsExtendedDAO extends \Optimeta\Citations\VersionSpecific\V321\Dao\CitationsExtendedDAO {}
-}
-else if (strstr(OPTIMETA_OJS_VERSION, OPTIMETA_COMPATIBLE_OJS_VERSION["V330"])) {
-    class CitationsExtendedDAO extends \Optimeta\Citations\VersionSpecific\V330\Dao\CitationsExtendedDAO {}
-}
-else {
-    class CitationsExtendedDAO extends \Optimeta\Citations\VersionSpecific\Main\Dao\CitationsExtendedDAO {}
+import('lib.pkp.classes.db.DAO');
+import('lib.pkp.classes.site.VersionCheck');
+
+use DAO;
+use DAOResultFactory;
+
+class CitationsExtendedDAO extends DAO
+{
+    /**
+     * @desc Get CitationsExtended by Publication ID
+     * @param $publicationId int Publication ID
+     * @return DAOResultFactory
+     */
+    function getByPublicationId($publicationId)
+    {
+        $result = $this->retrieve(
+            'SELECT * FROM citations_extended WHERE publication_id = ?',
+            [(int)$publicationId]
+        );
+        return new DAOResultFactory($result, $this, '_fromRow', array('id'));
+    }
+
+    /**
+     * @desc Get parsed citations by Publication ID
+     * @param $publicationId int Publication ID
+     * @return array
+     */
+    function getParsedCitationsByPublicationId($publicationId)
+    {
+        $citationsParsed = '';
+
+        $result = $this->retrieve(
+            'SELECT * FROM citations_extended WHERE publication_id = ?',
+            [(int)$publicationId]
+        );
+
+        foreach ($result as $row) {
+            $citationsParsed = $row->parsed_citations;
+        }
+
+        return $citationsParsed;
+    }
+
+    /**
+     * @desc Checks if citationsParsed exists for this publication
+     * @param $publicationId
+     * @return bool
+     */
+    function doesParsedCitationsByPublicationIdExists($publicationId)
+    {
+        $result = $this->retrieve(
+            'SELECT * FROM citations_extended WHERE publication_id = ?',
+            [(int)$publicationId]
+        );
+
+        foreach ($result as $row) return true;
+
+        return false;
+    }
+
+    /**
+     * @desc Insert or update a CitationsExtended.
+     * @param $citationsExtended CitationsExtended
+     * @return int Inserted CitationsExtended ID or 0 if Updated
+     */
+    function insertOrUpdateObject($citationsExtended)
+    {
+        if ($this->doesParsedCitationsByPublicationIdExists($citationsExtended->getPublicationId())) {
+            $this->updateObject($citationsExtended);
+            return 0;
+        } else {
+            $this->insertObject($citationsExtended);
+            return $citationsExtended->getId();
+        }
+    }
+
+    /**
+     * @desc Insert a CitationsExtended.
+     * @param $citationsExtended CitationsExtended
+     * @return int Inserted CitationsExtended ID
+     */
+    function insertObject($citationsExtended)
+    {
+        $this->update(
+            'INSERT INTO citations_extended (publication_id, parsed_citations) VALUES (?, ?)',
+            array(
+                $citationsExtended->getPublicationId(),
+                $citationsExtended->getParsedCitations()
+            )
+        );
+
+        $citationsExtended->setId($this->getInsertId());
+
+        return $citationsExtended->getId();
+    }
+
+    /**
+     * @desc Update the database with a CitationsExtended object
+     * @param $citationsExtended CitationsExtended
+     */
+    function updateObject($citationsExtended)
+    {
+        $this->update(
+            'UPDATE	citations_extended SET parsed_citations = ? WHERE publication_id = ?',
+            array(
+                $citationsExtended->getParsedCitations(),
+                $citationsExtended->getPublicationId()
+            )
+        );
+    }
+
+    /**
+     * @desc Delete CitationsExtended by ID.
+     * @param $citationsExtendedId int
+     */
+    function deleteById($citationsExtendedId)
+    {
+        $this->update(
+            'DELETE FROM citations_extended WHERE citations_extended_id = ?',
+            [(int)$citationsExtendedId]
+        );
+    }
+
+    /**
+     * @desc Delete a CitationsExtended object.
+     * @param $citationsExtended CitationsExtended
+     */
+    function deleteObject($citationsExtended)
+    {
+        $this->deleteById($citationsExtended->getId());
+    }
+
+    /**
+     * @desc Delete CitationsExtended by Publication ID
+     * @param $publicationId int Publication ID
+     */
+    function deleteByPublicationId($publicationId)
+    {
+        $citationsExtended = $this->getByPublicationId($publicationId);
+        while ($citationsExtended = $citationsExtended->next()) {
+            $this->deleteObject($citationsExtended);
+        }
+    }
+
+    /**
+     * @desc Generate a new CitationsExtended object.
+     * @return CitationsExtended
+     */
+    function newDataObject()
+    {
+        return new CitationsExtended();
+    }
+
+    /**
+     * @desc Return a new CitationsExtended object from a given row.
+     * @return CitationsExtended
+     */
+    function _fromRow($row)
+    {
+        $citationsExtended = $this->newDataObject();
+
+        $citationsExtended->setId($row['citations_extended_id']);
+        $citationsExtended->setPublicationId($row['publication_id']);
+        $citationsExtended->setParsedCitations($row['parsed_citations']);
+
+        return $citationsExtended;
+    }
+
+    /**
+     * @desc Get the insert ID for the last inserted CitationsExtended.
+     * @return int
+     */
+    function getInsertId()
+    {
+        return $this->_getInsertId('citations_extended', 'citations_extended_id');
+    }
+
+    /**
+     * @desc Get the additional field names.
+     * @return array
+     */
+    function getAdditionalFieldNames()
+    {
+        return array();
+    }
 }

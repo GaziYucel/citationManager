@@ -21,10 +21,11 @@ msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement"
 msgstr "Veröffentlichungserklärung"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement.description"
-msgstr "Fügen Sie eine Beschreibung der Publikation hinzu, die auf jeder Landing Page der Publikation erscheinen soll."
+msgstr "Fügen Sie eine Beschreibung der Publikation hinzu, die auf jeder Landing Page der "
+"Publikation erscheinen soll."
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
-msgstr "Zitationen"
+msgstr "Literaturhinweise+"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.button"
 msgstr "Übermitteln"
@@ -33,7 +34,8 @@ msgid "plugins.generic.optimetaCitationsPlugin.deposit.question"
 msgstr "Sind Sie sich sicher, dass Sie die Zitationen an die oben genannten Websites übermitteln wollen?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.message.not_published"
-msgstr "Die Publikation muss einer Ausgabe zugeordnet werden, benötigt einen DOI und muss veröffentlicht werden, bevor eine Übermittlung an die Websites möglich ist."
+msgstr "Die Publikation muss einer Ausgabe zugeordnet werden, benötigt einen DOI und muss veröffentlicht "
+"werden, bevor eine Übermittlung an die Websites möglich ist."
 
 msgid "plugins.generic.optimetaCitationsPlugin.clear.button"
 msgstr "Löschen"
@@ -42,7 +44,8 @@ msgid "plugins.generic.optimetaCitationsPlugin.clear.question"
 msgstr "Die strukturierten Zitationen werden entfernt, wenn Sie auf OK klicken. Sind Sie sich sicher?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.citations.empty.description"
-msgstr "Es sind keine strukturierten Zitationen vorhanden. Bitte klicken Sie auf den oben stehenden Button \"Verarbeiten\", um die Zitationen zu strukturieren und anzureichern."
+msgstr "Es sind keine strukturierten Zitationen vorhanden. Bitte klicken Sie auf den oben stehenden "
+"Button \"Verarbeiten\", um die Zitationen zu strukturieren und anzureichern."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.button"
 msgstr "Verarbeiten"
@@ -53,10 +56,12 @@ msgstr "Strukturierte Literaturhinweise/Zitationen"
 msgid "plugins.generic.optimetaCitationsPlugin.process.description"
 msgstr "Bitte benutzen Sie den Button \"Verarbeiten\", um die Zitationen zu strukturieren und anzureichern.<br/>"
 "Nach der Extraktion der DOIs werden zusätzliche Metadaten von externen Websites erfasst und unten angezeigt.<br/>"
-"Die Übermittlung dieser Metadaten erfolgt automatisch, wenn dieser Beitrag veröffentlicht wird und einen DOI erhält. Alternativ kann die Metadatenübermittlung manuell über den Button \"Übermitteln\" erfolgen."
+"Die Übermittlung dieser Metadaten erfolgt automatisch, wenn dieser Beitrag veröffentlicht wird und einen DOI erhält."
+"Alternativ kann die Metadatenübermittlung manuell über den Button \"Übermitteln\" erfolgen."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
-msgstr "Die strukturierten Zitationen werden überschrieben, wenn Sie auf OK klicken. Alle Ihre Änderungen gehen dabei verloren. Sind Sie sich sicher?"
+msgstr "Die strukturierten Zitationen werden überschrieben, wenn Sie auf OK klicken. Alle Ihre Änderungen gehen "
+"dabei verloren. Sind Sie sich sicher?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.author.add.button"
 msgstr "Autor hinzufügen"
@@ -68,7 +73,8 @@ msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
 msgstr "Die Zitationen wurden aktualisiert."
 
 msgid "plugins.generic.optimetaCitations.settings.description"
-msgstr "Geben Sie Ihre Authentifizierungsinformationen für Open-Access-Websites ein, auf denen Sie Zitationen hinterlegen möchten."
+msgstr "Geben Sie Ihre Authentifizierungsinformationen für Open-Access-Websites ein, auf denen Sie "
+"Zitationen hinterlegen möchten."
 
 msgid "plugins.generic.optimetaCitations.settings.form.saved"
 msgstr "Einstellungen erfolgreich gespeichert"
@@ -85,8 +91,16 @@ msgstr "Wikidata Passwort"
 msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url"
 msgstr "Wikidata API URL"
 
+msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url_test"
+msgstr "test (https://test.wikidata.org/w/api.php)"
+
+msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url_prod"
+msgstr "production (https://www.wikidata.org/w/api.php)"
+
 msgid "plugins.generic.optimetaCitations.settings.open_citations_title"
-msgstr "Open Citations CROCI <a href='https://github.com/TIBHannover/optimetaCitations/blob/main/README.md#registering-for-opencitationsorg-croci' target='_blank'><i class='fa fa-question-circle' aria-hidden='true'></i></a>"
+msgstr "Open Citations CROCI "
+"<a href='https://github.com/TIBHannover/optimetaCitations/blob/main/README.md#registering-for-opencitationsorg-croci' "
+"target='_blank'><i class='fa fa-question-circle' aria-hidden='true'></i></a>"
 
 msgid "plugins.generic.optimetaCitations.settings.open_citations_owner"
 msgstr "Github-Besitzer für OpenCitations-Deposits"

@@ -1,5 +1,17 @@
 <?php
-// import('plugins.generic.optimetaCitations.classes.Debug'); $debug = new \Optimeta\Citations\Debug();
+/**
+ * @file plugins/generic/optimetaCitations/classes/Debug.inc.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class Debug
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief Debug helper class
+ */
+
 namespace Optimeta\Citations;
 
 class Debug
@@ -8,7 +20,7 @@ class Debug
      * @desc Path to debug file
      * @var string
      */
-    private $file = __DIR__ . '/' . '__debug.txt';
+    private $file = OPTIMETA_CITATIONS_PLUGIN_PATH . '/' . 'debug.txt';
 
     /**
      * @desc Add to debug file
@@ -22,15 +34,14 @@ class Debug
         if ($text == null) $textToWrite = 'null';
 
         $fp = fopen($this->file, 'a');
+
         try {
-            $date = new \DateTime();
-            fwrite($fp, $date->format('Y-m-d H:i:s') . ' ' . $textToWrite . "\n");
+            fwrite($fp, date('Y-m-d H:i:s') . ' ' . $textToWrite . "\n");
+        } catch (\Exception $ex) {
+            error_log(var_export($ex, true));
         }
-        catch (\Exception $ex) {
-        }
-        finally {
-            if ($fp) fclose($fp);
-        }
+
+        if ($fp) fclose($fp);
     }
 
     /**
@@ -52,14 +63,14 @@ class Debug
     function Clear(): void
     {
         $fp = fopen($this->file, 'w');
+
         try {
             fwrite($fp, '');
+        } catch (\Exception $ex) {
+            error_log(var_export($ex, true));
         }
-        catch (\Exception $ex) {
-        }
-        finally {
-            if ($fp) fclose($fp);
-        }
+
+        if ($fp) fclose($fp);
     }
 
     /**
@@ -390,8 +401,8 @@ class Debug
     function calledHooks()
     {
         $hooksList = $this->getListHooks();
-        foreach($hooksList as $key){
-            \HookRegistry::register($key, function($key){
+        foreach ($hooksList as $key) {
+            \HookRegistry::register($key, function ($key) {
                 $this->Add($key);
             });
         }

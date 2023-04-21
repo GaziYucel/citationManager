@@ -24,7 +24,7 @@ msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement.description"
 msgstr "Add a publication statement that you would like to appear on every publication's landing page"
 
 msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
-msgstr "Citations"
+msgstr "Referanslar+"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.button"
 msgstr "Deposit"
@@ -33,7 +33,8 @@ msgid "plugins.generic.optimetaCitationsPlugin.deposit.question"
 msgstr "Are you sure you want to submit the citations to the predefined external websites?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.deposit.message.not_published"
-msgstr "The publication needs to be assigned to an issue, needs an identifier (DOI) and published before deposit is possible."
+msgstr "The publication needs to be assigned to an issue, needs an identifier (DOI) and published before "
+"deposit is possible."
 
 msgid "plugins.generic.optimetaCitationsPlugin.clear.button"
 msgstr "Clear"
@@ -48,15 +49,17 @@ msgid "plugins.generic.optimetaCitationsPlugin.process.button"
 msgstr "Process"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.label"
-msgstr "Parsed references"
+msgstr "Structured references/citations"
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.description"
-msgstr "Please use the button at the right to parse the references into different parts.<br/>"
-"After extracting DOIs, extra metadata will be acquired from external websites and shown below.<br/>"
-"Submission of this metadata will be done automatically, when this submission is published and received a DOI."
+msgstr "Please use the Process button to structure and enrich the citations. <br/>"
+"After DOIs are extracted, additional metadata from external websites will be collected and displayed below.<br/>."
+"Submission of this metadata occurs automatically when this article is published and receives a DOI."
+"Alternatively, metadata submission can be done manually using the Submit button."
 
 msgid "plugins.generic.optimetaCitationsPlugin.process.question"
-msgstr "The current parsed citations will be overwritten if you click OK. All your modifications will be lost. Are you sure?"
+msgstr "The current structured citations will be overwritten if you click OK. All your modifications "
+"will be lost. Are you sure?"
 
 msgid "plugins.generic.optimetaCitationsPlugin.author.add.button"
 msgstr "Add Author"
@@ -77,16 +80,24 @@ msgid "plugins.generic.optimetaCitations.settings.wikidata_title"
 msgstr "Wikidata"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_username"
-msgstr "Wikidata bot username"
+msgstr "Wikidata username"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_password"
-msgstr "Wikidata bot password"
+msgstr "Wikidata password"
 
 msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url"
-msgstr "Wikidata api url"
+msgstr "Wikidata API URL"
+
+msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url_test"
+msgstr "test (https://test.wikidata.org/w/api.php)"
+
+msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url_prod"
+msgstr "production (https://www.wikidata.org/w/api.php)"
 
 msgid "plugins.generic.optimetaCitations.settings.open_citations_title"
-msgstr "Open Citations CROCI <a href='https://github.com/TIBHannover/optimetaCitations/blob/main/README.md#registering-for-opencitationsorg-croci' target='_blank'><i class='fa fa-question-circle' aria-hidden='true'></i></a>"
+msgstr "Open Citations CROCI "
+"<a href='https://github.com/TIBHannover/optimetaCitations/blob/main/README.md#registering-for-opencitationsorg-croci' "
+"target='_blank'><i class='fa fa-question-circle' aria-hidden='true'></i></a>"
 
 msgid "plugins.generic.optimetaCitations.settings.open_citations_owner"
 msgstr "Github Owner for OpenCitations deposits"
