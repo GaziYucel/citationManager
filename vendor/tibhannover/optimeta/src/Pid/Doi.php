@@ -1,4 +1,17 @@
 <?php
+/**
+ * @file plugins/generic/optimetaCitations/vendor/tibhannover/optimeta/src/Pid/Doi.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class Doi
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief Doi class
+ */
+
 namespace Optimeta\Shared\Pid;
 
 class Doi
@@ -44,7 +57,7 @@ class Doi
 
         if (!empty($matches[0])) $match = $matches[0];
 
-        if(empty($match)) return null;
+        if (empty($match)) return null;
 
         $pidCorrect = $this->prefix . $match;
 
@@ -58,14 +71,14 @@ class Doi
      */
     public function normalizeDoi($raw, $doi): ?string
     {
-        if(empty($raw)) return null;
+        if (empty($raw)) return null;
 
         $doiIncorrect = [];
-        foreach($this->prefixInCorrect as $key){
+        foreach ($this->prefixInCorrect as $key) {
             $doiIncorrect[] = $key . $this->removePrefixFromUrl($doi);
         }
 
-        return str_replace( $doiIncorrect, $doi, $raw);
+        return str_replace($doiIncorrect, $doi, $raw);
     }
 
     /**
@@ -75,7 +88,9 @@ class Doi
      */
     public function removePrefixFromUrl(?string $url): string
     {
-        if(empty($url)) { return ''; }
+        if (empty($url)) {
+            return '';
+        }
 
         return str_replace($this->prefix, '', $url);
     }
@@ -87,7 +102,9 @@ class Doi
      */
     public function addPrefixToUrl(?string $url): string
     {
-        if(empty($url)) { return ''; }
+        if (empty($url)) {
+            return '';
+        }
 
         return $url . $this->prefix;
     }

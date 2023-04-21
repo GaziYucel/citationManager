@@ -1,7 +1,17 @@
 <?php
 /**
- * @desc Works are scholarly documents like journal articles, books, datasets, and theses.
+ * @file plugins/generic/optimetaCitations/classes/Model/WorkModel.inc.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class WorkModel
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief Works are scholarly documents like journal articles, books, datasets, and theses.
  */
+
 namespace Optimeta\Citations\Model;
 
 class WorkModel
@@ -261,17 +271,17 @@ class WorkModel
      */
     public static function migrate(string $publicationWork)
     {
-        if(empty($publicationWork) || !is_array(json_decode($publicationWork, true))) return (array)new WorkModel();
+        if (empty($publicationWork) || !is_array(json_decode($publicationWork, true))) return (array)new WorkModel();
 
         $publicationWorkIn = json_decode($publicationWork, true);
         $publicationWorkOut = new WorkModel();
 
-        foreach($publicationWorkOut as $index => $key){
-            switch($key){
+        foreach ($publicationWorkOut as $index => $key) {
+            switch ($key) {
                 case '-_-add key here to do custom changes or mappings-_-':
                     break;
                 default:
-                    if(property_exists($publicationWorkIn, $key)){
+                    if (property_exists($publicationWorkIn, $key)) {
                         $publicationWorkOut->$key = $publicationWorkIn->$key;
                     }
             }

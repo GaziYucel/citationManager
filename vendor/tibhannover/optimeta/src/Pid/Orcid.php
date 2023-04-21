@@ -1,4 +1,17 @@
 <?php
+/**
+ * @file plugins/generic/optimetaCitations/vendor/tibhannover/optimeta/src/Pid/Orcid.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class Orcid
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief Orcid class
+ */
+
 namespace Optimeta\Shared\Pid;
 
 class Orcid
@@ -24,7 +37,9 @@ class Orcid
      */
     public function removePrefixFromUrl(?string $url): string
     {
-        if(empty($url)) { return ''; }
+        if (empty($url)) {
+            return '';
+        }
 
         return str_replace($this->prefix, '', $url);
     }

@@ -1,7 +1,17 @@
 <?php
 /**
- * @desc Works are scholarly documents like journal articles, books, datasets, and theses.
+ * @file plugins/generic/optimetaCitations/vendor/tibhannover/optimeta/src/OpenAlex/Model/Work.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class Work
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief Works are scholarly documents like journal articles, books, datasets, and theses.
  */
+
 namespace Optimeta\Shared\OpenAlex\Model;
 
 class Work
@@ -84,7 +94,7 @@ class Work
      * @see https://docs.openalex.org/about-the-data/work#the-openaccess-object
      * @example open_access: { is_oa: true, oa_status: "gold", oa_url: "https://peerj.com/articles/4375.pdf" },
      */
-     public $open_access;
+    public $open_access;
 
     /**
      * @var object (list)
@@ -92,7 +102,7 @@ class Work
      * @see https://docs.openalex.org/about-the-data/work#the-authorship-object
      * @example authorships: [ { author_position: "first", author: { id: "https://openalex.org/A1969205032", display_name: "Heather A. Piwowar", orcid: "https://orcid.org/0000-0003-1613-5981" }, institutions: [ { id: "https://openalex.org/I4200000001", display_name: "OurResearch", ror: "https://ror.org/02nr0ka47", country_code: "US", type: "nonprofit" } ] } ]
      */
-     public $authorships;
+    public $authorships;
 
     /**
      * @var integer
@@ -108,7 +118,7 @@ class Work
      * @see
      * @example biblio: { volume: "495", issue: "7442", first_page: "437", last_page: "440" }
      */
-     public $biblio;
+    public $biblio;
 
     /**
      * @var boolean
@@ -116,7 +126,7 @@ class Work
      * @see
      * @example is_retracted: false
      */
-     public $is_retracted;
+    public $is_retracted;
 
     /**
      * @var boolean
@@ -124,7 +134,7 @@ class Work
      * @see https://en.wikipedia.org/wiki/Paratext
      * @example is_paratext: false
      */
-     public $is_paratext;
+    public $is_paratext;
 
     /**
      * @var object (list)
@@ -132,7 +142,7 @@ class Work
      * @see https://docs.openalex.org/about-the-data/concept
      * @example concepts: [ { id: "https://openalex.org/C2778793908", wikidata: "https://www.wikidata.org/wiki/Q5122404", display_name: "Citation impact", level: 3, score: 0.459309 }, { id: "https://openalex.org/C2778805511", wikidata: "https://www.wikidata.org/wiki/Q1713", display_name: "Citation", level: 2, score: 0.447306 } ]
      */
-     public $concepts;
+    public $concepts;
 
     /**
      * @var object (list)
@@ -140,7 +150,7 @@ class Work
      * @see https://www.nlm.nih.gov/mesh/meshhome.html https://pubmed.ncbi.nlm.nih.gov/
      * @example mesh: [ { descriptor_ui: "D017712", descriptor_name: "Peer Review, Research", qualifier_ui: "Q000379", qualifier_name: "methods", is_major_topic: false }, { descriptor_ui: "D017712", descriptor_name: "Peer Review, Research", qualifier_ui: "Q000592", qualifier_name: "standards", is_major_topic: true } ]
      */
-     public $mesh;
+    public $mesh;
 
     /**
      * @var object (list)
@@ -148,7 +158,7 @@ class Work
      * @see https://docs.openalex.org/about-the-data/work#the-hostvenue-object https://docs.openalex.org/about-the-data/work#host_venue
      * @example alternate_host_venues: [ { id: null, display_name: "Europe PMC", type: "repository", url: "http://europepmc.org/articles/pmc5815332?pdf=render", is_oa: true, version: "publishedVersion", license: "cc-by" }, { id: null, display_name: "Simon Fraser University - Summit", type: "repository", url: "https://summit.sfu.ca/item/17691", is_oa: true, version: "submittedVersion", license: "cc-by" } ]
      */
-     public $alternate_host_venues;
+    public $alternate_host_venues;
 
     /**
      * @var object (list)
@@ -172,7 +182,7 @@ class Work
      * @see https://en.wikipedia.org/wiki/Inverted_index https://docs.microsoft.com/en-us/academic-services/graph/resources-faq#what-format-are-paper-abstracts-published-in
      * @example abstract_inverted_index: { Despite: [ 0 ], growing: [ 1 ], interest: [ 2 ], in: [ 3, 57, 73, 110, 122 ], Open: [ 4, 201 ], Access: [ 5 ], ... }
      */
-     public $abstract_inverted_index;
+    public $abstract_inverted_index;
 
     /**
      * @var
@@ -180,7 +190,7 @@ class Work
      * @see https://docs.openalex.org/about-the-data/work#cited_by_api_url
      * @example
      */
-     public $cited_by_api_url;
+    public $cited_by_api_url;
 
     /**
      * @var
@@ -188,7 +198,7 @@ class Work
      * @see https://docs.openalex.org/about-the-data/work#counts_by_year
      * @example
      */
-     public $counts_by_year;
+    public $counts_by_year;
 
     /**
      * @var string

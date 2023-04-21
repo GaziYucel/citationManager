@@ -9,9 +9,9 @@
  * @class Enricher
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Enricher class
- *
+ * @brief Main Enricher class
  */
+
 namespace Optimeta\Citations\Enrich;
 
 use Optimeta\Citations\Model\CitationModel;
@@ -28,22 +28,24 @@ class Enricher
         $citations = [];
 
         // return if input is empty
-        if (sizeof($citationsParsed) == 0) { return $citations; }
+        if (sizeof($citationsParsed) == 0) {
+            return $citations;
+        }
 
         // loop through citations and enrich every citation
         foreach ($citationsParsed as $index => $row) {
-            if(is_object($row) || is_array($row)){
+            if (is_object($row) || is_array($row)) {
                 $citation = new CitationModel();
 
                 // convert array to object
-                foreach($row as $key => $value){
-                    if(property_exists($citation, $key)){
+                foreach ($row as $key => $value) {
+                    if (property_exists($citation, $key)) {
                         $citation->$key = $value;
                     }
                 }
 
                 // skip iteration if isProcessed or DOI empty
-                if($citation->isProcessed || empty($citation->doi)){
+                if ($citation->isProcessed || empty($citation->doi)) {
                     $citations[] = (array)$citation;
                     continue;
                 }

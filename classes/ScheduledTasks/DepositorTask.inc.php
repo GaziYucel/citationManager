@@ -7,10 +7,9 @@
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class DepositorTask
- * @ingroup
+ * @ingroup plugins_generic_optimetacitations
  *
  * @brief Main DepositorTask class
- *
  */
 
 import('lib.pkp.classes.scheduledTask.ScheduledTask');
@@ -34,7 +33,8 @@ class DepositorTask extends ScheduledTask
         $plugin = \PluginRegistry::getPlugin('generic', 'optimetacitationsplugin');
         $this->plugin = $plugin;
 
-        parent::__construct($args);}
+        parent::__construct($args);
+    }
 
     /**
      * @copydoc ScheduledTask::executeActions()

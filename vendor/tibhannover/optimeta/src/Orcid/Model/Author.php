@@ -1,7 +1,17 @@
 <?php
 /**
- * @desc Authors are people who create works.
+ * @file plugins/generic/optimetaCitations/vendor/tibhannover/optimeta/src/Orcid/Model/Author.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class Author
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief Authors are people who create works.
  */
+
 namespace Optimeta\Shared\Orcid\Model;
 
 class Author

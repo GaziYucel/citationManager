@@ -1,4 +1,16 @@
 <?php
+/**
+ * @file plugins/generic/optimetaCitations/vendor/tibhannover/optimeta/src/WikiData/Model/Item.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class Item
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief Item on WikiData.
+ */
 
 namespace Optimeta\Shared\WikiData\Model;
 

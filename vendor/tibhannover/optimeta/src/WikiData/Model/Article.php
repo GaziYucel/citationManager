@@ -1,28 +1,40 @@
 <?php
+/**
+ * @file plugins/generic/optimetaCitations/vendor/tibhannover/optimeta/src/WikiData/Model/Article.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class Article
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief Articles are scholarly documents like journal articles, books, datasets, and theses.
+ */
 
 namespace Optimeta\Shared\WikiData\Model;
 
 class Article extends Item
 {
     public array $labels = [
-            "en" => [
-                "language" => "en",
-                "value" => ""
-            ]
+        "en" => [
+            "language" => "en",
+            "value" => ""
+        ]
     ];
 
     public array $defaultClaim = [
-            "mainsnak" => [
-                "snaktype" => "value",
-                "property" => "",
-                "datavalue" => [
-                    "value" => "",
-                    "type" => "string"
-                    ]
-            ],
-            "type" => "statement",
-            "rank" => "normal"
-        ];
+        "mainsnak" => [
+            "snaktype" => "value",
+            "property" => "",
+            "datavalue" => [
+                "value" => "",
+                "type" => "string"
+            ]
+        ],
+        "type" => "statement",
+        "rank" => "normal"
+    ];
 
     public array $pointInTimeClaim = [
         "mainsnak" => [
@@ -45,17 +57,17 @@ class Article extends Item
         "rank" => "normal"
     ];
 
-    public function getLabelAsJson(string $locale, string $label): array
+    public function getLabelAsJson(string $ojsLocale, string $label): array
     {
-        $languages = new Languages();
+        $languageModel = new Language();
         $labels = $this->labels;
-        $labels[$languages->defaultLanguage]["value"] = $label;
+        $labels[$languageModel->defaultLanguage]["value"] = $label;
 
-        $language = $languages->getLanguageCode($locale);
+        $wikiDataLocale = $languageModel->getLanguageCode($ojsLocale);
 
-        if($language !== $languages->defaultLanguage){
-            $labels[$language] = [
-                "language" => $language,
+        if ($wikiDataLocale !== $languageModel->defaultLanguage) {
+            $labels[$wikiDataLocale] = [
+                "language" => $wikiDataLocale,
                 "value" => $label
             ];
         }

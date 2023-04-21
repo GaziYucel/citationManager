@@ -1,7 +1,17 @@
 <?php
 /**
- * @desc Venues are where works are hosted.
+ * @file plugins/generic/optimetaCitations/vendor/tibhannover/optimeta/src/OpenAlex/Model/Venue.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class Venue
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief Venues are where works are hosted.
  */
+
 namespace Optimeta\Shared\OpenAlex\Model;
 
 class Venue

@@ -1,4 +1,17 @@
 <?php
+/**
+ * @file plugins/generic/optimetaCitations/Dao/CitationsExtendedDao.inc.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class CitationsExtendedDAO
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief DAO for get/set PublicationId and ParsedCitations
+ */
+
 namespace Optimeta\Citations\Dao;
 
 import('lib.pkp.classes.db.DAO');
@@ -14,10 +27,11 @@ class CitationsExtendedDAO extends DAO
      * @param $publicationId int Publication ID
      * @return DAOResultFactory
      */
-    function getByPublicationId($publicationId) {
+    function getByPublicationId($publicationId)
+    {
         $result = $this->retrieve(
             'SELECT * FROM citations_extended WHERE publication_id = ?',
-            [(int) $publicationId]
+            [(int)$publicationId]
         );
         return new DAOResultFactory($result, $this, '_fromRow', array('id'));
     }
@@ -27,12 +41,13 @@ class CitationsExtendedDAO extends DAO
      * @param $publicationId int Publication ID
      * @return array
      */
-    function getParsedCitationsByPublicationId($publicationId) {
+    function getParsedCitationsByPublicationId($publicationId)
+    {
         $citationsParsed = '';
 
         $result = $this->retrieve(
             'SELECT * FROM citations_extended WHERE publication_id = ?',
-            [(int) $publicationId]
+            [(int)$publicationId]
         );
 
         foreach ($result as $row) {
@@ -51,7 +66,7 @@ class CitationsExtendedDAO extends DAO
     {
         $result = $this->retrieve(
             'SELECT * FROM citations_extended WHERE publication_id = ?',
-            [(int) $publicationId]
+            [(int)$publicationId]
         );
 
         foreach ($result as $row) return true;
@@ -66,11 +81,10 @@ class CitationsExtendedDAO extends DAO
      */
     function insertOrUpdateObject($citationsExtended)
     {
-        if($this->doesParsedCitationsByPublicationIdExists($citationsExtended->getPublicationId())){
+        if ($this->doesParsedCitationsByPublicationIdExists($citationsExtended->getPublicationId())) {
             $this->updateObject($citationsExtended);
             return 0;
-        }
-        else{
+        } else {
             $this->insertObject($citationsExtended);
             return $citationsExtended->getId();
         }
@@ -81,7 +95,8 @@ class CitationsExtendedDAO extends DAO
      * @param $citationsExtended CitationsExtended
      * @return int Inserted CitationsExtended ID
      */
-    function insertObject($citationsExtended) {
+    function insertObject($citationsExtended)
+    {
         $this->update(
             'INSERT INTO citations_extended (publication_id, parsed_citations) VALUES (?, ?)',
             array(
@@ -99,7 +114,8 @@ class CitationsExtendedDAO extends DAO
      * @desc Update the database with a CitationsExtended object
      * @param $citationsExtended CitationsExtended
      */
-    function updateObject($citationsExtended) {
+    function updateObject($citationsExtended)
+    {
         $this->update(
             'UPDATE	citations_extended SET parsed_citations = ? WHERE publication_id = ?',
             array(
@@ -113,10 +129,11 @@ class CitationsExtendedDAO extends DAO
      * @desc Delete CitationsExtended by ID.
      * @param $citationsExtendedId int
      */
-    function deleteById($citationsExtendedId) {
+    function deleteById($citationsExtendedId)
+    {
         $this->update(
             'DELETE FROM citations_extended WHERE citations_extended_id = ?',
-            [(int) $citationsExtendedId]
+            [(int)$citationsExtendedId]
         );
     }
 
@@ -124,7 +141,8 @@ class CitationsExtendedDAO extends DAO
      * @desc Delete a CitationsExtended object.
      * @param $citationsExtended CitationsExtended
      */
-    function deleteObject($citationsExtended) {
+    function deleteObject($citationsExtended)
+    {
         $this->deleteById($citationsExtended->getId());
     }
 
@@ -132,7 +150,8 @@ class CitationsExtendedDAO extends DAO
      * @desc Delete CitationsExtended by Publication ID
      * @param $publicationId int Publication ID
      */
-    function deleteByPublicationId($publicationId) {
+    function deleteByPublicationId($publicationId)
+    {
         $citationsExtended = $this->getByPublicationId($publicationId);
         while ($citationsExtended = $citationsExtended->next()) {
             $this->deleteObject($citationsExtended);
@@ -143,7 +162,8 @@ class CitationsExtendedDAO extends DAO
      * @desc Generate a new CitationsExtended object.
      * @return CitationsExtended
      */
-    function newDataObject() {
+    function newDataObject()
+    {
         return new CitationsExtended();
     }
 
@@ -151,7 +171,8 @@ class CitationsExtendedDAO extends DAO
      * @desc Return a new CitationsExtended object from a given row.
      * @return CitationsExtended
      */
-    function _fromRow($row) {
+    function _fromRow($row)
+    {
         $citationsExtended = $this->newDataObject();
 
         $citationsExtended->setId($row['citations_extended_id']);
@@ -165,7 +186,8 @@ class CitationsExtendedDAO extends DAO
      * @desc Get the insert ID for the last inserted CitationsExtended.
      * @return int
      */
-    function getInsertId() {
+    function getInsertId()
+    {
         return $this->_getInsertId('citations_extended', 'citations_extended_id');
     }
 
@@ -173,7 +195,8 @@ class CitationsExtendedDAO extends DAO
      * @desc Get the additional field names.
      * @return array
      */
-    function getAdditionalFieldNames() {
+    function getAdditionalFieldNames()
+    {
         return array();
     }
 }

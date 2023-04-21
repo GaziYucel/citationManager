@@ -1,4 +1,16 @@
 <?php
+/**
+ * @file plugins/generic/optimetaCitations/classes/Enrich/Orcid.inc.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class Orcid
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief Enricher class for Orcid
+ */
 
 namespace Optimeta\Citations\Enrich;
 

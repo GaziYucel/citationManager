@@ -49,7 +49,7 @@ return array(
     'Optimeta\\Shared\\WikiData\\Model\\Article' => $vendorDir . '/tibhannover/optimeta/src/WikiData/Model/Article.php',
     'Optimeta\\Shared\\WikiData\\Model\\Author' => $vendorDir . '/tibhannover/optimeta/src/WikiData/Model/Author.php',
     'Optimeta\\Shared\\WikiData\\Model\\Item' => $vendorDir . '/tibhannover/optimeta/src/WikiData/Model/Item.php',
-    'Optimeta\\Shared\\WikiData\\Model\\Languages' => $vendorDir . '/tibhannover/optimeta/src/WikiData/Model/Languages.php',
+    'Optimeta\\Shared\\WikiData\\Model\\Language' => $vendorDir . '/tibhannover/optimeta/src/WikiData/Model/Language.php',
     'Optimeta\\Shared\\WikiData\\Model\\Property' => $vendorDir . '/tibhannover/optimeta/src/WikiData/Model/Property.php',
     'Optimeta\\Shared\\WikiData\\WikiDataBase' => $vendorDir . '/tibhannover/optimeta/src/WikiData/WikiDataBase.php',
 );

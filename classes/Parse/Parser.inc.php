@@ -1,4 +1,17 @@
 <?php
+/**
+ * @file plugins/generic/optimetaCitations/classes/Parse/Parser.inc.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class Parser
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief Main Parser class for extracting DOI, Url, Handle, Arxiv, Urn.
+ */
+
 namespace Optimeta\Citations\Parse;
 
 use Optimeta\Citations\Model\CitationModel;
@@ -23,7 +36,9 @@ class Parser
         $citationsRaw = $this->cleanCitationsRaw($citationsRaw);
 
         // return if input is empty
-        if (empty($citationsRaw)) { return $citations; }
+        if (empty($citationsRaw)) {
+            return $citations;
+        }
 
         // break up at line endings
         $citationsArray = explode("\n", $citationsRaw);
@@ -118,7 +133,9 @@ class Parser
      */
     public function removeNumberPrefixFromString(string $text): string
     {
-        if(empty($text)) { return ''; }
+        if (empty($text)) {
+            return '';
+        }
         return preg_replace(
             '/^\s*[\[#]?[0-9]+[.)\]]?\s*/',
             '',
@@ -132,7 +149,9 @@ class Parser
      */
     public static function normalizeWhiteSpace(string $text): string
     {
-        if(empty($text)) { return ''; }
+        if (empty($text)) {
+            return '';
+        }
         return preg_replace(
             '/[\s]+/',
             ' ',
@@ -146,7 +165,9 @@ class Parser
      */
     public static function normalizeLineEndings(string $text): string
     {
-        if(empty($text)) { return ''; }
+        if (empty($text)) {
+            return '';
+        }
         return preg_replace(
             '/[\r\n]+/s',
             "\n",

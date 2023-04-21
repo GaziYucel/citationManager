@@ -1,4 +1,16 @@
 <?php
+/**
+ * @file plugins/generic/optimetaCitations/vendor/tibhannover/optimeta/src/OpenAlex/OpenAlexBase.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class OpenAlexBase
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief OpenAlexBase class
+ */
 
 namespace Optimeta\Shared\OpenAlex;
 

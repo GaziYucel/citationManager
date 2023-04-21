@@ -39,13 +39,13 @@ class SettingsForm extends \Form
         OPTIMETA_CITATIONS_WIKIDATA_PASSWORD,
         OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER,
         OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY,
-        OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN ];
+        OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN];
 
     /**
      * @copydoc Form::__construct()
      */
-    public function __construct($plugin) {
-
+    public function __construct($plugin)
+    {
         // Define the settings template and store a copy of the plugin object
         parent::__construct($plugin->getTemplateResource('settings.tpl'));
         $this->plugin = $plugin;
@@ -59,10 +59,11 @@ class SettingsForm extends \Form
      * @desc Load settings already saved in the database Settings are stored by context, so that each journal or press can have different settings.
      * @copydoc Form::initData()
      */
-    public function initData() {
+    public function initData()
+    {
         $context = Application::get()->getRequest()->getContext();
         $contextId = $context ? $context->getId() : CONTEXT_SITE;
-        foreach($this->settings as $key){
+        foreach ($this->settings as $key) {
             $this->setData($key, $this->plugin->getSetting($contextId, $key));
         }
 
@@ -73,8 +74,9 @@ class SettingsForm extends \Form
      * @desc Load data that was submitted with the form
      * @copydoc Form::readInputData()
      */
-    public function readInputData() {
-        foreach($this->settings as $key){
+    public function readInputData()
+    {
+        foreach ($this->settings as $key) {
             $this->readUserVars([$key]);
         }
         parent::readInputData();
@@ -84,7 +86,8 @@ class SettingsForm extends \Form
      * @desc Fetch any additional data needed for your form. Data assigned to the form using $this->setData() during the initData() or readInputData() methods will be passed to the template.
      * @copydoc Form::fetch()
      */
-    public function fetch($request, $template = null, $display = false) {
+    public function fetch($request, $template = null, $display = false)
+    {
         // Pass the plugin name to the template so that it can be
         // used in the URL that the form is submitted to
         $templateMgr = TemplateManager::getManager($request);
@@ -98,12 +101,13 @@ class SettingsForm extends \Form
      * @copydoc Form::execute()
      * @return null|mixed
      */
-    public function execute(...$functionArgs) {
+    public function execute(...$functionArgs)
+    {
         $context = Application::get()->getRequest()->getContext();
         $contextId = $context ? $context->getId() : CONTEXT_SITE;
 
-        foreach($this->settings as $key){
-            $this->plugin->updateSetting( $contextId, $key, $this->getData($key));
+        foreach ($this->settings as $key) {
+            $this->plugin->updateSetting($contextId, $key, $this->getData($key));
         }
 
         // Tell the user that the save was successful.

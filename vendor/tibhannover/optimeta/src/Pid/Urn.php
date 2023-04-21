@@ -1,4 +1,17 @@
 <?php
+/**
+ * @file plugins/generic/optimetaCitations/vendor/tibhannover/optimeta/src/Pid/Urn.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class Urn
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief Urn class
+ */
+
 namespace Optimeta\Shared\Pid;
 
 class Urn
@@ -22,7 +35,7 @@ class Urn
 
         if (!empty($matches[0])) $match = $matches[0];
 
-        if(empty($match)) return null;
+        if (empty($match)) return null;
 
         return trim($match, '.');
     }

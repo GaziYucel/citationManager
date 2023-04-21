@@ -9,9 +9,9 @@
  * @class Depositor
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Depositor class
- *
+ * @brief Main Depositor class
  */
+
 namespace Optimeta\Citations\Deposit;
 
 use Optimeta\Citations\Dao\PluginDAO;
@@ -47,11 +47,11 @@ class Depositor
         $publication = $publicationDao->getById($submission->getLatestPublication()->getId());
 
         $publicationWorkDb = $publication->getData(OPTIMETA_CITATIONS_PUBLICATION_WORK);
-        if(!empty($publicationWorkDb) && $publicationWorkDb !== '[]')
+        if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]')
             $publicationWork = json_decode($publicationWorkDb, true);
 
         // OpenCitations: deposit if not batch or empty
-        if(!$isBatch || empty($publicationWork['opencitations_url'])){
+        if (!$isBatch || empty($publicationWork['opencitations_url'])) {
             $openCitations = new OpenCitations();
             $openCitationsUrl = $openCitations->submitWork($submissionId, $citationsParsed);
             $publicationWork['opencitations_url'] = $openCitationsUrl;
@@ -60,7 +60,7 @@ class Depositor
         }
 
         // WikiData: deposit if not batch or empty
-        if(!$isBatch || empty($publicationWork['wikidata_url'])){
+        if (!$isBatch || empty($publicationWork['wikidata_url'])) {
             $wikiData = new WikiData();
             $wikiDataUrl = $wikiData->submitWork(
                 $submissionId,
@@ -88,9 +88,9 @@ class Depositor
     {
         $result = true;
 
-        foreach($this->getContextIds() as $contextId){
+        foreach ($this->getContextIds() as $contextId) {
             $this->log .= '[$contextId: ' . $contextId . ']';
-            foreach($this->getPublishedSubmissionIds($contextId) as $submissionId){
+            foreach ($this->getPublishedSubmissionIds($contextId) as $submissionId) {
                 $this->log .= '[$submissionId: ' . $submissionId . ']';
                 $submissionDao = new \SubmissionDAO();
                 $submission = $submissionDao->getById($submissionId);
@@ -111,7 +111,8 @@ class Depositor
     /**
      * Get an array of all published submission IDs in the database
      */
-    public function getPublishedSubmissionIds($contextId) {
+    public function getPublishedSubmissionIds($contextId)
+    {
         import('classes.submission.Submission');
         $submissionsIterator = Services::get('submission')->getMany([
             'contextId' => $contextId,

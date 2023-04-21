@@ -11,6 +11,7 @@
  *
  * @brief Migrations
  */
+
 namespace Optimeta\Citations\Install;
 
 use Illuminate\Database\Migrations\Migration;

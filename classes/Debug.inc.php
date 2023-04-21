@@ -1,4 +1,17 @@
 <?php
+/**
+ * @file plugins/generic/optimetaCitations/classes/Debug.inc.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class Debug
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief Debug helper class
+ */
+
 namespace Optimeta\Citations;
 
 class Debug
@@ -24,8 +37,7 @@ class Debug
 
         try {
             fwrite($fp, date('Y-m-d H:i:s') . ' ' . $textToWrite . "\n");
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             error_log(var_export($ex, true));
         }
 
@@ -54,8 +66,7 @@ class Debug
 
         try {
             fwrite($fp, '');
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             error_log(var_export($ex, true));
         }
 
@@ -390,8 +401,8 @@ class Debug
     function calledHooks()
     {
         $hooksList = $this->getListHooks();
-        foreach($hooksList as $key){
-            \HookRegistry::register($key, function($key){
+        foreach ($hooksList as $key) {
+            \HookRegistry::register($key, function ($key) {
                 $this->Add($key);
             });
         }

@@ -1,4 +1,17 @@
 <?php
+/**
+ * @file plugins/generic/optimetaCitations/classes/Enrich/OpenAlex.inc.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class OpenAlex
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief Enricher class for OpenAlex
+ */
+
 namespace Optimeta\Citations\Enrich;
 
 use Optimeta\Citations\Model\AuthorModel;
@@ -26,40 +39,42 @@ class OpenAlex
         $citation->type = $openAlexWork->type;
 
         $objOrcid = new \Optimeta\Shared\Pid\Orcid();
-        for($i = 0; $i < count((array)$openAlexWork->authorships); $i++){
+        for ($i = 0; $i < count((array)$openAlexWork->authorships); $i++) {
             $author = new AuthorModel();
             $author->orcid = $objOrcid->removePrefixFromUrl(
                 $openAlexWork->authorships[$i]['author']['orcid']);
 
             $author->display_name = $openAlexWork->authorships[$i]['author']['display_name'];
             $authorDisplayNameParts = explode(' ', trim($author->display_name));
-            if(count($authorDisplayNameParts) > 1){
+            if (count($authorDisplayNameParts) > 1) {
                 $author->family_name = array_pop($authorDisplayNameParts);
-                $author->given_name = implode(' ' , $authorDisplayNameParts);
+                $author->given_name = implode(' ', $authorDisplayNameParts);
             }
             $author->openalex_id = $this->removeOpenAlexOrgFromUrl($openAlexWork->authorships[$i]['author']['id']);
             $citation->authors[] = (array)$author;
         }
         $citation->cited_by_count = $openAlexWork->cited_by_count;
 
-        if(!empty($openAlexWork->biblio['volume'])) $citation->volume = $openAlexWork->biblio['volume'];
-        if(!empty($openAlexWork->biblio['issue'])) $citation->issue = $openAlexWork->biblio['issue'];
+        if (!empty($openAlexWork->biblio['volume'])) $citation->volume = $openAlexWork->biblio['volume'];
+        if (!empty($openAlexWork->biblio['issue'])) $citation->issue = $openAlexWork->biblio['issue'];
         $citation->pages = 0;
-        if(!empty($openAlexWork->biblio['first_page'])) $citation->first_page = $openAlexWork->biblio['first_page'];
-        if(!empty($openAlexWork->biblio['last_page'])) $citation->last_page = $openAlexWork->biblio['last_page'];
+        if (!empty($openAlexWork->biblio['first_page'])) $citation->first_page = $openAlexWork->biblio['first_page'];
+        if (!empty($openAlexWork->biblio['last_page'])) $citation->last_page = $openAlexWork->biblio['last_page'];
 
         $citation->is_retracted = $openAlexWork->is_retracted;
         $citation->updated_date = $openAlexWork->updated_date;
         $citation->created_date = $openAlexWork->created_date;
 
-        if(!empty($openAlexWork->host_venue['issn_l'])) $citation->venue_issn_l = $openAlexWork->host_venue['issn_l'];
-        if(!empty($openAlexWork->host_venue['display_name'])) $citation->venue_name = $openAlexWork->host_venue['display_name'];
-        if(!empty($openAlexWork->host_venue['publisher'])) $citation->venue_publisher = $openAlexWork->host_venue['publisher'];
-        if(!empty($openAlexWork->host_venue['is_oa'])) $citation->venue_is_oa = $openAlexWork->host_venue['is_oa'];
-        if(!empty($openAlexWork->host_venue['id'])) $citation->venue_openalex_id = $this->removeOpenAlexOrgFromUrl($openAlexWork->host_venue['id']);
+        if (!empty($openAlexWork->host_venue['issn_l'])) $citation->venue_issn_l = $openAlexWork->host_venue['issn_l'];
+        if (!empty($openAlexWork->host_venue['display_name'])) $citation->venue_name = $openAlexWork->host_venue['display_name'];
+        if (!empty($openAlexWork->host_venue['publisher'])) $citation->venue_publisher = $openAlexWork->host_venue['publisher'];
+        if (!empty($openAlexWork->host_venue['is_oa'])) $citation->venue_is_oa = $openAlexWork->host_venue['is_oa'];
+        if (!empty($openAlexWork->host_venue['id'])) $citation->venue_openalex_id = $this->removeOpenAlexOrgFromUrl($openAlexWork->host_venue['id']);
 
         $citation->openalex_id = $this->removeOpenAlexOrgFromUrl($openAlexWork->id);
-        if(!empty($citation->openalex_id)) { $citation->isProcessed = true; }
+        if (!empty($citation->openalex_id)) {
+            $citation->isProcessed = true;
+        }
 
         return $citation;
     }
@@ -71,7 +86,9 @@ class OpenAlex
      */
     public function removeOpenAlexOrgFromUrl(?string $url): string
     {
-        if(empty($url)) { return ''; }
+        if (empty($url)) {
+            return '';
+        }
         return str_replace(OPTIMETA_CITATIONS_OPENALEX_URL . '/', '', $url);
     }
 }

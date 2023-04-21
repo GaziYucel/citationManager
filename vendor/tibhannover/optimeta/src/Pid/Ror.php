@@ -1,4 +1,17 @@
 <?php
+/**
+ * @file plugins/generic/optimetaCitations/vendor/tibhannover/optimeta/src/Pid/Ror.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class Ror
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief Ror class
+ */
+
 namespace Optimeta\Shared\Pid;
 
 class Ror
@@ -30,7 +43,9 @@ class Ror
      */
     public function removePrefixFromUrl(?string $url): string
     {
-        if(empty($url)) { return ''; }
+        if (empty($url)) {
+            return '';
+        }
 
         return str_replace($this->prefix, '', $url);
     }
@@ -42,7 +57,9 @@ class Ror
      */
     public function addPrefixToUrl(?string $url): string
     {
-        if(empty($url)) { return ''; }
+        if (empty($url)) {
+            return '';
+        }
 
         return $url . $this->prefix;
     }

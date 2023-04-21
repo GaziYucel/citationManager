@@ -1,4 +1,16 @@
 <?php
+/**
+ * @file plugins/generic/optimetaCitations/vendor/tibhannover/optimeta/src/Orcid/OrcidBase.php
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class OrcidBase
+ * @ingroup plugins_generic_optimetacitations
+ *
+ * @brief OrcidBase class
+ */
 
 namespace Optimeta\Shared\Orcid;
 
