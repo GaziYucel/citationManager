@@ -17,15 +17,13 @@ namespace Optimeta\Citations\Model;
 class CitationModel extends WorkModel
 {
     /**
+     * The unchanged raw citation
      * @var string
-     * @desc The unchanged raw citation
-     * @see
-     * @example
      */
     public $raw;
 
     /**
-     * @desc Migrates to current CitationModel
+     * Migrates to current CitationModel
      * @param string $citations
      * @return array
      */

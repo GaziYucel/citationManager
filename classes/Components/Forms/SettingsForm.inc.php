@@ -31,7 +31,7 @@ class SettingsForm extends \Form
     public $plugin;
 
     /**
-     * @desc Array of variables saved in the database
+     * Array of variables saved in the database
      * @var string[]
      */
     private $settings = [
@@ -56,7 +56,7 @@ class SettingsForm extends \Form
     }
 
     /**
-     * @desc Load settings already saved in the database Settings are stored by context, so that each journal or press can have different settings.
+     * Load settings already saved in the database Settings are stored by context, so that each journal or press can have different settings.
      * @copydoc Form::initData()
      */
     public function initData()
@@ -71,7 +71,7 @@ class SettingsForm extends \Form
     }
 
     /**
-     * @desc Load data that was submitted with the form
+     * Load data that was submitted with the form
      * @copydoc Form::readInputData()
      */
     public function readInputData()
@@ -83,7 +83,7 @@ class SettingsForm extends \Form
     }
 
     /**
-     * @desc Fetch any additional data needed for your form. Data assigned to the form using $this->setData() during the initData() or readInputData() methods will be passed to the template.
+     * Fetch any additional data needed for your form. Data assigned to the form using $this->setData() during the initData() or readInputData() methods will be passed to the template.
      * @copydoc Form::fetch()
      */
     public function fetch($request, $template = null, $display = false)
@@ -97,7 +97,7 @@ class SettingsForm extends \Form
     }
 
     /**
-     * @desc Save the settings
+     * Save the settings
      * @copydoc Form::execute()
      * @return null|mixed
      */

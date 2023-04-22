@@ -20,14 +20,11 @@ use Optimeta\Citations\Deposit\Depositor;
 class DepositorTask extends ScheduledTask
 {
     /**
-     * @var $plugin OptimetaCitationsPlugin
+     * OptimetaCitationsPlugin
+     * @var object
      */
-    var $plugin;
+    var object $plugin;
 
-    /**
-     * Constructor.
-     * @param $args array
-     */
     function __construct($args)
     {
         $plugin = \PluginRegistry::getPlugin('generic', 'optimetacitationsplugin');

@@ -9,7 +9,7 @@
  * @class Orcid
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Enricher class for Orcid
+ * @brief Orcid class for Orcid
  */
 
 namespace Optimeta\Citations\Enrich;

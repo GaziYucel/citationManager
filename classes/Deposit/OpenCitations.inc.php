@@ -26,36 +26,37 @@ use OptimetaCitationsPlugin;
 class OpenCitations
 {
     /**
-     * @desc The base url to the public issues
+     * The base url to the public issues
      * @var string
      */
     protected $urlIssues = 'https://github.com/{{owner}}/{{repository}}/issues';
 
     /**
-     * @desc The base url to the api issues
+     * The base url to the api issues
      * @var string
      */
     protected $urlIssuesApi = 'https://api.github.com/repos/{{owner}}/{{repository}}/issues';
 
     /**
-     * @desc The syntax for the title of the issue
+     * The syntax for the title of the issue
      * @var string
      */
     protected $titleSyntax = 'deposit {{domain}} {{pid}}';
 
     /**
-     * @desc The separator to separate the work and the citations CSV
+     * The separator to separate the work and the citations CSV
      * @var string
      */
     protected $separator = '===###===@@@===';
 
     /**
-     * @desc Default article type
+     * Default article type
      * @var string
      */
     protected $defaultType = 'journal article';
 
     /**
+     * Submits work to OpenCitations
      * @param string $submissionId
      * @param array $citations
      * @return string

@@ -9,7 +9,7 @@
  * @class WikiData
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Enricher class for WikiData
+ * @brief WikiData class for WikiData
  */
 
 namespace Optimeta\Citations\Enrich;
@@ -23,7 +23,7 @@ use OptimetaCitationsPlugin;
 class WikiData
 {
     /**
-     * @desc Get information from Wikidata and return as CitationModel
+     * Get information from Wikidata and return as CitationModel
      * @param CitationModel $citation
      * @return CitationModel
      */

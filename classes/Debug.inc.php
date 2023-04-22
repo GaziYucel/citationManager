@@ -17,13 +17,13 @@ namespace Optimeta\Citations;
 class Debug
 {
     /**
-     * @desc Path to debug file
+     * Path to debug file
      * @var string
      */
-    private $file = OPTIMETA_CITATIONS_PLUGIN_PATH . '/' . 'debug.txt';
+    private string $file = OPTIMETA_CITATIONS_PLUGIN_PATH . '/' . 'debug.txt';
 
     /**
-     * @desc Add to debug file
+     * Add to debug file
      * @param $text
      * @return void
      */
@@ -45,7 +45,7 @@ class Debug
     }
 
     /**
-     * @desc Get and return contents debug file
+     * Get and return contents debug file
      * @return string
      */
     function Get(): string
@@ -57,7 +57,7 @@ class Debug
     }
 
     /**
-     * @desc Clear contents debug file
+     * Clear contents debug file
      * @return void
      */
     function Clear(): void
@@ -74,7 +74,7 @@ class Debug
     }
 
     /**
-     * @desc Get a list of all the hooks called
+     * Get a list of all the hooks called
      * @return string[]
      */
     function getListHooks()
@@ -395,7 +395,7 @@ class Debug
     }
 
     /**
-     * @desc Export a list of hooks called where this method is called
+     * Export a list of hooks called where this method is called
      * @return void
      */
     function calledHooks()

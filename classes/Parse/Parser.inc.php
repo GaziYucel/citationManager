@@ -24,7 +24,7 @@ use Optimeta\Shared\Pid\Urn;
 class Parser
 {
     /**
-     * @desc Parse and save parsed citations to citationsParsed
+     * Parse and save parsed citations to citationsParsed
      * @param string $citationsRaw
      * @return array
      */
@@ -83,7 +83,7 @@ class Parser
     }
 
     /**
-     * @desc Clean and return citationRaw
+     * Clean and return citationRaw
      * @param string $citationsRaw
      * @return string
      */
@@ -105,7 +105,7 @@ class Parser
     }
 
     /**
-     * @desc Clean and return citation
+     * Clean and return citation
      * @param $citation
      * @return string
      */
@@ -127,8 +127,8 @@ class Parser
     }
 
     /**
-     * @desc Remove number from the beginning of string.
-     * @param $text
+     * Remove number from the beginning of string.
+     * @param string $text
      * @return string
      */
     public function removeNumberPrefixFromString(string $text): string
@@ -143,7 +143,7 @@ class Parser
     }
 
     /**
-     * @desc Normalize whitespace
+     * Normalize whitespace
      * @param string $text
      * @return string
      */
@@ -159,7 +159,7 @@ class Parser
     }
 
     /**
-     * @desc Normalize line endings of string
+     * Normalize line endings of string
      * @param string $text
      * @return string
      */

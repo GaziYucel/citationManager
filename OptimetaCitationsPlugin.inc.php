@@ -131,7 +131,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
     }
 
     /**
-     * @desc This method is called after the plugin is activated
+     * This method is called after the plugin is activated
      * @return void
      */
     public function pluginActivationActions()
@@ -139,14 +139,14 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $this->callbackParseCronTabWorkAround();
 
         // create / alter table required by plugin
-        $migrate = new \Optimeta\Citations\Install\OptimetaCitationsMigration();
+        $migrate = new OptimetaCitationsMigration();
         $migrate->createCitationsExtendedIfNotExists();
 
         error_log('OptimetaCitationsPlugin was enabled');
     }
 
     /**
-     * @desc Workaround for hook AcronPlugin::parseCronTab not working in ojs 3.3.0-x
+     * Workaround for hook AcronPlugin::parseCronTab not working in ojs 3.3.0-x
      * @return void
      */
     public function callbackParseCronTabWorkAround()
@@ -157,7 +157,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
     }
 
     /**
-     * @desc This method is called after the plugin is activated
+     * This method is called after the plugin is activated
      * @return void
      */
     public function pluginDeactivationActions()
@@ -458,7 +458,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
     }
 
     /**
-     * @desc Post install hook to flag cron tab reload on every install/upgrade.
+     * Post install hook to flag cron tab reload on every install/upgrade.
      * @param $hookName string
      * @param $args array
      * @return boolean
