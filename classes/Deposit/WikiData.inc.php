@@ -12,24 +12,6 @@
  * @brief Depositor class WikiData
  */
 
-/*
-steps
-
-- create journal
-
-- create citation authors
-
-- create citation articles
-    + link authors
-
-- create authors of article
-
-- create main article
-    + link authors
-    + link citation articles
-    + link journal
-*/
-
 namespace Optimeta\Citations\Deposit;
 
 use Optimeta\Shared\Pid\Doi;
@@ -46,6 +28,12 @@ class WikiData
      */
     public string $log = '';
 
+    /**
+     * Submits work to WikiData
+     * @param string $submissionId
+     * @param array $citations
+     * @return string
+     */
     public function submitWork(string $submissionId, array $citations): string
     {
         $work = [];
@@ -102,6 +90,15 @@ class WikiData
         return $qidNew;
     }
 
+    /**
+     * Return work as an array
+     * @param $submission
+     * @param $publication
+     * @param $authors
+     * @param $issue
+     * @param $journal
+     * @return array
+     */
     public function getWorkAsArray($submission, $publication, $authors, $issue, $journal): array
     {
         $work = new WorkMetaData();

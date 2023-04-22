@@ -27,11 +27,11 @@ class Depositor
     public string $log = '';
 
     /**
-     * @desc Submit enriched citations and return citations
+     * Submit enriched citations and return citations
      * @param string $submissionId
      * @param array $citationsParsed
      * @param bool $isBatch
-     * @return array|mixed
+     * @return array
      */
     public function executeAndReturnWork(string $submissionId, array $citationsParsed, bool $isBatch = false)
     {
@@ -110,6 +110,8 @@ class Depositor
 
     /**
      * Get an array of all published submission IDs in the database
+     * @param int $contextId
+     * @return array
      */
     public function getPublishedSubmissionIds($contextId)
     {
@@ -126,6 +128,7 @@ class Depositor
 
     /**
      * Get an array of all context IDs in the database
+     * @return array
      */
     public function getContextIds()
     {
@@ -133,8 +136,11 @@ class Depositor
 
         $contextDao = \Application::getContextDAO();
         $contextFactory = $contextDao->getAll();
-        while ($context = $contextFactory->next()) {
-            $contextIds[] = $context->getId();
+        try {
+            while ($context = $contextFactory->next()) {
+                $contextIds[] = $context->getId();
+            }
+        } catch (\Exception $exception) {
         }
 
         return $contextIds;

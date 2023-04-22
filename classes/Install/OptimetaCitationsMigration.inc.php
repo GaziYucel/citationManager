@@ -22,7 +22,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class OptimetaCitationsMigration extends Migration
 {
     /**
-     * Run the migrations.
+     * Run the migrations
      * @return void
      */
     public function up()
@@ -30,6 +30,10 @@ class OptimetaCitationsMigration extends Migration
         $this->createCitationsExtended();
     }
 
+    /**
+     * Create citations_extended table if not exists
+     * @return void
+     */
     public function createCitationsExtendedIfNotExists()
     {
         if (!Capsule::schema()->hasTable('citations_extended')) {
@@ -37,6 +41,10 @@ class OptimetaCitationsMigration extends Migration
         }
     }
 
+    /**
+     * Create citations_extended table
+     * @return void
+     */
     private function createCitationsExtended()
     {
         Capsule::schema()->create('citations_extended', function (Blueprint $table) {
@@ -46,16 +54,20 @@ class OptimetaCitationsMigration extends Migration
 
             $table->index('publication_id');
         });
+    }
 
-        /*
-        // MySQL
-        CREATE TABLE `citations_extended` (
+    /**
+     * Returns MySQL create table script as a string
+     * @return string
+     */
+    private function getMySQLCreateTableSql()
+    {
+        return "CREATE TABLE `citations_extended` (
          `citations_extended_id` bigint(20) NOT NULL AUTO_INCREMENT,
          `publication_id` bigint(20) DEFAULT NULL,
          `parsed_citations` longtext DEFAULT NULL,
          PRIMARY KEY (`citations_extended_id`),
          KEY `citations_extended_publication_id_index` (`publication_id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-         */
+        ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;";
     }
 }

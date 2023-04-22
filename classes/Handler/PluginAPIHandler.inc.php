@@ -27,6 +27,10 @@ use Optimeta\Citations\Parse\Parser;
 
 class PluginAPIHandler extends APIHandler
 {
+    /**
+     * Structure of the response body
+     * @var array
+     */
     private $responseBody = [
         'status' => 'ok',
         'message-type' => '',
@@ -73,8 +77,8 @@ class PluginAPIHandler extends APIHandler
     }
 
     /**
-     * @desc Parse and enrich citations and return
-     * @param $slimeRequest
+     * Parse and enrich citations and return
+     * @param $slimRequest
      * @param $response
      * @param $args
      * @return mixed
@@ -116,8 +120,8 @@ class PluginAPIHandler extends APIHandler
     }
 
     /**
-     * @desc
-     * @param $slimeRequest
+     * Deposit citations and return
+     * @param $slimRequest
      * @param $response
      * @param $args
      * @return mixed

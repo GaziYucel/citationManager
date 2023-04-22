@@ -9,7 +9,7 @@
  * @class OpenAlex
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Enricher class for OpenAlex
+ * @brief OpenAlex class for OpenAlex
  */
 
 namespace Optimeta\Citations\Enrich;
@@ -22,7 +22,7 @@ use Optimeta\Shared\OpenAlex\OpenAlexBase;
 class OpenAlex
 {
     /**
-     * @desc Get all information from OpenAlex and return as CitationModel
+     * Get all information from OpenAlex and return as CitationModel
      * @param CitationModel $citation
      * @return CitationModel
      */
@@ -80,7 +80,7 @@ class OpenAlex
     }
 
     /**
-     * @desc Remove OpenAlex prefix from URL
+     * Remove OpenAlex prefix from URL
      * @param ?string $url
      * @return string
      */

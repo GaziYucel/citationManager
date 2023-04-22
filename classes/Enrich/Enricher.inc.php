@@ -19,7 +19,7 @@ use Optimeta\Citations\Model\CitationModel;
 class Enricher
 {
     /**
-     * @desc Enrich citations and save results to citations
+     * Enrich citations and save results to citations
      * @param array $citationsParsed
      * @return array
      */

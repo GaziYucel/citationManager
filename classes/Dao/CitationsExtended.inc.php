@@ -19,7 +19,7 @@ use DataObject;
 class CitationsExtended extends DataObject
 {
     /**
-     * @desc Get Publication ID
+     * Get Publication ID
      * @return int
      */
     function getPublicationId()
@@ -28,16 +28,17 @@ class CitationsExtended extends DataObject
     }
 
     /**
-     * @desc Set Publication ID
+     * Set Publication ID
      * @param $publicationId int
+     * @return void
      */
     function setPublicationId($publicationId)
     {
-        return $this->setData('publicationId', $publicationId);
+        $this->setData('publicationId', $publicationId);
     }
 
     /**
-     * @desc Get ParsedCitations
+     * Get ParsedCitations
      * @return string
      */
     function getParsedCitations()
@@ -46,11 +47,12 @@ class CitationsExtended extends DataObject
     }
 
     /**
-     * @desc Set ParsedCitations
-     * @param $parsedCitations string
+     * Set ParsedCitations
+     * @param string $parsedCitations
+     * @return void
      */
     function setParsedCitations($parsedCitations)
     {
-        return $this->setData('parsedCitations', $parsedCitations);
+        $this->setData('parsedCitations', $parsedCitations);
     }
 }
