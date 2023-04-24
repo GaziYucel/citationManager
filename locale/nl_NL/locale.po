@@ -11,63 +11,63 @@ msgstr ""
 "PO-Revision-Date: 2022-07-01T23:59:59+00:00\n"
 "Language: \n"
 
-msgid "plugins.generic.optimetaCitationsPlugin.name"
+msgid "plugins.generic.optimetaCitations.name"
 msgstr "Optimeta Citations Plugin"
 
-msgid "plugins.generic.optimetaCitationsPlugin.description"
+msgid "plugins.generic.optimetaCitations.description"
 msgstr "Optimeta Citations Plugin"
 
-msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement"
+msgid "plugins.generic.optimetaCitations.publicationStatement"
 msgstr "Publication Statement"
 
-msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement.description"
+msgid "plugins.generic.optimetaCitations.publicationStatement.description"
 msgstr "Add a publication statement that you would like to appear on every publication's landing page"
 
-msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
+msgid "plugins.generic.optimetaCitations.publication.label"
 msgstr "Referenties+"
 
-msgid "plugins.generic.optimetaCitationsPlugin.deposit.button"
+msgid "plugins.generic.optimetaCitations.deposit.button"
 msgstr "Deposit"
 
-msgid "plugins.generic.optimetaCitationsPlugin.deposit.question"
+msgid "plugins.generic.optimetaCitations.deposit.question"
 msgstr "Are you sure you want to submit the citations to the predefined external websites?"
 
-msgid "plugins.generic.optimetaCitationsPlugin.deposit.message.not_published"
+msgid "plugins.generic.optimetaCitations.deposit.message.not_published"
 msgstr "The publication needs to be assigned to an issue, needs an identifier (DOI) and published before "
 "deposit is possible."
 
-msgid "plugins.generic.optimetaCitationsPlugin.clear.button"
+msgid "plugins.generic.optimetaCitations.clear.button"
 msgstr "Clear"
 
-msgid "plugins.generic.optimetaCitationsPlugin.clear.question"
+msgid "plugins.generic.optimetaCitations.clear.question"
 msgstr "The current parsed citations will be removed if you click OK. Are you sure?"
 
-msgid "plugins.generic.optimetaCitationsPlugin.citations.empty.description"
+msgid "plugins.generic.optimetaCitations.citations.empty.description"
 msgstr "Parsed citations are empty. Please use the button above to parse and enrich the citations."
 
-msgid "plugins.generic.optimetaCitationsPlugin.process.button"
+msgid "plugins.generic.optimetaCitations.process.button"
 msgstr "Process"
 
-msgid "plugins.generic.optimetaCitationsPlugin.process.label"
+msgid "plugins.generic.optimetaCitations.process.label"
 msgstr "Structured references/citations"
 
-msgid "plugins.generic.optimetaCitationsPlugin.process.description"
+msgid "plugins.generic.optimetaCitations.process.description"
 msgstr "Please use the Process button to structure and enrich the citations. <br/>"
 "After DOIs are extracted, additional metadata from external websites will be collected and displayed below.<br/>."
 "Submission of this metadata occurs automatically when this article is published and receives a DOI."
 "Alternatively, metadata submission can be done manually using the Submit button."
 
-msgid "plugins.generic.optimetaCitationsPlugin.process.question"
+msgid "plugins.generic.optimetaCitations.process.question"
 msgstr "The current structured citations will be overwritten if you click OK. All your modifications "
 "will be lost. Are you sure?"
 
-msgid "plugins.generic.optimetaCitationsPlugin.author.add.button"
+msgid "plugins.generic.optimetaCitations.author.add.button"
 msgstr "Add Author"
 
-msgid "plugins.generic.optimetaCitationsPlugin.author.remove.question"
+msgid "plugins.generic.optimetaCitations.author.remove.question"
 msgstr "Are you sure you want to delete this author?"
 
-msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
+msgid "plugins.generic.optimetaCitations.publication.success"
 msgstr "The citations have been updated."
 
 msgid "plugins.generic.optimetaCitations.settings.description"
@@ -125,3 +125,9 @@ msgstr "Deposit all published"
 
 msgid "plugins.generic.optimetaCitations.settings.deposit.notification"
 msgstr "All published publications are deposited"
+
+msgid "plugins.generic.optimetaCitations.settings.show_structured_frontend.title"
+msgstr "Whether show or hide the structured citations at front."
+
+msgid "plugins.generic.optimetaCitations.settings.show_structured_frontend.checkbox"
+msgstr "If checked, the structured citations will be shown."

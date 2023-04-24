@@ -43,7 +43,7 @@
                 this.citations[index].authors.push(this.author);
             },
             removeAuthor: function (index, authorIndex) {
-                if (confirm('{translate key="plugins.generic.optimetaCitationsPlugin.author.remove.question"}') !== true) {
+                if (confirm('{translate key="plugins.generic.optimetaCitations.author.remove.question"}') !== true) {
                     return;
                 }
                 this.citations[index].authors.splice(authorIndex, 1);
@@ -84,7 +84,7 @@
     }
 
     function optimetaProcessCitations() {
-        let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.process.question"}';
+        let questionText = '{translate key="plugins.generic.optimetaCitations.process.question"}';
         if (confirm(questionText) !== true) {
             return;
         }
@@ -114,7 +114,7 @@
     }
 
     function optimetaDepositCitations() {
-        let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.deposit.question"}';
+        let questionText = '{translate key="plugins.generic.optimetaCitations.deposit.question"}';
         if (confirm(questionText) !== true) {
             return;
         }
@@ -141,7 +141,7 @@
     }
 
     function optimetaClearCitations() {
-        let questionText = '{translate key="plugins.generic.optimetaCitationsPlugin.clear.question"}';
+        let questionText = '{translate key="plugins.generic.optimetaCitations.clear.question"}';
         if (confirm(questionText) !== true) {
             return;
         }
@@ -163,9 +163,9 @@
             <table>
                 <tr>
                     <td colspan="2">
-                        <span class="label">{translate key="plugins.generic.optimetaCitationsPlugin.process.label"}</span>
+                        <span class="label">{translate key="plugins.generic.optimetaCitations.process.label"}</span>
                         <br/>
-                        <span class="description">{translate key="plugins.generic.optimetaCitationsPlugin.process.description"}</span>
+                        <span class="description">{translate key="plugins.generic.optimetaCitations.process.description"}</span>
                     </td>
                 </tr>
                 <tr>
@@ -180,11 +180,11 @@
                     </td>
                     <td class="optimetaAlignRight">
                         <a href="javascript:optimetaDepositCitations()" id="buttonDeposit" class="pkpButton"
-                           :class="(optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitationsPlugin.deposit.button"}</a>
+                           :class="(optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitations.deposit.button"}</a>
                         <a href="javascript:optimetaClearCitations()" id="buttonClear" class="pkpButton"
-                           :class="(optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitationsPlugin.clear.button"}</a>
+                           :class="(optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitations.clear.button"}</a>
                         <a href="javascript:optimetaProcessCitations()" id="buttonProcess"
-                           class="pkpButton">{translate key="plugins.generic.optimetaCitationsPlugin.process.button"}</a>
+                           class="pkpButton">{translate key="plugins.generic.optimetaCitations.process.button"}</a>
                     </td>
                 </tr>
             </table>
@@ -197,7 +197,7 @@
             </div>
 
             <div id="optimetaScrollableDivEmpty" class="optimetaScrollableDivEmpty" v-show="!optimetaCitationsIsParsed">
-                {translate key="plugins.generic.optimetaCitationsPlugin.citations.empty.description"}
+                {translate key="plugins.generic.optimetaCitations.citations.empty.description"}
             </div>
 
             <div id="optimetaScrollableDivValue" class="optimetaScrollableDivValue">
@@ -277,7 +277,7 @@
                                             <br v-show="row.editRow"/>
                                     </span>
                                     <a class="pkpButton" v-show="row.editRow"
-                                       v-on:click="addAuthor(i)">{translate key="plugins.generic.optimetaCitationsPlugin.author.add.button"}</a>
+                                       v-on:click="addAuthor(i)">{translate key="plugins.generic.optimetaCitations.author.add.button"}</a>
                                 </div>
 
                                 <div>

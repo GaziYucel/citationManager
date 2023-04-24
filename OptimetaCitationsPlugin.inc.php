@@ -232,7 +232,6 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
     /**
      * Add a property to the publication schema
-     *
      * @param $hookName string `Schema::get::publication`
      * @param $args [[
      * @option object Publication schema
@@ -245,9 +244,9 @@ class OptimetaCitationsPlugin extends GenericPlugin
     }
 
     /**
+     * Show tab under Publications
      * @param string $hookname
      * @param array $args [string, TemplateManager]
-     * @brief Show tab under Publications
      */
     public function publicationTab(string $hookName, array $args): void
     {
@@ -265,7 +264,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $form = new PublicationForm(
             $apiBaseUrl . 'submissions/' . $submissionId . '/publications/' . $latestPublication->getId(),
             $latestPublication,
-            __('plugins.generic.optimetaCitationsPlugin.publication.success'));
+            __('plugins.generic.optimetaCitations.publication.success'));
 
         $state = $templateMgr->getTemplateVars($this->versionSpecificNameState);
         $state['components'][OPTIMETA_CITATIONS_FORM_NAME] = $form->getConfig();
@@ -295,13 +294,13 @@ class OptimetaCitationsPlugin extends GenericPlugin
     }
 
     /**
+     * Process data from post/put
      * @param string $hookname
      * @param array $args [
      *   Publication -> new publication
      *   Publication
      *   array parameters/publication properties to be saved
      *   Request
-     * @brief process data from post/put
      */
     public function publicationSave(string $hookname, array $args): void
     {
@@ -332,10 +331,10 @@ class OptimetaCitationsPlugin extends GenericPlugin
     }
 
     /**
+     * Show citations part on step 3 in submission wizard
      * @param string $hookname
      * @param array $args
      * @return void
-     * @brief show citations part on step 3 in submission wizard
      */
     public function submissionWizard(string $hookname, array $args): void
     {
@@ -368,21 +367,23 @@ class OptimetaCitationsPlugin extends GenericPlugin
     }
 
     /**
+     * Execute API Handler
      * @param string $hookName
      * @param PKPRequest $request
      * @return bool
-     * @brief execute api handler
-     * @throws \Throwable
      */
     public function apiHandler(string $hookName, PKPRequest $request): bool
     {
-        $router = $request->getRouter();
-        if ($router instanceof \APIRouter && strpos(' ' .
-                $request->getRequestPath() . ' ', 'api/v1/' . OPTIMETA_CITATIONS_API_ENDPOINT) !== false) {
-            $handler = new PluginAPIHandler($this);
-            $router->setHandler($handler);
-            $handler->getApp()->run();
-            exit;
+        try {
+            $router = $request->getRouter();
+            if ($router instanceof \APIRouter && strpos(' ' .
+                    $request->getRequestPath() . ' ', 'api/v1/' . OPTIMETA_CITATIONS_API_ENDPOINT) !== false) {
+                $handler = new PluginAPIHandler($this);
+                $router->setHandler($handler);
+                $handler->getApp()->run();
+                exit;
+            }
+        } catch (Throwable $e) {
         }
 
         return false;
@@ -446,7 +447,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
      */
     public function getDisplayName(): string
     {
-        return __('plugins.generic.optimetaCitationsPlugin.name');
+        return __('plugins.generic.optimetaCitations.name');
     }
 
     /* Plugin required methods */
@@ -540,7 +541,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
      */
     public function getDescription(): string
     {
-        return __('plugins.generic.optimetaCitationsPlugin.description');
+        return __('plugins.generic.optimetaCitations.description');
     }
 
     /**
