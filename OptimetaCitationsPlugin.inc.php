@@ -16,6 +16,7 @@ const OPTIMETA_CITATIONS_IS_TEST_ENVIRONMENT = true;
 const OPTIMETA_CITATIONS_PLUGIN_PATH = __DIR__;
 const OPTIMETA_CITATIONS_USER_AGENT = 'OJSOptimetaCitations';
 const OPTIMETA_CITATIONS_API_ENDPOINT = 'OptimetaCitations';
+const OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED = 'OptimetaCitations_FrontendShowStructured';
 const OPTIMETA_CITATIONS_PUBLICATION_WORK = 'OptimetaCitations_PublicationWork';
 const OPTIMETA_CITATIONS_FORM_NAME = 'OptimetaCitations_PublicationForm';
 const OPTIMETA_CITATIONS_FORM_FIELD_PARSED = 'OptimetaCitations_CitationsParsed';
@@ -23,15 +24,16 @@ const OPTIMETA_CITATIONS_SAVED_IS_ENABLED = 'OptimetaCitations_IsEnabled';
 const OPTIMETA_CITATIONS_OPENALEX_URL = 'https://openalex.org';
 const OPTIMETA_CITATIONS_WIKIDATA_USERNAME = 'OptimetaCitations_Wikidata_Username';
 const OPTIMETA_CITATIONS_WIKIDATA_PASSWORD = 'OptimetaCitations_Wikidata_Password';
-const OPTIMETA_CITATIONS_WIKIDATA_URLS = [
-    'prod' => 'https://www.wikidata.org/wiki',
-    'test' => 'https://test.wikidata.org/wiki',
-    'apiProd' => 'https://www.wikidata.org/w/api.php',
-    'apiTest' => 'https://test.wikidata.org/w/api.php'
-];
+const OPTIMETA_CITATIONS_WIKIDATA_URLS = ['prod' => 'https://www.wikidata.org/wiki', 'test' => 'https://test.wikidata.org/wiki'];
+const OPTIMETA_CITATIONS_WIKIDATA_API_URLS = ['prod' => 'https://www.wikidata.org/w/api.php', 'test' => 'https://test.wikidata.org/w/api.php'];
+const OPTIMETA_CITATIONS_WIKIDATA_URL = 'https://www.wikidata.org/wiki';
+const OPTIMETA_CITATIONS_WIKIDATA_API_URL = 'https://www.wikidata.org/w/api.php';
 const OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER = 'OptimetaCitations_Open_Citations_Owner';
 const OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY = 'OptimetaCitations_Open_Citations_Repository';
 const OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN = 'OptimetaCitations_Open_Citations_Token';
+const OPTIMETA_CITATIONS_ORCID_URL = 'https://orcid.org/';
+const OPTIMETA_CITATIONS_OPEN_ALEX_URL = 'https://openalex.org/';
+const OPTIMETA_CITATIONS_DOI_BASE_URL = 'https://doi.org/';
 
 require_once(OPTIMETA_CITATIONS_PLUGIN_PATH . '/vendor/autoload.php');
 
@@ -45,6 +47,7 @@ use Optimeta\Citations\Components\Forms\SettingsForm;
 use Optimeta\Citations\Dao\CitationsExtendedDAO;
 use Optimeta\Citations\Dao\PluginDAO;
 use Optimeta\Citations\Deposit\Depositor;
+use Optimeta\Citations\Frontend\Article;
 use Optimeta\Citations\Handler\PluginAPIHandler;
 use Optimeta\Citations\Model\AuthorModel;
 use Optimeta\Citations\Model\WorkModel;
@@ -125,9 +128,71 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
             // Is triggered only on the page defined in Handler method/class
             HookRegistry::register('Dispatcher::dispatch', array($this, 'apiHandler'));
+
+            // Register callback to add text to registration page
+            HookRegistry::register('TemplateManager::display', array($this, 'handleTemplateDisplay'));
         }
 
         return $success;
+    }
+
+    /**
+     * Hook callback: register output filter to replace raw with structured citations.
+     * @see TemplateManager::display()
+     */
+    public function handleTemplateDisplay($hookName, $args)
+    {
+        $templateMgr = $args[0];
+        $template = $args[1];
+        $request = PKPApplication::get()->getRequest();
+
+        if ($template === 'frontend/pages/article.tpl') {
+            if ($this->getSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED) === 'true') {
+                $templateMgr->addStyleSheet(
+                    'optimetaCitations',
+                    $request->getBaseUrl() . '/' . $this->getPluginPath() . '/css/optimetaCitations.css',
+                    array('contexts' => array('frontend'))
+                );
+
+                $templateMgr->registerFilter("output", array($this, 'registrationFilter'));
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Output filter to replace raw with structured citations.
+     * @param $output string
+     * @param $templateMgr TemplateManager
+     * @return string
+     */
+    public function registrationFilter($output, $templateMgr)
+    {
+        $request = Application::get()->getRequest();
+        $context = $request->getContext();
+
+        $publication = $templateMgr->getTemplateVars('currentPublication');
+
+        $article = new Article();
+        $references = $article->getCitationsAsHtml($publication);
+
+        $newOutput =
+            "<div id='optimetaCitations_StructuredCitations_1234567890' style='display: none;'>$references</div>" . PHP_EOL .
+            "<script> 
+                window.onload = function(){
+                    let src = document.querySelector('#optimetaCitations_StructuredCitations_1234567890');
+                    let dst = document.querySelector('.main_entry .references .value'); 
+                    dst.innerHTML = src.innerHTML;
+                }
+            </script>";
+
+        if ($context != null) {
+            $output .= $newOutput;
+            $templateMgr->unregisterFilter("output", array($this, 'registrationFilter'));
+        }
+
+        return $output;
     }
 
     /**
@@ -167,7 +232,6 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
     /**
      * Add a property to the publication schema
-     *
      * @param $hookName string `Schema::get::publication`
      * @param $args [[
      * @option object Publication schema
@@ -180,9 +244,9 @@ class OptimetaCitationsPlugin extends GenericPlugin
     }
 
     /**
+     * Show tab under Publications
      * @param string $hookname
      * @param array $args [string, TemplateManager]
-     * @brief Show tab under Publications
      */
     public function publicationTab(string $hookName, array $args): void
     {
@@ -200,7 +264,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $form = new PublicationForm(
             $apiBaseUrl . 'submissions/' . $submissionId . '/publications/' . $latestPublication->getId(),
             $latestPublication,
-            __('plugins.generic.optimetaCitationsPlugin.publication.success'));
+            __('plugins.generic.optimetaCitations.publication.success'));
 
         $state = $templateMgr->getTemplateVars($this->versionSpecificNameState);
         $state['components'][OPTIMETA_CITATIONS_FORM_NAME] = $form->getConfig();
@@ -230,13 +294,13 @@ class OptimetaCitationsPlugin extends GenericPlugin
     }
 
     /**
+     * Process data from post/put
      * @param string $hookname
      * @param array $args [
      *   Publication -> new publication
      *   Publication
      *   array parameters/publication properties to be saved
      *   Request
-     * @brief process data from post/put
      */
     public function publicationSave(string $hookname, array $args): void
     {
@@ -267,10 +331,10 @@ class OptimetaCitationsPlugin extends GenericPlugin
     }
 
     /**
+     * Show citations part on step 3 in submission wizard
      * @param string $hookname
      * @param array $args
      * @return void
-     * @brief show citations part on step 3 in submission wizard
      */
     public function submissionWizard(string $hookname, array $args): void
     {
@@ -303,21 +367,23 @@ class OptimetaCitationsPlugin extends GenericPlugin
     }
 
     /**
+     * Execute API Handler
      * @param string $hookName
      * @param PKPRequest $request
      * @return bool
-     * @brief execute api handler
-     * @throws \Throwable
      */
     public function apiHandler(string $hookName, PKPRequest $request): bool
     {
-        $router = $request->getRouter();
-        if ($router instanceof \APIRouter && strpos(' ' .
-                $request->getRequestPath() . ' ', 'api/v1/' . OPTIMETA_CITATIONS_API_ENDPOINT) !== false) {
-            $handler = new PluginAPIHandler($this);
-            $router->setHandler($handler);
-            $handler->getApp()->run();
-            exit;
+        try {
+            $router = $request->getRouter();
+            if ($router instanceof \APIRouter && strpos(' ' .
+                    $request->getRequestPath() . ' ', 'api/v1/' . OPTIMETA_CITATIONS_API_ENDPOINT) !== false) {
+                $handler = new PluginAPIHandler($this);
+                $router->setHandler($handler);
+                $handler->getApp()->run();
+                exit;
+            }
+        } catch (Throwable $e) {
         }
 
         return false;
@@ -381,7 +447,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
      */
     public function getDisplayName(): string
     {
-        return __('plugins.generic.optimetaCitationsPlugin.name');
+        return __('plugins.generic.optimetaCitations.name');
     }
 
     /* Plugin required methods */
@@ -475,7 +541,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
      */
     public function getDescription(): string
     {
-        return __('plugins.generic.optimetaCitationsPlugin.description');
+        return __('plugins.generic.optimetaCitations.description');
     }
 
     /**

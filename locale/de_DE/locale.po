@@ -11,65 +11,65 @@ msgstr ""
 "PO-Revision-Date: 2022-07-01T23:59:59+00:00\n"
 "Language: \n"
 
-msgid "plugins.generic.optimetaCitationsPlugin.name"
+msgid "plugins.generic.optimetaCitations.name"
 msgstr "Optimeta Zitations-Plugin"
 
-msgid "plugins.generic.optimetaCitationsPlugin.description"
+msgid "plugins.generic.optimetaCitations.description"
 msgstr "Optimeta Zitations-Plugin"
 
-msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement"
+msgid "plugins.generic.optimetaCitations.publicationStatement"
 msgstr "Veröffentlichungserklärung"
 
-msgid "plugins.generic.optimetaCitationsPlugin.publicationStatement.description"
+msgid "plugins.generic.optimetaCitations.publicationStatement.description"
 msgstr "Fügen Sie eine Beschreibung der Publikation hinzu, die auf jeder Landing Page der "
 "Publikation erscheinen soll."
 
-msgid "plugins.generic.optimetaCitationsPlugin.publication.label"
+msgid "plugins.generic.optimetaCitations.publication.label"
 msgstr "Literaturhinweise+"
 
-msgid "plugins.generic.optimetaCitationsPlugin.deposit.button"
+msgid "plugins.generic.optimetaCitations.deposit.button"
 msgstr "Übermitteln"
 
-msgid "plugins.generic.optimetaCitationsPlugin.deposit.question"
+msgid "plugins.generic.optimetaCitations.deposit.question"
 msgstr "Sind Sie sich sicher, dass Sie die Zitationen an die oben genannten Websites übermitteln wollen?"
 
-msgid "plugins.generic.optimetaCitationsPlugin.deposit.message.not_published"
+msgid "plugins.generic.optimetaCitations.deposit.message.not_published"
 msgstr "Die Publikation muss einer Ausgabe zugeordnet werden, benötigt einen DOI und muss veröffentlicht "
 "werden, bevor eine Übermittlung an die Websites möglich ist."
 
-msgid "plugins.generic.optimetaCitationsPlugin.clear.button"
+msgid "plugins.generic.optimetaCitations.clear.button"
 msgstr "Löschen"
 
-msgid "plugins.generic.optimetaCitationsPlugin.clear.question"
+msgid "plugins.generic.optimetaCitations.clear.question"
 msgstr "Die strukturierten Zitationen werden entfernt, wenn Sie auf OK klicken. Sind Sie sich sicher?"
 
-msgid "plugins.generic.optimetaCitationsPlugin.citations.empty.description"
+msgid "plugins.generic.optimetaCitations.citations.empty.description"
 msgstr "Es sind keine strukturierten Zitationen vorhanden. Bitte klicken Sie auf den oben stehenden "
 "Button \"Verarbeiten\", um die Zitationen zu strukturieren und anzureichern."
 
-msgid "plugins.generic.optimetaCitationsPlugin.process.button"
+msgid "plugins.generic.optimetaCitations.process.button"
 msgstr "Verarbeiten"
 
-msgid "plugins.generic.optimetaCitationsPlugin.process.label"
+msgid "plugins.generic.optimetaCitations.process.label"
 msgstr "Strukturierte Literaturhinweise/Zitationen"
 
-msgid "plugins.generic.optimetaCitationsPlugin.process.description"
+msgid "plugins.generic.optimetaCitations.process.description"
 msgstr "Bitte benutzen Sie den Button \"Verarbeiten\", um die Zitationen zu strukturieren und anzureichern.<br/>"
 "Nach der Extraktion der DOIs werden zusätzliche Metadaten von externen Websites erfasst und unten angezeigt.<br/>"
 "Die Übermittlung dieser Metadaten erfolgt automatisch, wenn dieser Beitrag veröffentlicht wird und einen DOI erhält."
 "Alternativ kann die Metadatenübermittlung manuell über den Button \"Übermitteln\" erfolgen."
 
-msgid "plugins.generic.optimetaCitationsPlugin.process.question"
+msgid "plugins.generic.optimetaCitations.process.question"
 msgstr "Die strukturierten Zitationen werden überschrieben, wenn Sie auf OK klicken. Alle Ihre Änderungen gehen "
 "dabei verloren. Sind Sie sich sicher?"
 
-msgid "plugins.generic.optimetaCitationsPlugin.author.add.button"
+msgid "plugins.generic.optimetaCitations.author.add.button"
 msgstr "Autor hinzufügen"
 
-msgid "plugins.generic.optimetaCitationsPlugin.author.remove.question"
+msgid "plugins.generic.optimetaCitations.author.remove.question"
 msgstr "Sind Sie sich sicher, dass Sie diesen Autor löschen wollen?"
 
-msgid "plugins.generic.optimetaCitationsPlugin.publication.success"
+msgid "plugins.generic.optimetaCitations.publication.success"
 msgstr "Die Zitationen wurden aktualisiert."
 
 msgid "plugins.generic.optimetaCitations.settings.description"
@@ -128,3 +128,9 @@ msgstr "Publikation übermitteln"
 
 msgid "plugins.generic.optimetaCitations.settings.deposit.notification"
 msgstr "Alle veröffentlichten Publikationen sind übermittelt."
+
+msgid "plugins.generic.optimetaCitations.settings.show_structured_frontend.title"
+msgstr "Whether show or hide the structured citations at front."
+
+msgid "plugins.generic.optimetaCitations.settings.show_structured_frontend.checkbox"
+msgstr "If checked, the structured citations will be shown."

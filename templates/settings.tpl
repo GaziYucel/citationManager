@@ -16,7 +16,8 @@
     {fbvFormArea id="optimetaCitationsSettingsArea"}
 
     {fbvFormSection title="plugins.generic.optimetaCitations.settings.description"}{/fbvFormSection}
-        <!-- OpenCitations -->
+
+    <!-- OpenCitations -->
     {fbvFormSection label="plugins.generic.optimetaCitations.settings.open_citations_title"}
         <p>
             {fbvElement
@@ -75,6 +76,20 @@
         </p>
     {/fbvFormSection}
     <!-- Wikidata -->
+
+    <!-- Show at Front -->
+    {fbvFormSection for="{$smarty.const.OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED}"
+    title="plugins.generic.optimetaCitations.settings.show_structured_frontend.title" list="true"}
+    {fbvElement
+    type="checkbox"
+    name="{$smarty.const.OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED}"
+    id="{$smarty.const.OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED}"
+    value={$smarty.const.OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED}
+    label="plugins.generic.optimetaCitations.settings.show_structured_frontend.checkbox"
+    checked=${$smarty.const.OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED}
+    }
+    {/fbvFormSection}
+    <!-- Show at Front -->
 
     {/fbvFormArea}
 
