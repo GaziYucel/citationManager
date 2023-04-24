@@ -17,13 +17,13 @@ namespace Optimeta\Shared\Pid;
 class Orcid
 {
     /**
-     * @desc Correct prefix
+     * Correct prefix
      * @var string
      */
     public $prefix = 'https://orcid.org/';
 
     /**
-     * @desc Incorrect prefixes
+     * Incorrect prefixes
      * @var array|string[]
      */
     public array $prefixInCorrect = [
@@ -31,7 +31,7 @@ class Orcid
     ];
 
     /**
-     * @desc Remove https://orcid.org/ from ORCID URL
+     * Remove https://orcid.org/ from ORCID URL
      * @param string|null $url
      * @return string
      */
@@ -42,5 +42,19 @@ class Orcid
         }
 
         return str_replace($this->prefix, '', $url);
+    }
+
+    /**
+     * Add $prefix to URL
+     * @param string|null $url
+     * @return string
+     */
+    public function addPrefixToUrl(?string $url): string
+    {
+        if (empty($url)) {
+            return '';
+        }
+
+        return $url . $this->prefix;
     }
 }

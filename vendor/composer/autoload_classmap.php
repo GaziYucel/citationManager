@@ -21,6 +21,7 @@ return array(
     'Optimeta\\Citations\\Enrich\\OpenAlex' => $baseDir . '/classes/Enrich/OpenAlex.inc.php',
     'Optimeta\\Citations\\Enrich\\Orcid' => $baseDir . '/classes/Enrich/Orcid.php',
     'Optimeta\\Citations\\Enrich\\WikiData' => $baseDir . '/classes/Enrich/WikiData.inc.php',
+    'Optimeta\\Citations\\Frontend\\Article' => $baseDir . '/classes/Frontend/Article.inc.php',
     'Optimeta\\Citations\\Handler\\PluginAPIHandler' => $baseDir . '/classes/Handler/PluginAPIHandler.inc.php',
     'Optimeta\\Citations\\Install\\OptimetaCitationsMigration' => $baseDir . '/classes/Install/OptimetaCitationsMigration.inc.php',
     'Optimeta\\Citations\\Model\\AuthorModel' => $baseDir . '/classes/Model/AuthorModel.inc.php',

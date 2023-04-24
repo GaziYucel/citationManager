@@ -36,6 +36,7 @@ class ComposerStaticInit205e7fc175dbc92c2ca8148adbc3ad81
         'Optimeta\\Citations\\Enrich\\OpenAlex' => __DIR__ . '/../..' . '/classes/Enrich/OpenAlex.inc.php',
         'Optimeta\\Citations\\Enrich\\Orcid' => __DIR__ . '/../..' . '/classes/Enrich/Orcid.php',
         'Optimeta\\Citations\\Enrich\\WikiData' => __DIR__ . '/../..' . '/classes/Enrich/WikiData.inc.php',
+        'Optimeta\\Citations\\Frontend\\Article' => __DIR__ . '/../..' . '/classes/Frontend/Article.inc.php',
         'Optimeta\\Citations\\Handler\\PluginAPIHandler' => __DIR__ . '/../..' . '/classes/Handler/PluginAPIHandler.inc.php',
         'Optimeta\\Citations\\Install\\OptimetaCitationsMigration' => __DIR__ . '/../..' . '/classes/Install/OptimetaCitationsMigration.inc.php',
         'Optimeta\\Citations\\Model\\AuthorModel' => __DIR__ . '/../..' . '/classes/Model/AuthorModel.inc.php',

@@ -39,7 +39,9 @@ class SettingsForm extends \Form
         OPTIMETA_CITATIONS_WIKIDATA_PASSWORD,
         OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER,
         OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY,
-        OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN];
+        OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN,
+        OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED
+    ];
 
     /**
      * @copydoc Form::__construct()
@@ -83,7 +85,8 @@ class SettingsForm extends \Form
     }
 
     /**
-     * Fetch any additional data needed for your form. Data assigned to the form using $this->setData() during the initData() or readInputData() methods will be passed to the template.
+     * Fetch any additional data needed for your form. Data assigned to the form using $this->setData()
+     * during the initData() or readInputData() methods will be passed to the template.
      * @copydoc Form::fetch()
      */
     public function fetch($request, $template = null, $display = false)
@@ -107,7 +110,9 @@ class SettingsForm extends \Form
         $contextId = $context ? $context->getId() : CONTEXT_SITE;
 
         foreach ($this->settings as $key) {
-            $this->plugin->updateSetting($contextId, $key, $this->getData($key));
+            $value = $this->getData($key);
+            if($key === OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED && !empty($value)) $value = "true";
+            $this->plugin->updateSetting($contextId, $key, $value);
         }
 
         // Tell the user that the save was successful.
