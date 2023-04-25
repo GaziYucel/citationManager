@@ -12,7 +12,7 @@
  * @brief Plugin for parsing Citations and submitting to Open Access websites.
  */
 
-const OPTIMETA_CITATIONS_IS_TEST_ENVIRONMENT = true;
+const OPTIMETA_CITATIONS_IS_PRODUCTION_KEY = 'OptimetaCitations_IsProductionEnvironment';
 const OPTIMETA_CITATIONS_PLUGIN_PATH = __DIR__;
 const OPTIMETA_CITATIONS_USER_AGENT = 'OJSOptimetaCitations';
 const OPTIMETA_CITATIONS_API_ENDPOINT = 'OptimetaCitations';
@@ -55,7 +55,13 @@ use Optimeta\Citations\Model\WorkModel;
 
 class OptimetaCitationsPlugin extends GenericPlugin
 {
-    protected $versionSpecificNameState = 'state';
+    /**
+     * Is this instance production
+     * @var bool
+     */
+    protected bool $isProduction = false;
+
+    protected $versionSpecificNameState = 'state'; //todo: can be replaced
 
     protected $isEnabledSaved = '0';
 
@@ -79,6 +85,10 @@ class OptimetaCitationsPlugin extends GenericPlugin
     {
         // Register the plugin even when it is not enabled
         $success = parent::register($category, $path);
+
+        if($this->getSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true'){
+            $this->isProduction = true;
+        }
 
         // get value of isEnabled from database
         $this->isEnabledSaved = $this->getSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_SAVED_IS_ENABLED);
@@ -284,7 +294,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
         if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]')
             $this->templateParameters['workModel'] = $publicationWorkDb;
 
-        if (OPTIMETA_CITATIONS_IS_TEST_ENVIRONMENT) $this->templateParameters['wikidataURL'] = OPTIMETA_CITATIONS_WIKIDATA_URLS['test'];
+        if (!$this->isProduction)
+            $this->templateParameters['wikidataURL'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST;
 
         if ($publication->getData('status') === STATUS_PUBLISHED)
             $this->templateParameters['customScript'] .= "window.onload = function(){ document.querySelector('#optimetaCitations button.pkpButton').disabled = true; }" . PHP_EOL;
@@ -360,7 +371,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
         if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]')
             $this->templateParameters['workModel'] = $publicationWorkDb;
 
-        if (OPTIMETA_CITATIONS_IS_TEST_ENVIRONMENT) $this->templateParameters['wikidataURL'] = OPTIMETA_CITATIONS_WIKIDATA_URLS['test'];
+        if (!$this->isProduction)
+            $this->templateParameters['wikidataURL'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST;
 
         $templateMgr->assign($this->templateParameters);
 

@@ -78,8 +78,7 @@
     <!-- Wikidata -->
 
     <!-- Show at Front -->
-    {fbvFormSection for="{$smarty.const.OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED}"
-    title="plugins.generic.optimetaCitations.settings.show_structured_frontend.title" list="true"}
+    {fbvFormSection title="plugins.generic.optimetaCitations.settings.show_structured_frontend.title" list="true"}
     {fbvElement
     type="checkbox"
     name="{$smarty.const.OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED}"
@@ -90,6 +89,19 @@
     }
     {/fbvFormSection}
     <!-- Show at Front -->
+
+        <!-- Show at Front -->
+    {fbvFormSection title="plugins.generic.optimetaCitations.settings.is_production_environment.title" list="true"}
+    {fbvElement
+    type="checkbox"
+    name="{$smarty.const.OPTIMETA_CITATIONS_IS_PRODUCTION_KEY}"
+    id="{$smarty.const.OPTIMETA_CITATIONS_IS_PRODUCTION_KEY}"
+    value={$smarty.const.OPTIMETA_CITATIONS_IS_PRODUCTION_KEY}
+    label="plugins.generic.optimetaCitations.settings.is_production_environment.checkbox"
+    checked=${$smarty.const.OPTIMETA_CITATIONS_IS_PRODUCTION_KEY}
+    }
+    {/fbvFormSection}
+        <!-- Show at Front -->
 
     {/fbvFormArea}
 

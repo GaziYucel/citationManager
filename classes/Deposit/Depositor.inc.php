@@ -16,15 +16,30 @@ namespace Optimeta\Citations\Deposit;
 
 use Optimeta\Citations\Dao\PluginDAO;
 use Optimeta\Citations\Model\WorkModel;
+use OptimetaCitationsPlugin;
 use Services;
 
 class Depositor
 {
     /**
+     * Is this instance production
+     * @var bool
+     */
+    protected bool $isProduction = false;
+
+    /**
      * Log string
      * @var string
      */
     public string $log = '';
+
+    public function __construct()
+    {
+        $plugin = new OptimetaCitationsPlugin();
+        if ($plugin->getSetting($plugin->getCurrentContextId(), OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
+            $this->isProduction = true;
+        }
+    }
 
     /**
      * Submit enriched citations and return citations

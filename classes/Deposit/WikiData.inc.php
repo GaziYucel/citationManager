@@ -23,10 +23,24 @@ use OptimetaCitationsPlugin;
 class WikiData
 {
     /**
+     * Is this instance production
+     * @var bool
+     */
+    protected bool $isProduction = false;
+
+    /**
      * Log string
      * @var string
      */
     public string $log = '';
+
+    public function __construct()
+    {
+        $plugin = new OptimetaCitationsPlugin();
+        if ($plugin->getSetting($plugin->getCurrentContextId(), OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
+            $this->isProduction = true;
+        }
+    }
 
     /**
      * Submits work to WikiData
@@ -65,7 +79,7 @@ class WikiData
         if (empty($doi) || empty($issue)) return '';
 
         $wikiDataBase = new WikiDataBase(
-            OPTIMETA_CITATIONS_IS_TEST_ENVIRONMENT,
+            !$this->isProduction,
             $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_WIKIDATA_USERNAME),
             $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_WIKIDATA_PASSWORD));
 
