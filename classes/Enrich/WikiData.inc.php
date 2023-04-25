@@ -57,6 +57,12 @@ class WikiData
 
         $citation->wikidata_qid = $wikiData->getEntity($doi, '');
 
+        if (!empty($citation->wikidata_qid)) {
+            $citation->wikidata_url = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $citation->wikidata_qid;
+            if (!$this->isProduction)
+                $citation->wikidata_url = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $citation->wikidata_qid;
+        }
+
         return $citation;
     }
 }

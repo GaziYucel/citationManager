@@ -218,9 +218,9 @@
                     <td class="optimetaScrollableDiv-nr">{{ i + 1 }}</td>
                     <td class="optimetaScrollableDiv-parts">
                         <div>
-                                <span v-show="!row.editRow">
-                                    <a :href="optimetaCitationsApp.citations[i].doi"
-                                       target="_blank">{{ optimetaCitationsApp.citations[i].doi }}</a></span>
+                             <span v-show="!row.editRow">
+                                 <a :href="'{$doiBaseUrl}' + optimetaCitationsApp.citations[i].doi"
+                                    target="_blank">{{ optimetaCitationsApp.citations[i].doi }}</a></span>
                             <input id="doi-{{ i + 1 }}" placeholder="DOI" v-show="row.editRow"
                                    v-model="optimetaCitationsApp.citations[i].doi"
                                    class="optimetaInput"/>
@@ -267,7 +267,7 @@
                                           v-if="!optimetaCitationsApp.citations[i].authors[j].orcid">iD</span>
                                     <a class="optimetaButton optimetaButtonGreen"
                                        v-if="optimetaCitationsApp.citations[i].authors[j].orcid"
-                                       :href="'https://{$orcidURL}/' + optimetaCitationsApp.citations[i].authors[j].orcid"
+                                       :href="'{$orcidURL}' + optimetaCitationsApp.citations[i].authors[j].orcid"
                                        target="_blank">iD</a>
 
                                     <a class="pkpButton" v-show="row.editRow"

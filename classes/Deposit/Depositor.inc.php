@@ -65,24 +65,26 @@ class Depositor
         if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]')
             $publicationWork = json_decode($publicationWorkDb, true);
 
-        // OpenCitations: deposit if not batch or empty
-        if (!$isBatch || empty($publicationWork['opencitations_url'])) {
+        // OpenCitations
+        if (empty($publicationWork['opencitations_url'])) {
             $openCitations = new OpenCitations();
             $openCitationsUrl = $openCitations->submitWork($submissionId, $citationsParsed);
+
             $publicationWork['opencitations_url'] = $openCitationsUrl;
-            $this->log .= '[$publicationWork>opencitations_url: ' .
-                $publicationWork['opencitations_url'] . ']';
+
+            $this->log .= '[publicationWork>opencitations_url: ' . $publicationWork['opencitations_url'] . ']';
         }
 
-        // WikiData: deposit if not batch or empty
-        if (!$isBatch || empty($publicationWork['wikidata_url'])) {
+        // WikiData
+        if (empty($publicationWork['wikidata_url'])) {
             $wikiData = new WikiData();
-            $wikiDataUrl = $wikiData->submitWork(
-                $submissionId,
-                $citationsParsed);
-            $publicationWork['wikidata_url'] = $wikiDataUrl;
-            $this->log .= '[$publicationWork>wikidata_url: ' .
-                $publicationWork['wikidata_url'] . ']';
+            $wikiDataQid = $wikiData->submitWork($submissionId, $citationsParsed);
+
+            $publicationWork['wikidata_qid'] = $wikiDataQid;
+            $publicationWork['wikidata_url'] = OPTIMETA_CITATIONS_WIKIDATA_URL . '/' . $wikiDataQid;
+            if (!$this->isProduction) $publicationWork['wikidata_url'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $wikiDataQid;
+
+            $this->log .= '[publicationWork>wikidata_url: ' . $publicationWork['wikidata_url'] . ']';
         }
 
         // convert to json

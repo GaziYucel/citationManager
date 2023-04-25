@@ -50,7 +50,15 @@ class WikiData
      */
     public function submitWork(string $submissionId, array $citations): string
     {
-        $work = [];
+        $work = [
+            'qid' => '',
+            'locale' => '',
+            'label' => '',
+            'claims' => [
+                'doi' => '',
+                'publicationDate' => ''
+            ]
+        ];
 
         $plugin = new OptimetaCitationsPlugin();
 
@@ -94,8 +102,7 @@ class WikiData
         $work["claims"]["publicationDate"] = $publicationDate;
 
         // check if article/item exists
-        $qid = $wikiDataBase->getEntity($doi, '');
-        if (empty($qid)) $work["qid"] = $qid;
+        $work["qid"] = $wikiDataBase->getEntity($doi, '');
 
         $qidNew = $wikiDataBase->submitWork($work);
 
