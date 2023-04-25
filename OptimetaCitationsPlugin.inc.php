@@ -49,6 +49,7 @@ use Optimeta\Citations\Dao\PluginDAO;
 use Optimeta\Citations\Deposit\Depositor;
 use Optimeta\Citations\Frontend\Article;
 use Optimeta\Citations\Handler\PluginAPIHandler;
+use Optimeta\Citations\Install\OptimetaCitationsMigration;
 use Optimeta\Citations\Model\AuthorModel;
 use Optimeta\Citations\Model\WorkModel;
 
