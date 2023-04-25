@@ -213,7 +213,7 @@
                         <td class="optimetaScrollableDiv-parts">
                             <div>
                                 <span v-show="!row.editRow">
-                                    <a :href="'{$doiBaseUrl}' + citations[i].doi"
+                                    <a :href="'{$doiBaseUrl}' + '/' + citations[i].doi"
                                        target="_blank">{{ citations[i].doi }}</a></span>
                                 <input id="doi-{{ i + 1 }}" placeholder="DOI" v-show="row.editRow"
                                        v-model="citations[i].doi"
@@ -238,13 +238,6 @@
 
                                 <div>
                                     <span v-for="(author, j) in citations[i].authors">
-                                        {* <span v-show="!row.editRow" *}
-                                        {* class="optimetaTag">{{ citations[i].authors[j].display_name }}</span> *}
-                                        {* <input id="display_name-{{ i + 1 }}-{{ j + 1 }}" placeholder="Display name" *}
-                                        {* v-show="row.editRow" *}
-                                        {* v-model="citations[i].authors[j].display_name" *}
-                                        {* class="optimetaInput" /> *}
-
                                         <span v-show="!row.editRow"
                                               class="optimetaTag">{{ citations[i].authors[j].given_name }}</span>
                                         <input id="given_name-{{ i + 1 }}-{{ j + 1 }}" placeholder="Given name"
@@ -268,7 +261,7 @@
                                               v-if="!citations[i].authors[j].orcid">iD</span>
                                         <a class="optimetaButton optimetaButtonGreen"
                                            v-if="citations[i].authors[j].orcid"
-                                           :href="'https://{$orcidURL}/' + citations[i].authors[j].orcid"
+                                           :href="'{$orcidURL}' + '/' + citations[i].authors[j].orcid"
                                            target="_blank">iD</a>
 
                                         <a class="pkpButton" v-show="row.editRow"
