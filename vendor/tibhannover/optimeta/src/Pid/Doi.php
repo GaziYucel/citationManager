@@ -17,19 +17,19 @@ namespace Optimeta\Shared\Pid;
 class Doi
 {
     /**
-     * @desc Regex to extract DOI
+     * Regex to extract DOI
      * @var string
      */
     public string $regex = '(10[.][0-9]{4,}[^\s"/<>]*/[^\s"<>]+)';
 
     /**
-     * @desc Correct prefix
+     * Correct prefix
      * @var string
      */
     public string $prefix = 'https://doi.org/';
 
     /**
-     * @desc Incorrect prefixes
+     * Incorrect prefixes
      * @var array|string[]
      */
     public array $prefixInCorrect = [
@@ -40,8 +40,7 @@ class Doi
         'http://doi:',
         'https://doi:',
         'doi:',
-        'doi: '
-    ];
+        'doi: '];
 
     /**
      * Extract doi from string
@@ -59,12 +58,13 @@ class Doi
 
         if (empty($match)) return null;
 
-        $pidCorrect = $this->prefix . $match;
+        $pidCorrect = $match;
 
         return trim($pidCorrect, '.');
     }
 
     /**
+     * Normalize a DOI that is found in a raw citation by removing any (in)correct prefixes
      * @param $raw
      * @param $doi
      * @return string|null
@@ -73,16 +73,19 @@ class Doi
     {
         if (empty($raw)) return null;
 
-        $doiIncorrect = [];
+        $doiListToRemove = [];
+
+        $doiListToRemove[] = $this->prefix . $doi;
+
         foreach ($this->prefixInCorrect as $key) {
-            $doiIncorrect[] = $key . $this->removePrefixFromUrl($doi);
+            $doiListToRemove[] = $key . $this->removePrefixFromUrl($doi);
         }
 
-        return str_replace($doiIncorrect, $doi, $raw);
+        return str_replace($doiListToRemove, $doi, $raw);
     }
 
     /**
-     * @desc Remove $prefix from URL
+     * Remove prefix from URL
      * @param ?string $url
      * @return string
      */
@@ -96,7 +99,7 @@ class Doi
     }
 
     /**
-     * Add $prefix to URL
+     * Add prefix to URL
      * @param string|null $url
      * @return string
      */
