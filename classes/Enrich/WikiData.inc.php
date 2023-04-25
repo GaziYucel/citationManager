@@ -23,6 +23,20 @@ use OptimetaCitationsPlugin;
 class WikiData
 {
     /**
+     * Is this instance production
+     * @var bool
+     */
+    protected bool $isProduction = false;
+
+    public function __construct()
+    {
+        $plugin = new OptimetaCitationsPlugin();
+        if ($plugin->getSetting($plugin->getCurrentContextId(), OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
+            $this->isProduction = true;
+        }
+    }
+
+    /**
      * Get information from Wikidata and return as CitationModel
      * @param CitationModel $citation
      * @return CitationModel
@@ -37,11 +51,17 @@ class WikiData
         $doi = $objDoi->removePrefixFromUrl($citation->doi);
 
         $wikiData = new WikiDataBase(
-            OPTIMETA_CITATIONS_IS_TEST_ENVIRONMENT,
+            !$this->isProduction,
             $plugin->getSetting($contextId, OPTIMETA_CITATIONS_WIKIDATA_USERNAME),
             $plugin->getSetting($contextId, OPTIMETA_CITATIONS_WIKIDATA_PASSWORD));
 
         $citation->wikidata_qid = $wikiData->getEntity($doi, '');
+
+        if (!empty($citation->wikidata_qid)) {
+            $citation->wikidata_url = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $citation->wikidata_qid;
+            if (!$this->isProduction)
+                $citation->wikidata_url = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $citation->wikidata_qid;
+        }
 
         return $citation;
     }

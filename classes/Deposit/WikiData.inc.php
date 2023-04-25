@@ -23,10 +23,24 @@ use OptimetaCitationsPlugin;
 class WikiData
 {
     /**
+     * Is this instance production
+     * @var bool
+     */
+    protected bool $isProduction = false;
+
+    /**
      * Log string
      * @var string
      */
     public string $log = '';
+
+    public function __construct()
+    {
+        $plugin = new OptimetaCitationsPlugin();
+        if ($plugin->getSetting($plugin->getCurrentContextId(), OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
+            $this->isProduction = true;
+        }
+    }
 
     /**
      * Submits work to WikiData
@@ -36,7 +50,15 @@ class WikiData
      */
     public function submitWork(string $submissionId, array $citations): string
     {
-        $work = [];
+        $work = [
+            'qid' => '',
+            'locale' => '',
+            'label' => '',
+            'claims' => [
+                'doi' => '',
+                'publicationDate' => ''
+            ]
+        ];
 
         $plugin = new OptimetaCitationsPlugin();
 
@@ -65,7 +87,7 @@ class WikiData
         if (empty($doi) || empty($issue)) return '';
 
         $wikiDataBase = new WikiDataBase(
-            OPTIMETA_CITATIONS_IS_TEST_ENVIRONMENT,
+            !$this->isProduction,
             $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_WIKIDATA_USERNAME),
             $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_WIKIDATA_PASSWORD));
 
@@ -80,8 +102,7 @@ class WikiData
         $work["claims"]["publicationDate"] = $publicationDate;
 
         // check if article/item exists
-        $qid = $wikiDataBase->getEntity($doi, '');
-        if (empty($qid)) $work["qid"] = $qid;
+        $work["qid"] = $wikiDataBase->getEntity($doi, '');
 
         $qidNew = $wikiDataBase->submitWork($work);
 

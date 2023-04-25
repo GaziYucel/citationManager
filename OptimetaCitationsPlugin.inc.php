@@ -12,7 +12,7 @@
  * @brief Plugin for parsing Citations and submitting to Open Access websites.
  */
 
-const OPTIMETA_CITATIONS_IS_TEST_ENVIRONMENT = true;
+const OPTIMETA_CITATIONS_IS_PRODUCTION_KEY = 'OptimetaCitations_IsProductionEnvironment';
 const OPTIMETA_CITATIONS_PLUGIN_PATH = __DIR__;
 const OPTIMETA_CITATIONS_USER_AGENT = 'OJSOptimetaCitations';
 const OPTIMETA_CITATIONS_API_ENDPOINT = 'OptimetaCitations';
@@ -21,19 +21,20 @@ const OPTIMETA_CITATIONS_PUBLICATION_WORK = 'OptimetaCitations_PublicationWork';
 const OPTIMETA_CITATIONS_FORM_NAME = 'OptimetaCitations_PublicationForm';
 const OPTIMETA_CITATIONS_FORM_FIELD_PARSED = 'OptimetaCitations_CitationsParsed';
 const OPTIMETA_CITATIONS_SAVED_IS_ENABLED = 'OptimetaCitations_IsEnabled';
-const OPTIMETA_CITATIONS_OPENALEX_URL = 'https://openalex.org';
 const OPTIMETA_CITATIONS_WIKIDATA_USERNAME = 'OptimetaCitations_Wikidata_Username';
 const OPTIMETA_CITATIONS_WIKIDATA_PASSWORD = 'OptimetaCitations_Wikidata_Password';
-const OPTIMETA_CITATIONS_WIKIDATA_URLS = ['prod' => 'https://www.wikidata.org/wiki', 'test' => 'https://test.wikidata.org/wiki'];
-const OPTIMETA_CITATIONS_WIKIDATA_API_URLS = ['prod' => 'https://www.wikidata.org/w/api.php', 'test' => 'https://test.wikidata.org/w/api.php'];
-const OPTIMETA_CITATIONS_WIKIDATA_URL = 'https://www.wikidata.org/wiki';
-const OPTIMETA_CITATIONS_WIKIDATA_API_URL = 'https://www.wikidata.org/w/api.php';
 const OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER = 'OptimetaCitations_Open_Citations_Owner';
 const OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY = 'OptimetaCitations_Open_Citations_Repository';
 const OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN = 'OptimetaCitations_Open_Citations_Token';
-const OPTIMETA_CITATIONS_ORCID_URL = 'https://orcid.org/';
-const OPTIMETA_CITATIONS_OPEN_ALEX_URL = 'https://openalex.org/';
-const OPTIMETA_CITATIONS_DOI_BASE_URL = 'https://doi.org/';
+
+const OPTIMETA_CITATIONS_OPENALEX_URL = 'https://openalex.org';
+const OPTIMETA_CITATIONS_WIKIDATA_URL = 'https://www.wikidata.org/wiki';
+const OPTIMETA_CITATIONS_WIKIDATA_API_URL = 'https://www.wikidata.org/w/api.php';
+const OPTIMETA_CITATIONS_WIKIDATA_URL_TEST = 'https://test.wikidata.org/wiki';
+const OPTIMETA_CITATIONS_WIKIDATA_API_URL_TEST = 'https://test.wikidata.org/w/api.php';
+const OPTIMETA_CITATIONS_ORCID_URL = 'https://orcid.org';
+const OPTIMETA_CITATIONS_OPEN_ALEX_URL = 'https://openalex.org';
+const OPTIMETA_CITATIONS_DOI_BASE_URL = 'https://doi.org';
 
 require_once(OPTIMETA_CITATIONS_PLUGIN_PATH . '/vendor/autoload.php');
 
@@ -55,7 +56,13 @@ use Optimeta\Citations\Model\WorkModel;
 
 class OptimetaCitationsPlugin extends GenericPlugin
 {
-    protected $versionSpecificNameState = 'state';
+    /**
+     * Is this instance production
+     * @var bool
+     */
+    protected bool $isProduction = false;
+
+    protected $versionSpecificNameState = 'state'; //todo: can be replaced
 
     protected $isEnabledSaved = '0';
 
@@ -69,8 +76,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
         'workModel' => '',
         'publicationWork' => '',
         'openAlexURL' => OPTIMETA_CITATIONS_OPENALEX_URL,
-        'wikidataURL' => OPTIMETA_CITATIONS_WIKIDATA_URLS['prod'],
-        'orcidURL' => 'orcid.org'];
+        'wikidataURL' => OPTIMETA_CITATIONS_WIKIDATA_URL,
+        'orcidURL' => OPTIMETA_CITATIONS_ORCID_URL];
 
     /**
      * @copydoc Plugin::register
@@ -79,6 +86,10 @@ class OptimetaCitationsPlugin extends GenericPlugin
     {
         // Register the plugin even when it is not enabled
         $success = parent::register($category, $path);
+
+        if($this->getSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true'){
+            $this->isProduction = true;
+        }
 
         // get value of isEnabled from database
         $this->isEnabledSaved = $this->getSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_SAVED_IS_ENABLED);
@@ -276,6 +287,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
         $this->templateParameters['pluginApiUrl'] = $apiBaseUrl . OPTIMETA_CITATIONS_API_ENDPOINT;
         $this->templateParameters['submissionId'] = $submissionId;
+        $this->templateParameters['doiBaseUrl'] = OPTIMETA_CITATIONS_DOI_BASE_URL;
 
         $pluginDAO = new PluginDao();
         $this->templateParameters['citationsParsed'] = json_encode($pluginDAO->getCitations($publication));
@@ -284,7 +296,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
         if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]')
             $this->templateParameters['workModel'] = $publicationWorkDb;
 
-        if (OPTIMETA_CITATIONS_IS_TEST_ENVIRONMENT) $this->templateParameters['wikidataURL'] = OPTIMETA_CITATIONS_WIKIDATA_URLS['test'];
+        if (!$this->isProduction)
+            $this->templateParameters['wikidataURL'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST;
 
         if ($publication->getData('status') === STATUS_PUBLISHED)
             $this->templateParameters['customScript'] .= "window.onload = function(){ document.querySelector('#optimetaCitations button.pkpButton').disabled = true; }" . PHP_EOL;
@@ -352,6 +365,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
         $this->templateParameters['pluginApiUrl'] = $apiBaseUrl . OPTIMETA_CITATIONS_API_ENDPOINT;
         $this->templateParameters['submissionId'] = $submissionId;
+        $this->templateParameters['doiBaseUrl'] = OPTIMETA_CITATIONS_DOI_BASE_URL;
 
         $pluginDAO = new PluginDao();
         $this->templateParameters['citationsParsed'] = json_encode($pluginDAO->getCitations($publication));
@@ -360,7 +374,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
         if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]')
             $this->templateParameters['workModel'] = $publicationWorkDb;
 
-        if (OPTIMETA_CITATIONS_IS_TEST_ENVIRONMENT) $this->templateParameters['wikidataURL'] = OPTIMETA_CITATIONS_WIKIDATA_URLS['test'];
+        if (!$this->isProduction)
+            $this->templateParameters['wikidataURL'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST;
 
         $templateMgr->assign($this->templateParameters);
 

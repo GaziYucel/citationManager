@@ -72,7 +72,9 @@ class OpenAlex
         if (!empty($openAlexWork->host_venue['id'])) $citation->venue_openalex_id = $this->removeOpenAlexOrgFromUrl($openAlexWork->host_venue['id']);
 
         $citation->openalex_id = $this->removeOpenAlexOrgFromUrl($openAlexWork->id);
+
         if (!empty($citation->openalex_id)) {
+            $citation->openalex_url = OPTIMETA_CITATIONS_OPENALEX_URL . '/' . $citation->openalex_id;
             $citation->isProcessed = true;
         }
 

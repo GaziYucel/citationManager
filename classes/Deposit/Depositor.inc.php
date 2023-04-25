@@ -16,15 +16,30 @@ namespace Optimeta\Citations\Deposit;
 
 use Optimeta\Citations\Dao\PluginDAO;
 use Optimeta\Citations\Model\WorkModel;
+use OptimetaCitationsPlugin;
 use Services;
 
 class Depositor
 {
     /**
+     * Is this instance production
+     * @var bool
+     */
+    protected bool $isProduction = false;
+
+    /**
      * Log string
      * @var string
      */
     public string $log = '';
+
+    public function __construct()
+    {
+        $plugin = new OptimetaCitationsPlugin();
+        if ($plugin->getSetting($plugin->getCurrentContextId(), OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
+            $this->isProduction = true;
+        }
+    }
 
     /**
      * Submit enriched citations and return citations
@@ -50,24 +65,26 @@ class Depositor
         if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]')
             $publicationWork = json_decode($publicationWorkDb, true);
 
-        // OpenCitations: deposit if not batch or empty
-        if (!$isBatch || empty($publicationWork['opencitations_url'])) {
+        // OpenCitations
+        if (empty($publicationWork['opencitations_url'])) {
             $openCitations = new OpenCitations();
             $openCitationsUrl = $openCitations->submitWork($submissionId, $citationsParsed);
+
             $publicationWork['opencitations_url'] = $openCitationsUrl;
-            $this->log .= '[$publicationWork>opencitations_url: ' .
-                $publicationWork['opencitations_url'] . ']';
+
+            $this->log .= '[publicationWork>opencitations_url: ' . $publicationWork['opencitations_url'] . ']';
         }
 
-        // WikiData: deposit if not batch or empty
-        if (!$isBatch || empty($publicationWork['wikidata_url'])) {
+        // WikiData
+        if (empty($publicationWork['wikidata_url'])) {
             $wikiData = new WikiData();
-            $wikiDataUrl = $wikiData->submitWork(
-                $submissionId,
-                $citationsParsed);
-            $publicationWork['wikidata_url'] = $wikiDataUrl;
-            $this->log .= '[$publicationWork>wikidata_url: ' .
-                $publicationWork['wikidata_url'] . ']';
+            $wikiDataQid = $wikiData->submitWork($submissionId, $citationsParsed);
+
+            $publicationWork['wikidata_qid'] = $wikiDataQid;
+            $publicationWork['wikidata_url'] = OPTIMETA_CITATIONS_WIKIDATA_URL . '/' . $wikiDataQid;
+            if (!$this->isProduction) $publicationWork['wikidata_url'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $wikiDataQid;
+
+            $this->log .= '[publicationWork>wikidata_url: ' . $publicationWork['wikidata_url'] . ']';
         }
 
         // convert to json

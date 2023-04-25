@@ -35,6 +35,7 @@ class SettingsForm extends \Form
      * @var string[]
      */
     private $settings = [
+        OPTIMETA_CITATIONS_IS_PRODUCTION_KEY,
         OPTIMETA_CITATIONS_WIKIDATA_USERNAME,
         OPTIMETA_CITATIONS_WIKIDATA_PASSWORD,
         OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER,
@@ -111,7 +112,13 @@ class SettingsForm extends \Form
 
         foreach ($this->settings as $key) {
             $value = $this->getData($key);
-            if($key === OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED && !empty($value)) $value = "true";
+
+            if ($key === OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED && !empty($value)) {
+                $value = "true";
+            } else if ($key === OPTIMETA_CITATIONS_IS_PRODUCTION_KEY && !empty($value)) {
+                $value = "true";
+            }
+
             $this->plugin->updateSetting($contextId, $key, $value);
         }
 

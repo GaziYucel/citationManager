@@ -131,3 +131,9 @@ msgstr "Whether show or hide the structured citations at front."
 
 msgid "plugins.generic.optimetaCitations.settings.show_structured_frontend.checkbox"
 msgstr "If checked, the structured citations will be shown."
+
+msgid "plugins.generic.optimetaCitations.settings.is_production_environment.title"
+msgstr "Is this a production instance?"
+
+msgid "plugins.generic.optimetaCitations.settings.is_production_environment.checkbox"
+msgstr "If checked, this installation is assumed a production environment."
