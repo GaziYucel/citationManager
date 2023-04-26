@@ -27,13 +27,13 @@ class OrcidBase
     protected string $userAgent = 'OJSOptimetaCitations';
 
     /**
-     * @desc The url to the api
+     * The url to the api
      * @var string
      */
     protected string $url = 'https://pub.orcid.org/v2.1/';
 
     /**
-     * @desc GuzzleHttp\Client
+     * GuzzleHttp\Client
      * @var object (class)
      */
     protected object $client;

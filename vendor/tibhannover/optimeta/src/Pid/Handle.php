@@ -17,13 +17,13 @@ namespace Optimeta\Shared\Pid;
 class Handle
 {
     /**
-     * @desc Correct prefix
+     * Correct prefix
      * @var string
      */
     public string $prefix = 'https://hdl.handle.net/';
 
     /**
-     * @desc Incorrect prefixes
+     * Incorrect prefixes
      * @var array|string[]
      */
     public array $prefixInCorrect = [
@@ -31,7 +31,7 @@ class Handle
     ];
 
     /**
-     * @desc Remove $prefix from URL
+     * Remove prefix from URL
      * @param string|null $url
      * @return string
      */

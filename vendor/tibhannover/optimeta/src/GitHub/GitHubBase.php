@@ -26,19 +26,19 @@ class GitHubBase
     protected string $userAgent = 'OJSOptimetaCitations';
 
     /**
-     * @desc The base url to the api issues
+     * The base url to the api issues
      * @var string
      */
     protected $url = 'https://api.github.com/repos/{{owner}}/{{repository}}/issues';
 
     /**
-     * @desc Access token
+     * Access token
      * @var string
      */
     protected $token;
 
     /**
-     * @desc GuzzleHttp\Client
+     * GuzzleHttp\Client
      * @var object (class)
      */
     protected object $client;
@@ -62,7 +62,7 @@ class GitHubBase
     }
 
     /**
-     * @desc Adds an issue to a given repository
+     * Adds an issue to a given repository
      * @param string $title
      * @param string $body
      * @return int
@@ -101,7 +101,7 @@ class GitHubBase
     }
 
     /**
-     * @desc Get issue id from response
+     * Get issue id from response
      * @param $response
      * @return int
      */

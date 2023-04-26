@@ -12,7 +12,7 @@
  */
 
 /**
- * @desc Gets CSRF Token
+ * Gets CSRF Token
  * @returns string
  */
 function optimetaCitationsGetCsrfToken() {
@@ -33,7 +33,7 @@ function optimetaCitationsGetCsrfToken() {
 }
 
 /**
- * @desc Gets citations raw value
+ * Gets citations raw value
  * @returns {string}
  */
 function optimetaCitationsGetCitationsRaw() {
@@ -58,7 +58,7 @@ function optimetaCitationsGetCitationsRaw() {
 }
 
 /**
- * @desc Gets Helper Array
+ * Gets Helper Array
  * @param baseArray array
  * @returns array
  */
@@ -74,7 +74,7 @@ function optimetaCitationsGetHelperArray(baseArray) {
 }
 
 /**
- * @desc Check if string is json
+ * Check if string is json
  * @param str string
  * @returns boolean
  */

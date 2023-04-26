@@ -62,7 +62,7 @@ class Api
     protected string $csrfToken;
 
     /**
-     * @desc GuzzleHttp\Client
+     * GuzzleHttp\Client
      * @var Client
      */
     protected Client $client;
