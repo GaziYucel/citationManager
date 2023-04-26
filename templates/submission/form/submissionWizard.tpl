@@ -10,7 +10,8 @@
             citations: optimetaCitations,
             helper: optimetaCitationsGetHelperArray(optimetaCitations),
             author: {$authorModel},
-            publicationWork: {$workModel}
+            publicationWork: {$workModel},
+            isPublished: {$isPublished}
         },
         computed: {
             citationsJsonComputed: function () {
@@ -60,6 +61,14 @@
                     if (rowIsNull === true) {
                         this.citations[index].authors.splice(i);
                     }
+                }
+            }
+        },
+        created() {
+            if (this.isPublished) {
+                window.onload = function () {
+                    document.querySelector('#optimetaCitations button.pkpButton').disabled = true;
+
                 }
             }
         }
@@ -180,7 +189,8 @@
                     </td>
                     <td class="optimetaAlignRight">
                         <a href="javascript:optimetaDepositCitations()" id="buttonDeposit" class="pkpButton"
-                           :class="(optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitations.deposit.button"}</a>
+                           :class="(optimetaCitationsIsParsed && isPublished)?'':'optimetaDisabled'">
+                            {translate key="plugins.generic.optimetaCitations.deposit.button"}</a>
                         <a href="javascript:optimetaClearCitations()" id="buttonClear" class="pkpButton"
                            :class="(optimetaCitationsIsParsed)?'':'optimetaDisabled'">{translate key="plugins.generic.optimetaCitations.clear.button"}</a>
                         <a href="javascript:optimetaProcessCitations()" id="buttonProcess"
