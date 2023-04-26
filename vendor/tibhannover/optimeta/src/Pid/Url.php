@@ -17,7 +17,7 @@ namespace Optimeta\Shared\Pid;
 class Url
 {
     /**
-     * @desc Regex to extract URL
+     * Regex to extract URL
      * @var string
      */
     public string $regex = '%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s';

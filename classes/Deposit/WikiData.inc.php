@@ -94,9 +94,7 @@ class WikiData
         // add main article
         $locale = $publication->getData('locale');
         $work["locale"] = $locale;
-        $work["label"] = $title = $publication->getData('title', $locale);
-        // debug data
-        $work["label"] .= ' [' . date('Y-m-d H:i:s') . ']';
+        $work["label"] = $title = $publication->getData('title', $locale); // . ' [' . date('Y-m-d H:i:s') . ']';
 
         $work["claims"]["doi"] = $doi;
         $work["claims"]["publicationDate"] = $publicationDate;

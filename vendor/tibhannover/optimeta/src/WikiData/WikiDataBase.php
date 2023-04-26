@@ -26,19 +26,16 @@ class WikiDataBase
     public string $log = '';
 
     /**
-     * @var string|mixed
+     * Url for production
+     * @var string
      */
     public string $url = 'https://www.wikidata.org/w/api.php';
 
     /**
-     * @var array|string[]
+     * Url for test
+     * @var string
      */
-    public array $availableUrls = [
-        'prod' => 'https://www.wikidata.org/wiki/',
-        'test' => 'https://test.wikidata.org/wiki/',
-        'apiProd' => 'https://www.wikidata.org/w/api.php',
-        'apiTest' => 'https://test.wikidata.org/w/api.php'
-    ];
+    public string $urlTest = 'https://test.wikidata.org/w/api.php';
 
     /**
      * Optimeta\Shared\WikiData\Model\Property
@@ -56,12 +53,10 @@ class WikiDataBase
     {
         $this->property = new Property($isTest);
 
-        if ($isTest) $this->url = $this->availableUrls['apiTest'];
+        if ($isTest)
+            $this->url = $this->urlTest;
 
-        $this->api = new Api(
-            $this->url,
-            $username,
-            $password);
+        $this->api = new Api($this->url, $username, $password);
     }
 
     /**
@@ -152,16 +147,14 @@ class WikiDataBase
         }
 
         $data["labels"] = $labels;
-        if (!empty($claims)) $data["claims"] = $claims;
+        if (!empty($claims))
+            $data["claims"] = $claims;
 
         $form["data"] = json_encode($data);
 
-//        error_log('form -> ' . json_encode($form, JSON_UNESCAPED_SLASHES));
+        $this->log .= '<form>' . json_encode($form, JSON_UNESCAPED_SLASHES) . '</form>';
 
-        $response = $this->api->actionPost(
-            $action,
-            $query,
-            $form);
+        $response = $this->api->actionPost($action, $query, $form);
 
         $responseArray = json_decode($response, true);
 
@@ -169,7 +162,7 @@ class WikiDataBase
             $qid = $responseArray["entity"]["id"];
         }
 
-        $this->log .= $response;
+        $this->log .= '<response>' . $response . '</response>';
 
         return $qid;
     }
