@@ -34,7 +34,7 @@ const OPTIMETA_CITATIONS_WIKIDATA_URL_TEST = 'https://test.wikidata.org/wiki';
 const OPTIMETA_CITATIONS_WIKIDATA_API_URL_TEST = 'https://test.wikidata.org/w/api.php';
 const OPTIMETA_CITATIONS_ORCID_URL = 'https://orcid.org';
 const OPTIMETA_CITATIONS_OPEN_ALEX_URL = 'https://openalex.org';
-const OPTIMETA_CITATIONS_DOI_BASE_URL = 'https://doi.org';
+const OPTIMETA_CITATIONS_DOI_URL = 'https://doi.org';
 
 require_once(OPTIMETA_CITATIONS_PLUGIN_PATH . '/vendor/autoload.php');
 
@@ -72,6 +72,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         'pluginJavaScriptURL' => '',
         'pluginImagesURL' => '',
         'pluginApiUrl' => '',
+        'isPublished' => 'false',
         'authorModel' => '',
         'workModel' => '',
         'publicationWork' => '',
@@ -87,7 +88,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         // Register the plugin even when it is not enabled
         $success = parent::register($category, $path);
 
-        if($this->getSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true'){
+        if ($this->getSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
             $this->isProduction = true;
         }
 
@@ -158,16 +159,20 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $template = $args[1];
         $request = PKPApplication::get()->getRequest();
 
-        if ($template === 'frontend/pages/article.tpl') {
-            if ($this->getSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED) === 'true') {
-                $templateMgr->addStyleSheet(
-                    'optimetaCitations',
-                    $request->getBaseUrl() . '/' . $this->getPluginPath() . '/css/optimetaCitations.css',
-                    array('contexts' => array('frontend'))
-                );
+        switch($template){
+            case 'frontend/pages/article.tpl':
+                if ($this->getSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED) === 'true') {
+                    $templateMgr->addStyleSheet(
+                        'optimetaCitations',
+                        $request->getBaseUrl() . '/' . $this->getPluginPath() . '/css/optimetaCitations.css',
+                        array('contexts' => array('frontend'))
+                    );
 
-                $templateMgr->registerFilter("output", array($this, 'registrationFilter'));
-            }
+                    $templateMgr->registerFilter("output", array($this, 'registrationFilter'));
+                }
+                break;
+            default:
+                break;
         }
 
         return false;
@@ -188,6 +193,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
         $article = new Article();
         $references = $article->getCitationsAsHtml($publication);
+        if (!$this->isProduction)
+            $references = str_replace(OPTIMETA_CITATIONS_WIKIDATA_URL, OPTIMETA_CITATIONS_WIKIDATA_URL_TEST, $references);
 
         $newOutput =
             "<div id='optimetaCitations_StructuredCitations_1234567890' style='display: none;'>$references</div>" . PHP_EOL .
@@ -287,7 +294,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
         $this->templateParameters['pluginApiUrl'] = $apiBaseUrl . OPTIMETA_CITATIONS_API_ENDPOINT;
         $this->templateParameters['submissionId'] = $submissionId;
-        $this->templateParameters['doiBaseUrl'] = OPTIMETA_CITATIONS_DOI_BASE_URL;
+        $this->templateParameters['doiBaseUrl'] = OPTIMETA_CITATIONS_DOI_URL;
 
         $pluginDAO = new PluginDao();
         $this->templateParameters['citationsParsed'] = json_encode($pluginDAO->getCitations($publication));
@@ -300,7 +307,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
             $this->templateParameters['wikidataURL'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST;
 
         if ($publication->getData('status') === STATUS_PUBLISHED)
-            $this->templateParameters['customScript'] .= "window.onload = function(){ document.querySelector('#optimetaCitations button.pkpButton').disabled = true; }" . PHP_EOL;
+            $this->templateParameters['isPublished'] = 'true';
 
         $templateMgr->assign($this->templateParameters);
 
@@ -365,7 +372,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
         $this->templateParameters['pluginApiUrl'] = $apiBaseUrl . OPTIMETA_CITATIONS_API_ENDPOINT;
         $this->templateParameters['submissionId'] = $submissionId;
-        $this->templateParameters['doiBaseUrl'] = OPTIMETA_CITATIONS_DOI_BASE_URL;
+        $this->templateParameters['doiBaseUrl'] = OPTIMETA_CITATIONS_DOI_URL;
 
         $pluginDAO = new PluginDao();
         $this->templateParameters['citationsParsed'] = json_encode($pluginDAO->getCitations($publication));
@@ -376,6 +383,9 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
         if (!$this->isProduction)
             $this->templateParameters['wikidataURL'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST;
+
+        if ($publication->getData('status') === STATUS_PUBLISHED)
+            $this->templateParameters['isPublished'] = 'true';
 
         $templateMgr->assign($this->templateParameters);
 

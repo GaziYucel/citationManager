@@ -33,7 +33,7 @@ class Article
         for ($i = 0; $i < count($citations); $i++) {
             $citationOut = $this->getCitationWithLinks($citations[$i]['raw']);
 
-            if ($citations[$i]['isProcessed']) $citationOut = $this->getCitationAsHtml($citations[$i]);
+            if ($citations[$i]['isProcessed']) $citationOut = $this->getSingleCitationAsHtml($citations[$i]);
 
             $output .= '<p>' . $citationOut . '</p>';
         }
@@ -46,26 +46,30 @@ class Article
      * @param $citation
      * @return string
      */
-    public function getCitationAsHtml($citation): string
+    public function getSingleCitationAsHtml($citation): string
     {
         $out = '';
         $doiUrl = "<a href='{doi}'  target='_blank'><span>{doi}</span></a>";
-        $orcidUrl = "<a href='" . OPTIMETA_CITATIONS_ORCID_URL . "{orcid}'  target='_blank' class='optimetaButton optimetaButtonGreen'><span>iD</span></a>";
-        $wikiDataUrl = "<a href='" . OPTIMETA_CITATIONS_WIKIDATA_URL . "{wikidata_qid}'  target='_blank' class='optimetaButton optimetaButtonGreen'><span>WikiData</span></a>";
-        $openAlexUrl = "<a href='" . OPTIMETA_CITATIONS_OPEN_ALEX_URL . "{openalex_id}'  target='_blank' class='optimetaButton optimetaButtonGreen'><span>OpenAlex</span></a>";
+        $orcidUrl = "<a href='" . OPTIMETA_CITATIONS_ORCID_URL . "/" . "{orcid}'  target='_blank' class='optimetaButton optimetaButtonGreen'><span>iD</span></a>";
+        $wikiDataUrl = "<a href='" . OPTIMETA_CITATIONS_WIKIDATA_URL . "/" . "{wikidata_qid}'  target='_blank' class='optimetaButton optimetaButtonGreen'><span>WikiData</span></a>";
+        $openAlexUrl = "<a href='" . OPTIMETA_CITATIONS_OPEN_ALEX_URL . "/" . "{openalex_id}'  target='_blank' class='optimetaButton optimetaButtonGreen'><span>OpenAlex</span></a>";
 
         // authors
         foreach ($citation['authors'] as $index => $author) {
             $out .= $author['family_name'] . ' ' . $author['given_name'];
-            if (!empty($author['orcid'])) $out .= " " . str_replace('orcid', $author['orcid'], $orcidUrl);
+            if (!empty($author['orcid'])) $out .= " " . str_replace('{orcid}', $author['orcid'], $orcidUrl);
             $out .= ', ';
         }
         $out = trim($out, ', ');
 
         if (!empty($citation['publication_year'])) $out .= ' (' . $citation['publication_year'] . ')';
+
         $out .= ' ' . $citation['title'];
-        if (!empty($citation['doi'])) $out .= " " . str_replace('{doi}', $citation['doi'], $doiUrl);
+        
+        if (!empty($citation['doi'])) $out .= " " . str_replace('{doi}', OPTIMETA_CITATIONS_DOI_URL . '/' . $citation['doi'], $doiUrl);
+
         if (!empty($citation['wikidata_qid'])) $out .= " " . str_replace('{wikidata_qid}', $citation['wikidata_qid'], $wikiDataUrl);
+
         if (!empty($citation['openalex_id'])) $out .= " " . str_replace('{openalex_id}', $citation['openalex_id'], $openAlexUrl);
 
         return $out;
