@@ -14,11 +14,13 @@
 
 namespace Optimeta\Citations\Deposit;
 
+use Journal;
 use Optimeta\Shared\Pid\Doi;
 use Optimeta\Shared\Pid\Orcid;
 use Optimeta\Shared\OpenCitations\Model\WorkMetaData;
 use Optimeta\Shared\WikiData\WikiDataBase;
 use OptimetaCitationsPlugin;
+use Publication;
 
 class WikiData
 {
@@ -34,22 +36,50 @@ class WikiData
      */
     public string $log = '';
 
+    /**
+     * Instance of OptimetaCitationsPlugin
+     * @var object OptimetaCitationsPlugin
+     */
+    protected object $plugin;
+
     public function __construct()
     {
-        $plugin = new OptimetaCitationsPlugin();
-        if ($plugin->getSetting($plugin->getCurrentContextId(), OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
+        $this->plugin = new OptimetaCitationsPlugin();
+        if ($this->plugin->getSetting($this->plugin->getCurrentContextId(),
+                OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
             $this->isProduction = true;
         }
     }
 
     /**
      * Submits work to WikiData
-     * @param string $submissionId
+     * @param Journal $context
+     * @param object|null $issue
+     * @param object $submission
+     * @param Publication $publication
+     * @param array $authors
+     * @param array $publicationWork
      * @param array $citations
      * @return string
      */
-    public function submitWork(string $submissionId, array $citations): string
+    public function submitWork(
+        Journal     $context,
+        ?object     $issue,
+        object      $submission,
+        Publication $publication,
+        array       $authors,
+        array       $publicationWork,
+        array       $citations): string
     {
+        $username = $this->plugin->getSetting($context->getId(),
+            OPTIMETA_CITATIONS_WIKIDATA_USERNAME);
+        $password = $this->plugin->getSetting($context->getId(),
+            OPTIMETA_CITATIONS_WIKIDATA_PASSWORD);
+
+        // return '' url not empty or username and password empty
+        if (empty($username) || empty($password))
+            return '';
+
         $work = [
             'qid' => '',
             'locale' => '',
@@ -60,36 +90,11 @@ class WikiData
             ]
         ];
 
-        $plugin = new OptimetaCitationsPlugin();
+        $doi = $submission->getStoredPubId('doi');
 
-        $request = $plugin->getRequest();
-        $context = $request->getContext(); // journal
+        $publicationDate = date('Y-m-d', strtotime($issue->getData('datePublished')));
 
-        $submissionDao = \DAORegistry::getDAO('SubmissionDAO');
-        $submission = $submissionDao->getById($submissionId);
-
-        $publication = $submission->getLatestPublication();
-        $authors = $submission->getAuthors();
-
-        $issueDao = \DAORegistry::getDAO('IssueDAO');
-        $issueId = $publication->getData('issueId');
-
-        $doi = '';
-        if (!empty($submission->getStoredPubId('doi'))) $doi = $submission->getStoredPubId('doi');
-
-        $issue = null;
-        $publicationDate = '';
-        if (!is_null($issueDao->getById($issueId))) {
-            $issue = $issueDao->getById($issueId);
-            $publicationDate = date('\+Y-m-d\T00:00:00\Z', strtotime($issue->getData('datePublished')));
-        }
-
-        if (empty($doi) || empty($issue)) return '';
-
-        $wikiDataBase = new WikiDataBase(
-            !$this->isProduction,
-            $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_WIKIDATA_USERNAME),
-            $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_WIKIDATA_PASSWORD));
+        $wikiDataBase = new WikiDataBase(!$this->isProduction, $username, $password);
 
         // add main article
         $locale = $publication->getData('locale');

@@ -28,6 +28,12 @@ class Depositor
     protected bool $isProduction = false;
 
     /**
+     * Instance of OptimetaCitationsPlugin
+     * @var object OptimetaCitationsPlugin
+     */
+    protected object $plugin;
+
+    /**
      * Log string
      * @var string
      */
@@ -35,8 +41,9 @@ class Depositor
 
     public function __construct()
     {
-        $plugin = new OptimetaCitationsPlugin();
-        if ($plugin->getSetting($plugin->getCurrentContextId(), OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
+        $this->plugin = new OptimetaCitationsPlugin();
+        if ($this->plugin->getSetting($this->plugin->getCurrentContextId(),
+                OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
             $this->isProduction = true;
         }
     }
@@ -50,40 +57,79 @@ class Depositor
      */
     public function executeAndReturnWork(string $submissionId, array $citationsParsed, bool $isBatch = false)
     {
-        $publicationWork = get_object_vars(new WorkModel());
+        $publicationWork = get_object_vars(new WorkModel());;
 
-        // return if input is empty
-        if (empty($submissionId) || empty($citationsParsed)) return $publicationWork;
+        // return if input or username password is empty
+        if (empty($submissionId) || empty($citationsParsed))
+            return $publicationWork;
 
+        // request
+        $request = $this->plugin->getRequest();
+
+        // context or journal
+        $context = $request->getContext();
+
+        // submission
         $submissionDao = \DAORegistry::getDAO('SubmissionDAO');
         $submission = $submissionDao->getById($submissionId);
 
-        $publicationDao = \DAORegistry::getDAO('PublicationDAO');
-        $publication = $publicationDao->getById($submission->getLatestPublication()->getId());
+        // return if doi is empty
+        if (empty($submission->getStoredPubId('doi')))
+            return $publicationWork;
 
+        // publication
+        $publicationDao = \DAORegistry::getDAO('PublicationDAO');
+        $publication = $submission->getLatestPublication();
+
+        // authors
+        $authors = $submission->getAuthors();
+
+        // issue
+        $issueId = $publication->getData('issueId');
+        $issue = null;
+        $issueDao = \DAORegistry::getDAO('IssueDAO');
+        if (!is_null($issueDao->getById($issueId))) {
+            $issue = $issueDao->getById($issueId);
+        }
+
+        // publication work
         $publicationWorkDb = $publication->getData(OPTIMETA_CITATIONS_PUBLICATION_WORK);
         if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]')
             $publicationWork = json_decode($publicationWorkDb, true);
 
+        $doi = $submission->getStoredPubId('doi');
+
         // OpenCitations
-        if (empty($publicationWork['opencitations_url'])) {
+        if(empty($publicationWork['opencitations_url']) && !empty($doi) && !empty($issue)){
             $openCitations = new OpenCitations();
-            $openCitationsUrl = $openCitations->submitWork($submissionId, $citationsParsed);
-
+            $openCitationsUrl = $openCitations->submitWork(
+                $context,
+                $issue,
+                $submission,
+                $publication,
+                $authors,
+                $publicationWork,
+                $citationsParsed);
             $publicationWork['opencitations_url'] = $openCitationsUrl;
-
-            $this->log .= '[publicationWork>opencitations_url: ' . $publicationWork['opencitations_url'] . ']';
+            $this->log .= '[openCitationsUrl: ' . $openCitationsUrl . ']';
         }
 
-        // WikiData
-        if (empty($publicationWork['wikidata_url'])) {
+        // WikiData: proceed if url empty, username and password given
+        if (empty($publicationWork['wikidata_url']) && !empty($doi) && !empty($issue)) {
             $wikiData = new WikiData();
-            $wikiDataQid = $wikiData->submitWork($submissionId, $citationsParsed);
+            $wikiDataQid = $wikiData->submitWork(
+                $context,
+                $issue,
+                $submission,
+                $publication,
+                $authors,
+                $publicationWork,
+                $citationsParsed);
 
             $publicationWork['wikidata_qid'] = $wikiDataQid;
             $publicationWork['wikidata_url'] = OPTIMETA_CITATIONS_WIKIDATA_URL . '/' . $wikiDataQid;
-            if (!$this->isProduction) $publicationWork['wikidata_url'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $wikiDataQid;
-
+            if (!$this->isProduction)
+                $publicationWork['wikidata_url'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $wikiDataQid;
             $this->log .= '[publicationWork>wikidata_url: ' . $publicationWork['wikidata_url'] . ']';
         }
 

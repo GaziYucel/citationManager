@@ -11,7 +11,8 @@
             helper: optimetaCitationsGetHelperArray(optimetaCitations),
             author: {$authorModel},
             publicationWork: {$workModel},
-            isPublished: {$isPublished}
+            statusCodePublished: {$statusCodePublished},
+            publicationStatus: 1
         },
         computed: {
             citationsJsonComputed: function () {
@@ -21,10 +22,26 @@
                 return JSON.stringify(this.publicationWork);
             },
             optimetaCitationsIsParsed: function () {
-                if (this.citations.length === 0) {
-                    return false;
+                return this.citations.length !== 0;
+            },
+            isPublished() {
+                let isPublished = false;
+
+                if(this.statusCodePublished === this.publicationStatus){
+                    isPublished = true;
                 }
-                return true;
+
+                if(document.querySelector('#optimetaCitations button.pkpButton') !== null){
+                    var saveBtn = document.querySelector('#optimetaCitations button.pkpButton');
+                    if (isPublished) {
+                        saveBtn.disabled = true;
+                    }
+                    else{
+                        saveBtn.disabled = false;
+                    }
+                }
+
+                return isPublished;
             }
         },
         methods: {
@@ -61,14 +78,6 @@
                     if (rowIsNull === true) {
                         this.citations[index].authors.splice(i);
                     }
-                }
-            }
-        },
-        created() {
-            if (this.isPublished) {
-                window.onload = function () {
-                    document.querySelector('#optimetaCitations button.pkpButton').disabled = true;
-
                 }
             }
         }
@@ -363,6 +372,7 @@
                       style="display: none;">{{ citationsJsonComputed }}</textarea>
             <textarea name="{$smarty.const.OPTIMETA_CITATIONS_PUBLICATION_WORK}"
                       style="display: none;">{{ publicationWorkJsonComputed }}</textarea>
+            <span style="display: none;">{{ optimetaCitationsApp.publicationStatus = components.issueEntry.fields[0].publicationStatus }}</span>
         </div>
 
     </div>

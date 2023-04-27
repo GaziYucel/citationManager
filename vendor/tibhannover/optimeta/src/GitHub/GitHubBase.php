@@ -26,6 +26,12 @@ class GitHubBase
     protected string $userAgent = 'OJSOptimetaCitations';
 
     /**
+     * Log string
+     * @var string
+     */
+    public string $log = '';
+
+    /**
      * The base url to the api issues
      * @var string
      */
@@ -94,7 +100,7 @@ class GitHubBase
 
             $issueId = $this->getIssueId($response);
         } catch (GuzzleException|\Exception $ex) {
-            error_log($ex->getMessage(), true);
+            $this->log .= $ex->getMessage();
         }
 
         return $issueId;
@@ -123,9 +129,14 @@ class GitHubBase
                 }
             }
         } catch (\Exception $ex) {
-            error_log($ex->getMessage(), true);
+            $this->log .= $ex->getMessage();
         }
 
         return $issueId;
+    }
+
+    function __destruct()
+    {
+        // error_log('GitHubBase->__destruct: ' . $this->log);
     }
 }
