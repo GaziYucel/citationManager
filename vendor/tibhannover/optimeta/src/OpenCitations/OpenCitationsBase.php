@@ -19,6 +19,12 @@ use Optimeta\Shared\GitHub\GitHubBase;
 class OpenCitationsBase
 {
     /**
+     * Log string
+     * @var string
+     */
+    public string $log = '';
+
+    /**
      * GitHubBase object
      * @var GitHubBase
      */
@@ -42,8 +48,15 @@ class OpenCitationsBase
 
         $issueId = $this->github->addIssue($title, $body);
 
+        $this->log .= '[issueId: ' . $issueId . ']';
+
         if (empty($issueId)) return 0;
 
         return $issueId;
+    }
+
+    function __destruct()
+    {
+        // error_log('OpenCitationsBase->__destruct: ' . $this->log);
     }
 }
