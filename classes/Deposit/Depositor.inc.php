@@ -111,6 +111,7 @@ class Depositor
                 $publicationWork,
                 $citationsParsed);
             $publicationWork['opencitations_url'] = $openCitationsUrl;
+
             $this->log .= '[openCitationsUrl: ' . $openCitationsUrl . ']';
         }
 
@@ -127,9 +128,12 @@ class Depositor
                 $citationsParsed);
 
             $publicationWork['wikidata_qid'] = $wikiDataQid;
-            $publicationWork['wikidata_url'] = OPTIMETA_CITATIONS_WIKIDATA_URL . '/' . $wikiDataQid;
+            if(!empty($wikiDataQid))
+                $publicationWork['wikidata_url'] = OPTIMETA_CITATIONS_WIKIDATA_URL . '/' . $wikiDataQid;
+
             if (!$this->isProduction)
                 $publicationWork['wikidata_url'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $wikiDataQid;
+
             $this->log .= '[publicationWork>wikidata_url: ' . $publicationWork['wikidata_url'] . ']';
         }
 
