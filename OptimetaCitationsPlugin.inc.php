@@ -76,6 +76,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         'authorModel' => '',
         'workModel' => '',
         'publicationWork' => '',
+        'statusCodePublished' => 3,
         'openAlexURL' => OPTIMETA_CITATIONS_OPENALEX_URL,
         'wikidataURL' => OPTIMETA_CITATIONS_WIKIDATA_URL,
         'orcidURL' => OPTIMETA_CITATIONS_ORCID_URL];
@@ -264,8 +265,9 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
     /**
      * Show tab under Publications
-     * @param string $hookname
+     * @param string $hookName
      * @param array $args [string, TemplateManager]
+     * @return void
      */
     public function publicationTab(string $hookName, array $args): void
     {
@@ -306,8 +308,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         if (!$this->isProduction)
             $this->templateParameters['wikidataURL'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST;
 
-        if ($publication->getData('status') === STATUS_PUBLISHED)
-            $this->templateParameters['isPublished'] = 'true';
+        $this->templateParameters['statusCodePublished'] = STATUS_PUBLISHED;
 
         $templateMgr->assign($this->templateParameters);
 
@@ -384,8 +385,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         if (!$this->isProduction)
             $this->templateParameters['wikidataURL'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST;
 
-        if ($publication->getData('status') === STATUS_PUBLISHED)
-            $this->templateParameters['isPublished'] = 'true';
+        $this->templateParameters['statusCodePublished'] = STATUS_PUBLISHED;
 
         $templateMgr->assign($this->templateParameters);
 

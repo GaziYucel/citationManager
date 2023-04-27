@@ -128,3 +128,26 @@ function optimetaCitationsFindPathInArray(obj, key) {
 
     return path.join(".");
 }
+
+/**
+ * Method to wait for an element to appear and call function
+ * @param selector
+ * @param callback
+ * @param checkFrequency
+ * @param timeOut
+ * @example waitForElementToDisplay(".class1 div.class2", function () { console.log("callback function"); }, 1000, 9000);
+ */
+function optimetaCitationsWaitForElementToDisplay(selector, callback, checkFrequency, timeOut) {
+    var startTime = Date.now();
+    (function loopSearch() {
+        if (document.querySelector(selector) != null) {
+            callback();
+        } else {
+            setTimeout(function () {
+                if (timeOut && Date.now() - startTime > timeOut)
+                    return;
+                loopSearch();
+            }, checkFrequency);
+        }
+    })();
+}
