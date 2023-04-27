@@ -372,7 +372,6 @@
                       style="display: none;">{{ citationsJsonComputed }}</textarea>
             <textarea name="{$smarty.const.OPTIMETA_CITATIONS_PUBLICATION_WORK}"
                       style="display: none;">{{ publicationWorkJsonComputed }}</textarea>
-            <span style="display: none;">{{ optimetaCitationsApp.publicationStatus = components.issueEntry.fields[0].publicationStatus }}</span>
         </div>
 
     </div>
