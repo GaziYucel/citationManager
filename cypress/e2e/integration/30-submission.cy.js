@@ -191,8 +191,26 @@ describe('Submission, enrich and deposit', function () {
         });
         cy.wait(2000);
 
+        // Click "Schedule For Publication"
+        cy.get('.pkpHeader__actions').within(() => {
+            cy.get('button.pkpButton')
+                .contains('Schedule For Publication').click();
+        });
+        cy.wait(2000);
+
+        // Click "Publish"
+        cy.get('.pkp_modal_panel').within(() => {
+            cy.get('button').contains('Publish').click();
+        });
+        cy.wait(2000);
+
         // Select tab Citations > Deposit
         cy.get('button#optimetaCitations-button').click();
+
+        // remove class "optimetaDisabled" from #buttonDeposit
+        cy.get('#buttonDeposit').invoke('removeClass', 'optimetaDisabled');
+
+        // click #buttonDeposit and confirm
         cy.get('#buttonDeposit').click();
         cy.on('window:confirm', () => true);
     });
