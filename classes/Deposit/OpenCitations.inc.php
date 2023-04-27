@@ -14,6 +14,7 @@
 
 namespace Optimeta\Citations\Deposit;
 
+use Journal;
 use Optimeta\Shared\Pid\Arxiv;
 use Optimeta\Shared\Pid\Doi;
 use Optimeta\Shared\Pid\Handle;
@@ -22,80 +23,99 @@ use Optimeta\Shared\OpenCitations\Model\WorkCitation;
 use Optimeta\Shared\OpenCitations\Model\WorkMetaData;
 use Optimeta\Shared\OpenCitations\OpenCitationsBase;
 use OptimetaCitationsPlugin;
+use Publication;
 
 class OpenCitations
 {
     /**
+     * Log string
+     * @var string
+     */
+    public string $log = '';
+
+    /**
+     * Instance of OptimetaCitationsPlugin
+     * @var object OptimetaCitationsPlugin
+     */
+    protected object $plugin;
+
+    /**
      * The base url to the public issues
      * @var string
      */
-    protected $urlIssues = 'https://github.com/{{owner}}/{{repository}}/issues';
+    protected string $urlIssues = 'https://github.com/{{owner}}/{{repository}}/issues';
 
     /**
      * The base url to the api issues
      * @var string
      */
-    protected $urlIssuesApi = 'https://api.github.com/repos/{{owner}}/{{repository}}/issues';
+    protected string $urlIssuesApi = 'https://api.github.com/repos/{{owner}}/{{repository}}/issues';
 
     /**
      * The syntax for the title of the issue
      * @var string
      */
-    protected $titleSyntax = 'deposit {{domain}} {{pid}}';
+    protected string $titleSyntax = 'deposit {{domain}} {{pid}}';
 
     /**
      * The separator to separate the work and the citations CSV
      * @var string
      */
-    protected $separator = '===###===@@@===';
+    protected string $separator = '===###===@@@===';
 
     /**
      * Default article type
      * @var string
      */
-    protected $defaultType = 'journal article';
+    protected string $defaultType = 'journal article';
+
+    public function __construct()
+    {
+        $this->plugin = new OptimetaCitationsPlugin();
+    }
 
     /**
      * Submits work to OpenCitations
-     * @param string $submissionId
+     * @param Journal $context
+     * @param object|null $issue
+     * @param object $submission
+     * @param Publication $publication
+     * @param array $authors
+     * @param array $publicationWork
      * @param array $citations
      * @return string
      */
-    public function submitWork(string $submissionId, array $citations): string
+    public function submitWork(
+        Journal $context,
+        ?object $issue,
+        object $submission,
+        Publication $publication,
+        array $authors,
+        array $publicationWork,
+        array $citations): string
     {
-        $plugin = new OptimetaCitationsPlugin();
+        $owner = $this->plugin->getSetting($this->plugin->getCurrentContextId(),
+            OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER);
+        $repo = $this->plugin->getSetting($this->plugin->getCurrentContextId(),
+            OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY);
+        $token = $this->plugin->getSetting($this->plugin->getCurrentContextId(),
+            OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN);
 
-        $request = $plugin->getRequest();
-        $context = $request->getContext(); // journal
+        // return '' url not empty or username and password empty
+        if (empty($owner) || empty($repo) || empty($token))
+            return '';
 
-        $submissionDao = \DAORegistry::getDAO('SubmissionDAO');
-        $submission = $submissionDao->getById($submissionId);
+        $doi = $submission->getStoredPubId('doi');
 
-        $publication = $submission->getLatestPublication();
-        $authors = $submission->getAuthors();
-
-        $issueDao = \DAORegistry::getDAO('IssueDAO');
-        $issueId = $publication->getData('issueId');
-
-        $doi = '';
-        if (!empty($submission->getStoredPubId('doi'))) $doi = $submission->getStoredPubId('doi');
-
-        $issue = null;
-        $publicationDate = '';
-        if (!is_null($issueDao->getById($issueId))) {
-            $issue = $issueDao->getById($issueId);
-            $publicationDate = date('Y-m-d', strtotime($issue->getData('datePublished')));
-        }
-
-        if (empty($doi) || empty($issue)) return '';
+        $publicationDate = date('Y-m-d', strtotime($issue->getData('datePublished')));
 
         $objDoi = new Doi();
-        // title of github issue
+        // title of GitHub issue
         $title = str_replace('{{domain}} {{pid}}',
             $_SERVER['SERVER_NAME'] . ' ' . 'doi:' . $objDoi->removePrefixFromUrl($doi),
             $this->titleSyntax);
 
-        // body of github issue
+        // body of GitHub issue
         $body =
             $this->getColumnNamesAsCsv(new WorkMetaData()) .
             $this->getWorkAsCsv($submission, $publication, $authors, $issue, $context) .
@@ -105,20 +125,20 @@ class OpenCitations
             $this->getCitationsAsCsv($citations, $doi, $publicationDate);
 
         // prepare open citations and deposit
-        $openCitations = new OpenCitationsBase(
-            $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER),
-            $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY),
-            $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN));
+        $openCitations = new OpenCitationsBase( $owner, $repo, $token);
 
         $githubIssueId = $openCitations->depositCitations($title, $body);
 
-        $githubIssueUrl = str_replace('{{owner}}/{{repository}}',
-            $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER) . '/' .
-            $plugin->getSetting($context->getId(), OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY),
+        $githubIssueUrl = str_replace(
+            '{{owner}}/{{repository}}',
+            $owner . '/' . $repo,
             $this->urlIssues);
 
-        if (!empty($githubIssueId) && $githubIssueId != 0)
+        $this->log .= '[opencitations_url: ' . $githubIssueUrl . '/' . $githubIssueId . ']';
+
+        if (!empty($githubIssueId) && $githubIssueId != 0) {
             return $githubIssueUrl . '/' . $githubIssueId;
+        }
 
         return '';
     }
@@ -321,5 +341,10 @@ class OpenCitations
         }
 
         return trim($urlNew);
+    }
+
+    function __destruct()
+    {
+        // error_log('OpenCitations->__destruct: ' . $this->log);
     }
 }
