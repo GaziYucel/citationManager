@@ -206,7 +206,7 @@ class Api
     }
 
     /**
-     * * Execute action (POST) against API and returns the body
+     * Execute action (POST) against API and returns the body
      * @param string $action
      * @param array|null $query
      * @param array|null $form

@@ -14,8 +14,12 @@
 
 namespace Optimeta\Shared\WikiData\Model;
 
-class Article extends Item
+class Article
 {
+    /**
+     * Labels
+     * @var array|array[]
+     */
     public array $labels = [
         "en" => [
             "language" => "en",
@@ -23,6 +27,10 @@ class Article extends Item
         ]
     ];
 
+    /**
+     * Default claim
+     * @var array
+     */
     public array $defaultClaim = [
         "mainsnak" => [
             "snaktype" => "value",
@@ -36,6 +44,10 @@ class Article extends Item
         "rank" => "normal"
     ];
 
+    /**
+     * Claim of type point in time
+     * @var array
+     */
     public array $pointInTimeClaim = [
         "mainsnak" => [
             "snaktype" => "value",
