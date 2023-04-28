@@ -134,6 +134,7 @@ class Depositor
             if (!$this->isProduction)
                 $publicationWork['wikidata_url'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $wikiDataQid;
 
+            $this->log .= '[publicationWork>wikidata_qid: ' . $publicationWork['wikidata_qid'] . ']';
             $this->log .= '[publicationWork>wikidata_url: ' . $publicationWork['wikidata_url'] . ']';
         }
 
@@ -215,6 +216,6 @@ class Depositor
 
     function __destruct()
     {
-        error_log('Depositor->__destruct: ' . $this->log);
+        // error_log('Depositor->__destruct: ' . $this->log);
     }
 }
