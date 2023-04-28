@@ -55,7 +55,7 @@ class WikiData
             $plugin->getSetting($contextId, OPTIMETA_CITATIONS_WIKIDATA_USERNAME),
             $plugin->getSetting($contextId, OPTIMETA_CITATIONS_WIKIDATA_PASSWORD));
 
-        $citation->wikidata_qid = $wikiData->getEntity($doi, '');
+        $citation->wikidata_qid = $wikiData->getQidWithDoi($doi);
 
         if (!empty($citation->wikidata_qid)) {
             $citation->wikidata_url = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $citation->wikidata_qid;

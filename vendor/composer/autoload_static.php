@@ -64,7 +64,6 @@ class ComposerStaticInit205e7fc175dbc92c2ca8148adbc3ad81
         'Optimeta\\Shared\\WikiData\\Api' => __DIR__ . '/..' . '/tibhannover/optimeta/src/WikiData/Api.php',
         'Optimeta\\Shared\\WikiData\\Model\\Article' => __DIR__ . '/..' . '/tibhannover/optimeta/src/WikiData/Model/Article.php',
         'Optimeta\\Shared\\WikiData\\Model\\Author' => __DIR__ . '/..' . '/tibhannover/optimeta/src/WikiData/Model/Author.php',
-        'Optimeta\\Shared\\WikiData\\Model\\Item' => __DIR__ . '/..' . '/tibhannover/optimeta/src/WikiData/Model/Item.php',
         'Optimeta\\Shared\\WikiData\\Model\\Language' => __DIR__ . '/..' . '/tibhannover/optimeta/src/WikiData/Model/Language.php',
         'Optimeta\\Shared\\WikiData\\Model\\Property' => __DIR__ . '/..' . '/tibhannover/optimeta/src/WikiData/Model/Property.php',
         'Optimeta\\Shared\\WikiData\\WikiDataBase' => __DIR__ . '/..' . '/tibhannover/optimeta/src/WikiData/WikiDataBase.php',

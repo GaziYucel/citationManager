@@ -38,7 +38,7 @@ class Language
     {
         $this->languages = json_decode(
             file_get_contents(
-                realpath(dirname(__FILE__)) . '\\' . $this->languagesJsonFile),
+                realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . $this->languagesJsonFile),
             true);
     }
 

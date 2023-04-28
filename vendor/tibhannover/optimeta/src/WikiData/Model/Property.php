@@ -79,14 +79,18 @@ class Property
         'default' => ''
     ];
 
-    function __construct(?bool $isTest = false)
+    function __construct(?bool $isProduction = false)
     {
-        foreach (json_decode(file_get_contents(
-            realpath(dirname(__FILE__)) . '\PropertyTest.json'), true) as $key => $value) {
-            $prop = $this->$key;
-            $prop['pid'] = $value['pid'];
-            $prop['default'] = $value['default'];
-            $this->$key = $prop;
+        if(!$isProduction){
+            foreach (json_decode(file_get_contents(
+                realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'PropertyTest.json'), true) as $key => $value) {
+                $prop = $this->$key;
+                $prop['label'] = $prop['pid'] . ': ' . $prop['label'];
+                $prop['pid'] = $value['pid'];
+                $prop['default'] = $value['default'];
+
+                $this->$key = $prop;
+            }
         }
     }
 }

@@ -27,16 +27,15 @@
             isPublished() {
                 let isPublished = false;
 
-                if(this.statusCodePublished === this.publicationStatus){
+                if (this.statusCodePublished === this.publicationStatus) {
                     isPublished = true;
                 }
 
-                if(document.querySelector('#optimetaCitations button.pkpButton') !== null){
+                if (document.querySelector('#optimetaCitations button.pkpButton') !== null) {
                     var saveBtn = document.querySelector('#optimetaCitations button.pkpButton');
                     if (isPublished) {
                         saveBtn.disabled = true;
-                    }
-                    else{
+                    } else {
                         saveBtn.disabled = false;
                     }
                 }
@@ -206,10 +205,11 @@
                        :class="(optimetaCitationsApp.optimetaCitationsIsParsed && optimetaCitationsApp.isPublished)?'':'optimetaDisabled'">
                         {translate key="plugins.generic.optimetaCitations.deposit.button"}</a>
                     <a href="javascript:optimetaClearCitations()" id="buttonClear" class="pkpButton"
-                       :class="(optimetaCitationsApp.optimetaCitationsIsParsed)?'':'optimetaDisabled'">
+                       :class="(optimetaCitationsApp.optimetaCitationsIsParsed && !optimetaCitationsApp.isPublished)?'':'optimetaDisabled'">
                         {translate key="plugins.generic.optimetaCitations.clear.button"}</a>
-                    <a href="javascript:optimetaProcessCitations()" id="buttonProcess"
-                       class="pkpButton">{translate key="plugins.generic.optimetaCitations.process.button"}</a>
+                    <a href="javascript:optimetaProcessCitations()" id="buttonProcess" class="pkpButton"
+                       :class="(optimetaCitationsApp.optimetaCitationsIsParsed && !optimetaCitationsApp.isPublished)?'':'optimetaDisabled'">
+                        {translate key="plugins.generic.optimetaCitations.process.button"}</a>
                 </td>
             </tr>
         </table>
