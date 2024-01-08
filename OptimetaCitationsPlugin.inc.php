@@ -123,28 +123,28 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $this->templateParameters['workModel'] = json_encode(get_object_vars(new WorkModel()));;
 
         // Is triggered post install on every install/upgrade.
-        HookRegistry::register('Installer::postInstall', array(&$this, 'callbackPostInstall'));
+        HookRegistry::add('Installer::postInstall', array(&$this, 'callbackPostInstall'));
 
         // Is triggered in Acron Plugin for registering scheduled task
-        HookRegistry::register('AcronPlugin::parseCronTab', array($this, 'callbackParseCronTab'));
+        HookRegistry::add('AcronPlugin::parseCronTab', array($this, 'callbackParseCronTab'));
 
         if ($success && $this->getEnabled()) {
             $citationsExtendedDAO = new CitationsExtendedDAO();
             DAORegistry::registerDAO('CitationsExtendedDAO', $citationsExtendedDAO);
 
             // Is triggered with every request from anywhere
-            HookRegistry::register('Schema::get::publication', array($this, 'addToSchema'));
+            HookRegistry::add('Schema::get::publication', array($this, 'addToSchema'));
 
             // Is triggered only on these hooks
-            HookRegistry::register('Templates::Submission::SubmissionMetadataForm::AdditionalMetadata', array($this, 'submissionWizard'));
-            HookRegistry::register('Template::Workflow::Publication', array($this, 'publicationTab'));
-            HookRegistry::register('Publication::edit', array($this, 'publicationSave'));
+            HookRegistry::add('Templates::Submission::SubmissionMetadataForm::AdditionalMetadata', array($this, 'submissionWizard'));
+            HookRegistry::add('Template::Workflow::Publication', array($this, 'publicationTab'));
+            HookRegistry::add('Publication::edit', array($this, 'publicationSave'));
 
             // Is triggered only on the page defined in Handler method/class
-            HookRegistry::register('Dispatcher::dispatch', array($this, 'apiHandler'));
+            HookRegistry::add('Dispatcher::dispatch', array($this, 'apiHandler'));
 
             // Register callback to add text to registration page
-            HookRegistry::register('TemplateManager::display', array($this, 'handleTemplateDisplay'));
+            HookRegistry::add('TemplateManager::display', array($this, 'handleTemplateDisplay'));
         }
 
         return $success;
