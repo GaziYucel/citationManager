@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/Dao/CitationsExtendedDao.inc.php
+ * @file plugins/generic/optimetaCitations/Dao/CitationsExtendedDao.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,10 +12,10 @@
  * @brief DAO for get/set PublicationId and ParsedCitations
  */
 
-namespace Optimeta\Citations\Dao;
+namespace APP\plugins\generic\optimetaCitations\classes\Dao;
 
-import('lib.pkp.classes.db.DAO');
-import('lib.pkp.classes.site.VersionCheck');
+//import('lib.pkp.classes.db.DAO');
+//import('lib.pkp.classes.site.VersionCheck');
 
 use DAO;
 use DAOResultFactory;
@@ -25,7 +25,7 @@ class CitationsExtendedDAO extends DAO
     /**
      * Get CitationsExtended by Publication ID
      * @param $publicationId int Publication ID
-     * @return array
+     * @return
      */
     function getByPublicationId($publicationId)
     {

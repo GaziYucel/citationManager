@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Deposit/Depositor.inc.php
+ * @file plugins/generic/optimetaCitations/classes/Deposit/Depositor.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,10 +12,10 @@
  * @brief Main Depositor class
  */
 
-namespace Optimeta\Citations\Deposit;
+namespace APP\plugins\generic\optimetaCitations\classes\Deposit;
 
-use Optimeta\Citations\Dao\PluginDAO;
-use Optimeta\Citations\Model\WorkModel;
+use APP\plugins\generic\optimetaCitations\classes\Dao\PluginDAO;
+use APP\plugins\generic\optimetaCitations\classes\Model\WorkModel;
 use OptimetaCitationsPlugin;
 use Services;
 

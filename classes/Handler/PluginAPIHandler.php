@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Handler/PluginAPIHandler.inc.php
+ * @file plugins/generic/optimetaCitations/classes/Handler/PluginAPIHandler.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,7 +12,7 @@
  * @brief Extended class of base request APIhandler
  */
 
-namespace Optimeta\Citations\Handler;
+namespace APP\plugins\generic\optimetaCitations\classes\Handler;
 
 import('lib.pkp.classes.security.authorization.PolicySet');
 import('lib.pkp.classes.security.authorization.RoleBasedHandlerOperationPolicy');
@@ -21,9 +21,9 @@ use APIHandler;
 use RoleBasedHandlerOperationPolicy;
 use PolicySet;
 
-use Optimeta\Citations\Deposit\Depositor;
-use Optimeta\Citations\Enrich\Enricher;
-use Optimeta\Citations\Parse\Parser;
+use APP\plugins\generic\optimetaCitations\classes\Deposit\Depositor;
+use APP\plugins\generic\optimetaCitations\classes\Enrich\Enricher;
+use APP\plugins\generic\optimetaCitations\classes\Parse\Parser;
 
 class PluginAPIHandler extends APIHandler
 {

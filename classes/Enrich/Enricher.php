@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Enrich/Enricher.inc.php
+ * @file plugins/generic/optimetaCitations/classes/Enrich/Enricher.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,9 +12,9 @@
  * @brief Main Enricher class
  */
 
-namespace Optimeta\Citations\Enrich;
+namespace APP\plugins\generic\optimetaCitations\classes\Enrich;
 
-use Optimeta\Citations\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
 
 class Enricher
 {

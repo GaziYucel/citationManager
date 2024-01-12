@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/Dao/CitationsExtended.inc.php
+ * @file plugins/generic/optimetaCitations/Dao/CitationsExtended.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,7 +12,7 @@
  * @brief DataObject  for get/set PublicationId and ParsedCitations
  */
 
-namespace Optimeta\Citations\Dao;
+namespace APP\plugins\generic\optimetaCitations\classes\Dao;
 
 use DataObject;
 

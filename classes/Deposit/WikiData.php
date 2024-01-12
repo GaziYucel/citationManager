@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Deposit/WikiData.inc.php
+ * @file plugins/generic/optimetaCitations/classes/Deposit/WikiData.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,7 +12,7 @@
  * @brief Depositor class WikiData
  */
 
-namespace Optimeta\Citations\Deposit;
+namespace APP\plugins\generic\optimetaCitations\classes\Deposit;
 
 use Journal;
 use Optimeta\Shared\WikiData\WikiDataBase;

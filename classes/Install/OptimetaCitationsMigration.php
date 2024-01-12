@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Install/OptimetaCitationsMigration.inc.php
+ * @file plugins/generic/optimetaCitations/classes/Install/OptimetaCitationsMigration.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,7 +12,7 @@
  * @brief Migrations
  */
 
-namespace Optimeta\Citations\Install;
+namespace APP\plugins\generic\optimetaCitations\classes\Install;
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Builder;

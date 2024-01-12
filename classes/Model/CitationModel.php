@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Model/CitationModel.inc.php
+ * @file plugins/generic/optimetaCitations/classes/Model/CitationModel.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,7 +12,7 @@
  * @brief Citations are scholarly documents like journal articles, books, datasets, and theses.
  */
 
-namespace Optimeta\Citations\Model;
+namespace APP\plugins\generic\optimetaCitations\classes\Model;
 
 class CitationModel extends WorkModel
 {

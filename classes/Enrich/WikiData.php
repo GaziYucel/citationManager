@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Enrich/WikiData.inc.php
+ * @file plugins/generic/optimetaCitations/classes/Enrich/WikiData.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,10 +12,10 @@
  * @brief WikiData class for WikiData
  */
 
-namespace Optimeta\Citations\Enrich;
+namespace APP\plugins\generic\optimetaCitations\classes\Enrich;
 
 use Application;
-use Optimeta\Citations\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
 use Optimeta\Shared\Pid\Doi;
 use Optimeta\Shared\WikiData\WikiDataBase;
 use OptimetaCitationsPlugin;

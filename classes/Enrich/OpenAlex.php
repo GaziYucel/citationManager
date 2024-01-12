@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Enrich/OpenAlex.inc.php
+ * @file plugins/generic/optimetaCitations/classes/Enrich/OpenAlex.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,10 +12,10 @@
  * @brief OpenAlex class for OpenAlex
  */
 
-namespace Optimeta\Citations\Enrich;
+namespace APP\plugins\generic\optimetaCitations\classes\Enrich;
 
-use Optimeta\Citations\Model\AuthorModel;
-use Optimeta\Citations\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\classes\Model\AuthorModel;
+use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
 use Optimeta\Shared\Pid\Doi;
 use Optimeta\Shared\OpenAlex\OpenAlexBase;
 

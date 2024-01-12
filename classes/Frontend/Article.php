@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/Frontend/Article.inc.php
+ * @file plugins/generic/optimetaCitations/Frontend/Article.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,9 +12,9 @@
  * @brief Article view
  */
 
-namespace Optimeta\Citations\Frontend;
+namespace APP\plugins\generic\optimetaCitations\classes\Frontend;
 
-use Optimeta\Citations\Dao\PluginDAO;
+use APP\plugins\generic\optimetaCitations\classes\Dao\PluginDAO;
 
 class Article
 {
