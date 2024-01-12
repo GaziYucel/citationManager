@@ -74,7 +74,7 @@ class SettingsForm extends Form
     public function initData()
     {
         $context = Application::get()->getRequest()->getContext();
-        $contextId = $context ? $context->getId() : PKPApplication::CONTEXT_SITE;
+        $contextId = $context ? $context->getId() : Application::CONTEXT_SITE;
         foreach ($this->settings as $key) {
             $this->setData($key, $this->plugin->getSetting($contextId, $key));
         }
@@ -117,7 +117,7 @@ class SettingsForm extends Form
     public function execute(...$functionArgs)
     {
         $context = Application::get()->getRequest()->getContext();
-        $contextId = $context ? $context->getId() : PKPApplication::CONTEXT_SITE;
+        $contextId = $context ? $context->getId() : Application::CONTEXT_SITE;
 
         foreach ($this->settings as $key) {
             $value = $this->getData($key);
@@ -136,7 +136,7 @@ class SettingsForm extends Form
         $notificationMgr = new NotificationManager();
         $notificationMgr->createTrivialNotification(
             Application::get()->getRequest()->getUser()->getId(),
-             PKPNotification::NOTIFICATION_TYPE_SUCCESS,
+             Notification::NOTIFICATION_TYPE_SUCCESS,
             ['contents' => __('common.changesSaved')]
         );
 
