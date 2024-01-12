@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Debug.inc.php
+ * @file plugins/generic/optimetaCitations/classes/Debug.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,7 +12,9 @@
  * @brief Debug helper class
  */
 
-namespace Optimeta\Citations;
+namespace APP\plugins\generic\optimetaCitations\classes;
+
+use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_PLUGIN_PATH;
 
 class Debug
 {

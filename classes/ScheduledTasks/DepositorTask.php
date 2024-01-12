@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/ScheduledTasks/DepositorTask.inc.php
+ * @file plugins/generic/optimetaCitations/classes/ScheduledTasks/DepositorTask.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -15,7 +15,7 @@
 import('lib.pkp.classes.scheduledTask.ScheduledTask');
 import('plugins.generic.optimetaCitations.OptimetaCitationsPlugin');
 
-use Optimeta\Citations\Deposit\Depositor;
+use APP\plugins\generic\optimetaCitations\classes\Deposit\Depositor;
 
 class DepositorTask extends ScheduledTask
 {
@@ -41,7 +41,7 @@ class DepositorTask extends ScheduledTask
         $plugin = $this->plugin;
         if (!$plugin->getEnabled()) {
             $this->addExecutionLogEntry(
-                'Optimeta\Citations\ScheduledTasks\DepositorTask\executeActions>pluginEnabled=false' .
+                'APP\plugins\generic\optimetaCitations\classes\ScheduledTasks\DepositorTask\executeActions>pluginEnabled=false' .
                 ' [' . date('Y-m-d H:i:s') . ']',
                 SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
             return false;
@@ -54,13 +54,13 @@ class DepositorTask extends ScheduledTask
 
         if (!$result) {
             $this->addExecutionLogEntry(
-                'Optimeta\Citations\ScheduledTasks\DepositorTask\executeActions>result=false' .
+                'APP\plugins\generic\optimetaCitations\classes\ScheduledTasks\DepositorTask\executeActions>result=false' .
                 ' [' . date('Y-m-d H:i:s') . ']',
                 SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
         }
 
         $this->addExecutionLogEntry(
-            'Optimeta\Citations\ScheduledTasks\DepositorTask\executeActions>result=' . $result,
+            'APP\plugins\generic\optimetaCitations\classes\ScheduledTasks\DepositorTask\executeActions>result=' . $result,
             SCHEDULED_TASK_MESSAGE_TYPE_COMPLETED);
 
         return $result;

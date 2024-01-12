@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/SettingsForm.inc.php
+ * @file plugins/generic/optimetaCitations/classes/SettingsForm.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,29 +12,38 @@
  * @brief Form for journal managers to setup the OptimetaCitations plugin
  */
 
-namespace Optimeta\Citations\Components\Forms;
+namespace APP\plugins\generic\optimetaCitations\classes\Components\Forms;
 
-import('lib.pkp.classes.form.Form');
+//import('lib.pkp.classes.form.Form');
 
-use FormValidator;
-use FormValidatorPost;
-use FormValidatorCSRF;
-use Application;
-use TemplateManager;
-use NotificationManager;
+use APP\core\Application;
+use APP\notification\Notification;
+use APP\notification\NotificationManager;
+use APP\template\TemplateManager;
+use PKP\form\Form;
+use PKP\form\validation\FormValidatorCSRF;
+use PKP\form\validation\FormValidatorPost;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
+use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED;
+use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_IS_PRODUCTION_KEY;
+use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER;
+use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY;
+use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN;
+use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_WIKIDATA_PASSWORD;
+use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_WIKIDATA_USERNAME;
 
-class SettingsForm extends \Form
+class SettingsForm extends Form
 {
     /**
      * @var $plugin OptimetaCitationsPlugin
      */
-    public $plugin;
+    public OptimetaCitationsPlugin $plugin;
 
     /**
      * Array of variables saved in the database
      * @var string[]
      */
-    private $settings = [
+    private array $settings = [
         OPTIMETA_CITATIONS_IS_PRODUCTION_KEY,
         OPTIMETA_CITATIONS_WIKIDATA_USERNAME,
         OPTIMETA_CITATIONS_WIKIDATA_PASSWORD,
@@ -65,7 +74,7 @@ class SettingsForm extends \Form
     public function initData()
     {
         $context = Application::get()->getRequest()->getContext();
-        $contextId = $context ? $context->getId() : CONTEXT_SITE;
+        $contextId = $context ? $context->getId() : PKPApplication::CONTEXT_SITE;
         foreach ($this->settings as $key) {
             $this->setData($key, $this->plugin->getSetting($contextId, $key));
         }
@@ -108,7 +117,7 @@ class SettingsForm extends \Form
     public function execute(...$functionArgs)
     {
         $context = Application::get()->getRequest()->getContext();
-        $contextId = $context ? $context->getId() : CONTEXT_SITE;
+        $contextId = $context ? $context->getId() : PKPApplication::CONTEXT_SITE;
 
         foreach ($this->settings as $key) {
             $value = $this->getData($key);
@@ -127,7 +136,7 @@ class SettingsForm extends \Form
         $notificationMgr = new NotificationManager();
         $notificationMgr->createTrivialNotification(
             Application::get()->getRequest()->getUser()->getId(),
-            NOTIFICATION_TYPE_SUCCESS,
+             PKPNotification::NOTIFICATION_TYPE_SUCCESS,
             ['contents' => __('common.changesSaved')]
         );
 

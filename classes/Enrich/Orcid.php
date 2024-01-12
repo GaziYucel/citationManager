@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Enrich/Orcid.inc.php
+ * @file plugins/generic/optimetaCitations/classes/Enrich/Orcid.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,9 +12,9 @@
  * @brief Orcid class for Orcid
  */
 
-namespace Optimeta\Citations\Enrich;
+namespace APP\plugins\generic\optimetaCitations\classes\Enrich;
 
-use Optimeta\Citations\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
 use Optimeta\Shared\Orcid\OrcidBase;
 
 class Orcid

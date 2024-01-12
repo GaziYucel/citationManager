@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Install/OptimetaCitationsMigration.inc.php
+ * @file plugins/generic/optimetaCitations/classes/Install/OptimetaCitationsMigration.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,7 +12,7 @@
  * @brief Migrations
  */
 
-namespace Optimeta\Citations\Install;
+namespace APP\plugins\generic\optimetaCitations\classes\Install;
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Builder;
@@ -25,7 +25,7 @@ class OptimetaCitationsMigration extends Migration
      * Run the migrations
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         $this->createCitationsExtended();
     }
@@ -34,7 +34,7 @@ class OptimetaCitationsMigration extends Migration
      * Create citations_extended table if not exists
      * @return void
      */
-    public function createCitationsExtendedIfNotExists()
+    public function createCitationsExtendedIfNotExists(): void
     {
         if (!Capsule::schema()->hasTable('citations_extended')) {
             $this->createCitationsExtended();
@@ -45,7 +45,7 @@ class OptimetaCitationsMigration extends Migration
      * Create citations_extended table
      * @return void
      */
-    private function createCitationsExtended()
+    private function createCitationsExtended(): void
     {
         Capsule::schema()->create('citations_extended', function (Blueprint $table) {
             $table->bigInteger('citations_extended_id')->nullable(0)->autoIncrement();
@@ -60,7 +60,7 @@ class OptimetaCitationsMigration extends Migration
      * Returns MySQL create table script as a string
      * @return string
      */
-    private function getMySQLCreateTableSql()
+    private function getMySQLCreateTableSql(): string
     {
         return "CREATE TABLE `citations_extended` (
          `citations_extended_id` bigint(20) NOT NULL AUTO_INCREMENT,

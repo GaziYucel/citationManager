@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Deposit/OpenCitations.inc.php
+ * @file plugins/generic/optimetaCitations/classes/Deposit/OpenCitations.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,7 +12,7 @@
  * @brief Depositor class for OpenCitations
  */
 
-namespace Optimeta\Citations\Deposit;
+namespace APP\plugins\generic\optimetaCitations\classes\Deposit;
 
 use Journal;
 use Optimeta\Shared\Pid\Arxiv;

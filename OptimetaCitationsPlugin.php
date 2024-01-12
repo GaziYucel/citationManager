@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/OptimetaCitationsPlugin.inc.php
+ * @file plugins/generic/optimetaCitations/OptimetaCitationsPlugin.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -11,6 +11,8 @@
  *
  * @brief Plugin for parsing Citations and submitting to Open Access websites.
  */
+
+namespace APP\plugins\generic\optimetaCitations;
 
 const OPTIMETA_CITATIONS_IS_PRODUCTION_KEY = 'OptimetaCitations_IsProductionEnvironment';
 const OPTIMETA_CITATIONS_PLUGIN_PATH = __DIR__;
@@ -38,21 +40,44 @@ const OPTIMETA_CITATIONS_DOI_URL = 'https://doi.org';
 
 require_once(OPTIMETA_CITATIONS_PLUGIN_PATH . '/vendor/autoload.php');
 
-import('lib.pkp.classes.plugins.GenericPlugin');
-import('lib.pkp.classes.site.VersionCheck');
-import('lib.pkp.classes.handler.APIHandler');
-import('lib.pkp.classes.linkAction.request.AjaxAction');
+//import('lib.pkp.classes.plugins.GenericPlugin');
+//import('lib.pkp.classes.site.VersionCheck');
+//import('lib.pkp.classes.handler.APIHandler');
+//import('lib.pkp.classes.linkAction.request.AjaxAction');
 
-use Optimeta\Citations\Components\Forms\PublicationForm;
-use Optimeta\Citations\Components\Forms\SettingsForm;
-use Optimeta\Citations\Dao\CitationsExtendedDAO;
-use Optimeta\Citations\Dao\PluginDAO;
-use Optimeta\Citations\Deposit\Depositor;
-use Optimeta\Citations\Frontend\Article;
-use Optimeta\Citations\Handler\PluginAPIHandler;
-use Optimeta\Citations\Install\OptimetaCitationsMigration;
-use Optimeta\Citations\Model\AuthorModel;
-use Optimeta\Citations\Model\WorkModel;
+use APP\core\Application;
+use APP\core\Request;
+use APP\template\TemplateManager;
+use APP\notification\Notification;
+use APP\notification\NotificationManager;
+
+use PKP\core\JSONMessage;
+use PKP\core\PKPString;
+use PKP\linkAction\LinkAction;
+use PKP\linkAction\request\AjaxModal;
+use PKP\linkAction\request\AjaxAction;
+use PKP\plugins\GenericPlugin;
+use PKP\plugins\Hook;
+use PKP\core\Registry;
+use PKP\db\DAORegistry;
+use PKP\linkAction\request\RedirectAction;
+use PKP\form\Form;
+use PKP\form\validation\FormValidatorCSRF;
+use PKP\form\validation\FormValidatorPost;
+
+use APP\plugins\generic\optimetaCitations\classes\Components\Forms\PublicationForm;
+use APP\plugins\generic\optimetaCitations\classes\Components\Forms\SettingsForm;
+use APP\plugins\generic\optimetaCitations\classes\Dao\CitationsExtendedDAO;
+use APP\plugins\generic\optimetaCitations\classes\Dao\PluginDAO;
+use APP\plugins\generic\optimetaCitations\classes\Deposit\Depositor;
+use APP\plugins\generic\optimetaCitations\classes\Frontend\Article;
+use APP\plugins\generic\optimetaCitations\classes\Handler\PluginAPIHandler;
+use APP\plugins\generic\optimetaCitations\classes\Install\OptimetaCitationsMigration;
+use APP\plugins\generic\optimetaCitations\classes\Model\AuthorModel;
+use APP\plugins\generic\optimetaCitations\classes\Model\WorkModel;
+use PKP\core\PKPApplication;
+use PKP\notification\PKPNotification;
+use PKP\submission\PKPSubmission;
 
 class OptimetaCitationsPlugin extends GenericPlugin
 {
@@ -62,11 +87,11 @@ class OptimetaCitationsPlugin extends GenericPlugin
      */
     protected bool $isProduction = false;
 
-    protected $versionSpecificNameState = 'state'; //todo: can be replaced
+    protected string $versionSpecificNameState = 'state'; //todo: can be replaced
 
-    protected $isEnabledSaved = '0';
+    protected string $isEnabledSaved = '0';
 
-    protected $templateParameters = [
+    protected array $templateParameters = [
         'customScript' => '',
         'pluginStylesheetURL' => '',
         'pluginJavaScriptURL' => '',
@@ -92,7 +117,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         if ($this->getSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
             $this->isProduction = true;
         }
-
+        /*
         // get value of isEnabled from database
         $this->isEnabledSaved = $this->getSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_SAVED_IS_ENABLED);
         // plugin just got enabled
@@ -110,7 +135,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
             // plugin just got deactivated, execute actions
             $this->pluginDeactivationActions();
         }
-
+        */
+        
         // Current Request / Context
         $request = $this->getRequest();
 
@@ -120,15 +146,16 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $this->templateParameters['pluginImagesURL'] = $request->getBaseUrl() . '/' . $this->getPluginPath() . '/images';
         $this->templateParameters['pluginApiUrl'] = '';
         $this->templateParameters['authorModel'] = json_encode(get_object_vars(new AuthorModel()));
-        $this->templateParameters['workModel'] = json_encode(get_object_vars(new WorkModel()));;
+        $this->templateParameters['workModel'] = json_encode(get_object_vars(new WorkModel()));
 
         // Is triggered post install on every install/upgrade.
-        HookRegistry::add('Installer::postInstall', array(&$this, 'callbackPostInstall'));
+//        HookRegistry::add('Installer::postInstall', array(&$this, 'callbackPostInstall'));
 
         // Is triggered in Acron Plugin for registering scheduled task
-        HookRegistry::add('AcronPlugin::parseCronTab', array($this, 'callbackParseCronTab'));
+//        HookRegistry::add('AcronPlugin::parseCronTab', array($this, 'callbackParseCronTab'));
 
         if ($success && $this->getEnabled()) {
+            /*
             $citationsExtendedDAO = new CitationsExtendedDAO();
             DAORegistry::registerDAO('CitationsExtendedDAO', $citationsExtendedDAO);
 
@@ -145,6 +172,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
             // Register callback to add text to registration page
             HookRegistry::add('TemplateManager::display', array($this, 'handleTemplateDisplay'));
+            */
+            error_log('success: '. $success . ' | ' . '$this->getEnabled($mainContextId): ' . $this->getEnabled($mainContextId));
         }
 
         return $success;
@@ -154,7 +183,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
      * Hook callback: register output filter to replace raw with structured citations.
      * @see TemplateManager::display()
      */
-    public function handleTemplateDisplay($hookName, $args)
+    public function handleTemplateDisplay($hookName, $args): bool
     {
         $templateMgr = $args[0];
         $template = $args[1];
@@ -185,7 +214,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
      * @param $templateMgr TemplateManager
      * @return string
      */
-    public function registrationFilter($output, $templateMgr)
+    public function registrationFilter($output, $templateMgr): string
     {
         $request = Application::get()->getRequest();
         $context = $request->getContext();
@@ -219,9 +248,9 @@ class OptimetaCitationsPlugin extends GenericPlugin
      * This method is called after the plugin is activated
      * @return void
      */
-    public function pluginActivationActions()
+    public function pluginActivationActions(): void
     {
-        $this->callbackParseCronTabWorkAround();
+//        $this->callbackParseCronTabWorkAround();
 
         // create / alter table required by plugin
         $migrate = new OptimetaCitationsMigration();
@@ -234,18 +263,18 @@ class OptimetaCitationsPlugin extends GenericPlugin
      * Workaround for hook AcronPlugin::parseCronTab not working in ojs 3.3.0-x
      * @return void
      */
-    public function callbackParseCronTabWorkAround()
+    public function callbackParseCronTabWorkAround(): void
     {
-        import('plugins.generic.acron.AcronPlugin');
-        $acron = new \AcronPlugin();
-        $acron->_parseCrontab();
+//        import('plugins.generic.acron.AcronPlugin');
+        $acron = new AcronPlugin();
+//        $acron->_parseCrontab();
     }
 
     /**
      * This method is called after the plugin is activated
      * @return void
      */
-    public function pluginDeactivationActions()
+    public function pluginDeactivationActions(): void
     {
         error_log('OptimetaCitationsPlugin was disabled');
     }
@@ -280,7 +309,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
         $dispatcher = $request->getDispatcher();
         $latestPublication = $submission->getLatestPublication();
-        $apiBaseUrl = $dispatcher->url($request, ROUTE_API, $context->getData('urlPath'), '');
+        $apiBaseUrl = $dispatcher->url($request, PKPApplication::ROUTE_API, $context->getData('urlPath'), '');
 
         $form = new PublicationForm(
             $apiBaseUrl . 'submissions/' . $submissionId . '/publications/' . $latestPublication->getId(),
@@ -308,7 +337,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         if (!$this->isProduction)
             $this->templateParameters['wikidataURL'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST;
 
-        $this->templateParameters['statusCodePublished'] = STATUS_PUBLISHED;
+        $this->templateParameters['statusCodePublished'] = PKPSubmission::STATUS_PUBLISHED;
 
         $templateMgr->assign($this->templateParameters);
 
@@ -365,7 +394,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $request = $this->getRequest();
         $context = $request->getContext();
         $dispatcher = $request->getDispatcher();
-        $apiBaseUrl = $dispatcher->url($request, ROUTE_API, $context->getData('urlPath'), '');
+        $apiBaseUrl = $dispatcher->url($request, PKPApplication::ROUTE_API, $context->getData('urlPath'), '');
 
         $publicationDao = \DAORegistry::getDAO('PublicationDAO');
         $submissionId = $request->getUserVar('submissionId');
@@ -385,7 +414,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         if (!$this->isProduction)
             $this->templateParameters['wikidataURL'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST;
 
-        $this->templateParameters['statusCodePublished'] = STATUS_PUBLISHED;
+        $this->templateParameters['statusCodePublished'] = PKPSubmission::STATUS_PUBLISHED;
 
         $templateMgr->assign($this->templateParameters);
 
@@ -402,7 +431,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
     {
         try {
             $router = $request->getRouter();
-            if ($router instanceof \APIRouter && strpos(' ' .
+            if ($router instanceof APIRouter && strpos(' ' .
                     $request->getRequestPath() . ' ', 'api/v1/' . OPTIMETA_CITATIONS_API_ENDPOINT) !== false) {
                 $handler = new PluginAPIHandler($this);
                 $router->setHandler($handler);
@@ -421,14 +450,17 @@ class OptimetaCitationsPlugin extends GenericPlugin
     public function getActions($request, $actionArgs): array
     {
         $actions = parent::getActions($request, $actionArgs);
-        if (!$this->getEnabled()) return $actions;
 
-        import('lib.pkp.classes.linkAction.request.AjaxModal');
+        if (!$this->getEnabled()) {
+            return $actions;
+        }
+
+//        import('lib.pkp.classes.linkAction.request.AjaxModal');
         $router = $request->getRouter();
 
-        $linkAction[] = new \LinkAction(
+        $linkAction[] = new LinkAction(
             'settings',
-            new \AjaxModal(
+            new AjaxModal(
                 $router->url(
                     $request, null, null, 'manage', null,
                     array('verb' => 'settings', 'plugin' => $this->getName(), 'category' => 'generic')),
@@ -436,27 +468,27 @@ class OptimetaCitationsPlugin extends GenericPlugin
             __('manager.plugins.settings'),
             null);
 
-        $linkAction[] = new \LinkAction(
+        $linkAction[] = new LinkAction(
             'test_settings',
-            new \AjaxAction(
+            new AjaxAction(
                 $router->url(
                     $request, null, null, 'manage', null,
                     array('verb' => 'test_settings', 'plugin' => $this->getName(), 'category' => 'generic'))),
             __('plugins.generic.optimetaCitations.settings.test.button'),
             null);
 
-        $linkAction[] = new \LinkAction(
+        $linkAction[] = new LinkAction(
             'initialise_plugin',
-            new \AjaxAction(
+            new AjaxAction(
                 $router->url(
                     $request, null, null, 'manage', null,
                     array('verb' => 'initialise_plugin', 'plugin' => $this->getName(), 'category' => 'generic'))),
             __('plugins.generic.optimetaCitations.settings.initialise.button'),
             null);
 
-        $linkAction[] = new \LinkAction(
+        $linkAction[] = new LinkAction(
             'batch_deposit',
-            new \AjaxAction(
+            new AjaxAction(
                 $router->url(
                     $request, null, null, 'manage', null,
                     array('verb' => 'batch_deposit', 'plugin' => $this->getName(), 'category' => 'generic'))),
@@ -481,7 +513,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
     /**
      * @copydoc Plugin::manage()
      */
-    public function manage($args, $request): \JSONMessage
+    public function manage($args, $request): JSONMessage
     {
         $context = $request->getContext();
         switch ($request->getUserVar('verb')) {
@@ -492,42 +524,44 @@ class OptimetaCitationsPlugin extends GenericPlugin
                 // Fetch the form the first time it loads, before the user has tried to save it
                 if (!$request->getUserVar('save')) {
                     $form->initData();
-                    return new \JSONMessage(true, $form->fetch($request));
+                    return new JSONMessage(true, $form->fetch($request));
                 }
 
                 // Validate and save the form data
                 $form->readInputData();
                 if ($form->validate()) {
                     $form->execute();
-                    return new \JSONMessage(true);
+                    return new JSONMessage(true);
                 }
             case 'test_settings':
-                $notificationManager = new \NotificationManager();
+                $notificationManager = new NotificationManager();
                 $user = $request->getUser();
                 $notificationManager->createTrivialNotification(
                     $user->getId(),
-                    NOTIFICATION_TYPE_WARNING,
+                    Notification::NOTIFICATION_TYPE_WARNING,
                     array('contents' => __('plugins.generic.optimetaCitations.not_implemented')));
                 return \DAO::getDataChangedEvent();
             case 'initialise_plugin':
-                $this->pluginActivationActions();
-                $notificationManager = new \NotificationManager();
+//                $this->pluginActivationActions();
+                $migrate = new OptimetaCitationsMigration();
+                $migrate->createCitationsExtendedIfNotExists();
+                $notificationManager = new NotificationManager();
                 $user = $request->getUser();
                 $notificationManager->createTrivialNotification(
                     $user->getId(),
-                    NOTIFICATION_TYPE_SUCCESS,
+                    Notification::NOTIFICATION_TYPE_SUCCESS,
                     array('contents' => __('plugins.generic.optimetaCitations.settings.initialise.notification')));
-                return \DAO::getDataChangedEvent();
+                return DAO::getDataChangedEvent();
             case 'batch_deposit':
                 $depositor = new Depositor();
                 $depositor->batchDeposit();
-                $notificationManager = new \NotificationManager();
+                $notificationManager = new NotificationManager();
                 $user = $request->getUser();
                 $notificationManager->createTrivialNotification(
                     $user->getId(),
-                    NOTIFICATION_TYPE_SUCCESS,
+                    Notification::NOTIFICATION_TYPE_SUCCESS,
                     array('contents' => __('plugins.generic.optimetaCitations.settings.deposit.notification')));
-                return \DAO::getDataChangedEvent();
+                return DAO::getDataChangedEvent();
         }
         return parent::manage($args, $request);
     }
@@ -556,7 +590,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
      * @return boolean
      * @see Installer::postInstall() for the hook call.
      */
-    public function callbackPostInstall($hookName, $args)
+    public function callbackPostInstall($hookName, $args): bool
     {
         error_log('Installer::postInstall() > callbackPostInstall');
         return false;
@@ -573,8 +607,13 @@ class OptimetaCitationsPlugin extends GenericPlugin
     /**
      * @copydoc Plugin::getInstallMigration()
      */
-    public function getInstallMigration()
+    public function getInstallMigration(): OptimetaCitationsMigration
     {
-        return new \Optimeta\Citations\Install\OptimetaCitationsMigration();
+        return new OptimetaCitationsMigration();
     }
+}
+
+// For backwards compatibility -- expect this to be removed approx. OJS/OMP/OPS 3.6
+if (!PKP_STRICT_MODE) {
+    class_alias('\APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin', '\OptimetaCitationsPlugin');
 }

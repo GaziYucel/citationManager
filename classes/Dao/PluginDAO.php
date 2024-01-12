@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/Dao/PluginDAO.inc.php
+ * @file plugins/generic/optimetaCitations/Dao/PluginDAO.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,10 +12,10 @@
  * @brief DAO Schema
  */
 
-namespace Optimeta\Citations\Dao;
+namespace APP\plugins\generic\optimetaCitations\classes\Dao;
 
 use DAORegistry;
-use Optimeta\Citations\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
 
 class PluginDAO
 {

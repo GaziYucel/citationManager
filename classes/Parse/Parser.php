@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Parse/Parser.inc.php
+ * @file plugins/generic/optimetaCitations/classes/Parse/Parser.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,9 +12,9 @@
  * @brief Main Parser class for extracting DOI, Url, Handle, Arxiv, Urn.
  */
 
-namespace Optimeta\Citations\Parse;
+namespace APP\plugins\generic\optimetaCitations\classes\Parse;
 
-use Optimeta\Citations\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
 use Optimeta\Shared\Pid\Arxiv;
 use Optimeta\Shared\Pid\Doi;
 use Optimeta\Shared\Pid\Handle;

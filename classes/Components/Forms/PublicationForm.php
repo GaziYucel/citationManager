@@ -12,12 +12,15 @@
  * @brief A preset form for setting a publication's parsed citations
  */
 
-namespace Optimeta\Citations\Components\Forms;
+namespace APP\plugins\generic\optimetaCitations\classes\Components\Forms;
 
-use Optimeta\Citations\Dao\PluginDAO;
-use \PKP\components\forms\FormComponent;
-use \PKP\components\forms\FieldText;
+use APP\plugins\generic\optimetaCitations\classes\Dao\PluginDAO;
+use PKP\components\forms\FormComponent;
+use PKP\components\forms\FieldText;
 use Publication;
+use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_FORM_FIELD_PARSED;
+use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_FORM_NAME;
+use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_PUBLICATION_WORK;
 
 class PublicationForm extends FormComponent
 {

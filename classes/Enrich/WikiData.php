@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Enrich/WikiData.inc.php
+ * @file plugins/generic/optimetaCitations/classes/Enrich/WikiData.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,13 +12,16 @@
  * @brief WikiData class for WikiData
  */
 
-namespace Optimeta\Citations\Enrich;
+namespace APP\plugins\generic\optimetaCitations\classes\Enrich;
 
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 use Application;
-use Optimeta\Citations\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
 use Optimeta\Shared\Pid\Doi;
 use Optimeta\Shared\WikiData\WikiDataBase;
-use OptimetaCitationsPlugin;
+use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_WIKIDATA_PASSWORD;
+use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_WIKIDATA_URL_TEST;
+use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_WIKIDATA_USERNAME;
 
 class WikiData
 {
@@ -45,7 +48,7 @@ class WikiData
     {
         $plugin = new OptimetaCitationsPlugin();
         $context = Application::get()->getRequest()->getContext();
-        $contextId = $context ? $context->getId() : CONTEXT_SITE;
+        $contextId = $context ? $context->getId() : Application::CONTEXT_SITE;
 
         $objDoi = new Doi();
         $doi = $objDoi->removePrefixFromUrl($citation->doi);
