@@ -15,10 +15,21 @@
 namespace APP\plugins\generic\optimetaCitations\classes\Enrich;
 
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 use Optimeta\Shared\Orcid\OrcidBase;
 
 class Orcid
 {
+    /**
+     * @var OptimetaCitationsPlugin
+     */
+    public OptimetaCitationsPlugin $plugin;
+
+    public function __construct(OptimetaCitationsPlugin $plugin)
+    {
+        $this->plugin = $plugin;
+    }
+
     /**
      * Get all information from Orcid for the authors in this citation
      * @param CitationModel $citation

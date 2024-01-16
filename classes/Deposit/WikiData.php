@@ -14,42 +14,46 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Deposit;
 
-use Journal;
+use APP\journal\Journal;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
+use APP\publication\Publication;
+
 use Optimeta\Shared\WikiData\WikiDataBase;
-use OptimetaCitationsPlugin;
-use Publication;
 
 class WikiData
 {
     /**
      * Is this instance production
+     *
      * @var bool
      */
     protected bool $isProduction = false;
 
     /**
      * Log string
+     *
      * @var string
      */
     public string $log = '';
 
     /**
-     * Instance of OptimetaCitationsPlugin
-     * @var object OptimetaCitationsPlugin
+     * @var OptimetaCitationsPlugin
      */
-    protected object $plugin;
+    protected OptimetaCitationsPlugin $plugin;
 
-    public function __construct()
+    public function __construct(OptimetaCitationsPlugin $plugin)
     {
-        $this->plugin = new OptimetaCitationsPlugin();
+        $this->plugin = $plugin;
+
         if ($this->plugin->getSetting($this->plugin->getCurrentContextId(),
-                OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
+                $this->plugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
             $this->isProduction = true;
         }
     }
 
     /**
      * Submits work to WikiData
+     *
      * @param Journal $context
      * @param object|null $issue
      * @param object $submission
@@ -69,9 +73,9 @@ class WikiData
         array       $citations): string
     {
         $username = $this->plugin->getSetting($context->getId(),
-            OPTIMETA_CITATIONS_WIKIDATA_USERNAME);
+            $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_USERNAME);
         $password = $this->plugin->getSetting($context->getId(),
-            OPTIMETA_CITATIONS_WIKIDATA_PASSWORD);
+            $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_PASSWORD);
 
         // return '' url not empty or username and password empty
         if (empty($username) || empty($password))
@@ -94,7 +98,6 @@ class WikiData
         // publication date
         $publicationDate = date('+Y-m-d\T00:00:00\Z', strtotime($issue->getData('datePublished')));
         $wikiDataBase->createClaimPublicationDate($qid, $publicationDate);
-
 
         return $qid;
     }

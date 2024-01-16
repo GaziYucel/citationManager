@@ -19,22 +19,26 @@ use Application;
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
 use Optimeta\Shared\Pid\Doi;
 use Optimeta\Shared\WikiData\WikiDataBase;
-use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_WIKIDATA_PASSWORD;
-use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_WIKIDATA_URL_TEST;
-use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_WIKIDATA_USERNAME;
 
 class WikiData
 {
+    /**
+     * @var OptimetaCitationsPlugin
+     */
+    public OptimetaCitationsPlugin $plugin;
+
     /**
      * Is this instance production
      * @var bool
      */
     protected bool $isProduction = false;
 
-    public function __construct()
+    public function __construct(OptimetaCitationsPlugin $plugin)
     {
-        $plugin = new OptimetaCitationsPlugin();
-        if ($plugin->getSetting($plugin->getCurrentContextId(), OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
+        $this->plugin = $plugin;
+
+        if ($this->plugin->getSetting($plugin->getCurrentContextId(),
+                $this->plugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
             $this->isProduction = true;
         }
     }
@@ -46,7 +50,6 @@ class WikiData
      */
     public function getItem(CitationModel $citation): CitationModel
     {
-        $plugin = new OptimetaCitationsPlugin();
         $context = Application::get()->getRequest()->getContext();
         $contextId = $context ? $context->getId() : Application::CONTEXT_SITE;
 
@@ -55,15 +58,15 @@ class WikiData
 
         $wikiData = new WikiDataBase(
             !$this->isProduction,
-            $plugin->getSetting($contextId, OPTIMETA_CITATIONS_WIKIDATA_USERNAME),
-            $plugin->getSetting($contextId, OPTIMETA_CITATIONS_WIKIDATA_PASSWORD));
+            $this->plugin->getSetting($contextId, $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_USERNAME),
+            $this->plugin->getSetting($contextId, $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_PASSWORD));
 
         $citation->wikidata_qid = $wikiData->getQidWithDoi($doi);
 
         if (!empty($citation->wikidata_qid)) {
-            $citation->wikidata_url = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $citation->wikidata_qid;
+            $citation->wikidata_url = $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $citation->wikidata_qid;
             if (!$this->isProduction)
-                $citation->wikidata_url = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $citation->wikidata_qid;
+                $citation->wikidata_url = $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $citation->wikidata_qid;
         }
 
         return $citation;

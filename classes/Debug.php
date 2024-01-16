@@ -14,7 +14,9 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes;
 
-use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_PLUGIN_PATH;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
+use Exception;
+use PKP\plugins\Hook;
 
 class Debug
 {
@@ -22,7 +24,7 @@ class Debug
      * Path to debug file
      * @var string
      */
-    private string $file = OPTIMETA_CITATIONS_PLUGIN_PATH . '/' . 'debug.txt';
+    private string $file = OptimetaCitationsPlugin::OPTIMETA_CITATIONS_PLUGIN_PATH . '/' . 'debug.txt';
 
     /**
      * Add to debug file
@@ -39,7 +41,7 @@ class Debug
 
         try {
             fwrite($fp, date('Y-m-d H:i:s') . ' ' . $textToWrite . "\n");
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             error_log(var_export($ex, true));
         }
 
@@ -68,7 +70,7 @@ class Debug
 
         try {
             fwrite($fp, '');
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             error_log(var_export($ex, true));
         }
 
@@ -79,7 +81,7 @@ class Debug
      * Get a list of all the hooks called
      * @return string[]
      */
-    function getListHooks()
+    function getListHooks(): array
     {
         return [
             'AccessKeyDAO::_returnAccessKeyFromRow',
@@ -400,11 +402,11 @@ class Debug
      * Export a list of hooks called where this method is called
      * @return void
      */
-    function calledHooks()
+    function calledHooks(): void
     {
         $hooksList = $this->getListHooks();
         foreach ($hooksList as $key) {
-            \HookRegistry::register($key, function ($key) {
+            Hook::add($key, function ($key) {
                 $this->Add($key);
             });
         }

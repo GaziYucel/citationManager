@@ -16,13 +16,25 @@ namespace APP\plugins\generic\optimetaCitations\classes\Enrich;
 
 use APP\plugins\generic\optimetaCitations\classes\Model\AuthorModel;
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 use Optimeta\Shared\Pid\Doi;
 use Optimeta\Shared\OpenAlex\OpenAlexBase;
 
 class OpenAlex
 {
     /**
+     * @var OptimetaCitationsPlugin
+     */
+    public OptimetaCitationsPlugin $plugin;
+
+    public function __construct(OptimetaCitationsPlugin $plugin)
+    {
+        $this->plugin = $plugin;
+    }
+
+    /**
      * Get all information from OpenAlex and return as CitationModel
+     *
      * @param CitationModel $citation
      * @return CitationModel
      */
@@ -74,7 +86,7 @@ class OpenAlex
         $citation->openalex_id = $this->removeOpenAlexOrgFromUrl($openAlexWork->id);
 
         if (!empty($citation->openalex_id)) {
-            $citation->openalex_url = OPTIMETA_CITATIONS_OPENALEX_URL . '/' . $citation->openalex_id;
+            $citation->openalex_url = $this->plugin::OPTIMETA_CITATIONS_OPENALEX_URL . '/' . $citation->openalex_id;
             $citation->isProcessed = true;
         }
 
@@ -83,6 +95,7 @@ class OpenAlex
 
     /**
      * Remove OpenAlex prefix from URL
+     *
      * @param ?string $url
      * @return string
      */
@@ -91,6 +104,6 @@ class OpenAlex
         if (empty($url)) {
             return '';
         }
-        return str_replace(OPTIMETA_CITATIONS_OPENALEX_URL . '/', '', $url);
+        return str_replace($this->plugin::OPTIMETA_CITATIONS_OPENALEX_URL . '/', '', $url);
     }
 }

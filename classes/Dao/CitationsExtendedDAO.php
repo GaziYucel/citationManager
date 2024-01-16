@@ -14,40 +14,41 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Dao;
 
-//import('lib.pkp.classes.db.DAO');
-//import('lib.pkp.classes.site.VersionCheck');
-
-use DAO;
-use DAOResultFactory;
+use PKP\db\DAO;
+use PKP\db\DAOResultFactory;
+use Exception;
 
 class CitationsExtendedDAO extends DAO
 {
     /**
      * Get CitationsExtended by Publication ID
-     * @param $publicationId int Publication ID
-     * @return
+     *
+     * @param int $publicationId
+     * @return DAOResultFactory
      */
-    function getByPublicationId($publicationId)
+    function getByPublicationId(int $publicationId): DAOResultFactory
     {
         $result = $this->retrieve(
             'SELECT * FROM citations_extended WHERE publication_id = ?',
-            [(int)$publicationId]
+            [$publicationId]
         );
+
         return new DAOResultFactory($result, $this, '_fromRow', array('id'));
     }
 
     /**
      * Get parsed citations by Publication ID
+     *
      * @param $publicationId int Publication ID
-     * @return string
+     * @return ?string
      */
-    function getParsedCitationsByPublicationId($publicationId)
+    function getParsedCitationsByPublicationId(int $publicationId): ?string
     {
         $citationsParsed = '';
 
         $result = $this->retrieve(
             'SELECT * FROM citations_extended WHERE publication_id = ?',
-            [(int)$publicationId]
+            [$publicationId]
         );
 
         foreach ($result as $row) {
@@ -59,27 +60,27 @@ class CitationsExtendedDAO extends DAO
 
     /**
      * Checks if citationsParsed exists for this publication
+     *
      * @param $publicationId int
      * @return bool
      */
-    function doesParsedCitationsByPublicationIdExists($publicationId)
+    function doesParsedCitationsByPublicationIdExists(int $publicationId): bool
     {
-        $result = $this->retrieve(
-            'SELECT * FROM citations_extended WHERE publication_id = ?',
-            [(int)$publicationId]
-        );
+        $result = $this->retrieve('SELECT * FROM citations_extended WHERE publication_id = ?',
+            [$publicationId]);
 
-        foreach ($result as $row) return true;
+        $row = $result->current();
 
-        return false;
+        return (bool)$row;
     }
 
     /**
      * Insert or update a CitationsExtended.
+     *
      * @param $citationsExtended CitationsExtended
      * @return int Inserted CitationsExtended ID or 0 if Updated
      */
-    function insertOrUpdateObject($citationsExtended)
+    function insertOrUpdateObject(CitationsExtended $citationsExtended): int
     {
         if ($this->doesParsedCitationsByPublicationIdExists($citationsExtended->getPublicationId())) {
             $this->updateObject($citationsExtended);
@@ -87,23 +88,20 @@ class CitationsExtendedDAO extends DAO
         } else {
             $this->insertObject($citationsExtended);
             return $citationsExtended->getId();
+
         }
     }
 
     /**
      * Insert a CitationsExtended.
+     *
      * @param $citationsExtended CitationsExtended
      * @return int Inserted CitationsExtended ID
      */
-    function insertObject($citationsExtended)
+    function insertObject(CitationsExtended $citationsExtended): int
     {
-        $this->update(
-            'INSERT INTO citations_extended (publication_id, parsed_citations) VALUES (?, ?)',
-            array(
-                $citationsExtended->getPublicationId(),
-                $citationsExtended->getParsedCitations()
-            )
-        );
+        $this->update('INSERT INTO citations_extended (publication_id, parsed_citations) VALUES (?, ?)',
+            [$citationsExtended->getPublicationId(), $citationsExtended->getParsedCitations()]);
 
         $citationsExtended->setId($this->getInsertId());
 
@@ -112,49 +110,47 @@ class CitationsExtendedDAO extends DAO
 
     /**
      * Update the database with a CitationsExtended object
+     *
      * @param $citationsExtended CitationsExtended
      * @return void
      */
-    function updateObject($citationsExtended)
+    function updateObject(CitationsExtended $citationsExtended): void
     {
-        $this->update(
-            'UPDATE	citations_extended SET parsed_citations = ? WHERE publication_id = ?',
-            array(
-                $citationsExtended->getParsedCitations(),
-                $citationsExtended->getPublicationId()
-            )
-        );
+        $this->update('UPDATE	citations_extended SET parsed_citations = ? WHERE publication_id = ?',
+            [$citationsExtended->getParsedCitations(), $citationsExtended->getPublicationId()]);
     }
 
     /**
      * Delete CitationsExtended by ID.
+     *
      * @param $citationsExtendedId int
      * @return void
      */
-    function deleteById($citationsExtendedId)
+    function deleteById(int $citationsExtendedId): void
     {
-        $this->update(
-            'DELETE FROM citations_extended WHERE citations_extended_id = ?',
-            [(int)$citationsExtendedId]
-        );
+        $this->update('DELETE FROM citations_extended WHERE citations_extended_id = ?',
+            [$citationsExtendedId]);
     }
 
     /**
      * Delete a CitationsExtended object.
+     *
      * @param $citationsExtended CitationsExtended
      * @return void
      */
-    function deleteObject($citationsExtended)
+    function deleteObject(CitationsExtended $citationsExtended): void
     {
         $this->deleteById($citationsExtended->getId());
     }
 
     /**
      * Delete CitationsExtended by Publication ID
-     * @param $publicationId int Publication ID
+     *
+     * @param int $publicationId
      * @return void
+     * @throws Exception
      */
-    function deleteByPublicationId($publicationId)
+    function deleteByPublicationId(int $publicationId): void
     {
         $citationsExtended = $this->getByPublicationId($publicationId);
         while ($citationsExtended = $citationsExtended->next()) {
@@ -164,19 +160,21 @@ class CitationsExtendedDAO extends DAO
 
     /**
      * Generate a new CitationsExtended object.
+     *
      * @return CitationsExtended
      */
-    function newDataObject()
+    function newDataObject(): CitationsExtended
     {
         return new CitationsExtended();
     }
 
     /**
      * Return a new CitationsExtended object from a given row.
+     *
      * @param $row array
      * @return CitationsExtended
      */
-    function _fromRow($row)
+    function _fromRow(array $row): CitationsExtended
     {
         $citationsExtended = $this->newDataObject();
 
@@ -189,18 +187,20 @@ class CitationsExtendedDAO extends DAO
 
     /**
      * Get the insert ID for the last inserted CitationsExtended.
+     *
      * @return int
      */
-    function getInsertId()
+    function getInsertId(): int
     {
-        return $this->_getInsertId('citations_extended', 'citations_extended_id');
+        return $this->_getInsertId();
     }
 
     /**
      * Get the additional field names.
+     *
      * @return array
      */
-    function getAdditionalFieldNames()
+    function getAdditionalFieldNames(): array
     {
         return array();
     }

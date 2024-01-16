@@ -9,33 +9,25 @@
  * @class SettingsForm
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Form for journal managers to setup the OptimetaCitations plugin
+ * @brief Form for journal managers to set up the OptimetaCitations plugin
  */
 
 namespace APP\plugins\generic\optimetaCitations\classes\Components\Forms;
-
-//import('lib.pkp.classes.form.Form');
 
 use APP\core\Application;
 use APP\notification\Notification;
 use APP\notification\NotificationManager;
 use APP\template\TemplateManager;
+use Exception;
 use PKP\form\Form;
 use PKP\form\validation\FormValidatorCSRF;
 use PKP\form\validation\FormValidatorPost;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
-use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED;
-use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_IS_PRODUCTION_KEY;
-use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER;
-use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY;
-use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN;
-use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_WIKIDATA_PASSWORD;
-use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_WIKIDATA_USERNAME;
 
 class SettingsForm extends Form
 {
     /**
-     * @var $plugin OptimetaCitationsPlugin
+     * @var OptimetaCitationsPlugin
      */
     public OptimetaCitationsPlugin $plugin;
 
@@ -43,15 +35,7 @@ class SettingsForm extends Form
      * Array of variables saved in the database
      * @var string[]
      */
-    private array $settings = [
-        OPTIMETA_CITATIONS_IS_PRODUCTION_KEY,
-        OPTIMETA_CITATIONS_WIKIDATA_USERNAME,
-        OPTIMETA_CITATIONS_WIKIDATA_PASSWORD,
-        OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER,
-        OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY,
-        OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN,
-        OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED
-    ];
+    private array $settings;
 
     /**
      * @copydoc Form::__construct()
@@ -60,7 +44,18 @@ class SettingsForm extends Form
     {
         // Define the settings template and store a copy of the plugin object
         parent::__construct($plugin->getTemplateResource('settings.tpl'));
+
         $this->plugin = $plugin;
+
+        $this->settings = [
+            $this->plugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY,
+            $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_USERNAME,
+            $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_PASSWORD,
+            $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER,
+            $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY,
+            $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN,
+            $this->plugin::OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED
+        ];
 
         // Always add POST and CSRF validation to secure your form.
         $this->addCheck(new FormValidatorPost($this));
@@ -71,7 +66,7 @@ class SettingsForm extends Form
      * Load settings already saved in the database Settings are stored by context, so that each journal or press can have different settings.
      * @copydoc Form::initData()
      */
-    public function initData()
+    public function initData(): void
     {
         $context = Application::get()->getRequest()->getContext();
         $contextId = $context ? $context->getId() : Application::CONTEXT_SITE;
@@ -86,7 +81,7 @@ class SettingsForm extends Form
      * Load data that was submitted with the form
      * @copydoc Form::readInputData()
      */
-    public function readInputData()
+    public function readInputData(): void
     {
         foreach ($this->settings as $key) {
             $this->readUserVars([$key]);
@@ -98,8 +93,9 @@ class SettingsForm extends Form
      * Fetch any additional data needed for your form. Data assigned to the form using $this->setData()
      * during the initData() or readInputData() methods will be passed to the template.
      * @copydoc Form::fetch()
+     * @throws Exception
      */
-    public function fetch($request, $template = null, $display = false)
+    public function fetch($request, $template = null, $display = false): ?string
     {
         // Pass the plugin name to the template so that it can be
         // used in the URL that the form is submitted to
@@ -114,7 +110,7 @@ class SettingsForm extends Form
      * @copydoc Form::execute()
      * @return null|mixed
      */
-    public function execute(...$functionArgs)
+    public function execute(...$functionArgs): mixed
     {
         $context = Application::get()->getRequest()->getContext();
         $contextId = $context ? $context->getId() : Application::CONTEXT_SITE;
@@ -122,9 +118,9 @@ class SettingsForm extends Form
         foreach ($this->settings as $key) {
             $value = $this->getData($key);
 
-            if ($key === OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED && !empty($value)) {
+            if ($key === $this->plugin::OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED && !empty($value)) {
                 $value = "true";
-            } else if ($key === OPTIMETA_CITATIONS_IS_PRODUCTION_KEY && !empty($value)) {
+            } else if ($key === $this->plugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY && !empty($value)) {
                 $value = "true";
             }
 

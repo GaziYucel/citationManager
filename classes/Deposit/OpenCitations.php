@@ -14,7 +14,9 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Deposit;
 
-use Journal;
+use APP\journal\Journal;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
+use APP\publication\Publication;
 use Optimeta\Shared\Pid\Arxiv;
 use Optimeta\Shared\Pid\Doi;
 use Optimeta\Shared\Pid\Handle;
@@ -22,60 +24,64 @@ use Optimeta\Shared\Pid\Orcid;
 use Optimeta\Shared\OpenCitations\Model\WorkCitation;
 use Optimeta\Shared\OpenCitations\Model\WorkMetaData;
 use Optimeta\Shared\OpenCitations\OpenCitationsBase;
-use OptimetaCitationsPlugin;
-use Publication;
 
 class OpenCitations
 {
     /**
      * Log string
+     *
      * @var string
      */
     public string $log = '';
 
     /**
-     * Instance of OptimetaCitationsPlugin
-     * @var object OptimetaCitationsPlugin
+     * @var OptimetaCitationsPlugin
      */
-    protected object $plugin;
+    protected OptimetaCitationsPlugin $plugin;
 
     /**
      * The base url to the public issues
+     *
      * @var string
      */
     protected string $urlIssues = 'https://github.com/{{owner}}/{{repository}}/issues';
 
     /**
      * The base url to the api issues
+     *
      * @var string
      */
     protected string $urlIssuesApi = 'https://api.github.com/repos/{{owner}}/{{repository}}/issues';
 
     /**
      * The syntax for the title of the issue
+     *
      * @var string
      */
     protected string $titleSyntax = 'deposit {{domain}} {{pid}}';
 
     /**
      * The separator to separate the work and the citations CSV
+     *
      * @var string
      */
     protected string $separator = '===###===@@@===';
 
     /**
      * Default article type
+     *
      * @var string
      */
     protected string $defaultType = 'journal article';
 
-    public function __construct()
+    public function __construct(OptimetaCitationsPlugin $plugin)
     {
-        $this->plugin = new OptimetaCitationsPlugin();
+        $this->plugin = $plugin;
     }
 
     /**
      * Submits work to OpenCitations
+     *
      * @param Journal $context
      * @param object|null $issue
      * @param object $submission
@@ -95,11 +101,11 @@ class OpenCitations
         array $citations): string
     {
         $owner = $this->plugin->getSetting($this->plugin->getCurrentContextId(),
-            OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER);
+            $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER);
         $repo = $this->plugin->getSetting($this->plugin->getCurrentContextId(),
-            OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY);
+            $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY);
         $token = $this->plugin->getSetting($this->plugin->getCurrentContextId(),
-            OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN);
+            $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN);
 
         // return '' url not empty or username and password empty
         if (empty($owner) || empty($repo) || empty($token))
@@ -145,6 +151,7 @@ class OpenCitations
 
     /**
      * Get Column names in comma separated format
+     *
      * @param object $object
      * @return string
      */
@@ -161,6 +168,7 @@ class OpenCitations
 
     /**
      * Get Work as WorkModel in comma separated format
+     *
      * @param $submission
      * @param $publication
      * @param $authors
@@ -221,6 +229,7 @@ class OpenCitations
 
     /**
      * Get Citations as WorkModel in comma separated format
+     *
      * @param array $citations
      * @return string
      */
@@ -281,12 +290,13 @@ class OpenCitations
 
     /**
      * Get Citations in comma separated format
+     *
      * @param array $citations
-     * @param $doi
-     * @param $publicationDate
+     * @param string $doi
+     * @param string $publicationDate
      * @return string
      */
-    public function getCitationsAsCsv(array $citations, $doi, $publicationDate): string
+    public function getCitationsAsCsv(array $citations, string $doi, string $publicationDate): string
     {
         $values = '';
 

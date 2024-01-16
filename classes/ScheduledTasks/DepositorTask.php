@@ -16,18 +16,20 @@ import('lib.pkp.classes.scheduledTask.ScheduledTask');
 import('plugins.generic.optimetaCitations.OptimetaCitationsPlugin');
 
 use APP\plugins\generic\optimetaCitations\classes\Deposit\Depositor;
+use PKP\scheduledTask\ScheduledTaskHelper;
 
 class DepositorTask extends ScheduledTask
 {
     /**
-     * OptimetaCitationsPlugin
-     * @var object
+     * @var OptimetaCitationsPlugin
      */
-    var object $plugin;
+    var OptimetaCitationsPlugin $plugin;
 
     function __construct($args)
     {
-        $plugin = \PluginRegistry::getPlugin('generic', 'optimetacitationsplugin');
+        $plugin = PluginRegistry::getPlugin('generic', 'optimetacitationsplugin');
+
+        /** @var OptimetaCitationsPlugin $plugin */
         $this->plugin = $plugin;
 
         parent::__construct($args);
@@ -36,32 +38,32 @@ class DepositorTask extends ScheduledTask
     /**
      * @copydoc ScheduledTask::executeActions()
      */
-    public function executeActions()
+    public function executeActions(): bool
     {
         $plugin = $this->plugin;
         if (!$plugin->getEnabled()) {
             $this->addExecutionLogEntry(
                 'APP\plugins\generic\optimetaCitations\classes\ScheduledTasks\DepositorTask\executeActions>pluginEnabled=false' .
                 ' [' . date('Y-m-d H:i:s') . ']',
-                SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
+                ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
             return false;
         }
 
         $result = false;
 
-        $depositor = new Depositor();
+        $depositor = new Depositor($this->plugin);
         $result = $depositor->batchDeposit();
 
         if (!$result) {
             $this->addExecutionLogEntry(
                 'APP\plugins\generic\optimetaCitations\classes\ScheduledTasks\DepositorTask\executeActions>result=false' .
                 ' [' . date('Y-m-d H:i:s') . ']',
-                SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
+                ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
         }
 
         $this->addExecutionLogEntry(
             'APP\plugins\generic\optimetaCitations\classes\ScheduledTasks\DepositorTask\executeActions>result=' . $result,
-            SCHEDULED_TASK_MESSAGE_TYPE_COMPLETED);
+            ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_COMPLETED);
 
         return $result;
     }

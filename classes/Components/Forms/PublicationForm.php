@@ -14,55 +14,57 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Components\Forms;
 
-use APP\plugins\generic\optimetaCitations\classes\Dao\PluginDAO;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
+use APP\publication\Publication;
 use PKP\components\forms\FormComponent;
 use PKP\components\forms\FieldText;
-use Publication;
-use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_FORM_FIELD_PARSED;
-use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_FORM_NAME;
-use const APP\plugins\generic\optimetaCitations\OPTIMETA_CITATIONS_PUBLICATION_WORK;
 
 class PublicationForm extends FormComponent
 {
-    /** @copydoc FormComponent::$id */
-    public $id = OPTIMETA_CITATIONS_FORM_NAME;
-
-    /** @copydoc FormComponent::$method */
-    public $method = 'PUT';
-
-    /** @copydoc FormComponent::$action */
-    public $action = '';
+    /**
+     * @var OptimetaCitationsPlugin
+     */
+    public OptimetaCitationsPlugin $plugin;
 
     /** @copydoc FormComponent::$successMessage */
-    public $successMessage = '';
+    public string $successMessage = '';
 
     /**
      * Constructor
      *
-     * @param $action string URL to submit the form to
-     * @param $publication Publication The publication to change settings for
+     * @param string $id Unique id of this form
+     * @param string $action URL to submit the form to
+     * @param string $method Method used
+     * @param array $locales Locales of this context
+     * @param Publication $publication The publication to change settings for
+     * @param string $successMessage Message which will be shown if successful
+     * @param OptimetaCitationsPlugin $plugin
      */
-    public function __construct($action, $publication, $successMessage)
+    public function __construct(string $id, string $method, string $action, array $locales,
+                                Publication $publication,
+                                string $successMessage,
+                                OptimetaCitationsPlugin $plugin)
     {
-        $this->action = $action;
+        parent::__construct($id, $method, $action, $locales);
+
         $this->successMessage = $successMessage;
 
-        $pluginDAO = new PluginDAO();
+        $this->plugin = $plugin;
 
         $this->addField(new FieldText(
-            OPTIMETA_CITATIONS_FORM_FIELD_PARSED, [
+            $this->plugin::OPTIMETA_CITATIONS_FORM_FIELD_PARSED, [
             'label' => '',
             'description' => '',
             'isMultilingual' => false,
-            'value' => $pluginDAO->getCitations($publication)
+            'value' => $this->plugin->pluginDao->getCitations($publication)
         ]));
 
         $this->addField(new FieldText(
-            OPTIMETA_CITATIONS_PUBLICATION_WORK, [
+            $this->plugin::OPTIMETA_CITATIONS_PUBLICATION_WORK, [
             'label' => '',
             'description' => '',
             'isMultilingual' => false,
-            'value' => $publication->getData(OPTIMETA_CITATIONS_PUBLICATION_WORK)
+            'value' => $publication->getData($this->plugin::OPTIMETA_CITATIONS_PUBLICATION_WORK)
         ]));
     }
 }

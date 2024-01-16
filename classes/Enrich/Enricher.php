@@ -15,9 +15,20 @@
 namespace APP\plugins\generic\optimetaCitations\classes\Enrich;
 
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
 class Enricher
 {
+    /**
+     * @var OptimetaCitationsPlugin
+     */
+    public OptimetaCitationsPlugin $plugin;
+
+    public function __construct(OptimetaCitationsPlugin $plugin)
+    {
+        $this->plugin = $plugin;
+    }
+
     /**
      * Enrich citations and save results to citations
      * @param array $citationsParsed
@@ -51,15 +62,15 @@ class Enricher
                 }
 
                 // OpenAlex Work
-                $objOpenAlex = new OpenAlex();
+                $objOpenAlex = new OpenAlex($this->plugin);
                 $citation = $objOpenAlex->getWork($citation);
 
                 // WikiData
-                $objWikiData = new WikiData();
+                $objWikiData = new WikiData($this->plugin);
                 $citation = $objWikiData->getItem($citation);
 
                 // Orcid
-                $objOrcid = new Orcid();
+                $objOrcid = new Orcid($this->plugin);
                 $citation = $objOrcid->getAuthors($citation);
 
                 // push to citations enriched array

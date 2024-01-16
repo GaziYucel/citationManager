@@ -14,44 +14,48 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Dao;
 
-use DataObject;
+use PKP\core\DataObject;
 
 class CitationsExtended extends DataObject
 {
     /**
      * Get Publication ID
+     *
      * @return int
      */
-    function getPublicationId()
+    function getPublicationId(): int
     {
         return $this->getData('publicationId');
     }
 
     /**
      * Set Publication ID
-     * @param $publicationId int
+     *
+     * @param int $publicationId
      * @return void
      */
-    function setPublicationId($publicationId)
+    function setPublicationId(int $publicationId): void
     {
         $this->setData('publicationId', $publicationId);
     }
 
     /**
      * Get ParsedCitations
-     * @return string
+     *
+     * @return ?string
      */
-    function getParsedCitations()
+    function getParsedCitations(): ?string
     {
         return $this->getData('parsedCitations');
     }
 
     /**
      * Set ParsedCitations
+     *
      * @param string $parsedCitations
      * @return void
      */
-    function setParsedCitations($parsedCitations)
+    function setParsedCitations(string $parsedCitations): void
     {
         $this->setData('parsedCitations', $parsedCitations);
     }

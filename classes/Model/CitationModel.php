@@ -18,18 +18,22 @@ class CitationModel extends WorkModel
 {
     /**
      * The unchanged raw citation
+     *
      * @var string
      */
-    public $raw;
+    public string $raw;
 
     /**
      * Migrates to current CitationModel
+     *
      * @param string $citations
      * @return array
      */
     public static function migrate(string $citations): array
     {
-        if (empty($citations) || !is_array(json_decode($citations, true))) return [];
+        if (empty($citations) || !is_array(json_decode($citations, true))) {
+            return [];
+        }
 
         $citationsIn = json_decode($citations, true);
         $citationsOut = [];

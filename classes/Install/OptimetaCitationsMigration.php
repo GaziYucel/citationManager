@@ -15,7 +15,6 @@
 namespace APP\plugins\generic\optimetaCitations\classes\Install;
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Builder;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -23,6 +22,7 @@ class OptimetaCitationsMigration extends Migration
 {
     /**
      * Run the migrations
+     *
      * @return void
      */
     public function up(): void
@@ -32,6 +32,7 @@ class OptimetaCitationsMigration extends Migration
 
     /**
      * Create citations_extended table if not exists
+     *
      * @return void
      */
     public function createCitationsExtendedIfNotExists(): void
@@ -43,6 +44,7 @@ class OptimetaCitationsMigration extends Migration
 
     /**
      * Create citations_extended table
+     *
      * @return void
      */
     private function createCitationsExtended(): void
@@ -58,6 +60,7 @@ class OptimetaCitationsMigration extends Migration
 
     /**
      * Returns MySQL create table script as a string
+     *
      * @return string
      */
     private function getMySQLCreateTableSql(): string

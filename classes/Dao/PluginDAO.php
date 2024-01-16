@@ -14,28 +14,40 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Dao;
 
-use DAORegistry;
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
+use APP\publication\Publication;
 
 class PluginDAO
 {
     /**
+     * @var OptimetaCitationsPlugin
+     */
+    public OptimetaCitationsPlugin $plugin;
+
+    public function __construct(OptimetaCitationsPlugin $plugin)
+    {
+        $this->plugin = $plugin;
+    }
+
+    /**
      * This method adds two properties to the schema of a publication:
      * OPTIMETA_CITATIONS_FORM_FIELD_PARSED and OPTIMETA_CITATIONS_PUBLICATION_WORK.
      * These properties are used to store information related to the citations for the publication.
+     *
      * @param object $schema
      * @return void
      */
-    public function addToSchema(object $schema)
+    public function addToSchema(object $schema): void
     {
-        $schema->properties->{OPTIMETA_CITATIONS_FORM_FIELD_PARSED} = (object)[
+        $schema->properties->{$this->plugin::OPTIMETA_CITATIONS_FORM_FIELD_PARSED} = (object)[
             "type" => "string",
             "multilingual" => false,
             "apiSummary" => true,
             "validation" => ["nullable"]
         ];
 
-        $schema->properties->{OPTIMETA_CITATIONS_PUBLICATION_WORK} = (object)[
+        $schema->properties->{$this->plugin::OPTIMETA_CITATIONS_PUBLICATION_WORK} = (object)[
             "type" => "string",
             "multilingual" => false,
             "apiSummary" => true,
@@ -49,12 +61,13 @@ class PluginDAO
      * If no parsed citations are found, the method returns an empty array. Otherwise,
      * it creates a new CitationModel object and uses its migrate() method to convert the parsed
      * citations into an array of citation objects.
-     * @param $publication
+     *
+     * @param PUblication $publication
      * @return array
      */
-    public function getCitations($publication)
+    public function getCitations(PUblication $publication): array
     {
-        $citationsExtendedDAO = DAORegistry::getDAO('CitationsExtendedDAO');
+        $citationsExtendedDAO = new CitationsExtendedDAO();
         $citations = $citationsExtendedDAO->getParsedCitationsByPublicationId($publication->getId());
 
         if (empty($citations)) $citations = '[]';
@@ -70,13 +83,14 @@ class PluginDAO
      * citations on it. Finally, it uses the insertOrUpdateObject() method of the
      * CitationsExtendedDAO class to insert or update the
      * object in the database.
-     * @param $publication
-     * @param $citations
+     *
+     * @param Publication $publication
+     * @param string $citations
      * @return void
      */
-    public function saveCitations($publication, $citations)
+    public function saveCitations(Publication $publication, string $citations): void
     {
-        $citationsExtendedDAO = DAORegistry::getDAO('CitationsExtendedDAO');
+        $citationsExtendedDAO = new CitationsExtendedDAO();
         $citationsExtended = $citationsExtendedDAO->newDataObject();
         $citationsExtended->setPublicationId($publication->getId());
         $citationsExtended->setParsedCitations($citations);

@@ -14,45 +14,54 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Handler;
 
-import('lib.pkp.classes.security.authorization.PolicySet');
-import('lib.pkp.classes.security.authorization.RoleBasedHandlerOperationPolicy');
+use PKP\core\APIResponse;
+use PKP\handler\APIHandler;
+use PKP\security\authorization\PolicySet;
+use PKP\security\authorization\RoleBasedHandlerOperationPolicy;
+use PKP\security\Role;
+use Slim\Http\Request as SlimRequest;
 
-use APIHandler;
-use RoleBasedHandlerOperationPolicy;
-use PolicySet;
-
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 use APP\plugins\generic\optimetaCitations\classes\Deposit\Depositor;
 use APP\plugins\generic\optimetaCitations\classes\Enrich\Enricher;
 use APP\plugins\generic\optimetaCitations\classes\Parse\Parser;
+use Slim\Http\Response;
 
 class PluginAPIHandler extends APIHandler
 {
     /**
+     * @var OptimetaCitationsPlugin
+     */
+    public OptimetaCitationsPlugin $plugin;
+
+    /**
      * Structure of the response body
      * @var array
      */
-    private $responseBody = [
+    private array $responseBody = [
         'status' => 'ok',
         'message-type' => '',
         'message-version' => '1',
         'message' => ''
     ];
 
-    public function __construct()
+    public function __construct(OptimetaCitationsPlugin $plugin)
     {
-        $this->_handlerPath = OPTIMETA_CITATIONS_API_ENDPOINT;
+        $this->plugin = $plugin;
+
+        $this->_handlerPath = $this->plugin::OPTIMETA_CITATIONS_API_ENDPOINT;
 
         $this->_endpoints = [
             'POST' => [
                 [
                     'pattern' => $this->getEndpointPattern() . '/process',
                     'handler' => [$this, 'process'],
-                    'roles' => [ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR, ROLE_ID_ASSISTANT, ROLE_ID_REVIEWER, ROLE_ID_AUTHOR],
+                    'roles' => [Role::ROLE_ID_MANAGER, Role::ROLE_ID_SUB_EDITOR, Role::ROLE_ID_ASSISTANT, Role::ROLE_ID_REVIEWER, Role::ROLE_ID_AUTHOR],
                 ],
                 [
                     'pattern' => $this->getEndpointPattern() . '/deposit',
                     'handler' => [$this, 'deposit'],
-                    'roles' => [ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR, ROLE_ID_ASSISTANT, ROLE_ID_REVIEWER, ROLE_ID_AUTHOR],
+                    'roles' => [Role::ROLE_ID_MANAGER, Role::ROLE_ID_SUB_EDITOR, Role::ROLE_ID_ASSISTANT, Role::ROLE_ID_REVIEWER, Role::ROLE_ID_AUTHOR],
                 ]
             ],
             'GET' => []
@@ -64,7 +73,7 @@ class PluginAPIHandler extends APIHandler
     /**
      * @copydoc APIHandler::authorize
      */
-    public function authorize($request, &$args, $roleAssignments)
+    public function authorize($request, &$args, $roleAssignments): bool
     {
         $rolePolicy = new PolicySet(COMBINING_PERMIT_OVERRIDES);
 
@@ -78,12 +87,12 @@ class PluginAPIHandler extends APIHandler
 
     /**
      * Parse and enrich citations and return
-     * @param $slimRequest
-     * @param $response
-     * @param $args
-     * @return mixed
+     * @param SlimRequest $slimRequest
+     * @param APIResponse $response
+     * @param array $args
+     * @return Response
      */
-    public function process($slimRequest, $response, $args)
+    public function process(SlimRequest $slimRequest, APIResponse $response, array $args): Response
     {
         $request = $this->getRequest();
         $submissionId = '';
@@ -108,11 +117,11 @@ class PluginAPIHandler extends APIHandler
         }
 
         // parse citations
-        $parser = new Parser();
+        $parser = new Parser($this->plugin);
         $citationsOut = $parser->executeAndReturnCitations($citationsRaw);
 
         // enrich citations
-        $enricher = new Enricher();
+        $enricher = new Enricher($this->plugin);
         $citationsOut = $enricher->executeAndReturnCitations($citationsOut);
 
         $this->responseBody['message'] = $citationsOut;
@@ -121,12 +130,12 @@ class PluginAPIHandler extends APIHandler
 
     /**
      * Deposit citations and return
-     * @param $slimRequest
-     * @param $response
-     * @param $args
-     * @return mixed
+     * @param SlimRequest $slimRequest
+     * @param APIResponse $response
+     * @param array $args
+     * @return Response
      */
-    public function deposit($slimRequest, $response, $args)
+    public function deposit(SlimRequest $slimRequest, APIResponse $response, array $args): Response
     {
         $request = $this->getRequest();
         $submissionId = '';
@@ -151,7 +160,7 @@ class PluginAPIHandler extends APIHandler
         }
 
         // deposit work + citations
-        $depositor = new Depositor();
+        $depositor = new Depositor($this->plugin);
         $workOut = $depositor->executeAndReturnWork($submissionId, $citationsIn);
 
         $this->responseBody['message'] = $workOut;

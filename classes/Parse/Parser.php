@@ -15,6 +15,7 @@
 namespace APP\plugins\generic\optimetaCitations\classes\Parse;
 
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 use Optimeta\Shared\Pid\Arxiv;
 use Optimeta\Shared\Pid\Doi;
 use Optimeta\Shared\Pid\Handle;
@@ -23,6 +24,16 @@ use Optimeta\Shared\Pid\Urn;
 
 class Parser
 {
+    /**
+     * @var OptimetaCitationsPlugin
+     */
+    public OptimetaCitationsPlugin $plugin;
+
+    public function __construct(OptimetaCitationsPlugin $plugin)
+    {
+        $this->plugin = $plugin;
+    }
+
     /**
      * Parse and save parsed citations to citationsParsed
      * @param string $citationsRaw

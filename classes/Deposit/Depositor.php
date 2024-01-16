@@ -14,50 +14,58 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Deposit;
 
+use APP\core\Application;
+use APP\core\Services;
 use APP\plugins\generic\optimetaCitations\classes\Dao\PluginDAO;
 use APP\plugins\generic\optimetaCitations\classes\Model\WorkModel;
-use OptimetaCitationsPlugin;
-use Services;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
+use APP\submission\Submission;
+use Exception;
+use PKP\db\DAORegistry;
 
 class Depositor
 {
     /**
      * Is this instance production
+     *
      * @var bool
      */
     protected bool $isProduction = false;
 
     /**
-     * Instance of OptimetaCitationsPlugin
-     * @var object OptimetaCitationsPlugin
+     * @var OptimetaCitationsPlugin
      */
-    protected object $plugin;
+    protected OptimetaCitationsPlugin $plugin;
 
     /**
      * Log string
+     *
      * @var string
      */
     public string $log = '';
 
-    public function __construct()
+    public function __construct(OptimetaCitationsPlugin $plugin)
     {
-        $this->plugin = new OptimetaCitationsPlugin();
+        $this->plugin = $plugin;
+
         if ($this->plugin->getSetting($this->plugin->getCurrentContextId(),
-                OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
+                $this->plugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
             $this->isProduction = true;
         }
     }
 
     /**
      * Submit enriched citations and return citations
+     *
      * @param string $submissionId
      * @param array $citationsParsed
      * @param bool $isBatch
      * @return array
+     * @throws Exception
      */
-    public function executeAndReturnWork(string $submissionId, array $citationsParsed, bool $isBatch = false)
+    public function executeAndReturnWork(string $submissionId, array $citationsParsed, bool $isBatch = false): array
     {
-        $publicationWork = get_object_vars(new WorkModel());;
+        $publicationWork = get_object_vars(new WorkModel());
 
         // return if input or username password is empty
         if (empty($submissionId) || empty($citationsParsed))
@@ -70,7 +78,7 @@ class Depositor
         $context = $request->getContext();
 
         // submission
-        $submissionDao = \DAORegistry::getDAO('SubmissionDAO');
+        $submissionDao = DAORegistry::getDAO('SubmissionDAO');
         $submission = $submissionDao->getById($submissionId);
 
         // return if doi is empty
@@ -78,7 +86,7 @@ class Depositor
             return $publicationWork;
 
         // publication
-        $publicationDao = \DAORegistry::getDAO('PublicationDAO');
+        $publicationDao = DAORegistry::getDAO('PublicationDAO');
         $publication = $submission->getLatestPublication();
 
         // authors
@@ -87,21 +95,21 @@ class Depositor
         // issue
         $issueId = $publication->getData('issueId');
         $issue = null;
-        $issueDao = \DAORegistry::getDAO('IssueDAO');
+        $issueDao = DAORegistry::getDAO('IssueDAO');
         if (!is_null($issueDao->getById($issueId))) {
             $issue = $issueDao->getById($issueId);
         }
 
         // publication work
-        $publicationWorkDb = $publication->getData(OPTIMETA_CITATIONS_PUBLICATION_WORK);
+        $publicationWorkDb = $publication->getData($this->plugin::OPTIMETA_CITATIONS_PUBLICATION_WORK);
         if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]')
             $publicationWork = json_decode($publicationWorkDb, true);
 
         $doi = $submission->getStoredPubId('doi');
 
         // OpenCitations
-        if(empty($publicationWork['opencitations_url']) && !empty($doi) && !empty($issue)){
-            $openCitations = new OpenCitations();
+        if (empty($publicationWork['opencitations_url']) && !empty($doi) && !empty($issue)) {
+            $openCitations = new OpenCitations($this->plugin);
             $openCitationsUrl = $openCitations->submitWork(
                 $context,
                 $issue,
@@ -117,7 +125,7 @@ class Depositor
 
         // WikiData: proceed if url empty, username and password given
         if (empty($publicationWork['wikidata_url']) && !empty($doi) && !empty($issue)) {
-            $wikiData = new WikiData();
+            $wikiData = new WikiData($this->plugin);
             $wikiDataQid = $wikiData->submitWork(
                 $context,
                 $issue,
@@ -128,11 +136,11 @@ class Depositor
                 $citationsParsed);
 
             $publicationWork['wikidata_qid'] = $wikiDataQid;
-            if(!empty($wikiDataQid))
-                $publicationWork['wikidata_url'] = OPTIMETA_CITATIONS_WIKIDATA_URL . '/' . $wikiDataQid;
+            if (!empty($wikiDataQid))
+                $publicationWork['wikidata_url'] = $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_URL . '/' . $wikiDataQid;
 
             if (!$this->isProduction)
-                $publicationWork['wikidata_url'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $wikiDataQid;
+                $publicationWork['wikidata_url'] = $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $wikiDataQid;
 
             $this->log .= '[publicationWork>wikidata_qid: ' . $publicationWork['wikidata_qid'] . ']';
             $this->log .= '[publicationWork>wikidata_url: ' . $publicationWork['wikidata_url'] . ']';
@@ -142,7 +150,7 @@ class Depositor
         $publicationWorkJson = json_encode($publicationWork);
 
         // save to database
-        $publication->setData(OPTIMETA_CITATIONS_PUBLICATION_WORK, $publicationWorkJson);
+        $publication->setData($this->plugin::OPTIMETA_CITATIONS_PUBLICATION_WORK, $publicationWorkJson);
         $publicationDao->updateObject($publication);
 
         return $publicationWork;
@@ -150,21 +158,21 @@ class Depositor
 
     /**
      * Batch deposit
+     *
      * @return bool
+     * @throws Exception
      */
     public function batchDeposit(): bool
     {
-        $result = true;
-
         foreach ($this->getContextIds() as $contextId) {
             $this->log .= '[$contextId: ' . $contextId . ']';
             foreach ($this->getPublishedSubmissionIds($contextId) as $submissionId) {
                 $this->log .= '[$submissionId: ' . $submissionId . ']';
-                $submissionDao = new \SubmissionDAO();
+                $submissionDao = DAORegistry::getDAO('SubmissionDAO');
                 $submission = $submissionDao->getById($submissionId);
                 $publication = $submission->getLatestPublication();
 
-                $pluginDao = new PluginDAO();
+                $pluginDao = $this->plugin->pluginDao;
                 $citations = $pluginDao->getCitations($publication);
 
                 $publicationWork = $this->executeAndReturnWork($submissionId, $citations, true);
@@ -173,42 +181,46 @@ class Depositor
             }
         }
 
-        return $result;
+        return true;
     }
 
     /**
      * Get an array of all published submission IDs in the database
+     *
      * @param int $contextId
      * @return array
      */
-    public function getPublishedSubmissionIds($contextId)
+    public function getPublishedSubmissionIds(int $contextId): array
     {
-        import('classes.submission.Submission');
         $submissionsIterator = Services::get('submission')->getMany([
             'contextId' => $contextId,
-            'status' => STATUS_PUBLISHED]);
+            'status' => Submission::STATUS_PUBLISHED]);
+
         $submissionIds = [];
+
         foreach ($submissionsIterator as $submission) {
             $submissionIds[] = $submission->getId();
         }
+
         return $submissionIds;
     }
 
     /**
      * Get an array of all context IDs in the database
+     *
      * @return array
      */
-    public function getContextIds()
+    public function getContextIds(): array
     {
         $contextIds = [];
 
-        $contextDao = \Application::getContextDAO();
+        $contextDao = Application::getContextDAO();
         $contextFactory = $contextDao->getAll();
         try {
             while ($context = $contextFactory->next()) {
                 $contextIds[] = $context->getId();
             }
-        } catch (\Exception $exception) {
+        } catch (Exception) {
         }
 
         return $contextIds;
