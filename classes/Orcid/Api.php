@@ -15,10 +15,9 @@
 namespace APP\plugins\generic\optimetaCitations\classes\Orcid;
 
 use APP\core\Application;
-use APP\plugins\generic\optimetaCitations\classes\Orcid\Model\Author;
 use Exception;
 
-class OrcidApi
+class Api
 {
     /**
      * The url to the api
@@ -27,50 +26,42 @@ class OrcidApi
      */
     protected string $url;
 
+    /**
+     * GuzzleHttp\Client
+     * @var object (class)
+     */
+    protected object $httpClient;
+
     public function __construct(string $apiUrl)
     {
         $this->url = $apiUrl;
+
+        $this->httpClient = Application::get()->getHttpClient();
     }
 
     /**
-     * This method retrieves the Author from the API
+     * Gets response from API and returns the body of the response
      *
      * @param string $orcid
-     * @return Author
+     * @return array
      */
-    public function getAuthorFromApi(string $orcid): Author
+    public function getOrcidObjectFromApi(string $orcid): array
     {
-        $httpClient = Application::get()->getHttpClient();
-
-        $author = new Author();
-
-        if (empty($orcid)) return $author;
-
         try {
-
-            $response = $httpClient->request('GET', $this->url . '/' . $orcid,
+            $response = $this->httpClient->request('GET', $this->url . '/' . $orcid,
                 [
                     'headers' => [
                         'Accept' => 'application/json'],
                     'verify' => false
                 ]);
 
-            if ($response->getStatusCode() != 200) return $author;
+            if ($response->getStatusCode() != 200) return [];
 
-            $responseBody = json_decode($response->getBody(), true);
-
-            $author->orcid = $orcid;
-
-            if (!empty($responseBody['person']['name']['given-names']['value']))
-                $author->given_name = $responseBody['person']['name']['given-names']['value'];
-
-            if (!empty($responseBody['person']['name']['family-name']['value']))
-                $author->family_name = $responseBody['person']['name']['family-name']['value'];
-
+            return json_decode($response->getBody(), true);
         } catch (\GuzzleHttp\Exception\GuzzleException|Exception $ex) {
             error_log($ex->getMessage(), true);
         }
 
-        return $author;
+        return [];
     }
 }

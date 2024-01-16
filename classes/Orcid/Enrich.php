@@ -12,13 +12,14 @@
  * @brief Orcid class for Orcid
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes\Enrich;
+namespace APP\plugins\generic\optimetaCitations\classes\Orcid;
 
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
-use APP\plugins\generic\optimetaCitations\classes\Orcid\OrcidApi;
+use APP\plugins\generic\optimetaCitations\classes\Orcid\Model\Author;
+use APP\plugins\generic\optimetaCitations\classes\Pid\Orcid;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
-class Orcid
+class Enrich
 {
     /**
      * @var OptimetaCitationsPlugin
@@ -40,13 +41,13 @@ class Orcid
     {
         if (empty($citation->authors)) return $citation;
 
-        $objOrcid = new \APP\plugins\generic\optimetaCitations\classes\Pid\Orcid();
-        $ojbOrcidBase = new OrcidApi($this->plugin::OPTIMETA_CITATIONS_ORCID_API_URL);
+        $pidOrcid = new Orcid();
+        $api = new Api($this->plugin::OPTIMETA_CITATIONS_ORCID_API_URL);
 
         for ($i = 0; $i < count($citation->authors); $i++) {
             if (!empty($citation->authors[$i]['orcid'])) {
                 $orcid = $citation->authors[$i]['orcid'];
-                $author = $ojbOrcidBase->getAuthorFromApi($objOrcid->removePrefixFromUrl($orcid));
+                $author = $this->getAuthorFromApi($api, $pidOrcid->removePrefixFromUrl($orcid));
 
                 // Check if not empty and ORCID Record is not deactivated
                 if (!empty($author->given_name) &&
@@ -64,5 +65,33 @@ class Orcid
         }
 
         return $citation;
+    }
+
+    /**
+     * This method retrieves the Author from the API
+     *
+     * @param Api $api
+     * @param string $orcid
+     * @return Author
+     */
+    public function getAuthorFromApi(Api $api, string $orcid): Author
+    {
+        $author = new Author();
+
+        if (empty($orcid)) return $author;
+
+        $orcidObject = $api->getOrcidObjectFromApi($orcid);
+
+        if(empty($orcidObject)) return $author;
+
+        $author->orcid = $orcid;
+
+        if (!empty($orcidObject['person']['name']['given-names']['value']))
+            $author->given_name = $orcidObject['person']['name']['given-names']['value'];
+
+        if (!empty($orcidObject['person']['name']['family-name']['value']))
+            $author->family_name = $orcidObject['person']['name']['family-name']['value'];
+
+        return $author;
     }
 }

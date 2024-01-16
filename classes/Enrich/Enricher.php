@@ -70,7 +70,7 @@ class Enricher
                 $citation = $objWikiData->getItem($citation);
 
                 // Orcid
-                $objOrcid = new Orcid($this->plugin);
+                $objOrcid = new \APP\plugins\generic\optimetaCitations\classes\Orcid\Enrich($this->plugin);
                 $citation = $objOrcid->getAuthors($citation);
 
                 // push to citations enriched array
