@@ -1,3 +1,6 @@
+# local directory
+.local
+
 # PHPStorm
 .idea/**
 
@@ -8,3 +11,4 @@
 node_modules/**
 
 cypress/logs/
+

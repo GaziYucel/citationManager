@@ -38,8 +38,8 @@ use PKP\form\validation\FormValidatorPost;
 
 use APP\plugins\generic\optimetaCitations\classes\Components\Forms\PublicationForm;
 use APP\plugins\generic\optimetaCitations\classes\Components\Forms\SettingsForm;
-use APP\plugins\generic\optimetaCitations\classes\Dao\CitationsExtendedDAO;
-use APP\plugins\generic\optimetaCitations\classes\Dao\PluginDAO;
+use APP\plugins\generic\optimetaCitations\classes\Db\CitationsExtendedDAO;
+use APP\plugins\generic\optimetaCitations\classes\Db\PluginDAO;
 use APP\plugins\generic\optimetaCitations\classes\Deposit\Depositor;
 use APP\plugins\generic\optimetaCitations\classes\Frontend\Article;
 use APP\plugins\generic\optimetaCitations\classes\Handler\PluginAPIHandler;
@@ -66,13 +66,13 @@ class OptimetaCitationsPlugin extends GenericPlugin
     public const OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER = 'OptimetaCitations_Open_Citations_Owner';
     public const OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY = 'OptimetaCitations_Open_Citations_Repository';
     public const OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN = 'OptimetaCitations_Open_Citations_Token';
-
     public const OPTIMETA_CITATIONS_OPENALEX_URL = 'https://openalex.org';
     public const OPTIMETA_CITATIONS_WIKIDATA_URL = 'https://www.wikidata.org/wiki';
     public const OPTIMETA_CITATIONS_WIKIDATA_API_URL = 'https://www.wikidata.org/w/api.php';
     public const OPTIMETA_CITATIONS_WIKIDATA_URL_TEST = 'https://test.wikidata.org/wiki';
     public const OPTIMETA_CITATIONS_WIKIDATA_API_URL_TEST = 'https://test.wikidata.org/w/api.php';
     public const OPTIMETA_CITATIONS_ORCID_URL = 'https://orcid.org';
+    public const OPTIMETA_CITATIONS_ORCID_API_URL = 'https://pub.orcid.org/v2.1';
     public const OPTIMETA_CITATIONS_OPEN_ALEX_URL = 'https://openalex.org';
     public const OPTIMETA_CITATIONS_DOI_URL = 'https://doi.org';
 
@@ -327,7 +327,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $state['components'][OPTIMETA_CITATIONS_FORM_NAME] = $form->getConfig();
         $templateMgr->assign($this->versionSpecificNameState, $state);
 
-        $publicationDao = new PublicationDAO();
+        $publicationDao = DAORegistry::getDAO('PublicationDAO');
         $publication = $publicationDao->getById($submissionId);
 
         $this->templateParameters['pluginApiUrl'] = $apiBaseUrl . OPTIMETA_CITATIONS_API_ENDPOINT;
@@ -401,7 +401,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $dispatcher = $request->getDispatcher();
         $apiBaseUrl = $dispatcher->url($request, Application::ROUTE_API, $context->getData('urlPath'), '');
 
-        $publicationDao = new PublicationDAO();
+        $publicationDao = DAORegistry::getDAO('PublicationDAO');
         $submissionId = $request->getUserVar('submissionId');
         $publication = $publicationDao->getById($submissionId);
 

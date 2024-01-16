@@ -17,7 +17,7 @@ namespace APP\plugins\generic\optimetaCitations\classes\Enrich;
 use APP\plugins\generic\optimetaCitations\classes\Model\AuthorModel;
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
-use Optimeta\Shared\Pid\Doi;
+use APP\plugins\generic\optimetaCitations\classes\Pid\Doi;
 use Optimeta\Shared\OpenAlex\OpenAlexBase;
 
 class OpenAlex
@@ -50,7 +50,7 @@ class OpenAlex
         $citation->publication_date = $openAlexWork->publication_date;
         $citation->type = $openAlexWork->type;
 
-        $objOrcid = new \Optimeta\Shared\Pid\Orcid();
+        $objOrcid = new \APP\plugins\generic\optimetaCitations\classes\Pid\Orcid();
         for ($i = 0; $i < count((array)$openAlexWork->authorships); $i++) {
             $author = new AuthorModel();
             $author->orcid = $objOrcid->removePrefixFromUrl(

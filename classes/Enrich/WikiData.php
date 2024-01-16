@@ -17,7 +17,7 @@ namespace APP\plugins\generic\optimetaCitations\classes\Enrich;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 use Application;
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
-use Optimeta\Shared\Pid\Doi;
+use APP\plugins\generic\optimetaCitations\classes\Pid\Doi;
 use Optimeta\Shared\WikiData\WikiDataBase;
 
 class WikiData

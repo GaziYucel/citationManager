@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Enrich/Orcid.php
+ * @file plugins/generic/optimetaCitations/classes/Enrich/Orcid.inc.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -15,8 +15,8 @@
 namespace APP\plugins\generic\optimetaCitations\classes\Enrich;
 
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\classes\Orcid\OrcidApi;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
-use Optimeta\Shared\Orcid\OrcidBase;
 
 class Orcid
 {
@@ -32,6 +32,7 @@ class Orcid
 
     /**
      * Get all information from Orcid for the authors in this citation
+     *
      * @param CitationModel $citation
      * @return CitationModel
      */
@@ -39,8 +40,8 @@ class Orcid
     {
         if (empty($citation->authors)) return $citation;
 
-        $objOrcid = new \Optimeta\Shared\Pid\Orcid();
-        $ojbOrcidBase = new OrcidBase();
+        $objOrcid = new \APP\plugins\generic\optimetaCitations\classes\Pid\Orcid();
+        $ojbOrcidBase = new OrcidApi($this->plugin::OPTIMETA_CITATIONS_ORCID_API_URL);
 
         for ($i = 0; $i < count($citation->authors); $i++) {
             if (!empty($citation->authors[$i]['orcid'])) {

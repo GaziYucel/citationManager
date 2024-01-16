@@ -16,7 +16,7 @@ namespace APP\plugins\generic\optimetaCitations\classes\Deposit;
 
 use APP\core\Application;
 use APP\core\Services;
-use APP\plugins\generic\optimetaCitations\classes\Dao\PluginDAO;
+use APP\plugins\generic\optimetaCitations\classes\Db\PluginDAO;
 use APP\plugins\generic\optimetaCitations\classes\Model\WorkModel;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 use APP\submission\Submission;

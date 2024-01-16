@@ -6,15 +6,9 @@
     "Optimeta",
     "Citations"
   ],
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/tibhannover/optimeta-plugin-shared.git"
-    }
-  ],
+  "repositories": [],
   "require": {
-    "php": ">=7.3",
-    "tibhannover/optimeta": "dev-main"
+    "php": ">=7.3"
   },
   "autoload": {
     "classmap": [

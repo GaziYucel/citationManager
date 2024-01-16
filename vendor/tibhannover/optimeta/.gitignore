@@ -1,8 +1,0 @@
-# PHPStorm
-.idea/**
-
-# Visual Studio Code
-.vscode/**
-
-# node_modules
-node_modules/**
