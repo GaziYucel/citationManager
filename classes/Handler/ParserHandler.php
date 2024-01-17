@@ -1,28 +1,28 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Parse/Parser.php
+ * @file plugins/generic/optimetaCitations/classes/Handler/ParserHandler.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class Parser
+ * @class ParserHandler
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Main Parser class for extracting DOI, Url, Handle, Arxiv, Urn.
+ * @brief ParserHandler class for extracting DOI, Url, Handle, Arxiv, Urn.
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes\Parse;
+namespace APP\plugins\generic\optimetaCitations\classes\Handler;
 
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
-use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 use APP\plugins\generic\optimetaCitations\classes\PID\Arxiv;
 use APP\plugins\generic\optimetaCitations\classes\PID\Doi;
 use APP\plugins\generic\optimetaCitations\classes\PID\Handle;
 use APP\plugins\generic\optimetaCitations\classes\PID\Url;
 use APP\plugins\generic\optimetaCitations\classes\PID\Urn;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
-class Parser
+class ParserHandler
 {
     /**
      * @var OptimetaCitationsPlugin

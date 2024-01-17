@@ -1,23 +1,23 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Enrich/Enricher.php
+ * @file plugins/generic/optimetaCitations/classes/Handler/EnricherHandler.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class Enricher
+ * @class EnricherHandler
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Main Enricher class
+ * @brief EnricherHandler class
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes\Enrich;
+namespace APP\plugins\generic\optimetaCitations\classes\Handler;
 
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
-class Enricher
+class EnricherHandler
 {
     /**
      * @var OptimetaCitationsPlugin

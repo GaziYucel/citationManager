@@ -17,37 +17,26 @@ namespace APP\plugins\generic\optimetaCitations;
 require_once(OPTIMETA_CITATIONS_PLUGIN_PATH . '/vendor/autoload.php');
 
 use APP\core\Application;
-use APP\core\Request;
-use APP\template\TemplateManager;
 use APP\notification\Notification;
 use APP\notification\NotificationManager;
-
-use PKP\core\JSONMessage;
-use PKP\core\PKPString;
-use PKP\linkAction\LinkAction;
-use PKP\linkAction\request\AjaxModal;
-use PKP\linkAction\request\AjaxAction;
-use PKP\plugins\GenericPlugin;
-use PKP\plugins\Hook;
-use PKP\core\Registry;
-use PKP\db\DAORegistry;
-use PKP\linkAction\request\RedirectAction;
-use PKP\form\Form;
-use PKP\form\validation\FormValidatorCSRF;
-use PKP\form\validation\FormValidatorPost;
-
 use APP\plugins\generic\optimetaCitations\classes\Components\Forms\PublicationForm;
 use APP\plugins\generic\optimetaCitations\classes\Components\Forms\SettingsForm;
 use APP\plugins\generic\optimetaCitations\classes\Db\CitationsExtendedDAO;
 use APP\plugins\generic\optimetaCitations\classes\Db\PluginDAO;
-use APP\plugins\generic\optimetaCitations\classes\Deposit\Depositor;
 use APP\plugins\generic\optimetaCitations\classes\Frontend\Article;
+use APP\plugins\generic\optimetaCitations\classes\Handler\DepositorHandler;
 use APP\plugins\generic\optimetaCitations\classes\Handler\PluginAPIHandler;
 use APP\plugins\generic\optimetaCitations\classes\Install\OptimetaCitationsMigration;
 use APP\plugins\generic\optimetaCitations\classes\Model\AuthorModel;
 use APP\plugins\generic\optimetaCitations\classes\Model\WorkModel;
+use APP\template\TemplateManager;
+use PKP\core\JSONMessage;
 use PKP\core\PKPApplication;
-use PKP\notification\PKPNotification;
+use PKP\db\DAORegistry;
+use PKP\linkAction\LinkAction;
+use PKP\linkAction\request\AjaxAction;
+use PKP\linkAction\request\AjaxModal;
+use PKP\plugins\GenericPlugin;
 use PKP\submission\PKPSubmission;
 
 class OptimetaCitationsPlugin extends GenericPlugin
@@ -558,7 +547,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
                     array('contents' => __('plugins.generic.optimetaCitations.settings.initialise.notification')));
                 return DAO::getDataChangedEvent();
             case 'batch_deposit':
-                $depositor = new Depositor();
+                $depositor = new DepositorHandler();
                 $depositor->batchDeposit();
                 $notificationManager = new NotificationManager();
                 $user = $request->getUser();

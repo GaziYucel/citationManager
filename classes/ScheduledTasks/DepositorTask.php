@@ -15,7 +15,7 @@
 import('lib.pkp.classes.scheduledTask.ScheduledTask');
 import('plugins.generic.optimetaCitations.OptimetaCitationsPlugin');
 
-use APP\plugins\generic\optimetaCitations\classes\Deposit\Depositor;
+use APP\plugins\generic\optimetaCitations\classes\Handler\DepositorHandler;
 use PKP\scheduledTask\ScheduledTaskHelper;
 
 class DepositorTask extends ScheduledTask
@@ -51,7 +51,7 @@ class DepositorTask extends ScheduledTask
 
         $result = false;
 
-        $depositor = new Depositor($this->plugin);
+        $depositor = new DepositorHandler($this->plugin);
         $result = $depositor->batchDeposit();
 
         if (!$result) {

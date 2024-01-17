@@ -14,17 +14,14 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Handler;
 
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
+use Exception;
 use PKP\core\APIResponse;
 use PKP\handler\APIHandler;
 use PKP\security\authorization\PolicySet;
 use PKP\security\authorization\RoleBasedHandlerOperationPolicy;
 use PKP\security\Role;
 use Slim\Http\Request as SlimRequest;
-
-use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
-use APP\plugins\generic\optimetaCitations\classes\Deposit\Depositor;
-use APP\plugins\generic\optimetaCitations\classes\Enrich\Enricher;
-use APP\plugins\generic\optimetaCitations\classes\Parse\Parser;
 use Slim\Http\Response;
 
 class PluginAPIHandler extends APIHandler
@@ -117,11 +114,11 @@ class PluginAPIHandler extends APIHandler
         }
 
         // parse citations
-        $parser = new Parser($this->plugin);
+        $parser = new ParserHandler($this->plugin);
         $citationsOut = $parser->executeAndReturnCitations($citationsRaw);
 
         // enrich citations
-        $enricher = new Enricher($this->plugin);
+        $enricher = new EnricherHandler($this->plugin);
         $citationsOut = $enricher->executeAndReturnCitations($citationsOut);
 
         $this->responseBody['message'] = $citationsOut;
@@ -134,6 +131,7 @@ class PluginAPIHandler extends APIHandler
      * @param APIResponse $response
      * @param array $args
      * @return Response
+     * @throws Exception
      */
     public function deposit(SlimRequest $slimRequest, APIResponse $response, array $args): Response
     {
@@ -160,7 +158,7 @@ class PluginAPIHandler extends APIHandler
         }
 
         // deposit work + citations
-        $depositor = new Depositor($this->plugin);
+        $depositor = new DepositorHandler($this->plugin);
         $workOut = $depositor->executeAndReturnWork($submissionId, $citationsIn);
 
         $this->responseBody['message'] = $workOut;

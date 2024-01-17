@@ -1,29 +1,30 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Deposit/Depositor.php
+ * @file plugins/generic/optimetaCitations/classes/Handler/DepositorHandler.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class Depositor
+ * @class DepositorHandler
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Main Depositor class
+ * @brief DepositorHandler class
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes\Deposit;
+namespace APP\plugins\generic\optimetaCitations\classes\Handler;
 
 use APP\core\Application;
 use APP\core\Services;
-use APP\plugins\generic\optimetaCitations\classes\Db\PluginDAO;
-use APP\plugins\generic\optimetaCitations\classes\Model\WorkModel;
-use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 use APP\submission\Submission;
 use Exception;
 use PKP\db\DAORegistry;
+use APP\plugins\generic\optimetaCitations\classes\Deposit\OpenCitations;
+use APP\plugins\generic\optimetaCitations\classes\Deposit\Wikidata;
+use APP\plugins\generic\optimetaCitations\classes\Model\WorkModel;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
-class Depositor
+class DepositorHandler
 {
     /**
      * Is this instance production
