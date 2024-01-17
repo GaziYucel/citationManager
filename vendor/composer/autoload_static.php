@@ -14,10 +14,10 @@ class ComposerStaticInit205e7fc175dbc92c2ca8148adbc3ad81
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Db\\CitationsExtendedDAO' => __DIR__ . '/../..' . '/classes/Db/CitationsExtendedDAO.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Db\\PluginDAO' => __DIR__ . '/../..' . '/classes/Db/PluginDAO.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Debug' => __DIR__ . '/../..' . '/classes/Debug.php',
-        'APP\\plugins\\generic\\optimetaCitations\\classes\\Handler\\DepositorHandler' => __DIR__ . '/../..' . '/classes/Deposit/Depositor.php',
-        'APP\\plugins\\generic\\optimetaCitations\\classes\\Deposit\\OpenCitations' => __DIR__ . '/../..' . '/classes/Deposit/OpenCitations.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Deposit\\Wikidata' => __DIR__ . '/../..' . '/classes/Deposit/WikiData.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Frontend\\Article' => __DIR__ . '/../..' . '/classes/Frontend/Article.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\GitHub\\Api' => __DIR__ . '/../..' . '/classes/GitHub/Api.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Handler\\DepositorHandler' => __DIR__ . '/../..' . '/classes/Handler/DepositorHandler.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Handler\\EnricherHandler' => __DIR__ . '/../..' . '/classes/Handler/EnricherHandler.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Handler\\ParserHandler' => __DIR__ . '/../..' . '/classes/Handler/ParserHandler.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Handler\\PluginAPIHandler' => __DIR__ . '/../..' . '/classes/Handler/PluginAPIHandler.php',
@@ -30,6 +30,7 @@ class ComposerStaticInit205e7fc175dbc92c2ca8148adbc3ad81
         'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenAlex\\Model\\Author' => __DIR__ . '/../..' . '/classes/OpenAlex/Model/Author.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenAlex\\Model\\Venue' => __DIR__ . '/../..' . '/classes/OpenAlex/Model/Venue.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenAlex\\Model\\Work' => __DIR__ . '/../..' . '/classes/OpenAlex/Model/Work.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenCitations\\Deposit' => __DIR__ . '/../..' . '/classes/OpenCitations/Deposit.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Orcid\\Api' => __DIR__ . '/../..' . '/classes/Orcid/Api.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Orcid\\Enrich' => __DIR__ . '/../..' . '/classes/Orcid/Enrich.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Orcid\\Model\\Author' => __DIR__ . '/../..' . '/classes/Orcid/Model/Author.php',
@@ -48,6 +49,9 @@ class ComposerStaticInit205e7fc175dbc92c2ca8148adbc3ad81
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Wikidata\\Model\\Property' => __DIR__ . '/../..' . '/classes/Wikidata/Model/Property.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'DepositorTask' => __DIR__ . '/../..' . '/classes/ScheduledTasks/DepositorTask.php',
+        'Optimeta\\Shared\\OpenCitations\\Model\\WorkCitation' => __DIR__ . '/../..' . '/classes/OpenCitations/Model/WorkCitation.php',
+        'Optimeta\\Shared\\OpenCitations\\Model\\WorkMetaData' => __DIR__ . '/../..' . '/classes/OpenCitations/Model/WorkMetaData.php',
+        'Optimeta\\Shared\\OpenCitations\\OpenCitationsBase' => __DIR__ . '/../..' . '/classes/OpenCitations/Api.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

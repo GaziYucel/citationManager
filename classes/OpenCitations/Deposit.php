@@ -1,31 +1,31 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Deposit/OpenCitations.php
+ * @file plugins/generic/optimetaCitations/classes/OpenCitations/Deposit.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class OpenCitations
+ * @class Deposit
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Depositor class for OpenCitations
+ * @brief Deposit class for OpenCitations
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes\Deposit;
+namespace APP\plugins\generic\optimetaCitations\classes\OpenCitations;
 
 use APP\journal\Journal;
-use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
-use APP\publication\Publication;
 use APP\plugins\generic\optimetaCitations\classes\PID\Arxiv;
 use APP\plugins\generic\optimetaCitations\classes\PID\Doi;
 use APP\plugins\generic\optimetaCitations\classes\PID\Handle;
 use APP\plugins\generic\optimetaCitations\classes\PID\Orcid;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
+use APP\publication\Publication;
 use Optimeta\Shared\OpenCitations\Model\WorkCitation;
 use Optimeta\Shared\OpenCitations\Model\WorkMetaData;
 use Optimeta\Shared\OpenCitations\OpenCitationsBase;
 
-class OpenCitations
+class Deposit
 {
     /**
      * Log string

@@ -16,13 +16,12 @@ namespace APP\plugins\generic\optimetaCitations\classes\Handler;
 
 use APP\core\Application;
 use APP\core\Services;
-use APP\submission\Submission;
-use Exception;
-use PKP\db\DAORegistry;
-use APP\plugins\generic\optimetaCitations\classes\Deposit\OpenCitations;
 use APP\plugins\generic\optimetaCitations\classes\Deposit\Wikidata;
 use APP\plugins\generic\optimetaCitations\classes\Model\WorkModel;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
+use APP\submission\Submission;
+use Exception;
+use PKP\db\DAORegistry;
 
 class DepositorHandler
 {
@@ -110,7 +109,7 @@ class DepositorHandler
 
         // OpenCitations
         if (empty($publicationWork['opencitations_url']) && !empty($doi) && !empty($issue)) {
-            $openCitations = new OpenCitations($this->plugin);
+            $openCitations = new APP\plugins\generic\optimetaCitations\classes\OpenCitations\Deposit($this->plugin);
             $openCitationsUrl = $openCitations->submitWork(
                 $context,
                 $issue,
