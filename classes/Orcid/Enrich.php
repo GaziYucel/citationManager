@@ -53,7 +53,7 @@ class Enrich
         for ($i = 0; $i < count($citation->authors); $i++) {
             if (!empty($citation->authors[$i]['orcid'])) {
                 $orcid = $citation->authors[$i]['orcid'];
-                $author = $this->getAuthorFromApi($this->api, $pidOrcid->removePrefixFromUrl($orcid));
+                $author = $this->getAuthor($pidOrcid->removePrefixFromUrl($orcid));
 
                 // Check if not empty and ORCID Record is not deactivated
                 if (!empty($author->given_name) &&
@@ -76,28 +76,26 @@ class Enrich
     /**
      * This method retrieves the Author from the API
      *
-     * @param Api $api
      * @param string $orcid
      * @return Author
      */
-    public function getAuthorFromApi(Api $api, string $orcid): Author
+    public function getAuthor(string $orcid): Author
     {
         $author = new Author();
 
         if (empty($orcid)) return $author;
 
-        $orcidObject = $api->getObjectFromApi($orcid);
+        $orcidObject = $this->api->getObjectFromApi($orcid);
 
         if(empty($orcidObject)) return $author;
 
         $author->orcid = $orcid;
 
-        if (!empty($orcidObject['person']['name']['given-names']['value']))
-            $author->given_name = $orcidObject['person']['name']['given-names']['value'];
+        $author->given_name = $this->api->getGivenName($orcidObject);
 
-        if (!empty($orcidObject['person']['name']['family-name']['value']))
-            $author->family_name = $orcidObject['person']['name']['family-name']['value'];
+        $author->family_name = $this->api->getFamilyName($orcidObject);
 
         return $author;
     }
+
 }

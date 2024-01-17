@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'APP\\plugins\\generic\\optimetaCitations\\classes\\Api' => $baseDir . '/classes/Api.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\Components\\Forms\\PublicationForm' => $baseDir . '/classes/Components/Forms/PublicationForm.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\Components\\Forms\\SettingsForm' => $baseDir . '/classes/Components/Forms/SettingsForm.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\Db\\CitationsExtended' => $baseDir . '/classes/Db/CitationsExtended.php',
@@ -30,6 +29,7 @@ return array(
     'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenAlex\\Model\\Venue' => $baseDir . '/classes/OpenAlex/Model/Venue.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenAlex\\Model\\Work' => $baseDir . '/classes/OpenAlex/Model/Work.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenCitations\\Deposit' => $baseDir . '/classes/OpenCitations/Deposit.php',
+    'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenCitations\\OpenCitationsBase' => $baseDir . '/classes/OpenCitations/Api.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\Orcid\\Api' => $baseDir . '/classes/Orcid/Api.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\Orcid\\Enrich' => $baseDir . '/classes/Orcid/Enrich.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\Orcid\\Model\\Author' => $baseDir . '/classes/Orcid/Model/Author.php',
@@ -50,5 +50,4 @@ return array(
     'DepositorTask' => $baseDir . '/classes/ScheduledTasks/DepositorTask.php',
     'Optimeta\\Shared\\OpenCitations\\Model\\WorkCitation' => $baseDir . '/classes/OpenCitations/Model/WorkCitation.php',
     'Optimeta\\Shared\\OpenCitations\\Model\\WorkMetaData' => $baseDir . '/classes/OpenCitations/Model/WorkMetaData.php',
-    'Optimeta\\Shared\\OpenCitations\\OpenCitationsBase' => $baseDir . '/classes/OpenCitations/Api.php',
 );

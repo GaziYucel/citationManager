@@ -52,7 +52,7 @@ class Enrich
         $doi = $objDoi->removePrefixFromUrl($citation->doi);
 
         $openAlexWork = new Work();
-        $openAlexArray = $this->api->getObjectFromApi($doi);
+        $openAlexArray = $this->api->getWork($doi);
         foreach ($openAlexArray as $key => $value) {
             if (property_exists($openAlexWork, $key)) {
                 $openAlexWork->$key = $value;

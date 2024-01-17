@@ -109,7 +109,7 @@ class DepositorHandler
 
         // OpenCitations
         if (empty($publicationWork['opencitations_url']) && !empty($doi) && !empty($issue)) {
-            $openCitations = new APP\plugins\generic\optimetaCitations\classes\OpenCitations\Deposit($this->plugin);
+            $openCitations = new \APP\plugins\generic\optimetaCitations\classes\OpenCitations\Deposit($this->plugin);
             $openCitationsUrl = $openCitations->submitWork(
                 $context,
                 $issue,

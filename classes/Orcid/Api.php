@@ -14,36 +14,90 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Orcid;
 
-use Exception;
+use APP\core\Application;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
-class Api extends \APP\plugins\generic\optimetaCitations\classes\Api
+class Api
 {
+    /**
+     * @var OptimetaCitationsPlugin
+     */
+    public OptimetaCitationsPlugin $plugin;
+
+    /**
+     * @var string
+     */
+    protected string $url;
+
+    /**
+     * @var Client
+     */
+    protected Client $httpClient;
+
     function __construct(
-        OptimetaCitationsPlugin $plugin, string $url,
-        ?string                 $username = '', ?string $password = '', ?array $httpClientOptions = [])
+        OptimetaCitationsPlugin $plugin, string $url)
     {
-        parent::__construct($plugin, $url, $username, $password, $httpClientOptions);
+        $this->plugin = $plugin;
+
+        $this->url = $url;
+
+        $this->httpClient = new Client([
+            'headers' => [
+                'User-Agent' => Application::get()->getName() . '/' . $this->plugin->getDisplayName(),
+                'Accept' => 'application/json'],
+            'verify' => false]);
     }
 
     /**
      * Gets json object from API and returns the body of the response as array
      *
-     * @param string $id
+     * @param string $orcid
      * @return array
      */
-    public function getObjectFromApi(string $id): array
+    public function getObjectFromApi(string $orcid): array
     {
         try {
-            $response = $this->httpClient->request('GET', $this->url . '/' . $id);
+            $response = $this->httpClient->request('GET', $this->url . '/' . $orcid);
 
             if ($response->getStatusCode() != 200) return [];
 
-            return json_decode($response->getBody(), true);
-        } catch (\GuzzleHttp\Exception\GuzzleException|Exception $ex) {
+            $orcidObject = json_decode($response->getBody(), true);
+
+            if (empty($orcidObject) || json_last_error() !== JSON_ERROR_NONE) return [];
+
+            return $orcidObject;
+        } catch (\GuzzleHttp\Exception\GuzzleException|\Exception $ex) {
             error_log($ex->getMessage(), true);
         }
 
         return [];
+    }
+
+    /**
+     * Get Given name
+     *
+     * @param array $orcidObject
+     * @return string
+     */
+    public function getGivenName(array $orcidObject): string
+    {
+        if (!empty($orcidObject['person']['name']['given-names']['value']))
+            return $orcidObject['person']['name']['given-names']['value'];
+
+        return '';
+    }
+
+    /**
+     * Get Family name
+     *
+     * @param array $orcidObject
+     * @return string
+     */
+    public function getFamilyName(array $orcidObject): string
+    {
+        if (!empty($orcidObject['person']['name']['family-name']['value']))
+            return $orcidObject['person']['name']['family-name']['value'];
+
+        return '';
     }
 }

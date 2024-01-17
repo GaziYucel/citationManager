@@ -14,53 +14,39 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\GitHub;
 
-use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
+use APP\core\Application;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
-class Api extends \APP\plugins\generic\optimetaCitations\classes\Api
+class Api
 {
     /**
-     * User agent name to identify us
-     * @var string
+     * @var OptimetaCitationsPlugin
      */
-    protected string $userAgent = 'OJSOptimetaCitations';
+    public OptimetaCitationsPlugin $plugin;
 
     /**
-     * Log string
      * @var string
      */
-    public string $log = '';
+    protected string $url = 'https://api.github.com/repos/{{owner}}/{{repository}}/issues';
 
     /**
-     * The base url to the api issues
      * @var string
      */
-    protected $url = 'https://api.github.com/repos/{{owner}}/{{repository}}/issues';
+    protected string $token;
 
     /**
-     * Access token
-     * @var string
+     * @var Client
      */
-    protected $token;
+    protected Client $httpClient;
 
-    /**
-     * GuzzleHttp\Client
-     * @var object (class)
-     */
-    protected object $client;
-
-    function __construct(
-        OptimetaCitationsPlugin $plugin, string $url,
-        ?string                 $username = '', ?string $password = '', ?array $httpClientOptions = [])
+    public function __construct(
+        OptimetaCitationsPlugin $plugin, string $url, string $owner, string $repository, string $token)
     {
-        parent::__construct($plugin, $url, $username, $password, $httpClientOptions);
-    }
+        $this->plugin = $plugin;
 
-    public function __construct22(string $owner, string $repository, string $token)
-    {
-        if (!empty(OPTIMETA_CITATIONS_USER_AGENT))
-            $this->userAgent = OPTIMETA_CITATIONS_USER_AGENT;
+        $this->url = $url;
 
         $this->url = strtr($this->url, [
             '{{owner}}' => $owner,
@@ -69,8 +55,10 @@ class Api extends \APP\plugins\generic\optimetaCitations\classes\Api
 
         $this->token = $token;
 
-        $this->client = new Client([
-            'headers' => ['User-Agent' => $this->userAgent],
+        $this->httpClient = new Client([
+            'headers' => [
+                'User-Agent' => Application::get()->getName() . '/' . $this->plugin->getDisplayName()
+            ],
             'verify' => false
         ]);
     }
@@ -90,7 +78,7 @@ class Api extends \APP\plugins\generic\optimetaCitations\classes\Api
         }
 
         try {
-            $response = $this->client->request(
+            $response = $this->httpClient->request(
                 'POST',
                 $this->url,
                 [
@@ -108,7 +96,7 @@ class Api extends \APP\plugins\generic\optimetaCitations\classes\Api
 
             $issueId = $this->getIssueId($response);
         } catch (GuzzleException|\Exception $ex) {
-            $this->log .= $ex->getMessage();
+            error_log($ex->getMessage(), true);
         }
 
         return $issueId;
@@ -137,14 +125,9 @@ class Api extends \APP\plugins\generic\optimetaCitations\classes\Api
                 }
             }
         } catch (\Exception $ex) {
-            $this->log .= $ex->getMessage();
+            error_log($ex->getMessage(), true);
         }
 
         return $issueId;
-    }
-
-    function __destruct()
-    {
-        // error_log('GitHubBase->__destruct: ' . $this->log);
     }
 }

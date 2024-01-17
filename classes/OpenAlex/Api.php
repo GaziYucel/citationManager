@@ -14,33 +14,56 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\OpenAlex;
 
-use Exception;
+use APP\core\Application;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
-class Api extends \APP\plugins\generic\optimetaCitations\classes\Api
+class Api
 {
-    public function __construct(
-        OptimetaCitationsPlugin $plugin, string $url,
-        ?string                 $username = '', ?string $password = '', ?array $httpClientOptions = [])
+    /**
+     * @var OptimetaCitationsPlugin
+     */
+    public OptimetaCitationsPlugin $plugin;
+
+    /**
+     * @var string
+     */
+    protected string $url;
+
+    /**
+     * @var object
+     */
+    protected object $httpClient;
+
+
+    public function __construct(OptimetaCitationsPlugin $plugin, string $url)
     {
-        parent::__construct($plugin, $url, $username, $password, $httpClientOptions);
+        $this->plugin = $plugin;
+
+        $this->url = $url;
+
+        $this->httpClient = new \GuzzleHttp\Client([
+            'headers' => [
+                'User-Agent' => Application::get()->getName() . '/' . $this->plugin->getDisplayName(),
+                'Accept' => 'application/json'],
+            'verify' => false
+        ]);
     }
 
     /**
      * Gets json object from API and returns the body of the response as array
      *
-     * @param string $id
+     * @param string $doi
      * @return array
      */
-    public function getObjectFromApi(string $id): array
+    public function getWork(string $doi): array
     {
         try {
-            $response = $this->httpClient->request('GET', $this->url . 'works/doi:' . $id);
+            $response = $this->httpClient->request('GET', $this->url . '/' . 'works/doi:' . $doi);
 
             if ($response->getStatusCode() != 200) return [];
 
             return json_decode($response->getBody(), true);
-        } catch (\GuzzleHttp\Exception\GuzzleException|Exception $ex) {
+        } catch (\GuzzleHttp\Exception\GuzzleException|\Exception $ex) {
             error_log($ex->getMessage(), true);
         }
 

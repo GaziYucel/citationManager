@@ -15,29 +15,27 @@
 namespace APP\plugins\generic\optimetaCitations\classes\OpenCitations;
 
 use APP\journal\Journal;
+use APP\publication\Publication;
 use APP\plugins\generic\optimetaCitations\classes\PID\Arxiv;
 use APP\plugins\generic\optimetaCitations\classes\PID\Doi;
 use APP\plugins\generic\optimetaCitations\classes\PID\Handle;
 use APP\plugins\generic\optimetaCitations\classes\PID\Orcid;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
-use APP\publication\Publication;
-use Optimeta\Shared\OpenCitations\Model\WorkCitation;
-use Optimeta\Shared\OpenCitations\Model\WorkMetaData;
-use Optimeta\Shared\OpenCitations\OpenCitationsBase;
+use APP\plugins\generic\optimetaCitations\classes\GitHub\Api;
+use APP\plugins\generic\optimetaCitations\classes\OpenCitations\Model\WorkCitation;
+use APP\plugins\generic\optimetaCitations\classes\OpenCitations\Model\WorkMetaData;
 
 class Deposit
 {
     /**
-     * Log string
-     *
-     * @var string
-     */
-    public string $log = '';
-
-    /**
      * @var OptimetaCitationsPlugin
      */
     protected OptimetaCitationsPlugin $plugin;
+
+    /**
+     * @var Api
+     */
+    public Api $api;
 
     /**
      * The base url to the public issues
@@ -74,9 +72,23 @@ class Deposit
      */
     protected string $defaultType = 'journal article';
 
+    protected string $owner = '';
+
+    protected string $repository = '';
+
     public function __construct(OptimetaCitationsPlugin $plugin)
     {
         $this->plugin = $plugin;
+
+        $this->owner = $this->plugin->getSetting($this->plugin->getCurrentContextId(), $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER);
+        $this->repository = $this->plugin->getSetting($this->plugin->getCurrentContextId(), $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY);
+
+        $this->api = new Api(
+            $this->plugin,
+            $this->urlIssuesApi,
+            $this->owner,
+            $this->repository,
+            $this->plugin->getSetting($this->plugin->getCurrentContextId(), $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN));
     }
 
     /**
@@ -92,21 +104,14 @@ class Deposit
      * @return string
      */
     public function submitWork(
-        Journal $context,
-        ?object $issue,
-        object $submission,
+        Journal     $context,
+        ?object     $issue,
+        object      $submission,
         Publication $publication,
-        array $authors,
-        array $publicationWork,
-        array $citations): string
+        array       $authors,
+        array       $publicationWork,
+        array       $citations): string
     {
-        $owner = $this->plugin->getSetting($this->plugin->getCurrentContextId(),
-            $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER);
-        $repo = $this->plugin->getSetting($this->plugin->getCurrentContextId(),
-            $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY);
-        $token = $this->plugin->getSetting($this->plugin->getCurrentContextId(),
-            $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN);
-
         // return '' url not empty or username and password empty
         if (empty($owner) || empty($repo) || empty($token))
             return '';
@@ -115,8 +120,8 @@ class Deposit
 
         $publicationDate = date('Y-m-d', strtotime($issue->getData('datePublished')));
 
-        $objDoi = new Doi();
         // title of GitHub issue
+        $objDoi = new Doi();
         $title = str_replace('{{domain}} {{pid}}',
             $_SERVER['SERVER_NAME'] . ' ' . 'doi:' . $objDoi->removePrefixFromUrl($doi),
             $this->titleSyntax);
@@ -130,23 +135,12 @@ class Deposit
             $this->getColumnNamesAsCsv(new WorkCitation()) .
             $this->getCitationsAsCsv($citations, $doi, $publicationDate);
 
-        // prepare open citations and deposit
-        $openCitations = new OpenCitationsBase( $owner, $repo, $token);
+        $issueId = $this->api->addIssue($title, $body);
 
-        $githubIssueId = $openCitations->depositCitations($title, $body);
+        if (empty($issueId) && $issueId !== 0) return '';
 
-        $githubIssueUrl = str_replace(
-            '{{owner}}/{{repository}}',
-            $owner . '/' . $repo,
-            $this->urlIssues);
-
-        $this->log .= '[opencitations_url: ' . $githubIssueUrl . '/' . $githubIssueId . ']';
-
-        if (!empty($githubIssueId) && $githubIssueId != 0) {
-            return $githubIssueUrl . '/' . $githubIssueId;
-        }
-
-        return '';
+        return str_replace('{{owner}}/{{repository}}',$this->owner . '/' . $this->repository,
+                $this->urlIssues) . '/' . $issueId;
     }
 
     /**
@@ -353,8 +347,23 @@ class Deposit
         return trim($urlNew);
     }
 
-    function __destruct()
+    /**
+     * @param string $title
+     * @param string $body
+     * @return int
+     */
+    public function depositCitations(string $title, string $body): int
     {
-        // error_log('OpenCitations->__destruct: ' . $this->log);
+        $issueId = 0;
+
+        if (empty($title) || empty($body)) return $issueId;
+
+        $issueId = $this->api->addIssue($title, $body);
+
+        // error_log('[issueId: ' . $issueId . ']', true);
+
+        if (empty($issueId)) return 0;
+
+        return $issueId;
     }
 }

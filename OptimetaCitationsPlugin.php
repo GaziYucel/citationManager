@@ -56,7 +56,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
     public const OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY = 'OptimetaCitations_Open_Citations_Repository';
     public const OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN = 'OptimetaCitations_Open_Citations_Token';
     public const OPTIMETA_CITATIONS_OPENALEX_URL = 'https://openalex.org';
-    public const OPTIMETA_CITATIONS_OPENALEX_API_URL = 'https://api.openalex.org/';
+    public const OPTIMETA_CITATIONS_OPENALEX_API_URL = 'https://api.openalex.org';
     public const OPTIMETA_CITATIONS_WIKIDATA_URL = 'https://www.wikidata.org/wiki';
     public const OPTIMETA_CITATIONS_WIKIDATA_API_URL = 'https://www.wikidata.org/w/api.php';
     public const OPTIMETA_CITATIONS_WIKIDATA_URL_TEST = 'https://test.wikidata.org/wiki';

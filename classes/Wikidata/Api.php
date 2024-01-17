@@ -14,12 +14,43 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Wikidata;
 
+use APP\core\Application;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
-class Api extends \APP\plugins\generic\optimetaCitations\classes\Api
+class Api
 {
+    /**
+     * @var OptimetaCitationsPlugin
+     */
+    public OptimetaCitationsPlugin $plugin;
+
+    /**
+     * @var string
+     */
+    protected string $userAgent;
+
+    /**
+     * @var string
+     */
+    protected string $url;
+
+    /**
+     * @var string
+     */
+    protected string $username;
+
+    /**
+     * @var string
+     */
+    protected string $password;
+
+    /**
+     * @var object
+     */
+    protected object $httpClient;
+
     /**
      * Whether the client is logged in
      *
@@ -47,11 +78,19 @@ class Api extends \APP\plugins\generic\optimetaCitations\classes\Api
      */
     protected int $maxLoginAttempts = 3;
 
-    function __construct(
-        OptimetaCitationsPlugin $plugin, string $url,
-        ?string                 $username = '', ?string $password = '', ?array $httpClientOptions = [])
+    function __construct(OptimetaCitationsPlugin $plugin, string $url, ?string $username = '', ?string $password = '')
     {
-        parent::__construct($plugin, $url, $username, $password, array_merge($httpClientOptions, ['cookies' => true]));
+        $this->plugin = $plugin;
+        $this->url = $url;
+        if (!empty($username)) $this->username = $username;
+        if (!empty($password)) $this->password = $password;
+
+        $this->httpClient = new \GuzzleHttp\Client([
+            'headers' => [
+                'User-Agent' => Application::get()->getName() . '/' . $this->plugin->getDisplayName(),
+                'Accept' => 'application/json'],
+            'verify' => false,
+            'cookies' => true]);
 
         // login if username/password provided; else proceed anonymously
         if (!empty($this->username) && !empty($this->password)) {

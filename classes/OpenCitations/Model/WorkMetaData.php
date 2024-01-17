@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/vendor/tibhannover/optimeta/src/OpenCitations/Model/WorkMetaData.php
+ * @file plugins/generic/optimetaCitations/classes/OpenCitations/Model/WorkMetaData.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,7 +12,7 @@
  * @brief MetaData of citing and cited works.
  */
 
-namespace Optimeta\Shared\OpenCitations\Model;
+namespace APP\plugins\generic\optimetaCitations\classes\OpenCitations\Model;
 
 class WorkMetaData
 {

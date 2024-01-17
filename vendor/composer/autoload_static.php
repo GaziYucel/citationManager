@@ -7,7 +7,6 @@ namespace Composer\Autoload;
 class ComposerStaticInit205e7fc175dbc92c2ca8148adbc3ad81
 {
     public static $classMap = array (
-        'APP\\plugins\\generic\\optimetaCitations\\classes\\Api' => __DIR__ . '/../..' . '/classes/Api.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Components\\Forms\\PublicationForm' => __DIR__ . '/../..' . '/classes/Components/Forms/PublicationForm.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Components\\Forms\\SettingsForm' => __DIR__ . '/../..' . '/classes/Components/Forms/SettingsForm.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Db\\CitationsExtended' => __DIR__ . '/../..' . '/classes/Db/CitationsExtended.php',
@@ -31,6 +30,7 @@ class ComposerStaticInit205e7fc175dbc92c2ca8148adbc3ad81
         'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenAlex\\Model\\Venue' => __DIR__ . '/../..' . '/classes/OpenAlex/Model/Venue.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenAlex\\Model\\Work' => __DIR__ . '/../..' . '/classes/OpenAlex/Model/Work.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenCitations\\Deposit' => __DIR__ . '/../..' . '/classes/OpenCitations/Deposit.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenCitations\\OpenCitationsBase' => __DIR__ . '/../..' . '/classes/OpenCitations/Api.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Orcid\\Api' => __DIR__ . '/../..' . '/classes/Orcid/Api.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Orcid\\Enrich' => __DIR__ . '/../..' . '/classes/Orcid/Enrich.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Orcid\\Model\\Author' => __DIR__ . '/../..' . '/classes/Orcid/Model/Author.php',
@@ -51,7 +51,6 @@ class ComposerStaticInit205e7fc175dbc92c2ca8148adbc3ad81
         'DepositorTask' => __DIR__ . '/../..' . '/classes/ScheduledTasks/DepositorTask.php',
         'Optimeta\\Shared\\OpenCitations\\Model\\WorkCitation' => __DIR__ . '/../..' . '/classes/OpenCitations/Model/WorkCitation.php',
         'Optimeta\\Shared\\OpenCitations\\Model\\WorkMetaData' => __DIR__ . '/../..' . '/classes/OpenCitations/Model/WorkMetaData.php',
-        'Optimeta\\Shared\\OpenCitations\\OpenCitationsBase' => __DIR__ . '/../..' . '/classes/OpenCitations/Api.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
