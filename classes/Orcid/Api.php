@@ -15,6 +15,7 @@
 namespace APP\plugins\generic\optimetaCitations\classes\Orcid;
 
 use APP\core\Application;
+use GuzzleHttp\Exception\GuzzleException;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
 class Api
@@ -66,38 +67,10 @@ class Api
             if (empty($orcidObject) || json_last_error() !== JSON_ERROR_NONE) return [];
 
             return $orcidObject;
-        } catch (\GuzzleHttp\Exception\GuzzleException|\Exception $ex) {
+        } catch (GuzzleException|\Exception $ex) {
             error_log($ex->getMessage(), true);
         }
 
         return [];
-    }
-
-    /**
-     * Get Given name
-     *
-     * @param array $orcidObject
-     * @return string
-     */
-    public function getGivenName(array $orcidObject): string
-    {
-        if (!empty($orcidObject['person']['name']['given-names']['value']))
-            return $orcidObject['person']['name']['given-names']['value'];
-
-        return '';
-    }
-
-    /**
-     * Get Family name
-     *
-     * @param array $orcidObject
-     * @return string
-     */
-    public function getFamilyName(array $orcidObject): string
-    {
-        if (!empty($orcidObject['person']['name']['family-name']['value']))
-            return $orcidObject['person']['name']['family-name']['value'];
-
-        return '';
     }
 }

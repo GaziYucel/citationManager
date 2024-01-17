@@ -15,6 +15,7 @@
 namespace APP\plugins\generic\optimetaCitations\classes\OpenAlex;
 
 use APP\core\Application;
+use GuzzleHttp\Exception\GuzzleException;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
 class Api
@@ -63,7 +64,7 @@ class Api
             if ($response->getStatusCode() != 200) return [];
 
             return json_decode($response->getBody(), true);
-        } catch (\GuzzleHttp\Exception\GuzzleException|\Exception $ex) {
+        } catch (GuzzleException|\Exception $ex) {
             error_log($ex->getMessage(), true);
         }
 

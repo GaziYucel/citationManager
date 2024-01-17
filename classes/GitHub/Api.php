@@ -27,6 +27,12 @@ class Api
     public OptimetaCitationsPlugin $plugin;
 
     /**
+     * User agent name to identify us
+     * @var string
+     */
+    protected string $userAgent;
+
+    /**
      * @var string
      */
     protected string $url = 'https://api.github.com/repos/{{owner}}/{{repository}}/issues';
@@ -55,12 +61,9 @@ class Api
 
         $this->token = $token;
 
-        $this->httpClient = new Client([
-            'headers' => [
-                'User-Agent' => Application::get()->getName() . '/' . $this->plugin->getDisplayName()
-            ],
-            'verify' => false
-        ]);
+        $this->userAgent = Application::get()->getName() . '/' . $this->plugin->getDisplayName();
+
+        $this->httpClient = new Client();
     }
 
     /**

@@ -91,9 +91,11 @@ class Enrich
 
         $author->orcid = $orcid;
 
-        $author->given_name = $this->api->getGivenName($orcidObject);
+        if (!empty($orcidObject['person']['name']['given-names']['value']))
+            $author->given_name = $orcidObject['person']['name']['given-names']['value'];
 
-        $author->family_name = $this->api->getFamilyName($orcidObject);
+        if (!empty($orcidObject['person']['name']['family-name']['value']))
+            $author->family_name = $orcidObject['person']['name']['family-name']['value'];
 
         return $author;
     }
