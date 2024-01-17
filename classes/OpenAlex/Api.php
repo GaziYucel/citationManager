@@ -1,25 +1,25 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Orcid/Api.php
+ * @file plugins/generic/optimetaCitations/classes/OpenAlex/Api.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class Orcid
+ * @class OpenAlexBase
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Orcid class for Orcid
+ * @brief OpenAlex Api class
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes\Orcid;
+namespace APP\plugins\generic\optimetaCitations\classes\OpenAlex;
 
 use Exception;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
 class Api extends \APP\plugins\generic\optimetaCitations\classes\Api
 {
-    function __construct(
+    public function __construct(
         OptimetaCitationsPlugin $plugin, string $url,
         ?string                 $username = '', ?string $password = '', ?array $httpClientOptions = [])
     {
@@ -35,7 +35,7 @@ class Api extends \APP\plugins\generic\optimetaCitations\classes\Api
     public function getObjectFromApi(string $id): array
     {
         try {
-            $response = $this->httpClient->request('GET', $this->url . '/' . $id);
+            $response = $this->httpClient->request('GET', $this->url . 'works/doi:' . $id);
 
             if ($response->getStatusCode() != 200) return [];
 

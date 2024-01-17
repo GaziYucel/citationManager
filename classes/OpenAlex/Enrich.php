@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Enrich/OpenAlex.php
+ * @file plugins/generic/optimetaCitations/classes/OpenAlex/Enrich.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,24 +12,32 @@
  * @brief OpenAlex class for OpenAlex
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes\Enrich;
+namespace APP\plugins\generic\optimetaCitations\classes\OpenAlex;
 
 use APP\plugins\generic\optimetaCitations\classes\Model\AuthorModel;
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\classes\OpenAlex\Model\Work;
+use APP\plugins\generic\optimetaCitations\classes\PID\Orcid;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
-use APP\plugins\generic\optimetaCitations\classes\Pid\Doi;
-use Optimeta\Shared\OpenAlex\OpenAlexBase;
+use APP\plugins\generic\optimetaCitations\classes\PID\Doi;
 
-class OpenAlex
+class Enrich
 {
     /**
      * @var OptimetaCitationsPlugin
      */
     public OptimetaCitationsPlugin $plugin;
 
+    /**
+     * @var Api
+     */
+    public Api $api;
+
     public function __construct(OptimetaCitationsPlugin $plugin)
     {
         $this->plugin = $plugin;
+
+        $this->api = new Api($this->plugin, $this->plugin::OPTIMETA_CITATIONS_OPENALEX_API_URL);
     }
 
     /**
@@ -38,19 +46,25 @@ class OpenAlex
      * @param CitationModel $citation
      * @return CitationModel
      */
-    public function getWork(CitationModel $citation): CitationModel
+    public function getEnriched(CitationModel $citation): CitationModel
     {
         $objDoi = new Doi();
         $doi = $objDoi->removePrefixFromUrl($citation->doi);
-        $openAlex = new OpenAlexBase();
-        $openAlexWork = $openAlex->getWorkFromApiAsObjectWithDoi($doi); // \Optimeta\Shared\OpenAlex\Model\Work()
+
+        $openAlexWork = new Work();
+        $openAlexArray = $this->api->getObjectFromApi($doi);
+        foreach ($openAlexArray as $key => $value) {
+            if (property_exists($openAlexWork, $key)) {
+                $openAlexWork->$key = $value;
+            }
+        }
 
         $citation->title = $openAlexWork->title;
         $citation->publication_year = $openAlexWork->publication_year;
         $citation->publication_date = $openAlexWork->publication_date;
         $citation->type = $openAlexWork->type;
 
-        $objOrcid = new \APP\plugins\generic\optimetaCitations\classes\Pid\Orcid();
+        $objOrcid = new Orcid();
         for ($i = 0; $i < count((array)$openAlexWork->authorships); $i++) {
             $author = new AuthorModel();
             $author->orcid = $objOrcid->removePrefixFromUrl(

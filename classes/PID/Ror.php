@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Pid/Ror.php
+ * @file plugins/generic/optimetaCitations/classes/PID/Ror.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,7 +12,7 @@
  * @brief Ror class
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes\Pid;
+namespace APP\plugins\generic\optimetaCitations\classes\PID;
 
 class Ror
 {

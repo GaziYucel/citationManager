@@ -1,32 +1,32 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Pid/Url.php
+ * @file plugins/generic/optimetaCitations/classes/PID/Urn.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class Url
+ * @class Urn
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Url class
+ * @brief Urn class
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes\Pid;
+namespace APP\plugins\generic\optimetaCitations\classes\PID;
 
-class Url
+class Urn
 {
     /**
-     * Regex to extract URL
+     * Regex to extract URN
      * @var string
      */
-    public string $regex = '%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s';
+    public string $regex = '/urn:([a-z0-9][a-z0-9-]{1,31}):((?:[-a-z0-9()+,.:=@;$_!*\'&~\/]|%[0-9a-f]{2})+)(?:(\?\+)((?:(?!\?=)(?:[-a-z0-9()+,.:=@;$_!*\'&~\/\?]|%[0-9a-f]{2}))*))?(?:(\?=)((?:(?!#).)*))?(?:(#)((?:[-a-z0-9()+,.:=@;$_!*\'&~\/\?]|%[0-9a-f]{2})*))?$/i';
 
     /**
      * @param $raw
      * @return string|null
      */
-    public function getUrlParsed($raw): ?string
+    public function getUrnParsed($raw): ?string
     {
         $match = '';
         $matches = [];

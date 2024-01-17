@@ -62,16 +62,16 @@ class Enricher
                 }
 
                 // OpenAlex Work
-                $objOpenAlex = new OpenAlex($this->plugin);
-                $citation = $objOpenAlex->getWork($citation);
+                $objOpenAlex = new \APP\plugins\generic\optimetaCitations\classes\OpenAlex\Enrich($this->plugin);
+                $citation = $objOpenAlex->getEnriched($citation);
 
-                // WikiData
-                $objWikiData = new WikiData($this->plugin);
-                $citation = $objWikiData->getItem($citation);
+                // Wikidata
+                $objWikidata = new \APP\plugins\generic\optimetaCitations\classes\Wikidata\Enrich($this->plugin);
+                $citation = $objWikidata->getEnriched($citation);
 
                 // Orcid
                 $objOrcid = new \APP\plugins\generic\optimetaCitations\classes\Orcid\Enrich($this->plugin);
-                $citation = $objOrcid->getAuthors($citation);
+                $citation = $objOrcid->getEnriched($citation);
 
                 // push to citations enriched array
                 $citations[] = (array)$citation;

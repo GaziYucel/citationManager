@@ -123,9 +123,9 @@ class Depositor
             $this->log .= '[openCitationsUrl: ' . $openCitationsUrl . ']';
         }
 
-        // WikiData: proceed if url empty, username and password given
+        // Wikidata: proceed if url empty, username and password given
         if (empty($publicationWork['wikidata_url']) && !empty($doi) && !empty($issue)) {
-            $wikiData = new WikiData($this->plugin);
+            $wikiData = new Wikidata($this->plugin);
             $wikiDataQid = $wikiData->submitWork(
                 $context,
                 $issue,

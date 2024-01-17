@@ -1,15 +1,15 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Deposit/WikiData.php
+ * @file plugins/generic/optimetaCitations/classes/Deposit/Wikidata.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class WikiData
+ * @class Wikidata
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Depositor class WikiData
+ * @brief Depositor class Wikidata
  */
 
 namespace APP\plugins\generic\optimetaCitations\classes\Deposit;
@@ -18,9 +18,9 @@ use APP\journal\Journal;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 use APP\publication\Publication;
 
-use Optimeta\Shared\WikiData\WikiDataBase;
+use Optimeta\Shared\Wikidata\WikidataBase;
 
-class WikiData
+class Wikidata
 {
     /**
      * Is this instance production
@@ -52,7 +52,7 @@ class WikiData
     }
 
     /**
-     * Submits work to WikiData
+     * Submits work to Wikidata
      *
      * @param Journal $context
      * @param object|null $issue
@@ -85,7 +85,7 @@ class WikiData
         $locale = $publication->getData('locale');
         $label = $publication->getData('title', $locale);
 
-        $wikiDataBase = new WikiDataBase($this->isProduction, $username, $password);
+        $wikiDataBase = new WikidataBase($this->isProduction, $username, $password);
 
         $qid = $wikiDataBase->getQidWithDoi($doi);
 
@@ -104,6 +104,6 @@ class WikiData
 
     function __destruct()
     {
-        // error_log('WikiData->__destruct: ' . $this->log);
+        // error_log('Wikidata->__destruct: ' . $this->log);
     }
 }

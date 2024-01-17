@@ -1,37 +1,37 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Pid/Orcid.php
+ * @file plugins/generic/optimetaCitations/classes/PID/Arxiv.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class Orcid
+ * @class Arxiv
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Orcid class
+ * @brief Arxiv class
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes\Pid;
+namespace APP\plugins\generic\optimetaCitations\classes\PID;
 
-class Orcid
+class Arxiv
 {
     /**
      * Correct prefix
      * @var string
      */
-    public $prefix = 'https://orcid.org/';
+    public string $prefix = 'https://arxiv.org/abs/';
 
     /**
      * Incorrect prefixes
      * @var array|string[]
      */
     public array $prefixInCorrect = [
-        'http://orcid.org/'
+        'http://arxiv.org/abs/'
     ];
 
     /**
-     * Remove https://orcid.org/ from ORCID URL
+     * Remove prefix from URL
      * @param string|null $url
      * @return string
      */
@@ -45,7 +45,7 @@ class Orcid
     }
 
     /**
-     * Add $prefix to URL
+     * Add prefix to URL
      * @param string|null $url
      * @return string
      */

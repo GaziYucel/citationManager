@@ -1,37 +1,37 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Pid/Handle.php
+ * @file plugins/generic/optimetaCitations/classes/PID/Orcid.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class Handle
+ * @class Orcid
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Handle class
+ * @brief Orcid class
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes\Pid;
+namespace APP\plugins\generic\optimetaCitations\classes\PID;
 
-class Handle
+class Orcid
 {
     /**
      * Correct prefix
      * @var string
      */
-    public string $prefix = 'https://hdl.handle.net/';
+    public $prefix = 'https://orcid.org/';
 
     /**
      * Incorrect prefixes
      * @var array|string[]
      */
     public array $prefixInCorrect = [
-        'http://hdl.handle.net/'
+        'http://orcid.org/'
     ];
 
     /**
-     * Remove prefix from URL
+     * Remove https://orcid.org/ from ORCID URL
      * @param string|null $url
      * @return string
      */
@@ -42,5 +42,19 @@ class Handle
         }
 
         return str_replace($this->prefix, '', $url);
+    }
+
+    /**
+     * Add $prefix to URL
+     * @param string|null $url
+     * @return string
+     */
+    public function addPrefixToUrl(?string $url): string
+    {
+        if (empty($url)) {
+            return '';
+        }
+
+        return $url . $this->prefix;
     }
 }

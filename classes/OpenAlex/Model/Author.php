@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/vendor/tibhannover/optimeta/src/OpenAlex/Model/Author.php
+ * @file plugins/generic/optimetaCitations/OpenAlex/Model/Author.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel

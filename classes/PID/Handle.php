@@ -1,33 +1,33 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Pid/Arxiv.php
+ * @file plugins/generic/optimetaCitations/classes/PID/Handle.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class Arxiv
+ * @class Handle
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Arxiv class
+ * @brief Handle class
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes\Pid;
+namespace APP\plugins\generic\optimetaCitations\classes\PID;
 
-class Arxiv
+class Handle
 {
     /**
      * Correct prefix
      * @var string
      */
-    public string $prefix = 'https://arxiv.org/abs/';
+    public string $prefix = 'https://hdl.handle.net/';
 
     /**
      * Incorrect prefixes
      * @var array|string[]
      */
     public array $prefixInCorrect = [
-        'http://arxiv.org/abs/'
+        'http://hdl.handle.net/'
     ];
 
     /**
@@ -42,19 +42,5 @@ class Arxiv
         }
 
         return str_replace($this->prefix, '', $url);
-    }
-
-    /**
-     * Add prefix to URL
-     * @param string|null $url
-     * @return string
-     */
-    public function addPrefixToUrl(?string $url): string
-    {
-        if (empty($url)) {
-            return '';
-        }
-
-        return $url . $this->prefix;
     }
 }

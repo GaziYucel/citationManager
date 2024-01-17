@@ -16,11 +16,11 @@ namespace APP\plugins\generic\optimetaCitations\classes\Parse;
 
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
-use APP\plugins\generic\optimetaCitations\classes\Pid\Arxiv;
-use APP\plugins\generic\optimetaCitations\classes\Pid\Doi;
-use APP\plugins\generic\optimetaCitations\classes\Pid\Handle;
-use APP\plugins\generic\optimetaCitations\classes\Pid\Url;
-use APP\plugins\generic\optimetaCitations\classes\Pid\Urn;
+use APP\plugins\generic\optimetaCitations\classes\PID\Arxiv;
+use APP\plugins\generic\optimetaCitations\classes\PID\Doi;
+use APP\plugins\generic\optimetaCitations\classes\PID\Handle;
+use APP\plugins\generic\optimetaCitations\classes\PID\Url;
+use APP\plugins\generic\optimetaCitations\classes\PID\Urn;
 
 class Parser
 {

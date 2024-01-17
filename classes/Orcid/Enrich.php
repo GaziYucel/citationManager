@@ -1,22 +1,22 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Enrich/Orcid.inc.php
+ * @file plugins/generic/optimetaCitations/classes/Orcid/Enrich.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class Orcid
+ * @class Enrich
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Orcid class for Orcid
+ * @brief Enrich class for Orcid
  */
 
 namespace APP\plugins\generic\optimetaCitations\classes\Orcid;
 
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
 use APP\plugins\generic\optimetaCitations\classes\Orcid\Model\Author;
-use APP\plugins\generic\optimetaCitations\classes\Pid\Orcid;
+use APP\plugins\generic\optimetaCitations\classes\PID\Orcid;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
 class Enrich
@@ -26,9 +26,16 @@ class Enrich
      */
     public OptimetaCitationsPlugin $plugin;
 
+    /**
+     * @var Api
+     */
+    public Api $api;
+
     public function __construct(OptimetaCitationsPlugin $plugin)
     {
         $this->plugin = $plugin;
+
+        $this->api = new Api($this->plugin, $this->plugin::OPTIMETA_CITATIONS_ORCID_API_URL);
     }
 
     /**
@@ -37,17 +44,16 @@ class Enrich
      * @param CitationModel $citation
      * @return CitationModel
      */
-    public function getAuthors(CitationModel $citation): CitationModel
+    public function getEnriched(CitationModel $citation): CitationModel
     {
         if (empty($citation->authors)) return $citation;
 
         $pidOrcid = new Orcid();
-        $api = new Api($this->plugin::OPTIMETA_CITATIONS_ORCID_API_URL);
 
         for ($i = 0; $i < count($citation->authors); $i++) {
             if (!empty($citation->authors[$i]['orcid'])) {
                 $orcid = $citation->authors[$i]['orcid'];
-                $author = $this->getAuthorFromApi($api, $pidOrcid->removePrefixFromUrl($orcid));
+                $author = $this->getAuthorFromApi($this->api, $pidOrcid->removePrefixFromUrl($orcid));
 
                 // Check if not empty and ORCID Record is not deactivated
                 if (!empty($author->given_name) &&
@@ -80,7 +86,7 @@ class Enrich
 
         if (empty($orcid)) return $author;
 
-        $orcidObject = $api->getOrcidObjectFromApi($orcid);
+        $orcidObject = $api->getObjectFromApi($orcid);
 
         if(empty($orcidObject)) return $author;
 
