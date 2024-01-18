@@ -11,7 +11,7 @@ msgstr ""
 "PO-Revision-Date: 2022-07-01T23:59:59+00:00\n"
 "Language: \n"
 
-msgid "plugins.generic.optimetaCitations.name"
+msgid "plugins.generic.optimetaCitations.displayName"
 msgstr "Optimeta Zitations-Plugin"
 
 msgid "plugins.generic.optimetaCitations.description"

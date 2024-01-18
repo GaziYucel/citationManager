@@ -18,7 +18,6 @@ use APP\core\Application;
 use APP\notification\Notification;
 use APP\notification\NotificationManager;
 use APP\template\TemplateManager;
-use Exception;
 use PKP\form\Form;
 use PKP\form\validation\FormValidatorCSRF;
 use PKP\form\validation\FormValidatorPost;
@@ -36,19 +35,19 @@ class SettingsForm extends Form
      * @var string[]
      */
     private array $settings = [
-        OptimetaCitationsPlugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY,
         OptimetaCitationsPlugin::OPTIMETA_CITATIONS_WIKIDATA_USERNAME,
         OptimetaCitationsPlugin::OPTIMETA_CITATIONS_WIKIDATA_PASSWORD,
         OptimetaCitationsPlugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER,
         OptimetaCitationsPlugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY,
         OptimetaCitationsPlugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN,
-        OptimetaCitationsPlugin::OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED
+        OptimetaCitationsPlugin::OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED,
+        OptimetaCitationsPlugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY
     ];
 
     /**
      * @copydoc Form::__construct()
      */
-    public function __construct($plugin)
+    public function __construct(OptimetaCitationsPlugin $plugin)
     {
         // Define the settings template and store a copy of the plugin object
         parent::__construct($plugin->getTemplateResource('settings.tpl'));
@@ -66,10 +65,18 @@ class SettingsForm extends Form
      */
     public function initData(): void
     {
-        $context = Application::get()->getRequest()->getContext();
-        $contextId = $context ? $context->getId() : Application::CONTEXT_SITE;
+        $context = Application::get()
+            ->getRequest()
+            ->getContext();
+
+        $contextId = $context
+            ? $context->getId()
+            : Application::CONTEXT_SITE;
+
         foreach ($this->settings as $key) {
-            $this->setData($key, $this->plugin->getSetting($contextId, $key));
+            $this->setData(
+                $key,
+                $this->plugin->getSetting($contextId, $key));
         }
 
         parent::initData();
@@ -88,15 +95,18 @@ class SettingsForm extends Form
     }
 
     /**
-     * Fetch any additional data needed for your form. Data assigned to the form using $this->setData()
-     * during the initData() or readInputData() methods will be passed to the template.
-     * @copydoc Form::fetch()
-     * @throws Exception
+     * Fetch any additional data needed for your form.
+     *
+     * Data assigned to the form using $this->setData() during the
+     * initData() or readInputData() methods will be passed to the
+     * template.
+     *
+     * In the example below, the plugin name is passed to the
+     * template so that it can be used in the URL that the form is
+     * submitted to.
      */
     public function fetch($request, $template = null, $display = false): ?string
     {
-        // Pass the plugin name to the template so that it can be
-        // used in the URL that the form is submitted to
         $templateMgr = TemplateManager::getManager($request);
         $templateMgr->assign('pluginName', $this->plugin->getName());
 
@@ -104,14 +114,18 @@ class SettingsForm extends Form
     }
 
     /**
-     * Save the settings
-     * @copydoc Form::execute()
-     * @return null|mixed
+     * Save the plugin settings and notify the user
+     * that the save was successful
      */
-    public function execute(...$functionArgs): mixed
+    public function execute(...$functionArgs)
     {
-        $context = Application::get()->getRequest()->getContext();
-        $contextId = $context ? $context->getId() : Application::CONTEXT_SITE;
+        $context = Application::get()
+            ->getRequest()
+            ->getContext();
+
+        $contextId = $context
+            ? $context->getId()
+            : Application::CONTEXT_SITE;
 
         foreach ($this->settings as $key) {
             $value = $this->getData($key);
@@ -122,15 +136,16 @@ class SettingsForm extends Form
                 $value = "true";
             }
 
-            $this->plugin->updateSetting($contextId, $key, $value);
+            $this->plugin->updateSetting(
+                $contextId,
+                $key,
+                $value);
         }
 
-        // Tell the user that the save was successful.
-        import('classes.notification.NotificationManager');
         $notificationMgr = new NotificationManager();
         $notificationMgr->createTrivialNotification(
             Application::get()->getRequest()->getUser()->getId(),
-             Notification::NOTIFICATION_TYPE_SUCCESS,
+            Notification::NOTIFICATION_TYPE_SUCCESS,
             ['contents' => __('common.changesSaved')]
         );
 
