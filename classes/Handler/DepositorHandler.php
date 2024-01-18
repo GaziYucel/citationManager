@@ -136,11 +136,11 @@ class DepositorHandler
                 $citationsParsed);
 
             $publicationWork['wikidata_qid'] = $wikiDataQid;
-            if (!empty($wikiDataQid))
-                $publicationWork['wikidata_url'] = $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_URL . '/' . $wikiDataQid;
 
-            if (!$this->isProduction)
-                $publicationWork['wikidata_url'] = $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $wikiDataQid;
+            if (!empty($wikiDataQid)) {
+                $objWikidata = new \APP\plugins\generic\optimetaCitations\classes\PID\Wikidata();
+                $publicationWork['wikidata_url'] = $objWikidata->addPrefixToPid($wikiDataQid);
+            }
 
             $this->log .= '[publicationWork>wikidata_qid: ' . $publicationWork['wikidata_qid'] . ']';
             $this->log .= '[publicationWork>wikidata_url: ' . $publicationWork['wikidata_url'] . ']';

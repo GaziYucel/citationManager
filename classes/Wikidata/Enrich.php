@@ -14,7 +14,7 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Wikidata;
 
-use APP\core\Application;
+use APP\plugins\generic\optimetaCitations\classes\PID\Wikidata;
 use APP\plugins\generic\optimetaCitations\classes\Wikidata\Model\Property;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
@@ -47,7 +47,7 @@ class Enrich
     {
         $this->plugin = $plugin;
 
-        $this->api = new Api($this->plugin, $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_API_URL);
+        $this->api = new Api($this->plugin);
 
         $isProduction = false;
         if ($this->plugin->getSetting(
@@ -72,11 +72,8 @@ class Enrich
 
         $citation->wikidata_qid = $this->getQid($doi);
 
-        if (!empty($citation->wikidata_qid)) {
-            $citation->wikidata_url = $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $citation->wikidata_qid;
-            if (!$this->isProduction)
-                $citation->wikidata_url = $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_URL_TEST . '/' . $citation->wikidata_qid;
-        }
+        $objWikidata = new Wikidata();
+        $citation->wikidata_url = $objWikidata->addPrefixToPid($citation->wikidata_qid);
 
         return $citation;
     }

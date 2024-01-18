@@ -59,8 +59,6 @@ class OptimetaCitationsPlugin extends GenericPlugin
     public const OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER = 'OptimetaCitations_Open_Citations_Owner';
     public const OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY = 'OptimetaCitations_Open_Citations_Repository';
     public const OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN = 'OptimetaCitations_Open_Citations_Token';
-    public const OPTIMETA_CITATIONS_WIKIDATA_URL = 'https://www.wikidata.org/wiki';
-    public const OPTIMETA_CITATIONS_WIKIDATA_URL_TEST = 'https://test.wikidata.org/wiki';
 
     /**
      * Is this instance production
@@ -224,8 +222,6 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
         $article = new Article();
         $references = $article->getCitationsAsHtml($publication);
-        if (!$this->isProduction)
-            $references = str_replace(OPTIMETA_CITATIONS_WIKIDATA_URL, OPTIMETA_CITATIONS_WIKIDATA_URL_TEST, $references);
 
         $newOutput =
             "<div id='optimetaCitations_StructuredCitations_1234567890' style='display: none;'>$references</div>" . PHP_EOL .
@@ -339,9 +335,6 @@ class OptimetaCitationsPlugin extends GenericPlugin
         if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]')
             $this->templateParameters['workModel'] = $publicationWorkDb;
 
-        if (!$this->isProduction)
-            $this->templateParameters['wikidataURL'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST;
-
         $this->templateParameters['statusCodePublished'] = PKPSubmission::STATUS_PUBLISHED;
 
         $templateMgr->assign($this->templateParameters);
@@ -412,9 +405,6 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $publicationWorkDb = $publication->getData(OPTIMETA_CITATIONS_PUBLICATION_WORK);
         if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]')
             $this->templateParameters['workModel'] = $publicationWorkDb;
-
-        if (!$this->isProduction)
-            $this->templateParameters['wikidataURL'] = OPTIMETA_CITATIONS_WIKIDATA_URL_TEST;
 
         $this->templateParameters['statusCodePublished'] = PKPSubmission::STATUS_PUBLISHED;
 
