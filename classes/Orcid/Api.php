@@ -28,12 +28,12 @@ class Api
     /**
      * @var string
      */
-    protected string $url = 'https://pub.orcid.org/v2.1';
+    public string $url = 'https://pub.orcid.org/v2.1';
 
     /**
      * @var Client
      */
-    protected Client $httpClient;
+    public Client $httpClient;
 
     function __construct(OptimetaCitationsPlugin $plugin)
     {

@@ -15,6 +15,7 @@
 namespace APP\plugins\generic\optimetaCitations\classes\OpenAlex;
 
 use APP\core\Application;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
@@ -28,19 +29,19 @@ class Api
     /**
      * @var string
      */
-    protected string $url = 'https://api.openalex.org';
+    public string $url = 'https://api.openalex.org';
 
     /**
      * @var object
      */
-    protected object $httpClient;
+    public object $httpClient;
 
 
     public function __construct(OptimetaCitationsPlugin $plugin)
     {
         $this->plugin = $plugin;
 
-        $this->httpClient = new \GuzzleHttp\Client([
+        $this->httpClient = new Client([
             'headers' => [
                 'User-Agent' => Application::get()->getName() . '/' . $this->plugin->getDisplayName(),
                 'Accept' => 'application/json'],

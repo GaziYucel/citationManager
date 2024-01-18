@@ -29,28 +29,37 @@ class Api
     /**
      * @var string
      */
-    protected string $url = 'https://api.github.com/repos/{{owner}}/{{repository}}/issues';
+    public string $url = 'https://api.github.com/repos';
 
     /**
      * @var Client
      */
-    protected Client $httpClient;
-
+    public Client $httpClient;
 
     /**
      * @var string
      */
-    protected string $token;
+    public string $token;
 
-    public function __construct(
-        OptimetaCitationsPlugin $plugin, string $url, string $owner, string $repository, string $token)
+    public string $urlIssues = '/{owner}/{repository}/issues';
+
+    /**
+     * @var string
+     */
+    public string $owner;
+
+    /**
+     * @var string
+     */
+    public string $repository;
+
+    public function __construct(OptimetaCitationsPlugin $plugin, string $owner, string $repository, string $token)
     {
         $this->plugin = $plugin;
 
-        $this->url = strtr($this->url, [
-            '{{owner}}' => $owner,
-            '{{repository}}' => $repository
-        ]);
+        $this->owner = $owner;
+
+        $this->repository = $repository;
 
         $this->token = $token;
 
@@ -67,9 +76,14 @@ class Api
     {
         $issueId = 0;
 
-        if (empty($this->url) || empty($this->token) || empty($title) || empty($body)) {
+        if (empty($this->owner) || empty($this->repository) || empty($this->token) || empty($title) || empty($body)) {
             return $issueId;
         }
+
+        $url = strtr($this->url . $this->urlIssues, [
+                '{owner}' => $this->owner,
+                '{repository}' => $this->repository
+            ]);
 
         try {
             $response = $this->httpClient->request(

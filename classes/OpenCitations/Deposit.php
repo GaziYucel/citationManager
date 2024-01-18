@@ -44,13 +44,6 @@ class Deposit
     protected string $urlIssues = 'https://github.com/{{owner}}/{{repository}}/issues';
 
     /**
-     * The base url to the api issues
-     *
-     * @var string
-     */
-    protected string $urlIssuesApi = 'https://api.github.com/repos/{{owner}}/{{repository}}/issues';
-
-    /**
      * The syntax for the title of the issue
      *
      * @var string
@@ -84,7 +77,6 @@ class Deposit
 
         $this->api = new Api(
             $this->plugin,
-            $this->urlIssuesApi,
             $this->owner,
             $this->repository,
             $this->plugin->getSetting($this->plugin->getCurrentContextId(), $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN));

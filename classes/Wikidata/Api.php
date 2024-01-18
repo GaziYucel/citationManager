@@ -16,6 +16,7 @@ namespace APP\plugins\generic\optimetaCitations\classes\Wikidata;
 
 use APP\core\Application;
 use Exception;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
@@ -29,54 +30,49 @@ class Api
     /**
      * @var string
      */
-    protected string $userAgent;
+    public string $url = 'https://www.wikidata.org/w/api.php';
 
     /**
      * @var string
      */
-    protected string $url = 'https://www.wikidata.org/w/api.php';
+    public string $username;
 
     /**
      * @var string
      */
-    protected string $username;
-
-    /**
-     * @var string
-     */
-    protected string $password;
+    public string $password;
 
     /**
      * @var object
      */
-    protected object $httpClient;
+    public object $httpClient;
 
     /**
      * Whether the client is logged in
      *
      * @var bool
      */
-    protected bool $isLoggedIn = false;
+    public bool $isLoggedIn = false;
 
     /**
      * Login token
      *
      * @var string
      */
-    protected string $loginToken;
+    public string $loginToken;
 
     /**
      * CSRF token
      *
      * @var string
      */
-    protected string $csrfToken;
+    public string $csrfToken;
 
     /**
      * Maximum number of login attempts
      * @var int
      */
-    protected int $maxLoginAttempts = 3;
+    public int $maxLoginAttempts = 3;
 
     function __construct(OptimetaCitationsPlugin $plugin, ?string $username = '', ?string $password = '')
     {
@@ -86,7 +82,7 @@ class Api
 
         if (!empty($password)) $this->password = $password;
 
-        $this->httpClient = new \GuzzleHttp\Client([
+        $this->httpClient = new Client([
             'headers' => [
                 'User-Agent' => Application::get()->getName() . '/' . $this->plugin->getDisplayName(),
                 'Accept' => 'application/json'],
