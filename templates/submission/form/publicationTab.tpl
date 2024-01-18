@@ -239,7 +239,7 @@
                     <td class="optimetaScrollableDiv-parts">
                         <div>
                              <span v-show="!row.editRow">
-                                 <a :href="'{$doiBaseUrl}' + '/' + optimetaCitationsApp.citations[i].doi"
+                                 <a :href="'{$doiUrl}' + '/' + optimetaCitationsApp.citations[i].doi"
                                     target="_blank">{{ optimetaCitationsApp.citations[i].doi }}</a></span>
                             <input id="doi-{{ i + 1 }}" placeholder="DOI" v-show="row.editRow"
                                    v-model="optimetaCitationsApp.citations[i].doi"

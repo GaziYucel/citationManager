@@ -17,6 +17,7 @@ namespace APP\plugins\generic\optimetaCitations\classes\OpenAlex;
 use APP\plugins\generic\optimetaCitations\classes\Model\AuthorModel;
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
 use APP\plugins\generic\optimetaCitations\classes\OpenAlex\Model\Work;
+use APP\plugins\generic\optimetaCitations\classes\PID\OpenAlex;
 use APP\plugins\generic\optimetaCitations\classes\PID\Orcid;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 use APP\plugins\generic\optimetaCitations\classes\PID\Doi;
@@ -100,7 +101,8 @@ class Enrich
         $citation->openalex_id = $this->removeOpenAlexOrgFromUrl($openAlexWork->id);
 
         if (!empty($citation->openalex_id)) {
-            $citation->openalex_url = $this->plugin::OPTIMETA_CITATIONS_OPENALEX_URL . '/' . $citation->openalex_id;
+            $objOpenAlex = new OpenAlex();
+            $citation->openalex_url = $objOpenAlex->prefix . '/' . $citation->openalex_id;
             $citation->isProcessed = true;
         }
 
@@ -118,6 +120,9 @@ class Enrich
         if (empty($url)) {
             return '';
         }
-        return str_replace($this->plugin::OPTIMETA_CITATIONS_OPENALEX_URL . '/', '', $url);
+
+        $objOpenAlex = new OpenAlex();
+
+        return str_replace($objOpenAlex->prefix . '/', '', $url);
     }
 }

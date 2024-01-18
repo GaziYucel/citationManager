@@ -14,6 +14,10 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Frontend;
 
+use APP\plugins\generic\optimetaCitations\classes\PID\Doi;
+use APP\plugins\generic\optimetaCitations\classes\PID\OpenAlex;
+use APP\plugins\generic\optimetaCitations\classes\PID\Orcid;
+use APP\plugins\generic\optimetaCitations\classes\PID\Wikidata;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
 class Article
@@ -57,11 +61,16 @@ class Article
      */
     public function getSingleCitationAsHtml($citation): string
     {
+        $objOrcid = new Orcid();
+        $objWikidata = new Wikidata();
+        $objOpenAlex = new OpenAlex();
+        $objDoi = new Doi();
+
         $out = '';
         $doiUrl = "<a href='{doi}'  target='_blank'><span>{doi}</span></a>";
-        $orcidUrl = "<a href='" . $this->plugin::OPTIMETA_CITATIONS_ORCID_URL . "/" . "{orcid}'  target='_blank' class='optimetaButton optimetaButtonGreen'><span>iD</span></a>";
-        $wikiDataUrl = "<a href='" . $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_URL . "/" . "{wikidata_qid}'  target='_blank' class='optimetaButton optimetaButtonGreen'><span>Wikidata</span></a>";
-        $openAlexUrl = "<a href='" . $this->plugin::OPTIMETA_CITATIONS_OPENALEX_URL . "/" . "{openalex_id}'  target='_blank' class='optimetaButton optimetaButtonGreen'><span>OpenAlex</span></a>";
+        $orcidUrl = "<a href='" . $objOrcid->prefix . "/" . "{orcid}'  target='_blank' class='optimetaButton optimetaButtonGreen'><span>iD</span></a>";
+        $wikiDataUrl = "<a href='" . $objWikidata->prefix . "/" . "{wikidata_qid}'  target='_blank' class='optimetaButton optimetaButtonGreen'><span>Wikidata</span></a>";
+        $openAlexUrl = "<a href='" . $objOpenAlex->prefix . "/" . "{openalex_id}'  target='_blank' class='optimetaButton optimetaButtonGreen'><span>OpenAlex</span></a>";
 
         // authors
         foreach ($citation['authors'] as $index => $author) {
@@ -75,7 +84,7 @@ class Article
 
         $out .= ' ' . $citation['title'];
         
-        if (!empty($citation['doi'])) $out .= " " . str_replace('{doi}', $this->plugin::OPTIMETA_CITATIONS_DOI_URL . '/' . $citation['doi'], $doiUrl);
+        if (!empty($citation['doi'])) $out .= " " . str_replace('{doi}', $objDoi->prefix . '/' . $citation['doi'], $doiUrl);
 
         if (!empty($citation['wikidata_qid'])) $out .= " " . str_replace('{wikidata_qid}', $citation['wikidata_qid'], $wikiDataUrl);
 

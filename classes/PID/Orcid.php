@@ -21,7 +21,7 @@ class Orcid
      *
      * @var string
      */
-    public string $prefix = 'https://orcid.org/';
+    public string $prefix = 'https://orcid.org';
 
     /**
      * Incorrect prefixes
@@ -29,7 +29,7 @@ class Orcid
      * @var array|string[]
      */
     public array $prefixInCorrect = [
-        'http://orcid.org/',
+        'http://orcid.org',
         'http://www.orcid.org',
         'https://www.orcid.org'
     ];
