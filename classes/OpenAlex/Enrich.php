@@ -38,7 +38,7 @@ class Enrich
     {
         $this->plugin = $plugin;
 
-        $this->api = new Api($this->plugin, $this->plugin::OPTIMETA_CITATIONS_OPENALEX_API_URL);
+        $this->api = new Api($this->plugin, OptimetaCitationsPlugin::OPTIMETA_CITATIONS_OPENALEX_API_URL);
     }
 
     /**

@@ -46,7 +46,7 @@ class PluginAPIHandler extends APIHandler
     {
         $this->plugin = $plugin;
 
-        $this->_handlerPath = $this->plugin::OPTIMETA_CITATIONS_API_ENDPOINT;
+        $this->_handlerPath = OptimetaCitationsPlugin::OPTIMETA_CITATIONS_API_ENDPOINT;
 
         $this->_endpoints = [
             'POST' => [

@@ -14,24 +14,31 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes;
 
-use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 use Exception;
+use PKP\config\Config;
 use PKP\plugins\Hook;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
-class Debug
+class Log
 {
     /**
-     * Path to debug file
+     * Path to file
      * @var string
      */
-    private string $file = OptimetaCitationsPlugin::OPTIMETA_CITATIONS_PLUGIN_PATH . '/' . 'debug.txt';
+    public string $file;
+
+    public function __construct()
+    {
+        $this->file = Config::getVar('files', 'files_dir') . '/' . OptimetaCitationsPlugin::OPTIMETA_CITATIONS_PLUGIN_NAME . '.txt';
+    }
 
     /**
-     * Add to debug file
+     * Add to file
+     *
      * @param $text
      * @return void
      */
-    function Add($text = null): void
+    public function Add($text = null): void
     {
         $textToWrite = $text;
         if (is_object($text) || is_array($text)) $textToWrite = var_export($text, true);
@@ -49,10 +56,11 @@ class Debug
     }
 
     /**
-     * Get and return contents debug file
+     * Get and return contents file
+     *
      * @return string
      */
-    function Get(): string
+    public function Get(): string
     {
         if (file_exists($this->file)) {
             return file_get_contents($this->file);
@@ -61,10 +69,11 @@ class Debug
     }
 
     /**
-     * Clear contents debug file
+     * Clear contents file
+     *
      * @return void
      */
-    function Clear(): void
+    public function Clear(): void
     {
         $fp = fopen($this->file, 'w');
 
@@ -79,9 +88,10 @@ class Debug
 
     /**
      * Get a list of all the hooks called
+     *
      * @return string[]
      */
-    function getListHooks(): array
+    public function getListHooks(): array
     {
         return [
             'AccessKeyDAO::_returnAccessKeyFromRow',
@@ -400,9 +410,10 @@ class Debug
 
     /**
      * Export a list of hooks called where this method is called
+     *
      * @return void
      */
-    function calledHooks(): void
+    public function calledHooks(): void
     {
         $hooksList = $this->getListHooks();
         foreach ($hooksList as $key) {

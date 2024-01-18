@@ -45,6 +45,7 @@ use PKP\submission\PKPSubmission;
 
 class OptimetaCitationsPlugin extends GenericPlugin
 {
+    public const OPTIMETA_CITATIONS_PLUGIN_NAME = 'OptimetaCitationsPlugin';
     public const OPTIMETA_CITATIONS_IS_PRODUCTION_KEY = 'OptimetaCitations_IsProductionEnvironment';
     public const OPTIMETA_CITATIONS_PLUGIN_PATH = __DIR__;
     public const OPTIMETA_CITATIONS_USER_AGENT = 'OJSOptimetaCitations';
@@ -129,6 +130,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
 //        Hook::add('AcronPlugin::parseCronTab', array($this, 'callbackParseCronTab'));
 
         if ($success && $this->getEnabled()) {
+
             // Current Request / Context
             $request = $this->getRequest();
 
@@ -324,7 +326,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $templateMgr->assign($this->versionSpecificNameState, $state);
 
         $publicationDao = DAORegistry::getDAO('PublicationDAO');
-        $publication = $publicationDao->getById($submissionId);
+        $publication = $publicationDao->getById($latestPublication->getId());
 
         $this->templateParameters['pluginApiUrl'] = $apiBaseUrl . OPTIMETA_CITATIONS_API_ENDPOINT;
         $this->templateParameters['submissionId'] = $submissionId;

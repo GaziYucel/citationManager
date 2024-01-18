@@ -52,7 +52,7 @@ class PublicationForm extends FormComponent
         $this->plugin = $plugin;
 
         $this->addField(new FieldText(
-            $this->plugin::OPTIMETA_CITATIONS_FORM_FIELD_PARSED, [
+            OptimetaCitationsPlugin::OPTIMETA_CITATIONS_FORM_FIELD_PARSED, [
             'label' => '',
             'description' => '',
             'isMultilingual' => false,
@@ -60,11 +60,11 @@ class PublicationForm extends FormComponent
         ]));
 
         $this->addField(new FieldText(
-            $this->plugin::OPTIMETA_CITATIONS_PUBLICATION_WORK, [
+            OptimetaCitationsPlugin::OPTIMETA_CITATIONS_PUBLICATION_WORK, [
             'label' => '',
             'description' => '',
             'isMultilingual' => false,
-            'value' => $publication->getData($this->plugin::OPTIMETA_CITATIONS_PUBLICATION_WORK)
+            'value' => $publication->getData(OptimetaCitationsPlugin::OPTIMETA_CITATIONS_PUBLICATION_WORK)
         ]));
     }
 }

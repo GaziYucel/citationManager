@@ -35,7 +35,15 @@ class SettingsForm extends Form
      * Array of variables saved in the database
      * @var string[]
      */
-    private array $settings;
+    private array $settings = [
+        OptimetaCitationsPlugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY,
+        OptimetaCitationsPlugin::OPTIMETA_CITATIONS_WIKIDATA_USERNAME,
+        OptimetaCitationsPlugin::OPTIMETA_CITATIONS_WIKIDATA_PASSWORD,
+        OptimetaCitationsPlugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER,
+        OptimetaCitationsPlugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY,
+        OptimetaCitationsPlugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN,
+        OptimetaCitationsPlugin::OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED
+    ];
 
     /**
      * @copydoc Form::__construct()
@@ -46,16 +54,6 @@ class SettingsForm extends Form
         parent::__construct($plugin->getTemplateResource('settings.tpl'));
 
         $this->plugin = $plugin;
-
-        $this->settings = [
-            $this->plugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY,
-            $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_USERNAME,
-            $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_PASSWORD,
-            $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER,
-            $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY,
-            $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN,
-            $this->plugin::OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED
-        ];
 
         // Always add POST and CSRF validation to secure your form.
         $this->addCheck(new FormValidatorPost($this));
@@ -118,9 +116,9 @@ class SettingsForm extends Form
         foreach ($this->settings as $key) {
             $value = $this->getData($key);
 
-            if ($key === $this->plugin::OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED && !empty($value)) {
+            if ($key === OptimetaCitationsPlugin::OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED && !empty($value)) {
                 $value = "true";
-            } else if ($key === $this->plugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY && !empty($value)) {
+            } else if ($key === OptimetaCitationsPlugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY && !empty($value)) {
                 $value = "true";
             }
 

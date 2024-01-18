@@ -72,14 +72,14 @@ class Deposit
     {
         $this->plugin = $plugin;
 
-        $this->owner = $this->plugin->getSetting($this->plugin->getCurrentContextId(), $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER);
-        $this->repository = $this->plugin->getSetting($this->plugin->getCurrentContextId(), $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY);
+        $this->owner = $this->plugin->getSetting($this->plugin->getCurrentContextId(), OptimetaCitationsPlugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER);
+        $this->repository = $this->plugin->getSetting($this->plugin->getCurrentContextId(), OptimetaCitationsPlugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY);
 
         $this->api = new Api(
             $this->plugin,
             $this->owner,
             $this->repository,
-            $this->plugin->getSetting($this->plugin->getCurrentContextId(), $this->plugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN));
+            $this->plugin->getSetting($this->plugin->getCurrentContextId(), OptimetaCitationsPlugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN));
     }
 
     /**

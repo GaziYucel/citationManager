@@ -46,7 +46,7 @@ class Wikidata
         $this->plugin = $plugin;
 
         if ($this->plugin->getSetting($this->plugin->getCurrentContextId(),
-                $this->plugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
+                OptimetaCitationsPlugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
             $this->isProduction = true;
         }
     }
@@ -73,9 +73,9 @@ class Wikidata
         array       $citations): string
     {
         $username = $this->plugin->getSetting($context->getId(),
-            $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_USERNAME);
+            OptimetaCitationsPlugin::OPTIMETA_CITATIONS_WIKIDATA_USERNAME);
         $password = $this->plugin->getSetting($context->getId(),
-            $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_PASSWORD);
+            OptimetaCitationsPlugin::OPTIMETA_CITATIONS_WIKIDATA_PASSWORD);
 
         // return '' url not empty or username and password empty
         if (empty($username) || empty($password))

@@ -49,7 +49,7 @@ class DepositorHandler
         $this->plugin = $plugin;
 
         if ($this->plugin->getSetting($this->plugin->getCurrentContextId(),
-                $this->plugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
+                OptimetaCitationsPlugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
             $this->isProduction = true;
         }
     }
@@ -101,7 +101,7 @@ class DepositorHandler
         }
 
         // publication work
-        $publicationWorkDb = $publication->getData($this->plugin::OPTIMETA_CITATIONS_PUBLICATION_WORK);
+        $publicationWorkDb = $publication->getData(OptimetaCitationsPlugin::OPTIMETA_CITATIONS_PUBLICATION_WORK);
         if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]')
             $publicationWork = json_decode($publicationWorkDb, true);
 
@@ -150,7 +150,7 @@ class DepositorHandler
         $publicationWorkJson = json_encode($publicationWork);
 
         // save to database
-        $publication->setData($this->plugin::OPTIMETA_CITATIONS_PUBLICATION_WORK, $publicationWorkJson);
+        $publication->setData(OptimetaCitationsPlugin::OPTIMETA_CITATIONS_PUBLICATION_WORK, $publicationWorkJson);
         $publicationDao->updateObject($publication);
 
         return $publicationWork;

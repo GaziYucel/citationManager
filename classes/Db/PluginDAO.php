@@ -40,14 +40,14 @@ class PluginDAO
      */
     public function addToSchema(object $schema): void
     {
-        $schema->properties->{$this->plugin::OPTIMETA_CITATIONS_FORM_FIELD_PARSED} = (object)[
+        $schema->properties->{OptimetaCitationsPlugin::OPTIMETA_CITATIONS_FORM_FIELD_PARSED} = (object)[
             "type" => "string",
             "multilingual" => false,
             "apiSummary" => true,
             "validation" => ["nullable"]
         ];
 
-        $schema->properties->{$this->plugin::OPTIMETA_CITATIONS_PUBLICATION_WORK} = (object)[
+        $schema->properties->{OptimetaCitationsPlugin::OPTIMETA_CITATIONS_PUBLICATION_WORK} = (object)[
             "type" => "string",
             "multilingual" => false,
             "apiSummary" => true,

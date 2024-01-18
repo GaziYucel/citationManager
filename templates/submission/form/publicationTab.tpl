@@ -208,7 +208,7 @@
                        :class="(optimetaCitationsApp.optimetaCitationsIsParsed && !optimetaCitationsApp.isPublished)?'':'optimetaDisabled'">
                         {translate key="plugins.generic.optimetaCitations.clear.button"}</a>
                     <a href="javascript:optimetaProcessCitations()" id="buttonProcess" class="pkpButton"
-                       :class="(optimetaCitationsApp.optimetaCitationsIsParsed && !optimetaCitationsApp.isPublished)?'':'optimetaDisabled'">
+                       :class="(!optimetaCitationsApp.optimetaCitationsIsParsed && !optimetaCitationsApp.isPublished)?'':'optimetaDisabled'">
                         {translate key="plugins.generic.optimetaCitations.process.button"}</a>
                 </td>
             </tr>

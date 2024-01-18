@@ -52,7 +52,7 @@ class Enrich
         $isProduction = false;
         if ($this->plugin->getSetting(
             $this->plugin->getCurrentContextId(),
-            $this->plugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
+            OptimetaCitationsPlugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
             $isProduction = true;
         }
 
