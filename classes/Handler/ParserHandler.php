@@ -69,17 +69,17 @@ class ParserHandler
 
             // parse doi
             $objDoi = new Doi();
-            $citation->doi = $objDoi->getDoiParsed($citation->raw);
-            $citation->raw = $objDoi->normalizeDoi($citation->raw, $citation->doi);
+            $citation->doi = $objDoi->extractFromString($citation->raw);
+            $citation->raw = $objDoi->normalize($citation->raw, $citation->doi);
 
             // parse url (after parsing doi)
             $objUrl = new Url();
-            $citation->url = $objUrl->getUrlParsed(str_replace($citation->doi, '', $citation->raw));
+            $citation->url = $objUrl->extractFromString(str_replace($citation->doi, '', $citation->raw));
 
             // replace incorrect url by correct url
-            $objHandle = new Handle();
+            $objHandle = new Handle(); //todo: add pid to citation/work model
             $citation->url = str_replace($objHandle->prefixInCorrect, $objHandle->prefix, $citation->url);
-            $objArxiv = new Arxiv();
+            $objArxiv = new Arxiv(); //todo: add pid to citation/work model
             $citation->url = str_replace($objArxiv->prefixInCorrect, $objArxiv->prefix, $citation->url);
 
             // urn parser

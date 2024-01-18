@@ -29,7 +29,8 @@ return array(
     'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenAlex\\Model\\Venue' => $baseDir . '/classes/OpenAlex/Model/Venue.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenAlex\\Model\\Work' => $baseDir . '/classes/OpenAlex/Model/Work.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenCitations\\Deposit' => $baseDir . '/classes/OpenCitations/Deposit.php',
-    'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenCitations\\OpenCitationsBase' => $baseDir . '/classes/OpenCitations/Api.php',
+    'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenCitations\\Model\\WorkCitation' => $baseDir . '/classes/OpenCitations/Model/WorkCitation.php',
+    'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenCitations\\Model\\WorkMetaData' => $baseDir . '/classes/OpenCitations/Model/WorkMetaData.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\Orcid\\Api' => $baseDir . '/classes/Orcid/Api.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\Orcid\\Enrich' => $baseDir . '/classes/Orcid/Enrich.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\Orcid\\Model\\Author' => $baseDir . '/classes/Orcid/Model/Author.php',
@@ -48,6 +49,4 @@ return array(
     'APP\\plugins\\generic\\optimetaCitations\\classes\\Wikidata\\Model\\Property' => $baseDir . '/classes/Wikidata/Model/Property.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'DepositorTask' => $baseDir . '/classes/ScheduledTasks/DepositorTask.php',
-    'Optimeta\\Shared\\OpenCitations\\Model\\WorkCitation' => $baseDir . '/classes/OpenCitations/Model/WorkCitation.php',
-    'Optimeta\\Shared\\OpenCitations\\Model\\WorkMetaData' => $baseDir . '/classes/OpenCitations/Model/WorkMetaData.php',
 );

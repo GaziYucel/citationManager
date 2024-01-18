@@ -1,27 +1,27 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/PID/Orcid.php
+ * @file plugins/generic/optimetaCitations/classes/PID/OpenAlex.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class Orcid
+ * @class OpenAlex
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Orcid class
+ * @brief OpenAlex class
  */
 
 namespace APP\plugins\generic\optimetaCitations\classes\PID;
 
-class Orcid
+class OpenAlex
 {
     /**
      * Correct prefix
      *
      * @var string
      */
-    public string $prefix = 'https://orcid.org/';
+    public string $prefix = 'https://openalex.org/works';
 
     /**
      * Incorrect prefixes
@@ -29,9 +29,9 @@ class Orcid
      * @var array|string[]
      */
     public array $prefixInCorrect = [
-        'http://orcid.org/',
-        'http://www.orcid.org',
-        'https://www.orcid.org'
+        'http://openalex.org/works',
+        'http://www.openalex.org/works',
+        'https://www.openalex.org/works'
     ];
 
     /**

@@ -26,41 +26,62 @@ class Ror
      * Correct prefix
      * @var string
      */
-    public string $prefix = 'https://ror.org/';
+    public string $prefix = 'https://ror.org';
 
     /**
      * Incorrect prefixes
      * @var array|string[]
      */
     public array $prefixInCorrect = [
-        'http://ror.org/'
+        'http://ror.org',
+        'http://www.ror.org',
+        'https://www.ror.org'
     ];
 
     /**
+     * Add prefix to PID
+     *
+     * @param string|null $pid
+     * @return string
+     */
+    public function addPrefixToPid(?string $pid): string
+    {
+        if (empty($pid)) return '';
+
+        return $this->prefix . '/' . trim($pid, ' /');
+    }
+
+    /**
      * Remove prefix from URL
+     *
      * @param string|null $url
      * @return string
      */
     public function removePrefixFromUrl(?string $url): string
     {
-        if (empty($url)) {
-            return '';
-        }
+        if (empty($url)) return '';
 
-        return str_replace($this->prefix, '', $url);
+        return trim(str_replace($this->prefix, '', $url), ' ./');
     }
 
     /**
-     * Add prefix to URL
-     * @param string|null $url
+     * Normalize PID in a string by removing any (in)correct prefixes, e.g.
+     * http://... > https:....
+     *
+     * @param string $string
+     * @param string $pid 10.12345/tib.11.2.3, Q12345678, w1234567890
      * @return string
      */
-    public function addPrefixToUrl(?string $url): string
+    public function normalize(string $string, string $pid): string
     {
-        if (empty($url)) {
-            return '';
+        if (empty($string) || empty($pid)) return '';
+
+        $doiListToRemove = [];
+
+        foreach ($this->prefixInCorrect as $key) {
+            $doiListToRemove[] = $key . '/' . $pid;
         }
 
-        return $url . $this->prefix;
+        return trim(str_replace($doiListToRemove, $this->addPrefixToPid($pid), $string));
     }
 }

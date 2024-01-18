@@ -34,7 +34,7 @@ class Api
     /**
      * @var string
      */
-    protected string $url;
+    protected string $url = 'https://www.wikidata.org/w/api.php';
 
     /**
      * @var string
@@ -78,11 +78,12 @@ class Api
      */
     protected int $maxLoginAttempts = 3;
 
-    function __construct(OptimetaCitationsPlugin $plugin, string $url, ?string $username = '', ?string $password = '')
+    function __construct(OptimetaCitationsPlugin $plugin, ?string $username = '', ?string $password = '')
     {
         $this->plugin = $plugin;
-        $this->url = $url;
+
         if (!empty($username)) $this->username = $username;
+
         if (!empty($password)) $this->password = $password;
 
         $this->httpClient = new \GuzzleHttp\Client([

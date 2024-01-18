@@ -23,20 +23,21 @@ class Url
     public string $regex = '%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s';
 
     /**
-     * @param $raw
-     * @return string|null
+     * Extracts url from string, e.g. https://tib.eu/12345/abcde
+     *
+     * @param string $string
+     * @return string
      */
-    public function getUrlParsed($raw): ?string
+    public function extractFromString(string $string): string
     {
-        $match = '';
+        if (empty($string)) return '';
+
         $matches = [];
 
-        preg_match($this->regex, $raw, $matches);
+        preg_match($this->regex, $string, $matches);
 
-        if (!empty($matches[0])) $match = $matches[0];
+        if (empty($matches[0])) return '';
 
-        if (empty($match)) return null;
-
-        return trim($match, '.');
+        return trim($matches[0], ' ./');
     }
 }

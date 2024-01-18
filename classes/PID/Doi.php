@@ -26,89 +26,85 @@ class Doi
      * Correct prefix
      * @var string
      */
-    public string $prefix = 'https://doi.org/';
+    public string $prefix = 'https://doi.org';
 
     /**
      * Incorrect prefixes
      * @var array|string[]
      */
     public array $prefixInCorrect = [
-        'http://dx.doi.org/',
-        'http://doi.org/',
-        'http://www.doi.org/',
-        'https://www.doi.org/',
+        'http://dx.doi.org',
+        'http://doi.org',
+        'http://www.doi.org',
+        'https://www.doi.org',
         'http://doi:',
         'https://doi:',
         'doi:',
         'doi: '];
 
     /**
-     * Extract doi from string
-     * @param $raw
-     * @return string|null
+     * Add prefix to PID
+     *
+     * @param string|null $pid
+     * @return string
      */
-    public function getDoiParsed($raw): ?string
+    public function addPrefixToPid(?string $pid): string
     {
-        $match = '';
-        $matches = [];
+        if (empty($pid)) return '';
 
-        preg_match($this->regex, $raw, $matches);
-
-        if (!empty($matches[0])) $match = $matches[0];
-
-        if (empty($match)) return null;
-
-        $pidCorrect = $match;
-
-        return trim($pidCorrect, '.');
-    }
-
-    /**
-     * Normalize a DOI that is found in a raw citation by removing any (in)correct prefixes
-     * @param $raw
-     * @param $doi
-     * @return string|null
-     */
-    public function normalizeDoi($raw, $doi): ?string
-    {
-        if (empty($raw)) return null;
-
-        $doiListToRemove = [];
-
-        $doiListToRemove[] = $this->prefix . $doi;
-
-        foreach ($this->prefixInCorrect as $key) {
-            $doiListToRemove[] = $key . $this->removePrefixFromUrl($doi);
-        }
-
-        return str_replace($doiListToRemove, $doi, $raw);
+        return $this->prefix . '/' . trim($pid, ' /');
     }
 
     /**
      * Remove prefix from URL
-     * @param ?string $url
+     *
+     * @param string|null $url
      * @return string
      */
     public function removePrefixFromUrl(?string $url): string
     {
-        if (empty($url)) {
-            return '';
-        }
+        if (empty($url)) return '';
 
-        return str_replace($this->prefix, '', $url);
+        return trim(str_replace($this->prefix, '', $url), ' ./');
     }
 
     /**
-     * Add prefix to URL
-     * @param string|null $url
+     * Normalize PID in a string by removing any (in)correct prefixes, e.g.
+     * http://... > https:....
+     *
+     * @param string $string
+     * @param string $pid 10.12345/tib.11.2.3, Q12345678, w1234567890
      * @return string
      */
-    public function addPrefixToUrl(?string $url): string
+    public function normalize(string $string, string $pid): string
     {
-        if (empty($url)) {
-            return '';
+        if (empty($string) || empty($pid)) return '';
+
+        $doiListToRemove = [];
+
+        foreach ($this->prefixInCorrect as $key) {
+            $doiListToRemove[] = $key . '/' . $pid;
         }
 
-        return $url . $this->prefix;
+        return trim(str_replace($doiListToRemove, $this->addPrefixToPid($pid), $string));
+    }
+
+    /**
+     * Extract PID from string, e.g. 10.12345/tib.11.2.3
+     *
+     * @param string $string
+     * @return string
+     */
+    public function extractFromString(string $string): string
+    {
+        if (empty($string)) return '';
+
+        $matches = [];
+
+        preg_match($this->regex, $string, $matches);
+
+        if (empty($matches[0])) return '';
+
+        return trim($matches[0], ' ./');
     }
 }

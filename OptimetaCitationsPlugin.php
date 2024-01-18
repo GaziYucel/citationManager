@@ -14,7 +14,7 @@
 
 namespace APP\plugins\generic\optimetaCitations;
 
-require_once(OPTIMETA_CITATIONS_PLUGIN_PATH . '/vendor/autoload.php');
+require_once(__DIR__ . '/vendor/autoload.php');
 
 use APP\core\Application;
 use APP\notification\Notification;
@@ -56,14 +56,9 @@ class OptimetaCitationsPlugin extends GenericPlugin
     public const OPTIMETA_CITATIONS_OPEN_CITATIONS_REPOSITORY = 'OptimetaCitations_Open_Citations_Repository';
     public const OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN = 'OptimetaCitations_Open_Citations_Token';
     public const OPTIMETA_CITATIONS_OPENALEX_URL = 'https://openalex.org';
-    public const OPTIMETA_CITATIONS_OPENALEX_API_URL = 'https://api.openalex.org';
     public const OPTIMETA_CITATIONS_WIKIDATA_URL = 'https://www.wikidata.org/wiki';
-    public const OPTIMETA_CITATIONS_WIKIDATA_API_URL = 'https://www.wikidata.org/w/api.php';
     public const OPTIMETA_CITATIONS_WIKIDATA_URL_TEST = 'https://test.wikidata.org/wiki';
-    public const OPTIMETA_CITATIONS_WIKIDATA_API_URL_TEST = 'https://test.wikidata.org/w/api.php';
     public const OPTIMETA_CITATIONS_ORCID_URL = 'https://orcid.org';
-    public const OPTIMETA_CITATIONS_ORCID_API_URL = 'https://pub.orcid.org/v2.1';
-    public const OPTIMETA_CITATIONS_OPEN_ALEX_URL = 'https://openalex.org';
     public const OPTIMETA_CITATIONS_DOI_URL = 'https://doi.org';
 
     /**

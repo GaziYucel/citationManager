@@ -27,32 +27,25 @@ class Api
     public OptimetaCitationsPlugin $plugin;
 
     /**
-     * User agent name to identify us
-     * @var string
-     */
-    protected string $userAgent;
-
-    /**
      * @var string
      */
     protected string $url = 'https://api.github.com/repos/{{owner}}/{{repository}}/issues';
-
-    /**
-     * @var string
-     */
-    protected string $token;
 
     /**
      * @var Client
      */
     protected Client $httpClient;
 
+
+    /**
+     * @var string
+     */
+    protected string $token;
+
     public function __construct(
         OptimetaCitationsPlugin $plugin, string $url, string $owner, string $repository, string $token)
     {
         $this->plugin = $plugin;
-
-        $this->url = $url;
 
         $this->url = strtr($this->url, [
             '{{owner}}' => $owner,
@@ -60,8 +53,6 @@ class Api
         ]);
 
         $this->token = $token;
-
-        $this->userAgent = Application::get()->getName() . '/' . $this->plugin->getDisplayName();
 
         $this->httpClient = new Client();
     }
@@ -86,7 +77,7 @@ class Api
                 $this->url,
                 [
                     'headers' => [
-                        'User-Agent' => $this->userAgent,
+                        'User-Agent' => Application::get()->getName() . '/' . $this->plugin->getDisplayName(),
                         'Accept' => 'application/vnd.github.v3+json',
                         'Authorization' => 'token ' . $this->token
                     ],

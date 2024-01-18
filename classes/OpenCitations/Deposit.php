@@ -21,7 +21,6 @@ use APP\plugins\generic\optimetaCitations\classes\PID\Doi;
 use APP\plugins\generic\optimetaCitations\classes\PID\Handle;
 use APP\plugins\generic\optimetaCitations\classes\PID\Orcid;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
-use APP\plugins\generic\optimetaCitations\classes\GitHub\Api;
 use APP\plugins\generic\optimetaCitations\classes\OpenCitations\Model\WorkCitation;
 use APP\plugins\generic\optimetaCitations\classes\OpenCitations\Model\WorkMetaData;
 

@@ -28,19 +28,16 @@ class Api
     /**
      * @var string
      */
-    protected string $url;
+    protected string $url = 'https://pub.orcid.org/v2.1';
 
     /**
      * @var Client
      */
     protected Client $httpClient;
 
-    function __construct(
-        OptimetaCitationsPlugin $plugin, string $url)
+    function __construct(OptimetaCitationsPlugin $plugin)
     {
         $this->plugin = $plugin;
-
-        $this->url = $url;
 
         $this->httpClient = new Client([
             'headers' => [

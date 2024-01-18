@@ -28,7 +28,7 @@ class Api
     /**
      * @var string
      */
-    protected string $url;
+    protected string $url = 'https://api.openalex.org';
 
     /**
      * @var object
@@ -36,11 +36,9 @@ class Api
     protected object $httpClient;
 
 
-    public function __construct(OptimetaCitationsPlugin $plugin, string $url)
+    public function __construct(OptimetaCitationsPlugin $plugin)
     {
         $this->plugin = $plugin;
-
-        $this->url = $url;
 
         $this->httpClient = new \GuzzleHttp\Client([
             'headers' => [

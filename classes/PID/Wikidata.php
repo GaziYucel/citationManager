@@ -1,27 +1,27 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/PID/Orcid.php
+ * @file plugins/generic/optimetaCitations/classes/PID/Wikidata.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class Orcid
+ * @class Wikidata
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Orcid class
+ * @brief Wikidata class
  */
 
 namespace APP\plugins\generic\optimetaCitations\classes\PID;
 
-class Orcid
+class Wikidata
 {
     /**
      * Correct prefix
      *
      * @var string
      */
-    public string $prefix = 'https://orcid.org/';
+    public string $prefix = 'https://wikidata.org/wiki';
 
     /**
      * Incorrect prefixes
@@ -29,9 +29,9 @@ class Orcid
      * @var array|string[]
      */
     public array $prefixInCorrect = [
-        'http://orcid.org/',
-        'http://www.orcid.org',
-        'https://www.orcid.org'
+        'http://wikidata.org/wiki',
+        'http://www.wikidata.org/wiki',
+        'https://www.wikidata.org/wiki'
     ];
 
     /**

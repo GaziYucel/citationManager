@@ -61,7 +61,7 @@ class Article
         $doiUrl = "<a href='{doi}'  target='_blank'><span>{doi}</span></a>";
         $orcidUrl = "<a href='" . $this->plugin::OPTIMETA_CITATIONS_ORCID_URL . "/" . "{orcid}'  target='_blank' class='optimetaButton optimetaButtonGreen'><span>iD</span></a>";
         $wikiDataUrl = "<a href='" . $this->plugin::OPTIMETA_CITATIONS_WIKIDATA_URL . "/" . "{wikidata_qid}'  target='_blank' class='optimetaButton optimetaButtonGreen'><span>Wikidata</span></a>";
-        $openAlexUrl = "<a href='" . $this->plugin::OPTIMETA_CITATIONS_OPEN_ALEX_URL . "/" . "{openalex_id}'  target='_blank' class='optimetaButton optimetaButtonGreen'><span>OpenAlex</span></a>";
+        $openAlexUrl = "<a href='" . $this->plugin::OPTIMETA_CITATIONS_OPENALEX_URL . "/" . "{openalex_id}'  target='_blank' class='optimetaButton optimetaButtonGreen'><span>OpenAlex</span></a>";
 
         // authors
         foreach ($citation['authors'] as $index => $author) {
