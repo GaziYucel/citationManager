@@ -168,18 +168,15 @@ class OptimetaCitationsPlugin2 extends GenericPlugin
 
             // Is triggered with every request from anywhere
 //            Hook::add('Schema::get::publication', array($this, 'addToSchema'));
-            foreach ($this->_getDAOs() as $dao) {
-                if ($dao instanceof SchemaDAO) {
-                    Hook::add('Schema::get::' . $dao->schemaName, [$this, 'addToSchema']);
-                } elseif ($dao instanceof EntityDAO) {
-                    Hook::add('Schema::get::' . $dao->schema, [$this, 'addToSchema']);
-                } else {
-                    Hook::add(strtolower_codesafe(get_class($dao)) . '::getAdditionalFieldNames', [&$this, 'getAdditionalFieldNames']);
-                }
-            }
-
-
-
+//            foreach ($this->_getDAOs() as $dao) {
+//                if ($dao instanceof SchemaDAO) {
+//                    Hook::add('Schema::get::' . $dao->schemaName, [$this, 'addToSchema']);
+//                } elseif ($dao instanceof EntityDAO) {
+//                    Hook::add('Schema::get::' . $dao->schema, [$this, 'addToSchema']);
+//                } else {
+//                    Hook::add(strtolower_codesafe(get_class($dao)) . '::getAdditionalFieldNames', [&$this, 'getAdditionalFieldNames']);
+//                }
+//            }
             // Is triggered only on these hooks
 //            Hook::add('Templates::Submission::SubmissionMetadataForm::AdditionalMetadata', array($this, 'submissionWizard'));
 //            Hook::add('Template::Workflow::Publication', array($this, 'publicationTab'));
@@ -197,90 +194,85 @@ class OptimetaCitationsPlugin2 extends GenericPlugin
         return $success;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Get the DAOs for objects that need to be augmented with additional settings.
-     *
-     * @return array
-     */
-    protected function _getDAOs()
-    {
-        return [
-            Repo::publication()->dao,
-            Repo::submission()->dao,
-//            Application::getRepresentationDAO(),
-//            Repo::issue()->dao,
-//            Repo::submissionFile()->dao
-        ];
-    }
-
-    /**
-     * Add properties for this type of public identifier to the entity's list for
-     * storage in the database.
-     * This is used for SchemaDAO-backed entities only.
-     *
-     * @see PKPPubIdPlugin::getAdditionalFieldNames()
-     *
-     * @param string $hookName `Schema::get::publication`
-     * @param array $params
-     */
-    public function addToSchema($hookName, $params)
-    {
-        $schema = & $params[0];
-        foreach ($this->_getObjectAdditionalSettings() as $fieldName) {
-            $schema->properties->{$fieldName} = (object) [
-                'type' => 'string',
-                'apiSummary' => true,
-                'validation' => ['nullable'],
-            ];
-        }
-
-        return false;
-    }
-
-    /**
-     * Add properties for this type of public identifier to the entity's list for
-     * storage in the database.
-     * This is used for non-SchemaDAO-backed entities only.
-     *
-     * @see PubObjectsExportPlugin::addToSchema()
-     *
-     * @param string $hookName
-     * @param DAO $dao
-     * @param array $additionalFields
-     *
-     * @return false
-     */
-    public function getAdditionalFieldNames($hookName, $dao, &$additionalFields)
-    {
-        foreach ($this->_getObjectAdditionalSettings() as $fieldName) {
-            $additionalFields[] = $fieldName;
-        }
-        return false;
-    }
-
-    /**
-     * Get a list of additional setting names that should be stored with the objects.
-     *
-     * @return array
-     */
-    protected function _getObjectAdditionalSettings()
-    {
-        return [$this->getDepositStatusSettingName()];
-    }
-
-    /**
-     * Get deposit status setting name.
-     *
-     * @return string
-     */
-    public function getDepositStatusSettingName()
-    {
-        return 'OptimetaCitationsPlugin::status';
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
+//    ////////////////////////////////////////////////////////////////////////////////////////////////////
+//    /**
+//     * Get the DAOs for objects that need to be augmented with additional settings.
+//     *
+//     * @return array
+//     */
+//    protected function _getDAOs()
+//    {
+//        return [
+//            Repo::publication()->dao,
+//            Repo::submission()->dao,
+//        ];
+//    }
+//
+//    /**
+//     * Add properties for this type of public identifier to the entity's list for
+//     * storage in the database.
+//     * This is used for SchemaDAO-backed entities only.
+//     *
+//     * @see PKPPubIdPlugin::getAdditionalFieldNames()
+//     *
+//     * @param string $hookName `Schema::get::publication`
+//     * @param array $params
+//     */
+//    public function addToSchema($hookName, $params)
+//    {
+//        $schema = & $params[0];
+//        foreach ($this->_getObjectAdditionalSettings() as $fieldName) {
+//            $schema->properties->{$fieldName} = (object) [
+//                'type' => 'string',
+//                'apiSummary' => true,
+//                'validation' => ['nullable'],
+//            ];
+//        }
+//
+//        return false;
+//    }
+//
+//    /**
+//     * Add properties for this type of public identifier to the entity's list for
+//     * storage in the database.
+//     * This is used for non-SchemaDAO-backed entities only.
+//     *
+//     * @see PubObjectsExportPlugin::addToSchema()
+//     *
+//     * @param string $hookName
+//     * @param DAO $dao
+//     * @param array $additionalFields
+//     *
+//     * @return false
+//     */
+//    public function getAdditionalFieldNames($hookName, $dao, &$additionalFields)
+//    {
+//        foreach ($this->_getObjectAdditionalSettings() as $fieldName) {
+//            $additionalFields[] = $fieldName;
+//        }
+//        return false;
+//    }
+//
+//    /**
+//     * Get a list of additional setting names that should be stored with the objects.
+//     *
+//     * @return array
+//     */
+//    protected function _getObjectAdditionalSettings()
+//    {
+//        return [$this->getDepositStatusSettingName()];
+//    }
+//
+//    /**
+//     * Get deposit status setting name.
+//     *
+//     * @return string
+//     */
+//    public function getDepositStatusSettingName()
+//    {
+//        return 'OptimetaCitationsPlugin::status';
+//    }
+//    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     /**

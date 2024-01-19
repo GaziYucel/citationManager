@@ -14,12 +14,22 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Db;
 
-use Illuminate\Database\Capsule\Manager;
+use APP\core\Application;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Capsule\Manager;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
 class PluginMigration extends Migration
 {
+    private OptimetaCitationsPlugin $plugin;
+
+    public function __construct(OptimetaCitationsPlugin $plugin)
+    {
+        $this->plugin = $plugin;
+    }
+
     /**
      * Run the migrations
      *
@@ -37,7 +47,7 @@ class PluginMigration extends Migration
      */
     public function createCitationsExtendedIfNotExists(): void
     {
-        if (!Manager::schema()->hasTable('citations_extended')) {
+        if (!Schema::hasTable('citations_extended')) {
             $this->createCitationsExtended();
         }
     }
@@ -49,7 +59,7 @@ class PluginMigration extends Migration
      */
     private function createCitationsExtended(): void
     {
-        Manager::schema()->create('citations_extended', function (Blueprint $table) {
+        Schema::create('citations_extended', function (Blueprint $table) {
             $table->bigInteger('citations_extended_id')->nullable(0)->autoIncrement();
             $table->bigInteger('publication_id')->nullable(1);
             $table->longText('parsed_citations')->nullable(1);
