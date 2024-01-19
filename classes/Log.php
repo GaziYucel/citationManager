@@ -1,21 +1,20 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Debug.php
+ * @file plugins/generic/optimetaCitations/classes/Log.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class Debug
+ * @class Log
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Debug helper class
+ * @brief Logging helper class
  */
 
 namespace APP\plugins\generic\optimetaCitations\classes;
 
 use PKP\config\Config;
-use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
 class Log
 {
@@ -24,7 +23,7 @@ class Log
      *
      * @var string
      */
-    private static string $file;
+    private static string $file = 'CitationManagerPlugin.log';
 
     /**
      * Is the class initialized
@@ -42,61 +41,55 @@ class Log
      *
      * @return void
      */
-    private static function initialize():void
+    private static function initialize(): void
     {
         if (self::$initialized) return;
 
-        self::$file =
-            Config::getVar('files', 'files_dir') . '/' .
-            OptimetaCitationsPlugin::OPTIMETA_CITATIONS_PLUGIN_NAME . '.txt';
+        self::$file = Config::getVar('files', 'files_dir') . '/' . self::$file;
 
         self::$initialized = true;
     }
 
     /**
-     * Add to file
+     * Write to file
      *
-     * @param string $text
+     * @param string $message
+     * @param string $level
      * @return bool
      */
-    public static function Add(string $text = ''): bool
+    private static function writeToFile(string $message, string $level): bool
     {
         self::initialize();
 
-        return file_put_contents(
-            self::$file,
-            date('Y-m-d H:i:s') . ' ' . str_replace(array("\r", "\n"), ' ', $text) . "\n",
-            FILE_APPEND | LOCK_EX);
+        $fineStamp =
+            date('Y-m-d H:i:s') .
+            substr(microtime(), 1, 4);
+
+        return error_log(
+            $fineStamp . ' ' . $level . ' ' . str_replace(array("\r", "\n"), ' ', $message) . "\n",
+            3,
+            self::$file);
     }
 
     /**
-     * Get and return contents file
+     * Log notice
      *
-     * @return string
+     * @param string $message
+     * @return bool
      */
-    public static function Get(): string
+    public static function logNotice(string $message): bool
     {
-        self::initialize();
-
-        if (file_exists(self::$file)) {
-            return file_get_contents(self::$file);
-        }
-
-        return '';
+        return self::writeToFile($message, 'NOTICE');
     }
 
     /**
-     * Clear contents file
+     * Log error
      *
+     * @param string $message
      * @return bool
      */
-    public static function Clear(): bool
+    public static function logError(string $message): bool
     {
-        self::initialize();
-
-        return file_put_contents(
-            self::$file,
-            '',
-            LOCK_EX);
+        return self::writeToFile($message, 'ERROR');
     }
 }
