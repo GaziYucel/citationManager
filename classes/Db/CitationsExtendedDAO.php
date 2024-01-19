@@ -14,11 +14,9 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Db;
 
-use PKP\db\DAO;
 use PKP\db\DAOResultFactory;
-use Exception;
 
-class CitationsExtendedDAO extends DAO
+class CitationsExtendedDAO extends \PKP\db\DAO
 {
     /**
      * Get CitationsExtended by Publication ID
@@ -148,13 +146,17 @@ class CitationsExtendedDAO extends DAO
      *
      * @param int $publicationId
      * @return void
-     * @throws Exception
      */
     function deleteByPublicationId(int $publicationId): void
     {
-        $citationsExtended = $this->getByPublicationId($publicationId);
-        while ($citationsExtended = $citationsExtended->next()) {
-            $this->deleteObject($citationsExtended);
+        try{
+            $citationsExtended = $this->getByPublicationId($publicationId);
+            while ($citationsExtended = $citationsExtended->next()) {
+                $this->deleteObject($citationsExtended);
+            }
+        }
+        catch(\Exception $ex){
+            error_log($ex->getMessage());
         }
     }
 

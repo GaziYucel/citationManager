@@ -15,6 +15,7 @@
 namespace APP\plugins\generic\optimetaCitations\classes\Wikidata;
 
 use APP\core\Application;
+use APP\plugins\generic\optimetaCitations\classes\Log;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -202,10 +203,10 @@ class Api
         try {
             $response = $this->httpClient->request('GET', $this->url . '?' . http_build_query($query));
 
-            if (!empty($response) && !empty($response->getBody())) return $response->getBody();
+            if (!empty($response->getBody())) return $response->getBody();
 
         } catch (GuzzleException|Exception $ex) {
-            error_log($ex->getMessage(), true);
+            error_log($ex->getMessage());
         }
 
         return '';
@@ -227,8 +228,6 @@ class Api
 
         if (!empty($this->csrfToken)) $form['token'] = $this->csrfToken;
 
-        error_log('form -> ' . json_encode($form, JSON_UNESCAPED_SLASHES));
-
         try {
             $response = $this->httpClient->request(
                 'POST',
@@ -236,10 +235,10 @@ class Api
                 'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
                 'form_params' => $form]);
 
-            if (!empty($response) && !empty($response->getBody())) return $response->getBody();
+            if (!empty($response->getBody())) return $response->getBody();
 
         } catch (GuzzleException|Exception $ex) {
-            error_log($ex->getMessage(), true);
+            error_log($ex->getMessage());
         }
 
         return '';

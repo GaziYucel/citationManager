@@ -225,9 +225,4 @@ class DepositorHandler
 
         return $contextIds;
     }
-
-    function __destruct()
-    {
-        // error_log('Depositor->__destruct: ' . $this->log);
-    }
 }

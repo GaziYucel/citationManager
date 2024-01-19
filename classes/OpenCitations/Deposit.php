@@ -15,6 +15,7 @@
 namespace APP\plugins\generic\optimetaCitations\classes\OpenCitations;
 
 use APP\journal\Journal;
+use APP\plugins\generic\optimetaCitations\classes\Log;
 use APP\publication\Publication;
 use APP\plugins\generic\optimetaCitations\classes\PID\Arxiv;
 use APP\plugins\generic\optimetaCitations\classes\PID\Doi;
@@ -350,8 +351,6 @@ class Deposit
         if (empty($title) || empty($body)) return $issueId;
 
         $issueId = $this->api->addIssue($title, $body);
-
-        // error_log('[issueId: ' . $issueId . ']', true);
 
         if (empty($issueId)) return 0;
 

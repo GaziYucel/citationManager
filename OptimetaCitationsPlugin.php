@@ -16,36 +16,25 @@ namespace APP\plugins\generic\optimetaCitations;
 require_once(__DIR__ . '/vendor/autoload.php');
 
 use APP\core\Application;
-use APP\facades\Repo;
 use APP\notification\Notification;
 use APP\notification\NotificationManager;
-use APP\plugins\generic\optimetaCitations\classes\Components\Forms\PublicationForm;
+use PKP\config\Config;
+use PKP\core\JSONMessage;
+use PKP\db\DAO;
+use PKP\linkAction\LinkAction;
+use PKP\linkAction\request\AjaxAction;
+use PKP\linkAction\request\AjaxModal;
+use PKP\plugins\GenericPlugin;
+use PKP\plugins\Hook;
+use APP\plugins\generic\optimetaCitations\classes\Log;
 use APP\plugins\generic\optimetaCitations\classes\Components\Forms\SettingsForm;
-use APP\plugins\generic\optimetaCitations\classes\Db\CitationsExtendedDAO;
 use APP\plugins\generic\optimetaCitations\classes\Db\PluginDAO;
-use APP\plugins\generic\optimetaCitations\classes\Frontend\Article;
-use APP\plugins\generic\optimetaCitations\classes\Handler\DepositorHandler;
-use APP\plugins\generic\optimetaCitations\classes\Handler\PluginAPIHandler;
-use APP\plugins\generic\optimetaCitations\classes\Install\OptimetaCitationsMigration;
 use APP\plugins\generic\optimetaCitations\classes\Model\AuthorModel;
 use APP\plugins\generic\optimetaCitations\classes\Model\WorkModel;
 use APP\plugins\generic\optimetaCitations\classes\PID\Doi;
 use APP\plugins\generic\optimetaCitations\classes\PID\OpenAlex;
 use APP\plugins\generic\optimetaCitations\classes\PID\Orcid;
 use APP\plugins\generic\optimetaCitations\classes\PID\Wikidata;
-use APP\template\TemplateManager;
-use PKP\core\EntityDAO;
-use PKP\core\JSONMessage;
-use PKP\core\PKPApplication;
-use PKP\db\DAO;
-use PKP\db\DAORegistry;
-use PKP\db\SchemaDAO;
-use PKP\linkAction\LinkAction;
-use PKP\linkAction\request\AjaxAction;
-use PKP\linkAction\request\AjaxModal;
-use PKP\plugins\GenericPlugin;
-use PKP\plugins\Hook;
-use PKP\submission\PKPSubmission;
 
 class OptimetaCitationsPlugin extends GenericPlugin
 {
@@ -72,9 +61,12 @@ class OptimetaCitationsPlugin extends GenericPlugin
     {
         $success = parent::register($category, $path);
 
+        error_log('OptimetaCitationsPlugin->register');
+
         if ($success && $this->getEnabled()) {
+            error_log('OptimetaCitationsPlugin->register>success&&enabled');
             // Display the publication statement on the article details page
-            Hook::add('Templates::Article::Main', [$this, 'addPublicationStatement']);
+//            Hook::add('Templates::Article::Main', [$this, 'addPublicationStatement']);
 
             $request = $this->getRequest();
             $objOrcid = new Orcid();
@@ -156,11 +148,9 @@ class OptimetaCitationsPlugin extends GenericPlugin
         // Only add the settings action when the plugin is enabled
         if (!$this->getEnabled()) return $actions;
 
-//        $linkAction = [];
-
         $router = $request->getRouter();
 
-        $linkAction = new LinkAction(
+        $actions[] = new LinkAction(
             'settings',
             new AjaxModal(
                 $router->url($request, null, null, 'manage', null,
@@ -170,25 +160,31 @@ class OptimetaCitationsPlugin extends GenericPlugin
             __('manager.plugins.settings'),
             null
         );
-        $actions[] = $linkAction;
 
-        $linkAction = new LinkAction(
+        $actions[] = new LinkAction(
             'initialise_plugin',
             new AjaxAction(
                 $router->url($request, null, null, 'manage', null,
                     ['verb' => 'initialise_plugin', 'plugin' => $this->getName(), 'category' => 'generic'])),
             __('plugins.generic.optimetaCitations.settings.initialise.button'),
             null);
-        $actions[] = $linkAction;
 
-        $linkAction = new LinkAction(
+        $actions[] = new LinkAction(
+            'test_settings',
+            new AjaxAction(
+                $router->url(
+                    $request, null, null, 'manage', null,
+                    array('verb' => 'test_settings', 'plugin' => $this->getName(), 'category' => 'generic'))),
+            __('plugins.generic.optimetaCitations.settings.test.button'),
+            null);
+
+        $actions[] = new LinkAction(
             'batch_deposit',
             new AjaxAction(
                 $router->url($request, null, null, 'manage', null,
                     ['verb' => 'batch_deposit', 'plugin' => $this->getName(), 'category' => 'generic'])),
             __('plugins.generic.optimetaCitations.settings.deposit.button'),
             null);
-        $actions[] = $linkAction;
 
         return $actions;
     }
@@ -203,14 +199,13 @@ class OptimetaCitationsPlugin extends GenericPlugin
      */
     public function manage($args, $request)
     {
+        $context = $request->getContext();
+
         switch ($request->getUserVar('verb')) {
             case 'settings':
-
-                // Load the custom form
                 $form = new SettingsForm($this);
 
-                // Fetch the form the first time it loads, before
-                // the user has tried to save it
+                // Fetch and show current data
                 if (!$request->getUserVar('save')) {
                     $form->initData();
                     return new JSONMessage(true, $form->fetch($request));
@@ -222,6 +217,32 @@ class OptimetaCitationsPlugin extends GenericPlugin
                     $form->execute();
                     return new JSONMessage(true);
                 }
+            case 'test_settings':
+                $notificationManager = new NotificationManager();
+                $notificationManager->createTrivialNotification(
+                    Application::get()->getRequest()->getUser()->getId(),
+                    Notification::NOTIFICATION_TYPE_WARNING,
+                    array('contents' => __('plugins.generic.optimetaCitations.not_implemented')));
+                return \DAO::getDataChangedEvent();
+            case 'initialise_plugin':
+//                $this->pluginActivationActions();
+                $pluginMigration = new PluginMigration();
+//                $pluginMigration->createCitationsExtendedIfNotExists();
+                $notificationManager = new NotificationManager();
+                $notificationManager->createTrivialNotification(
+                    Application::get()->getRequest()->getUser()->getId(),
+                    Notification::NOTIFICATION_TYPE_SUCCESS,
+                    array('contents' => __('plugins.generic.optimetaCitations.settings.initialise.notification')));
+                return DAO::getDataChangedEvent();
+            case 'batch_deposit':
+//                $depositor = new DepositorHandler();
+//                $depositor->batchDeposit();
+                $notificationManager = new NotificationManager();
+                $notificationManager->createTrivialNotification(
+                    Application::get()->getRequest()->getUser()->getId(),
+                    Notification::NOTIFICATION_TYPE_SUCCESS,
+                    array('contents' => __('plugins.generic.optimetaCitations.settings.deposit.notification')));
+                return DAO::getDataChangedEvent();
         }
 
         return parent::manage($args, $request);

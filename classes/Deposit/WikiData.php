@@ -101,9 +101,4 @@ class Wikidata
 
         return $qid;
     }
-
-    function __destruct()
-    {
-        // error_log('Wikidata->__destruct: ' . $this->log);
-    }
 }

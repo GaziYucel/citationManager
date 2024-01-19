@@ -104,7 +104,7 @@ class Api
 
             $issueId = $this->getIssueId($response);
         } catch (GuzzleException|\Exception $ex) {
-            error_log($ex->getMessage(), true);
+            error_log($ex->getMessage());
         }
 
         return $issueId;
@@ -133,7 +133,7 @@ class Api
                 }
             }
         } catch (\Exception $ex) {
-            error_log($ex->getMessage(), true);
+            error_log($ex->getMessage());
         }
 
         return $issueId;

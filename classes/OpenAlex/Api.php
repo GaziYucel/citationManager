@@ -64,7 +64,7 @@ class Api
 
             return json_decode($response->getBody(), true);
         } catch (GuzzleException|\Exception $ex) {
-            error_log($ex->getMessage(), true);
+            error_log($ex->getMessage());
         }
 
         return [];

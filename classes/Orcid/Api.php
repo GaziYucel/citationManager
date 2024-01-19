@@ -65,7 +65,7 @@ class Api
 
             return $orcidObject;
         } catch (GuzzleException|\Exception $ex) {
-            error_log($ex->getMessage(), true);
+            error_log($ex->getMessage());
         }
 
         return [];

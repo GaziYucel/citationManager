@@ -1,24 +1,24 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Install/OptimetaCitationsMigration.php
+ * @file plugins/generic/optimetaCitations/classes/Db/PluginMigration.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class OptimetaCitationsMigration
+ * @class PluginMigration
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief Migrations
+ * @brief PluginMigration
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes\Install;
+namespace APP\plugins\generic\optimetaCitations\classes\Db;
 
+use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
-class OptimetaCitationsMigration extends Migration
+class PluginMigration extends Migration
 {
     /**
      * Run the migrations
@@ -37,7 +37,7 @@ class OptimetaCitationsMigration extends Migration
      */
     public function createCitationsExtendedIfNotExists(): void
     {
-        if (!Capsule::schema()->hasTable('citations_extended')) {
+        if (!Manager::schema()->hasTable('citations_extended')) {
             $this->createCitationsExtended();
         }
     }
@@ -49,7 +49,7 @@ class OptimetaCitationsMigration extends Migration
      */
     private function createCitationsExtended(): void
     {
-        Capsule::schema()->create('citations_extended', function (Blueprint $table) {
+        Manager::schema()->create('citations_extended', function (Blueprint $table) {
             $table->bigInteger('citations_extended_id')->nullable(0)->autoIncrement();
             $table->bigInteger('publication_id')->nullable(1);
             $table->longText('parsed_citations')->nullable(1);
