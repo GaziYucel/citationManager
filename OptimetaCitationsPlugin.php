@@ -64,11 +64,11 @@ class OptimetaCitationsPlugin extends GenericPlugin
      */
     protected bool $isProduction = false;
 
-    protected $versionSpecificNameState = 'state'; //todo: can be replaced
+    protected string $versionSpecificNameState = 'state'; //todo: can be replaced
 
     protected $isEnabledSaved = '0';
 
-    protected $templateParameters = [
+    protected array $templateParameters = [
         'customScript' => '',
         'pluginStylesheetURL' => '',
         'pluginJavaScriptURL' => '',
@@ -97,13 +97,13 @@ class OptimetaCitationsPlugin extends GenericPlugin
         // Register the plugin even when it is not enabled
         $success = parent::register($category, $path);
 
-        error_log(
-            str_replace(
-                array("\r", "\n"), ' ',
-                json_encode(
-                    DAORegistry::getDAOs(),
-                    JSON_UNESCAPED_SLASHES))
-        );
+//        error_log(
+//            str_replace(
+//                array("\r", "\n"), ' ',
+//                json_encode(
+//                    DAORegistry::getDAOs(),
+//                    JSON_UNESCAPED_SLASHES))
+//        );
 
 //        if ($this->getSetting($this->getCurrentContextId(), OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
 //            $this->isProduction = true;
