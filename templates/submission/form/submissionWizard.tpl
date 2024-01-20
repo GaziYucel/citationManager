@@ -10,7 +10,7 @@
             citations: optimetaCitations,
             helper: optimetaCitationsGetHelperArray(optimetaCitations),
             author: {$authorModel},
-            publicationWork: {$workModel},
+            publicationWork: {$publicationWork},
             statusCodePublished: {$statusCodePublished},
             publicationStatus: 1
         },

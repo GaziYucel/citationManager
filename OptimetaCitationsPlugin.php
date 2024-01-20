@@ -52,14 +52,11 @@ class OptimetaCitationsPlugin extends GenericPlugin
 {
     public const OPTIMETA_CITATIONS_PLUGIN_NAME = 'OptimetaCitationsPlugin';
     public const OPTIMETA_CITATIONS_IS_PRODUCTION_KEY = 'OptimetaCitations_IsProductionEnvironment';
-    public const OPTIMETA_CITATIONS_PLUGIN_PATH = __DIR__;
-    public const OPTIMETA_CITATIONS_USER_AGENT = 'OJSOptimetaCitations';
     public const OPTIMETA_CITATIONS_API_ENDPOINT = 'OptimetaCitations';
     public const OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED = 'OptimetaCitations_FrontendShowStructured';
     public const OPTIMETA_CITATIONS_PUBLICATION_WORK = 'OptimetaCitations_PublicationWork';
     public const OPTIMETA_CITATIONS_FORM_NAME = 'OptimetaCitations_PublicationForm';
     public const OPTIMETA_CITATIONS_FORM_FIELD_PARSED = 'OptimetaCitations_CitationsParsed';
-    public const OPTIMETA_CITATIONS_SAVED_IS_ENABLED = 'OptimetaCitations_IsEnabled';
     public const OPTIMETA_CITATIONS_WIKIDATA_USERNAME = 'OptimetaCitations_Wikidata_Username';
     public const OPTIMETA_CITATIONS_WIKIDATA_PASSWORD = 'OptimetaCitations_Wikidata_Password';
     public const OPTIMETA_CITATIONS_OPEN_CITATIONS_OWNER = 'OptimetaCitations_Open_Citations_Owner';
@@ -84,13 +81,14 @@ class OptimetaCitationsPlugin extends GenericPlugin
         'pluginApiUrl' => '',
         'isPublished' => 'false',
         'authorModel' => '',
-        'workModel' => '',
         'publicationWork' => '',
         'statusCodePublished' => 3,
         'openAlexURL' => '',
         'wikidataURL' => '',
         'orcidURL' => '',
-        'doiURL' => ''];
+        'doiURL' => '',
+        'citationsParsed' => '',
+        'submissionId' => ''];
 
     /**
      * @var PluginDAO
@@ -159,7 +157,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
                 'authorModel' => json_encode(get_object_vars(new AuthorModel())),
                 'workModel' => json_encode(get_object_vars(new WorkModel())),
                 'publicationWork' => '',
-                'statusCodePublished' => 3,
+                'statusCodePublished' => PKPSubmission::STATUS_PUBLISHED,
                 'openAlexURL' => $objOpenAlex->prefix,
                 'wikidataURL' => $objWikidata->prefix,
                 'orcidURL' => $objOrcid->prefix,
@@ -340,12 +338,10 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $publication = $publicationDao->getById($submissionId);
 
         $publicationWorkDb = $publication->getData(OptimetaCitationsPlugin::OPTIMETA_CITATIONS_PUBLICATION_WORK);
-        if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]') $this->templateParameters['workModel'] = $publicationWorkDb;
+        if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]') $this->templateParameters['publicationWork'] = $publicationWorkDb;
         $this->templateParameters['pluginApiUrl'] = $apiBaseUrl . OptimetaCitationsPlugin::OPTIMETA_CITATIONS_API_ENDPOINT;
         $this->templateParameters['submissionId'] = $submissionId;
         $this->templateParameters['citationsParsed'] = json_encode($this->pluginDao->getCitations($publication));
-        $this->templateParameters['statusCodePublished'] = PKPSubmission::STATUS_PUBLISHED;
-
 
         $templateMgr->assign($this->templateParameters);
 
@@ -412,11 +408,10 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $publication = $publicationDao->getById($submissionId);
 
         $publicationWorkDb = $publication->getData(OptimetaCitationsPlugin::OPTIMETA_CITATIONS_PUBLICATION_WORK);
-        if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]') $this->templateParameters['workModel'] = $publicationWorkDb;
+        if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]') $this->templateParameters['publicationWork'] = $publicationWorkDb;
         $this->templateParameters['pluginApiUrl'] = $apiBaseUrl . OptimetaCitationsPlugin::OPTIMETA_CITATIONS_API_ENDPOINT;
         $this->templateParameters['submissionId'] = $submissionId;
         $this->templateParameters['citationsParsed'] = json_encode($this->pluginDao->getCitations($publication));
-        $this->templateParameters['statusCodePublished'] = PKPSubmission::STATUS_PUBLISHED;
 
         $templateMgr->assign($this->templateParameters);
 
