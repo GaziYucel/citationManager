@@ -317,7 +317,7 @@ class OptimetaCitationsPlugin2 extends GenericPlugin
 
         $publication = $templateMgr->getTemplateVars('currentPublication');
 
-        $article = new Article();
+        $article = new Article($this);
         $references = $article->getCitationsAsHtml($publication);
 
         $newOutput =
@@ -347,7 +347,7 @@ class OptimetaCitationsPlugin2 extends GenericPlugin
 //        $this->callbackParseCronTabWorkAround();
 
         // create / alter table required by plugin
-        $migrate = new PluginMigration();
+        $migrate = new PluginMigration($this);
         $migrate->createCitationsExtendedIfNotExists();
 
         error_log('OptimetaCitationsPlugin was enabled');
@@ -408,7 +408,7 @@ class OptimetaCitationsPlugin2 extends GenericPlugin
         $locales = array_map(fn (string $locale, string $name) => ['key' => $locale, 'label' => $name], array_keys($locales), $locales);
 
 //        $form = new PublicationForm(
-//            OPTIMETA_CITATIONS_FORM_NAME,
+//            OptimetaCitationsPlugin::OPTIMETA_CITATIONS_FORM_NAME,
 //            'PUT',
 //            $apiBaseUrl . 'submissions/' . $submissionId . '/publications/' . $latestPublication->getId(),
 //            $locales,
@@ -497,14 +497,12 @@ class OptimetaCitationsPlugin2 extends GenericPlugin
 
         $this->templateParameters['pluginApiUrl'] = $apiBaseUrl . OPTIMETA_CITATIONS_API_ENDPOINT;
         $this->templateParameters['submissionId'] = $submissionId;
-
         $this->templateParameters['citationsParsed'] = json_encode($this->pluginDao->getCitations($publication));
+        $this->templateParameters['statusCodePublished'] = PKPSubmission::STATUS_PUBLISHED;
 
         $publicationWorkDb = $publication->getData(OPTIMETA_CITATIONS_PUBLICATION_WORK);
         if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]')
             $this->templateParameters['workModel'] = $publicationWorkDb;
-
-        $this->templateParameters['statusCodePublished'] = PKPSubmission::STATUS_PUBLISHED;
 
         $templateMgr->assign($this->templateParameters);
 

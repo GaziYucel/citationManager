@@ -6,7 +6,7 @@
 
 <form
         class="pkp_form"
-        id="optimetaCitationsSettings"
+        id="{OptimetaCitationsPlugin::OPTIMETA_CITATIONS_PLUGIN_NAME}Settings"
         method="POST"
         action="{url router=$smarty.const.ROUTE_COMPONENT op="manage" category="generic" plugin=$pluginName verb="settings" save=true}"
 >

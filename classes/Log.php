@@ -77,9 +77,9 @@ class Log
      * @param string $message
      * @return bool
      */
-    public static function logNotice(string $message): bool
+    public static function logInfo(string $message): bool
     {
-        return self::writeToFile($message, 'NOTICE');
+        return self::writeToFile($message, 'INFO');
     }
 
     /**
