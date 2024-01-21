@@ -48,9 +48,10 @@ use APP\plugins\generic\optimetaCitations\classes\PID\Wikidata;
 use PKP\submission\PKPSubmission;
 use Throwable;
 
+define('OPTIMETA_CITATIONS_PLUGIN_NAME', basename(__FILE__, '.php'));
+
 class OptimetaCitationsPlugin extends GenericPlugin
 {
-    public const OPTIMETA_CITATIONS_PLUGIN_NAME = 'OptimetaCitationsPlugin';
     public const OPTIMETA_CITATIONS_IS_PRODUCTION_KEY = 'OptimetaCitations_IsProductionEnvironment';
     public const OPTIMETA_CITATIONS_API_ENDPOINT = 'OptimetaCitations';
     public const OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED = 'OptimetaCitations_FrontendShowStructured';

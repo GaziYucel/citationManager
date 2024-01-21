@@ -23,7 +23,7 @@ class Log
      *
      * @var string
      */
-    private static string $file = 'CitationManagerPlugin.log';
+    private static string $file = OPTIMETA_CITATIONS_PLUGIN_NAME . '.log';
 
     /**
      * Is the class initialized
