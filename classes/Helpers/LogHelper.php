@@ -1,22 +1,22 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Log.php
+ * @file plugins/generic/optimetaCitations/classes/Helpers/LogHelper.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class Log
+ * @class LogHelper
  * @ingroup plugins_generic_optimetacitations
  *
  * @brief Logging helper class
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes;
+namespace APP\plugins\generic\optimetaCitations\classes\Helpers;
 
 use PKP\config\Config;
 
-class Log
+class LogHelper
 {
     /**
      * Path to file
