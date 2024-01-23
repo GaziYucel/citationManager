@@ -19,35 +19,25 @@ use PKP\config\Config;
 class LogHelper
 {
     /**
-     * Path to file
+     * Log notice
      *
-     * @var string
+     * @param string $message
+     * @return bool
      */
-    private static string $file = OPTIMETA_CITATIONS_PLUGIN_NAME . '.log';
-
-    /**
-     * Is the class initialized
-     * @var bool
-     */
-    private static bool $initialized = false;
-
-    /**
-     * Private prevents instantiating this class
-     */
-    private function __construct() { }
-
-    /**
-     * Initialize class
-     *
-     * @return void
-     */
-    private static function initialize(): void
+    public static function logInfo(string $message): bool
     {
-        if (self::$initialized) return;
+        return self::writeToFile($message, 'INF');
+    }
 
-        self::$file = Config::getVar('files', 'files_dir') . '/' . self::$file;
-
-        self::$initialized = true;
+    /**
+     * Log error
+     *
+     * @param string $message
+     * @return bool
+     */
+    public static function logError(string $message): bool
+    {
+        return self::writeToFile($message, 'ERR');
     }
 
     /**
@@ -59,37 +49,22 @@ class LogHelper
      */
     private static function writeToFile(string $message, string $level): bool
     {
-        self::initialize();
-
         $fineStamp =
             date('Y-m-d H:i:s') .
             substr(microtime(), 1, 4);
 
+        $file = Config::getVar('files', 'files_dir') . '/' .
+            strtolower(
+                str_replace(
+                    ['\\classes\\Helpers', '\\'],
+                    ['', '_'],
+                    __NAMESPACE__ . '.log'
+                )
+            );
+
         return error_log(
             $fineStamp . ' ' . $level . ' ' . str_replace(array("\r", "\n"), ' ', $message) . "\n",
             3,
-            self::$file);
-    }
-
-    /**
-     * Log notice
-     *
-     * @param string $message
-     * @return bool
-     */
-    public static function logInfo(string $message): bool
-    {
-        return self::writeToFile($message, 'INFO');
-    }
-
-    /**
-     * Log error
-     *
-     * @param string $message
-     * @return bool
-     */
-    public static function logError(string $message): bool
-    {
-        return self::writeToFile($message, 'ERROR');
+            $file);
     }
 }

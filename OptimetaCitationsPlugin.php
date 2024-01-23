@@ -24,7 +24,7 @@ use APP\plugins\generic\optimetaCitations\classes\Components\Forms\PublicationFo
 use APP\plugins\generic\optimetaCitations\classes\Db\CitationsExtendedDAO;
 use APP\plugins\generic\optimetaCitations\classes\Frontend\Article;
 use APP\plugins\generic\optimetaCitations\classes\Handler\PluginAPIHandler;
-use APP\plugins\generic\optimetaCitations\classes\Helpers\ModelHelper;
+use APP\plugins\generic\optimetaCitations\classes\Helpers\LogHelper;
 use APP\plugins\generic\optimetaCitations\classes\Helpers\ObjectHelper;
 use APP\template\TemplateManager;
 use PKP\core\APIRouter;
