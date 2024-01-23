@@ -32,9 +32,7 @@ class ObjectHelper
 
         $objVars = [];
 
-        for($i = 0; $i < count($properties); $i++){
-            $objVars[$properties[$i]->name] = null;
-        }
+        for ($i = 0; $i < count($properties); $i++) $objVars[$properties[$i]->name] = null;
 
         return $objVars;
     }
@@ -52,13 +50,10 @@ class ObjectHelper
         $properties = (array)$reflect->getProperties(ReflectionProperty::IS_PUBLIC);
         $objVars = [];
 
-        error_log('$properties: ' . json_encode($properties, JSON_UNESCAPED_SLASHES));
-
-        for($i = 0; $i < count($properties); $i++){
-            if(!empty($values[$properties[$i]['name']])){
+        for ($i = 0; $i < count($properties); $i++) {
+            if (!empty($values[$properties[$i]['name']])) {
                 $objVars[$properties[$i]->name] = $values[$properties[$i]->name];
-            }
-            else {
+            } else {
                 $objVars[$properties[$i]->name] = null;
             }
         }
