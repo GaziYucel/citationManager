@@ -36,6 +36,7 @@ class ParserHandler
 
     /**
      * Parse and save parsed citations to citationsParsed
+     *
      * @param string $citationsRaw
      * @return array
      */
@@ -47,9 +48,7 @@ class ParserHandler
         $citationsRaw = $this->cleanCitationsRaw($citationsRaw);
 
         // return if input is empty
-        if (empty($citationsRaw)) {
-            return $citations;
-        }
+        if (empty($citationsRaw)) return $citations;
 
         // break up at line endings
         $citationsArray = explode("\n", $citationsRaw);
@@ -67,7 +66,7 @@ class ParserHandler
             // remove numbers from the beginning of each citation
             $citation->raw = $this->removeNumberPrefixFromString($citation->raw);
 
-            // parse doi
+            // doi
             $objDoi = new Doi();
             $citation->doi = $objDoi->extractFromString($citation->raw);
             $citation->raw = $objDoi->normalize($citation->raw, $citation->doi);
@@ -76,13 +75,15 @@ class ParserHandler
             $objUrl = new Url();
             $citation->url = $objUrl->extractFromString(str_replace($citation->doi, '', $citation->raw));
 
-            // replace incorrect url by correct url
+            // handle pid
             $objHandle = new Handle(); //todo: add pid to citation/work model
             $citation->url = str_replace($objHandle->prefixInCorrect, $objHandle->prefix, $citation->url);
+
+            // arxiv pid
             $objArxiv = new Arxiv(); //todo: add pid to citation/work model
             $citation->url = str_replace($objArxiv->prefixInCorrect, $objArxiv->prefix, $citation->url);
 
-            // urn parser
+            // urn
             $objUrn = new Urn();
             $citation->urn = $objUrn->getUrnParsed($citation->raw);
 
@@ -95,6 +96,7 @@ class ParserHandler
 
     /**
      * Clean and return citationRaw
+     *
      * @param string $citationsRaw
      * @return string
      */
@@ -117,6 +119,7 @@ class ParserHandler
 
     /**
      * Clean and return citation
+     *
      * @param $citation
      * @return string
      */
@@ -138,7 +141,8 @@ class ParserHandler
     }
 
     /**
-     * Remove number from the beginning of string.
+     * Remove number from the beginning of string
+     *
      * @param string $text
      * @return string
      */
@@ -155,6 +159,7 @@ class ParserHandler
 
     /**
      * Normalize whitespace
+     *
      * @param string $text
      * @return string
      */
@@ -171,6 +176,7 @@ class ParserHandler
 
     /**
      * Normalize line endings of string
+     *
      * @param string $text
      * @return string
      */

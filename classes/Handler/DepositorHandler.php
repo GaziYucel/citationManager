@@ -68,8 +68,7 @@ class DepositorHandler
         $publicationWork = get_object_vars(new WorkModel());
 
         // return if input or username password is empty
-        if (empty($submissionId) || empty($citationsParsed))
-            return $publicationWork;
+        if (empty($submissionId) || empty($citationsParsed)) return $publicationWork;
 
         // request
         $request = $this->plugin->getRequest();
@@ -82,8 +81,7 @@ class DepositorHandler
         $submission = $submissionDao->getById($submissionId);
 
         // return if doi is empty
-        if (empty($submission->getStoredPubId('doi')))
-            return $publicationWork;
+        if (empty($submission->getStoredPubId('doi'))) return $publicationWork;
 
         // publication
         $publicationDao = DAORegistry::getDAO('PublicationDAO');
@@ -96,9 +94,8 @@ class DepositorHandler
         $issueId = $publication->getData('issueId');
         $issue = null;
         $issueDao = DAORegistry::getDAO('IssueDAO');
-        if (!is_null($issueDao->getById($issueId))) {
-            $issue = $issueDao->getById($issueId);
-        }
+        if (!is_null($issueDao->getById($issueId))) $issue = $issueDao->getById($issueId);
+
 
         // publication work
         $publicationWorkDb = $publication->getData(OptimetaCitationsPlugin::OPTIMETA_CITATIONS_PUBLICATION_WORK);
@@ -192,9 +189,13 @@ class DepositorHandler
      */
     public function getPublishedSubmissionIds(int $contextId): array
     {
-        $submissionsIterator = Services::get('submission')->getMany([
-            'contextId' => $contextId,
-            'status' => Submission::STATUS_PUBLISHED]);
+        $submissionsIterator = Services::get('submission')
+            ->getMany(
+                [
+                    'contextId' => $contextId,
+                    'status' => Submission::STATUS_PUBLISHED
+                ]
+            );
 
         $submissionIds = [];
 
@@ -220,7 +221,8 @@ class DepositorHandler
             while ($context = $contextFactory->next()) {
                 $contextIds[] = $context->getId();
             }
-        } catch (Exception) {
+        } catch (Exception $ex) {
+            error_log($ex->getMessage());
         }
 
         return $contextIds;

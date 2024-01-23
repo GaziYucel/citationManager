@@ -84,6 +84,7 @@ class PluginAPIHandler extends APIHandler
 
     /**
      * Parse and enrich citations and return
+     *
      * @param SlimRequest $slimRequest
      * @param APIResponse $response
      * @param array $args
@@ -127,6 +128,7 @@ class PluginAPIHandler extends APIHandler
 
     /**
      * Deposit citations and return
+     *
      * @param SlimRequest $slimRequest
      * @param APIResponse $response
      * @param array $args

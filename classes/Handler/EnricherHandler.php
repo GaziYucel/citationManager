@@ -31,6 +31,7 @@ class EnricherHandler
 
     /**
      * Enrich citations and save results to citations
+     *
      * @param array $citationsParsed
      * @return array
      */
@@ -39,43 +40,41 @@ class EnricherHandler
         $citations = [];
 
         // return if input is empty
-        if (sizeof($citationsParsed) == 0) {
-            return $citations;
-        }
+        if (sizeof($citationsParsed) == 0) return $citations;
+
 
         // loop through citations and enrich every citation
         foreach ($citationsParsed as $index => $row) {
-            if (is_object($row) || is_array($row)) {
-                $citation = new CitationModel();
+            // skip if not object nor array
+            if (!is_object($row) && !is_array($row)) continue;
 
-                // convert array to object
-                foreach ($row as $key => $value) {
-                    if (property_exists($citation, $key)) {
-                        $citation->$key = $value;
-                    }
-                }
+            $citation = new CitationModel();
 
-                // skip iteration if isProcessed or DOI empty
-                if ($citation->isProcessed || empty($citation->doi)) {
-                    $citations[] = (array)$citation;
-                    continue;
-                }
-
-                // OpenAlex Work
-                $objOpenAlex = new \APP\plugins\generic\optimetaCitations\classes\OpenAlex\Enrich($this->plugin);
-                $citation = $objOpenAlex->getEnriched($citation);
-
-                // Wikidata
-                $objWikidata = new \APP\plugins\generic\optimetaCitations\classes\Wikidata\Enrich($this->plugin);
-                $citation = $objWikidata->getEnriched($citation);
-
-                // Orcid
-                $objOrcid = new \APP\plugins\generic\optimetaCitations\classes\Orcid\Enrich($this->plugin);
-                $citation = $objOrcid->getEnriched($citation);
-
-                // push to citations enriched array
-                $citations[] = (array)$citation;
+            // convert array to object
+            foreach ($row as $key => $value) {
+                if (property_exists($citation, $key)) $citation->$key = $value;
             }
+
+            // skip iteration if isProcessed or DOI empty
+            if ($citation->isProcessed || empty($citation->doi)) {
+                $citations[] = (array)$citation;
+                continue;
+            }
+
+            // OpenAlex Work
+            $objOpenAlex = new \APP\plugins\generic\optimetaCitations\classes\OpenAlex\Enrich($this->plugin);
+            $citation = $objOpenAlex->getEnriched($citation);
+
+            // Wikidata
+            $objWikidata = new \APP\plugins\generic\optimetaCitations\classes\Wikidata\Enrich($this->plugin);
+            $citation = $objWikidata->getEnriched($citation);
+
+            // Orcid
+            $objOrcid = new \APP\plugins\generic\optimetaCitations\classes\Orcid\Enrich($this->plugin);
+            $citation = $objOrcid->getEnriched($citation);
+
+            // push to citations enriched array
+            $citations[] = (array)$citation;
         }
 
         return $citations;
