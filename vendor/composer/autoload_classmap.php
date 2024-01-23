@@ -19,6 +19,7 @@ return array(
     'APP\\plugins\\generic\\optimetaCitations\\classes\\Handler\\EnricherHandler' => $baseDir . '/classes/Handler/EnricherHandler.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\Handler\\ParserHandler' => $baseDir . '/classes/Handler/ParserHandler.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\Handler\\PluginAPIHandler' => $baseDir . '/classes/Handler/PluginAPIHandler.php',
+    'APP\\plugins\\generic\\optimetaCitations\\classes\\Helpers\\ObjectHelper' => $baseDir . '/classes/Helpers/ObjectHelper.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\Log' => $baseDir . '/classes/Log.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\Model\\AuthorModel' => $baseDir . '/classes/Model/AuthorModel.php',
     'APP\\plugins\\generic\\optimetaCitations\\classes\\Model\\CitationModel' => $baseDir . '/classes/Model/CitationModel.php',

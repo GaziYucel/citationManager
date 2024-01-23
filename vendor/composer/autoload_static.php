@@ -20,6 +20,7 @@ class ComposerStaticInit205e7fc175dbc92c2ca8148adbc3ad81
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Handler\\EnricherHandler' => __DIR__ . '/../..' . '/classes/Handler/EnricherHandler.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Handler\\ParserHandler' => __DIR__ . '/../..' . '/classes/Handler/ParserHandler.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Handler\\PluginAPIHandler' => __DIR__ . '/../..' . '/classes/Handler/PluginAPIHandler.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Helpers\\ObjectHelper' => __DIR__ . '/../..' . '/classes/Helpers/ObjectHelper.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Log' => __DIR__ . '/../..' . '/classes/Log.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Model\\AuthorModel' => __DIR__ . '/../..' . '/classes/Model/AuthorModel.php',
         'APP\\plugins\\generic\\optimetaCitations\\classes\\Model\\CitationModel' => __DIR__ . '/../..' . '/classes/Model/CitationModel.php',

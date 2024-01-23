@@ -17,12 +17,15 @@ namespace APP\plugins\generic\optimetaCitations;
 require_once(__DIR__ . '/vendor/autoload.php');
 
 use APP\core\Application;
+use APP\facades\Repo;
 use APP\notification\Notification;
 use APP\notification\NotificationManager;
 use APP\plugins\generic\optimetaCitations\classes\Components\Forms\PublicationForm;
 use APP\plugins\generic\optimetaCitations\classes\Db\CitationsExtendedDAO;
 use APP\plugins\generic\optimetaCitations\classes\Frontend\Article;
 use APP\plugins\generic\optimetaCitations\classes\Handler\PluginAPIHandler;
+use APP\plugins\generic\optimetaCitations\classes\Helpers\ModelHelper;
+use APP\plugins\generic\optimetaCitations\classes\Helpers\ObjectHelper;
 use APP\template\TemplateManager;
 use PKP\core\APIRouter;
 use PKP\core\JSONMessage;
@@ -80,10 +83,10 @@ class OptimetaCitationsPlugin extends GenericPlugin
         'pluginJavaScriptURL' => '',
         'pluginImagesURL' => '',
         'pluginApiUrl' => '',
-        'isPublished' => 'false',
-        'authorModel' => '',
-        'publicationWork' => '',
-        'statusCodePublished' => 3,
+//        'isPublished' => 'false',
+        'authorModel' => [],
+        'publicationWork' => [],
+        'statusCodePublished' => 0,
         'openAlexURL' => '',
         'wikidataURL' => '',
         'orcidURL' => '',
@@ -148,16 +151,18 @@ class OptimetaCitationsPlugin extends GenericPlugin
             $objOpenAlex = new OpenAlex();
             $objDoi = new Doi();
 
+            error_log('$success && $this->getEnabled()');
+
+            $objectHelper = new ObjectHelper();
             $this->templateParameters = [
                 'customScript' => '',
                 'pluginStylesheetURL' => $request->getBaseUrl() . '/' . $this->getPluginPath() . '/css',
                 'pluginJavaScriptURL' => $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js',
                 'pluginImagesURL' => $request->getBaseUrl() . '/' . $this->getPluginPath() . '/images',
                 'pluginApiUrl' => '',
-                'isPublished' => 'false',
-                'authorModel' => json_encode(get_object_vars(new AuthorModel())),
-                'workModel' => json_encode(get_object_vars(new WorkModel())),
-                'publicationWork' => '',
+//                'isPublished' => 'false',
+                'authorModel' => json_encode($objectHelper->getObjectProperties(new AuthorModel())),
+                'publicationWork' => json_encode($objectHelper->getObjectProperties(new WorkModel())),
                 'statusCodePublished' => PKPSubmission::STATUS_PUBLISHED,
                 'openAlexURL' => $objOpenAlex->prefix,
                 'wikidataURL' => $objWikidata->prefix,
@@ -174,8 +179,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
             // Is triggered only on these hooks
 //            Hook::add('Templates::Submission::SubmissionMetadataForm::AdditionalMetadata', array($this, 'submissionWizard'));
-//            Hook::add('Template::Workflow::Publication', array($this, 'publicationTab'));
-//            Hook::add('Publication::edit', array($this, 'publicationSave'));
+            Hook::add('Template::Workflow::Publication', array($this, 'publicationTab'));
+            Hook::add('Publication::edit', array($this, 'publicationSave'));
 
             // Is triggered only on the page defined in Handler method/class
 //            Hook::add('Dispatcher::dispatch', array($this, 'apiHandler'));
@@ -290,8 +295,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
     public function addToSchema(string $hookName, array $args): void
     {
         $schema = $args[0];
-        $pluginDao = new PluginDao($this);
-        $pluginDao->addToSchema($schema);
+        $this->pluginDao->addToSchema($schema);
     }
 
     /**
@@ -335,14 +339,22 @@ class OptimetaCitationsPlugin extends GenericPlugin
         $state['components'][OptimetaCitationsPlugin::OPTIMETA_CITATIONS_FORM_NAME] = $form->getConfig();
         $templateMgr->assign($this->versionSpecificNameState, $state);
 
-        $publicationDao = DAORegistry::getDAO('PublicationDAO');
-        $publication = $publicationDao->getById($submissionId);
+//        $publication = $submission->getLatestPublication();
+//        $publicationDao = DAORegistry::getDAO('PublicationDAO');
+        $publication = Repo::publication()->get($latestPublication->getId());
+//        $publication = $publicationDao->getById($submissionId);
 
-        $publicationWorkDb = $publication->getData(OptimetaCitationsPlugin::OPTIMETA_CITATIONS_PUBLICATION_WORK);
-        if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]') $this->templateParameters['publicationWork'] = $publicationWorkDb;
-        $this->templateParameters['pluginApiUrl'] = $apiBaseUrl . OptimetaCitationsPlugin::OPTIMETA_CITATIONS_API_ENDPOINT;
+        $publicationWorkDb = $publication
+            ->getData(OptimetaCitationsPlugin::OPTIMETA_CITATIONS_PUBLICATION_WORK);
+
+        if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]') {
+            $this->templateParameters['publicationWork'] = $publicationWorkDb;
+        }
+        $this->templateParameters['pluginApiUrl'] =
+            $apiBaseUrl . OptimetaCitationsPlugin::OPTIMETA_CITATIONS_API_ENDPOINT;
         $this->templateParameters['submissionId'] = $submissionId;
-        $this->templateParameters['citationsParsed'] = json_encode($this->pluginDao->getCitations($publication));
+        $this->templateParameters['citationsParsed'] =
+            json_encode($this->pluginDao->getCitations($latestPublication));
 
         $templateMgr->assign($this->templateParameters);
 
@@ -404,9 +416,10 @@ class OptimetaCitationsPlugin extends GenericPlugin
             $context->getData('urlPath'),
             '');
 
-        $publicationDao = DAORegistry::getDAO('PublicationDAO');
+//        $publicationDao = DAORegistry::getDAO('PublicationDAO');
         $submissionId = $request->getUserVar('submissionId');
-        $publication = $publicationDao->getById($submissionId);
+//        $publication = $publicationDao->getById($submissionId);
+        $publication = Repo::publication()->get($submissionId);
 
         $publicationWorkDb = $publication->getData(OptimetaCitationsPlugin::OPTIMETA_CITATIONS_PUBLICATION_WORK);
         if (!empty($publicationWorkDb) && $publicationWorkDb !== '[]') $this->templateParameters['publicationWork'] = $publicationWorkDb;

@@ -1,3 +1,12 @@
+{**
+ * templates/settings.tpl
+ *
+ * Copyright (c) 2021+ TIB Hannover
+ * Copyright (c) 2021+ Gazi Yucel
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * Settings form for the optimetaCitations plugin.
+ *}
 <script>
     $(function () {ldelim}
         $('#{$smarty.const.OPTIMETA_CITATIONS_PLUGIN_NAME}Settings').pkpHandler('$.pkp.controllers.form.AjaxFormHandler');
