@@ -179,7 +179,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
 
             // Is triggered only on these hooks
 //            Hook::add('Templates::Submission::SubmissionMetadataForm::AdditionalMetadata', array($this, 'submissionWizard'));
-            Hook::add('Template::Workflow::Publication', array($this, 'publicationTab'));
+            Hook::add('Template::Workflow', array($this, 'publicationTab'));
             Hook::add('Publication::edit', array($this, 'publicationSave'));
 
             // Is triggered only on the page defined in Handler method/class

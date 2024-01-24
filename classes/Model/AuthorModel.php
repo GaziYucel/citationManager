@@ -30,7 +30,7 @@ class AuthorModel
      *
      * @var string
      * @see
-     * @example "Jason Priem"
+     * @example "John Doe"
      */
     public string $display_name;
 
@@ -39,7 +39,7 @@ class AuthorModel
      *
      * @var string
      * @see
-     * @example "Jason"
+     * @example "John"
      */
     public string $given_name;
 
@@ -48,12 +48,12 @@ class AuthorModel
      *
      * @var string
      * @see
-     * @example "Priem"
+     * @example "Doe"
      */
     public string $family_name;
 
     /**
-     * The number of Works this this author has created.
+     * The number of Works this author has created.
      *
      * @var integer
      * @see

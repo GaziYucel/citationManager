@@ -24,7 +24,7 @@ msgid "plugins.generic.optimetaCitations.publicationStatement.description"
 msgstr "Add a publication statement that you would like to appear on every publication's landing page"
 
 msgid "plugins.generic.optimetaCitations.publication.label"
-msgstr "Referenties+"
+msgstr "Citation Manager"
 
 msgid "plugins.generic.optimetaCitations.deposit.button"
 msgstr "Deposit"
@@ -54,7 +54,7 @@ msgstr "Structured references/citations"
 msgid "plugins.generic.optimetaCitations.process.description"
 msgstr "Please use the Process button to structure and enrich the citations. <br/>"
 "After DOIs are extracted, additional metadata from external websites will be collected and displayed below.<br/>."
-"Submission of this metadata occurs automatically when this article is published and receives a DOI."
+"Submission of this metadata occurs automatically when this article is published and receives a DOI.<br/>"
 "Alternatively, metadata submission can be done manually using the Submit button."
 
 msgid "plugins.generic.optimetaCitations.process.question"

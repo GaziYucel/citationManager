@@ -25,7 +25,7 @@ msgstr "Fügen Sie eine Beschreibung der Publikation hinzu, die auf jeder Landin
 "Publikation erscheinen soll."
 
 msgid "plugins.generic.optimetaCitations.publication.label"
-msgstr "Literaturhinweise+"
+msgstr "Zitations-Manager"
 
 msgid "plugins.generic.optimetaCitations.deposit.button"
 msgstr "Übermitteln"
