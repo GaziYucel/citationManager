@@ -25,7 +25,7 @@ use APP\plugins\generic\optimetaCitations\classes\Db\CitationsExtendedDAO;
 use APP\plugins\generic\optimetaCitations\classes\Frontend\Article;
 use APP\plugins\generic\optimetaCitations\classes\Handler\PluginAPIHandler;
 use APP\plugins\generic\optimetaCitations\classes\Helpers\LogHelper;
-use APP\plugins\generic\optimetaCitations\classes\Helpers\ObjectHelper;
+use APP\plugins\generic\optimetaCitations\classes\Helpers\ClassHelper;
 use APP\template\TemplateManager;
 use PKP\core\APIRouter;
 use PKP\core\JSONMessage;
@@ -151,9 +151,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
             $objOpenAlex = new OpenAlex();
             $objDoi = new Doi();
 
-            error_log('$success && $this->getEnabled()');
-
-            $objectHelper = new ObjectHelper();
+            $objectHelper = new ClassHelper();
             $this->templateParameters = [
                 'customScript' => '',
                 'pluginStylesheetURL' => $request->getBaseUrl() . '/' . $this->getPluginPath() . '/css',
@@ -183,7 +181,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
             Hook::add('Publication::edit', array($this, 'publicationSave'));
 
             // Is triggered only on the page defined in Handler method/class
-//            Hook::add('Dispatcher::dispatch', array($this, 'apiHandler'));
+            Hook::add('Dispatcher::dispatch', array($this, 'apiHandler'));
 
             // Register callback to add text to registration page
 //            Hook::add('TemplateManager::display', array($this, 'handleTemplateDisplay'));
@@ -435,12 +433,15 @@ class OptimetaCitationsPlugin extends GenericPlugin
     /**
      * Execute API Handler
      * @param string $hookName
-     * @param PKPRequest $request
+     * @param array $args
      * @return bool
      */
-    public function apiHandler(string $hookName, PKPRequest $request): bool
+    public function apiHandler(string $hookName, array $args): bool
     {
         try {
+            /* @var PKPRequest $request */
+            $request = $args[0];
+
             $router = $request->getRouter();
             if ($router instanceof APIRouter
                 && str_contains(

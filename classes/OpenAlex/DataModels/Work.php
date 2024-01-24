@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/OpenAlex/Model/Work.php
+ * @file plugins/generic/optimetaCitations/OpenAlex/DataModels/Work.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,69 +12,69 @@
  * @brief Works are scholarly documents like journal articles, books, datasets, and theses.
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes\OpenAlex\Model;
+namespace APP\plugins\generic\optimetaCitations\classes\OpenAlex\DataModels;
 
 class Work
 {
     /**
      * The OpenAlex ID for the work.
      * 
-     * @var string
+     * @var ?string
      * @see
      * @example id: "https://openalex.org/W2741809807"
      */
-    public string $id;
+    public ?string $id;
 
     /**
      * The DOI for the work.
      * 
-     * @var string
+     * @var ?string
      * @see
      * @example doi: "https://doi.org/10.7717/peerj.4375"
      */
-    public string $doi;
+    public ?string $doi;
 
     /**
      * The title of this work.
      * 
-     * @var string
+     * @var ?string
      * @see
      * @example title: "The state of OA: a large-scale analysis of the prevalence and impact of Open Access articles",
      */
-    public string $title;
+    public ?string $title;
 
     /**
      * Exactly the same as Work.title. It's useful for Works to include a display_name property,
      * since all the other entities have one.
      * 
-     * @var string
+     * @var ?string
      * @see https://docs.openalex.org/about-the-data/work#title-1
      * @example display_name: "The state of OA: a large-scale analysis of the prevalence and impact of OA articles",
      */
-    public string $display_name;
+    public ?string $display_name;
 
     /**
      * The year this work was published.
      * 
-     * @var string int
+     * @var ?string int
      * @see
      * @example publication_year: 2018
      */
-    public string $publication_year;
+    public ?string $publication_year;
 
     /**
      * The day when this work was published, formatted as an ISO 8601 date.
      * 
-     * @var string
+     * @var ?string
      * @see https://en.wikipedia.org/wiki/ISO_8601
      * @example publication_date: "2018-02-13"
      */
-    public string $publication_date;
+    public ?string $publication_date;
 
     /**
      * All the external identifiers that we know about for this work. IDs are expressed as URIs whenever possible.
      * 
-     * @var string object
+     * @var ?array object
      * @see
      * @example ids: {
      *              openalex: "https://openalex.org/W2741809807",
@@ -83,12 +83,12 @@ class Work
      *              pmid: "https://pubmed.ncbi.nlm.nih.gov/29456894",
      *              pmcid: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5815332/" }
      */
-    public string $ids;
+    public ?array $ids;
 
     /**
      * A HostVenue object describing how and where this work is being hosted online.
      * 
-     * @var string object
+     * @var ?string object
      * @see https://docs.openalex.org/about-the-data/work#the-hostvenue-object
      * @example host_venue: {
      *              id: "https://openalex.org/V1983995261",
@@ -102,30 +102,30 @@ class Work
      *               version: null,
      *               license: null }
      */
-    public string $host_venue;
+    public ?string $host_venue;
 
     /**
      * The type or genre of the work.
      * 
-     * @var string
+     * @var ?string
      * @see https://api.crossref.org/types
      * @example type: "journal-article"
      */
-    public string $type;
+    public ?string $type;
 
     /**
      * Information about the access status of this work, as an OpenAccess object.
      * 
-     * @var string object
+     * @var ?array object
      * @see https://docs.openalex.org/about-the-data/work#the-openaccess-object
      * @example open_access: { is_oa: true, oa_status: "gold", oa_url: "https://peerj.com/articles/4375.pdf" },
      */
-    public string $open_access;
+    public ?array $open_access;
 
     /**
      * List of Authorships objects, each representing an author and their institution.
      * 
-     * @var string object (list)
+     * @var ?array object (list)
      * @see https://docs.openalex.org/about-the-data/work#the-authorship-object
      * @example authorships: [
      *      {
@@ -142,48 +142,48 @@ class Work
      *              type: "nonprofit" } ]
      *      }, ]
      */
-    public string $authorships;
+    public ?array $authorships;
 
     /**
      * The number of citations to this work. These are the times that other works have cited this work.
      * 
-     * @var string int
+     * @var ?string int
      * @see
      * @example cited_by_count: 382
      */
-    public string $cited_by_count;
+    public ?string $cited_by_count;
 
     /**
      * Old-timey bibliographic info for this work. This is mostly useful only in citation/reference contexts.
      * These are all strings because sometimes you'll get fun values like "Spring" and "Inside cover".
      * 
-     * @var string object
+     * @var ?array object
      * @see
      * @example biblio: { volume: "495", issue: "7442", first_page: "437", last_page: "440" }
      */
-    public string $biblio;
+    public ?array $biblio;
 
     /**
      * True if we know this work has been retracted. False if we don't know or not retracted.
      * 
-     * @var string bool
+     * @var ?string bool
      * @see
      * @example is_retracted: false
      */
-    public string $is_retracted;
+    public ?string $is_retracted;
 
     /**
      * True if we think this work is
-     * @var string bool
+     * @var ?string bool
      * @see https://en.wikipedia.org/wiki/Paratext
      * @example is_paratext: false
      */
-    public string $is_paratext;
+    public ?string $is_paratext;
 
     /**
      *  List of dehydrated Concepts objects
      * 
-     * @var string object (list)
+     * @var ?array object (list)
      * @see https://docs.openalex.org/about-the-data/concept
      * @example concepts: [
      *      {
@@ -194,13 +194,13 @@ class Work
      *          score: 0.459309
      *      }, ]
      */
-    public string $concepts;
+    public ?array $concepts;
 
     /**
      * List of MeSH tag objects. Only works found in PubMed have MeSH tags; for all other works, 
      * this is an empty list.
      * 
-     * @var string object (list)
+     * @var ?array object (list)
      * @see https://www.nlm.nih.gov/mesh/meshhome.html https://pubmed.ncbi.nlm.nih.gov/
      * @example mesh: [
      *      {
@@ -211,13 +211,13 @@ class Work
      *          is_major_topic: false
      *      }, ]
      */
-    public string $mesh;
+    public ?array $mesh;
 
     /**
      * List of HostVenue objects describing places this work lives. This work's primary hosting venue isn't 
      * in this list; it's at host_venue.
      * 
-     * @var string object (list)
+     * @var ?array object (list)
      * @see https://docs.openalex.org/about-the-data/work#the-hostvenue-object https://docs.openalex.org/about-the-data/work#host_venue
      * @example alternate_host_venues: [
      *      {
@@ -229,32 +229,32 @@ class Work
      *          version: "publishedVersion",
      *          license: "cc-by" }, ]
      */
-    public string $alternate_host_venues;
+    public ?array $alternate_host_venues;
 
     /**
      * OpenAlex IDs for works that this work cites. These are citations that go from this work out to another work.
      * 
-     * @var string object (list)
+     * @var ?array object (list)
      * @see https://docs.openalex.org/about-the-data#the-openalex-id
      * @example referenced_works: [ "https://openalex.org/W2753353163", "https://openalex.org/W2785823074" ]
      */
-    public string $referenced_works;
+    public ?array $referenced_works;
 
     /**
      * OpenAlex IDs for works related to this work.
      * 
-     * @var string object (list)
+     * @var ?array object (list)
      * @see https://docs.openalex.org/about-the-data#the-openalex-id
      * @example related_works: [ "https://openalex.org/W2753353163", "https://openalex.org/W2785823074" ]
      */
-    public string $related_works;
+    public ?array $related_works;
 
     /**
      * The abstract of the work, as an inverted index, which encodes information about the abstract's words and their
      * positions within the text. Like Microsoft Academic Graph, OpenAlex doesn't include plaintext abstracts
      * due to legal constraints.
      * 
-     * @var string object
+     * @var ?array object
      * @see https://en.wikipedia.org/wiki/Inverted_index https://docs.microsoft.com/en-us/academic-services/graph/
      * resources-faq#what-format-are-paper-abstracts-published-in
      * @example abstract_inverted_index: {
@@ -265,42 +265,42 @@ class Work
      *          Open: [ 4, 201 ],
      *          Access: [ 5 ], }
      */
-    public string $abstract_inverted_index;
+    public ?array $abstract_inverted_index;
 
     /**
      * Cited by api url
      * 
-     * @var string
+     * @var ?string
      * @see https://docs.openalex.org/about-the-data/work#cited_by_api_url
      * @example
      */
-    public string $cited_by_api_url;
+    public ?string $cited_by_api_url;
 
     /**
      * Counts by year
      * 
-     * @var string
+     * @var ?array
      * @see https://docs.openalex.org/about-the-data/work#counts_by_year
-     * @example
+     * @example counts_by_year: [ {... }, { ... } ]
      */
-    public string $counts_by_year;
+    public ?array $counts_by_year;
 
     /**
      * The last time anything in this Work object changed, expressed as an ISO 8601 date string. This date is
      * updated for any change at all, including increases in various counts.
      * 
-     * @var string
+     * @var ?string
      * @see https://en.wikipedia.org/wiki/ISO_8601
      * @example updated_date: "2022-01-02T00:22:35.180390"
      */
-    public string $updated_date;
+    public ?string $updated_date;
 
     /**
      * The date this Work object was created in the OpenAlex dataset, expressed as an ISO 8601 date string.
      * 
-     * @var string
+     * @var ?string
      * @see https://en.wikipedia.org/wiki/ISO_8601
      * @example created_date: "2017-08-08"
      */
-    public string $created_date;
+    public ?string $created_date;
 }

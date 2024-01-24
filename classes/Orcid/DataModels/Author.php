@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Orcid/Model/Author.php
+ * @file plugins/generic/optimetaCitations/classes/Orcid/DataModels/Author.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
@@ -12,7 +12,7 @@
  * @brief Authors are people who create works.
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes\Orcid\Model;
+namespace APP\plugins\generic\optimetaCitations\classes\Orcid\DataModels;
 
 class Author
 {

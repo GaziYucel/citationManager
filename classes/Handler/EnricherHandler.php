@@ -55,6 +55,8 @@ class EnricherHandler
                 if (property_exists($citation, $key)) $citation->$key = $value;
             }
 
+            error_log( '$citation->doi: ' . $citation->doi . '|' . '$citation->isProcessed: ' . $citation->isProcessed);
+
             // skip iteration if isProcessed or DOI empty
             if ($citation->isProcessed || empty($citation->doi)) {
                 $citations[] = (array)$citation;

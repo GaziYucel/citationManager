@@ -15,6 +15,7 @@
 namespace APP\plugins\generic\optimetaCitations\classes\Orcid;
 
 use APP\core\Application;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 

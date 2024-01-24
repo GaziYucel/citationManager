@@ -72,9 +72,7 @@ class PluginDAO
 
         if (empty($citations)) $citations = '[]';
 
-        $citationModel = new CitationModel();
-
-        return $citationModel->migrate($citations);
+        return $citationsExtendedDAO->migrateCitations($citations);
     }
 
     /**

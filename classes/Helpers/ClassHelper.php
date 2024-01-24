@@ -1,15 +1,15 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/classes/Helpers/ObjectHelper.php
+ * @file plugins/generic/optimetaCitations/classes/Helpers/ClassHelper.php
  *
  * Copyright (c) 2021+ TIB Hannover
  * Copyright (c) 2021+ Gazi Yucel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class ObjectHelper
+ * @class ClassHelper
  * @ingroup plugins_generic_optimetacitations
  *
- * @brief ObjectHelper.
+ * @brief ClassHelper.
  */
 
 namespace APP\plugins\generic\optimetaCitations\classes\Helpers;
@@ -17,7 +17,7 @@ namespace APP\plugins\generic\optimetaCitations\classes\Helpers;
 use ReflectionClass;
 use ReflectionProperty;
 
-class ObjectHelper
+class ClassHelper
 {
     /**
      * Get public properties of object
@@ -32,7 +32,10 @@ class ObjectHelper
 
         $objVars = [];
 
-        for ($i = 0; $i < count($properties); $i++) $objVars[$properties[$i]->name] = null;
+        for ($i = 0; $i < count($properties); $i++)
+            $objVars[$properties[$i]->name] = null;
+
+        error_log($reflect->getName() . '(objVars): ' . json_encode($objVars, JSON_UNESCAPED_SLASHES));
 
         return $objVars;
     }

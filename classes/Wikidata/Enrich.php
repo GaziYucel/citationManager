@@ -16,9 +16,9 @@ namespace APP\plugins\generic\optimetaCitations\classes\Wikidata;
 
 use APP\plugins\generic\optimetaCitations\classes\PID\Wikidata;
 use APP\plugins\generic\optimetaCitations\classes\Wikidata\Model\Property;
-use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
-use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\classes\DataModels\CitationModel;
 use APP\plugins\generic\optimetaCitations\classes\PID\Doi;
+use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
 class Enrich
 {

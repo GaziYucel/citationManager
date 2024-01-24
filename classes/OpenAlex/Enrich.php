@@ -14,9 +14,10 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\OpenAlex;
 
+use APP\plugins\generic\optimetaCitations\classes\Helpers\LogHelper;
 use APP\plugins\generic\optimetaCitations\classes\Model\AuthorModel;
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
-use APP\plugins\generic\optimetaCitations\classes\OpenAlex\Model\Work;
+use APP\plugins\generic\optimetaCitations\classes\OpenAlex\DataModels\Work;
 use APP\plugins\generic\optimetaCitations\classes\PID\OpenAlex;
 use APP\plugins\generic\optimetaCitations\classes\PID\Orcid;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
@@ -38,7 +39,7 @@ class Enrich
     {
         $this->plugin = $plugin;
 
-        $this->api = new Api($this->plugin, OptimetaCitationsPlugin::OPTIMETA_CITATIONS_OPENALEX_API_URL);
+        $this->api = new Api($this->plugin);
     }
 
     /**
@@ -54,6 +55,9 @@ class Enrich
 
         $openAlexWork = new Work();
         $openAlexArray = $this->api->getWork($doi);
+
+        LogHelper::logInfo('openAlex: ' . json_encode($openAlexArray, JSON_UNESCAPED_SLASHES));
+
         foreach ($openAlexArray as $key => $value) {
             if (property_exists($openAlexWork, $key)) {
                 $openAlexWork->$key = $value;

@@ -167,10 +167,6 @@
         optimetaCitationsApp.citations = [];
         optimetaCitationsApp.helper = [];
     }
-
-    <!-- custom scripts -->
-    {$customScript}
-    <!-- custom scripts -->
 </script>
 
 <tab v-if="supportsReferences" id="optimetaCitations"
@@ -180,9 +176,13 @@
         <table>
             <tr>
                 <td colspan="2">
-                    <label class="pkpFormFieldLabel">{translate key="plugins.generic.optimetaCitations.process.label"}</label>
+                    <label class="pkpFormFieldLabel">
+                        {translate key="plugins.generic.optimetaCitations.process.label"}
+                    </label>
                     <br/>
-                    <div class="pkpFormField__description">{translate key="plugins.generic.optimetaCitations.process.description"}</div>
+                    <div class="pkpFormField__description">
+                        {translate key="plugins.generic.optimetaCitations.process.description"}
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -376,10 +376,10 @@
     </div>
 
     <div>
-        <span style="display: none;">{{ components.{$smarty.const.OPTIMETA_CITATIONS_FORM_NAME}.fields[0]['value'] = optimetaCitationsApp.citationsJsonComputed }}</span>
-        <span style="display: none;">{{ components.{$smarty.const.OPTIMETA_CITATIONS_FORM_NAME}.fields[1]['value'] = optimetaCitationsApp.publicationWorkJsonComputed }}</span>
+        <span style="display: none;">{{ components.{OptimetaCitationsPlugin::OPTIMETA_CITATIONS_FORM_NAME}.fields[0]['value'] = optimetaCitationsApp.citationsJsonComputed }}</span>
+        <span style="display: none;">{{ components.{OptimetaCitationsPlugin::OPTIMETA_CITATIONS_FORM_NAME}.fields[1]['value'] = optimetaCitationsApp.publicationWorkJsonComputed }}</span>
         <span style="display: none;">{{ optimetaCitationsApp.publicationStatus = components.issueEntry.fields[0].publicationStatus }}</span>
-        <pkp-form v-bind="components.{$smarty.const.OPTIMETA_CITATIONS_FORM_NAME}" @set="set"/>
+        <pkp-form v-bind="components.{OptimetaCitationsPlugin::OPTIMETA_CITATIONS_FORM_NAME}" @set="set"/>
     </div>
 
 </tab>

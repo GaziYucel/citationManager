@@ -83,6 +83,7 @@ class Doi
         $doiListToRemove = [];
 
         foreach ($this->prefixInCorrect as $key) {
+            $doiListToRemove[] = $key . '' . $pid;
             $doiListToRemove[] = $key . '/' . $pid;
         }
 

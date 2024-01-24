@@ -15,15 +15,14 @@
 namespace APP\plugins\generic\optimetaCitations\classes\OpenCitations;
 
 use APP\journal\Journal;
-use APP\plugins\generic\optimetaCitations\classes\Log;
 use APP\publication\Publication;
 use APP\plugins\generic\optimetaCitations\classes\PID\Arxiv;
 use APP\plugins\generic\optimetaCitations\classes\PID\Doi;
 use APP\plugins\generic\optimetaCitations\classes\PID\Handle;
 use APP\plugins\generic\optimetaCitations\classes\PID\Orcid;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
-use APP\plugins\generic\optimetaCitations\classes\OpenCitations\Model\WorkCitation;
-use APP\plugins\generic\optimetaCitations\classes\OpenCitations\Model\WorkMetaData;
+use APP\plugins\generic\optimetaCitations\classes\OpenCitations\DataModels\WorkCitation;
+use APP\plugins\generic\optimetaCitations\classes\OpenCitations\DataModels\WorkMetaData;
 
 class Deposit
 {

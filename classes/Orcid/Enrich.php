@@ -15,7 +15,7 @@
 namespace APP\plugins\generic\optimetaCitations\classes\Orcid;
 
 use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
-use APP\plugins\generic\optimetaCitations\classes\Orcid\Model\Author;
+use APP\plugins\generic\optimetaCitations\classes\Orcid\DataModels\Author;
 use APP\plugins\generic\optimetaCitations\classes\PID\Orcid;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
@@ -35,7 +35,7 @@ class Enrich
     {
         $this->plugin = $plugin;
 
-        $this->api = new Api($this->plugin, OptimetaCitationsPlugin::OPTIMETA_CITATIONS_ORCID_API_URL);
+        $this->api = new Api($this->plugin);
     }
 
     /**

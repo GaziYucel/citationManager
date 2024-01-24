@@ -58,34 +58,40 @@ class ParserHandler
 
             // get data model and fill citation raw
             $citation = new CitationModel();
+
+            // citations raw text
             $citation->raw = $rowRaw;
 
-            // clean single citation
-            $citation->raw = $this->cleanCitation($citation->raw);
-
-            // remove numbers from the beginning of each citation
-            $citation->raw = $this->removeNumberPrefixFromString($citation->raw);
+            // clean citation
+            $rowRaw = $this->cleanCitation($rowRaw);
 
             // doi
             $objDoi = new Doi();
-            $citation->doi = $objDoi->extractFromString($citation->raw);
-            $citation->raw = $objDoi->normalize($citation->raw, $citation->doi);
+            $citation->doi = $objDoi->extractFromString($rowRaw);
+
+            // remove doi
+            $rowRaw =
+                str_replace(
+                    $objDoi->addPrefixToPid($citation->doi),
+                    '',
+                    $objDoi->normalize($rowRaw, $citation->doi)
+                );
 
             // parse url (after parsing doi)
             $objUrl = new Url();
-            $citation->url = $objUrl->extractFromString(str_replace($citation->doi, '', $citation->raw));
+            $citation->url = $objUrl->extractFromString($rowRaw);
 
-            // handle pid
+            // handle
             $objHandle = new Handle(); //todo: add pid to citation/work model
             $citation->url = str_replace($objHandle->prefixInCorrect, $objHandle->prefix, $citation->url);
 
-            // arxiv pid
+            // arxiv
             $objArxiv = new Arxiv(); //todo: add pid to citation/work model
             $citation->url = str_replace($objArxiv->prefixInCorrect, $objArxiv->prefix, $citation->url);
 
             // urn
             $objUrn = new Urn();
-            $citation->urn = $objUrn->getUrnParsed($citation->raw);
+            $citation->urn = $objUrn->getUrnParsed($rowRaw);
 
             // push to citations parsed array
             $citations[] = (array)$citation;
@@ -137,6 +143,9 @@ class ParserHandler
         // normalize whitespace
         $citation = $this->normalizeWhiteSpace($citation);
 
+        // remove number prefix
+        $citation = $this->removeNumberPrefixFromString($citation);
+
         return $citation;
     }
 
@@ -146,7 +155,7 @@ class ParserHandler
      * @param string $text
      * @return string
      */
-    public function removeNumberPrefixFromString(string $text): string
+    private function removeNumberPrefixFromString(string $text): string
     {
         if (empty($text)) {
             return '';
@@ -163,7 +172,7 @@ class ParserHandler
      * @param string $text
      * @return string
      */
-    public static function normalizeWhiteSpace(string $text): string
+    private function normalizeWhiteSpace(string $text): string
     {
         if (empty($text)) {
             return '';
@@ -180,7 +189,7 @@ class ParserHandler
      * @param string $text
      * @return string
      */
-    public static function normalizeLineEndings(string $text): string
+    private function normalizeLineEndings(string $text): string
     {
         if (empty($text)) {
             return '';
