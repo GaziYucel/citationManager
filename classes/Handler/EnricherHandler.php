@@ -73,7 +73,7 @@ class EnricherHandler
 
             // Orcid
             $objOrcid = new \APP\plugins\generic\optimetaCitations\classes\Orcid\Enrich($this->plugin);
-            $citation = $objOrcid->getEnriched($citation);
+//            $citation = $objOrcid->getEnriched($citation);
 
             // push to citations enriched array
             $citations[] = (array)$citation;

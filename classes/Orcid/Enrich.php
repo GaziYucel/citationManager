@@ -35,7 +35,7 @@ class Enrich
     {
         $this->plugin = $plugin;
 
-        $this->api = new Api($this->plugin);
+        $this->api = new Api();
     }
 
     /**
@@ -85,7 +85,7 @@ class Enrich
 
         if (empty($orcid)) return $author;
 
-        $orcidObject = $this->api->getObjectFromApi($orcid);
+        $orcidObject = $this->api->getFromApi($orcid);
 
         if(empty($orcidObject)) return $author;
 

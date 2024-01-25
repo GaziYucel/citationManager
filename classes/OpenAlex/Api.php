@@ -17,14 +17,13 @@ namespace APP\plugins\generic\optimetaCitations\classes\OpenAlex;
 use APP\core\Application;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
 class Api
 {
     /**
-     * @var OptimetaCitationsPlugin
+     * @var string
      */
-    public OptimetaCitationsPlugin $plugin;
+    public string $userAgent = OPTIMETA_CITATIONS_PLUGIN_NAME;
 
     /**
      * @var string
@@ -37,16 +36,20 @@ class Api
     public object $httpClient;
 
 
-    public function __construct(OptimetaCitationsPlugin $plugin)
+    public function __construct(?string $url = '')
     {
-        $this->plugin = $plugin;
+        $this->userAgent = Application::get()->getName() . '/' . $this->userAgent;
 
-        $this->httpClient = new Client([
-            'headers' => [
-                'User-Agent' => Application::get()->getName() . '/' . $this->plugin->getDisplayName(),
-                'Accept' => 'application/json'],
-            'verify' => false
-        ]);
+        if (!empty($url)) $this->url = $url;
+
+        $this->httpClient = new Client(
+            [
+                'headers' => [
+                    'User-Agent' => $this->userAgent,
+                    'Accept' => 'application/json'],
+                'verify' => false
+            ]
+        );
     }
 
     /**
@@ -58,11 +61,18 @@ class Api
     public function getWork(string $doi): array
     {
         try {
-            $response = $this->httpClient->request('GET', $this->url . '/' . 'works/doi:' . $doi);
+            $response = $this->httpClient->request(
+                'GET',
+                $this->url . '/' . 'works/doi:' . $doi
+            );
 
             if ($response->getStatusCode() != 200) return [];
 
-            return json_decode($response->getBody(), true);
+            $result = json_decode($response->getBody(), true);
+            if (empty($result) || json_last_error() !== JSON_ERROR_NONE) return [];
+
+            return $result;
+
         } catch (GuzzleException|\Exception $ex) {
             error_log($ex->getMessage());
         }

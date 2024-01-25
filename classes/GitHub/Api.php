@@ -17,14 +17,13 @@ namespace APP\plugins\generic\optimetaCitations\classes\GitHub;
 use APP\core\Application;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
 class Api
 {
     /**
-     * @var OptimetaCitationsPlugin
+     * @var string
      */
-    public OptimetaCitationsPlugin $plugin;
+    public string $userAgent = OPTIMETA_CITATIONS_PLUGIN_NAME;
 
     /**
      * @var string
@@ -39,29 +38,31 @@ class Api
     /**
      * @var string
      */
-    public string $token;
-
-    public string $urlIssues = '/{owner}/{repository}/issues';
+    public string $owner;
 
     /**
      * @var string
      */
-    public string $owner;
+    public string $token;
+
+    /**
+     * @var string
+     */
+    public string $urlIssuesSuffix = '{owner}/{repository}/issues';
 
     /**
      * @var string
      */
     public string $repository;
 
-    public function __construct(OptimetaCitationsPlugin $plugin, string $owner, string $repository, string $token)
+    public function __construct(string $owner, string $token, string $repository, ?string $url = '')
     {
-        $this->plugin = $plugin;
+        $this->userAgent = Application::get()->getName() . '/' . $this->userAgent;
 
         $this->owner = $owner;
-
-        $this->repository = $repository;
-
         $this->token = $token;
+        $this->repository = $repository;
+        if (!empty($url)) $this->url = $url;
 
         $this->httpClient = new Client();
     }
@@ -76,19 +77,23 @@ class Api
     {
         $issueId = 0;
 
-        if (empty($this->owner) || empty($this->repository) || empty($this->token) || empty($title) || empty($body)) {
+        if (empty($this->owner) || empty($this->token)
+            || empty($this->repository) || empty($title) || empty($body)) {
             return $issueId;
         }
 
-        $url = strtr($this->url . $this->urlIssues, [
+        $urlIssues = strtr(
+            $this->url . '/' . $this->urlIssuesSuffix,
+            [
                 '{owner}' => $this->owner,
                 '{repository}' => $this->repository
-            ]);
+            ]
+        );
 
         try {
             $response = $this->httpClient->request(
                 'POST',
-                $this->url,
+                $urlIssues,
                 [
                     'headers' => [
                         'User-Agent' => Application::get()->getName() . '/' . $this->plugin->getDisplayName(),
@@ -112,6 +117,7 @@ class Api
 
     /**
      * Get issue id from response
+     *
      * @param $response
      * @return int
      */

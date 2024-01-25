@@ -39,7 +39,7 @@ class Enrich
     {
         $this->plugin = $plugin;
 
-        $this->api = new Api($this->plugin);
+        $this->api = new Api();
     }
 
     /**

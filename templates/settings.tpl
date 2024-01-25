@@ -51,6 +51,7 @@
         <p>
             {fbvElement
             type="text"
+            password=true
             id="{OptimetaCitationsPlugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN}"
             value=${OptimetaCitationsPlugin::OPTIMETA_CITATIONS_OPEN_CITATIONS_TOKEN}
             label="plugins.generic.optimetaCitations.settings.open_citations_token"
@@ -59,9 +60,9 @@
             }
         </p>
     {/fbvFormSection}
-    <!-- OpenCitations -->
+        <!-- OpenCitations -->
 
-    <!-- Wikidata -->
+        <!-- Wikidata -->
     {fbvFormSection label="plugins.generic.optimetaCitations.settings.wikidata_title"}
         <p>
             {fbvElement
@@ -76,6 +77,7 @@
         <p>
             {fbvElement
             type="text"
+            password=true
             id="{OptimetaCitationsPlugin::OPTIMETA_CITATIONS_WIKIDATA_PASSWORD}"
             value=${OptimetaCitationsPlugin::OPTIMETA_CITATIONS_WIKIDATA_PASSWORD}
             label="plugins.generic.optimetaCitations.settings.wikidata_password"
@@ -84,9 +86,9 @@
             }
         </p>
     {/fbvFormSection}
-    <!-- Wikidata -->
+        <!-- Wikidata -->
 
-    <!-- Show at Front -->
+        <!-- Show at Front -->
     {fbvFormSection title="plugins.generic.optimetaCitations.settings.show_structured_frontend.title" list="true"}
     {fbvElement
     type="checkbox"
@@ -97,7 +99,7 @@
     checked=${OptimetaCitationsPlugin::OPTIMETA_CITATIONS_FRONTEND_SHOW_STRUCTURED}
     }
     {/fbvFormSection}
-    <!-- Show at Front -->
+        <!-- Show at Front -->
 
         <!-- Show at Front -->
     {fbvFormSection title="plugins.generic.optimetaCitations.settings.is_production_environment.title" list="true"}

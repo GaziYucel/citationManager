@@ -15,18 +15,17 @@
 namespace APP\plugins\generic\optimetaCitations\classes\Wikidata;
 
 use APP\core\Application;
-use APP\plugins\generic\optimetaCitations\classes\Log;
+use APP\plugins\generic\optimetaCitations\classes\Helpers\LogHelper;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
 class Api
 {
     /**
-     * @var OptimetaCitationsPlugin
+     * @var string
      */
-    public OptimetaCitationsPlugin $plugin;
+    public string $userAgent = OPTIMETA_CITATIONS_PLUGIN_NAME;
 
     /**
      * @var string
@@ -75,20 +74,23 @@ class Api
      */
     public int $maxLoginAttempts = 3;
 
-    function __construct(OptimetaCitationsPlugin $plugin, ?string $username = '', ?string $password = '')
+    function __construct(?string $username = '', ?string $password = '', ?string $url = '')
     {
-        $this->plugin = $plugin;
+        $this->userAgent = Application::get()->getName() . '/' . $this->userAgent;
 
         if (!empty($username)) $this->username = $username;
-
         if (!empty($password)) $this->password = $password;
+        if (!empty($url)) $this->url = $url;
 
-        $this->httpClient = new Client([
-            'headers' => [
-                'User-Agent' => Application::get()->getName() . '/' . $this->plugin->getDisplayName(),
-                'Accept' => 'application/json'],
-            'verify' => false,
-            'cookies' => true]);
+        $this->httpClient = new Client(
+            [
+                'headers' => [
+                    'User-Agent' => $this->userAgent,
+                    'Accept' => 'application/json'],
+                'verify' => false,
+                'cookies' => true
+            ]
+        );
 
         // login if username/password provided; else proceed anonymously
         if (!empty($this->username) && !empty($this->password)) {
@@ -113,7 +115,7 @@ class Api
             'lgpassword' => $this->password,
             'lgtoken' => $this->loginToken];
 
-        $response = json_decode($this->actionPost($action, $query, $form), true);
+        $response = $this->actionPost($action, $query, $form);
 
         if (empty($response)) return false;
 
@@ -155,7 +157,7 @@ class Api
             'meta' => 'tokens',
             'type' => 'login'];
 
-        $response = json_decode($this->actionGet($action, $query), true);
+        $response = $this->actionGet($action, $query);
 
         if (empty($response)) return '';
 
@@ -177,7 +179,7 @@ class Api
             'meta' => 'tokens',
             'type' => 'csrf'];
 
-        $response = json_decode($this->actionGet($action, $query), true);
+        $response = $this->actionGet($action, $query);
 
         if (empty($response)) return '';
 
@@ -192,24 +194,39 @@ class Api
      *
      * @param string $action
      * @param array|null $query
-     * @return string
+     * @return array
      */
-    public function actionGet(string $action, ?array $query = null): string
+    public function actionGet(string $action, ?array $query = null): array
     {
         $query['action'] = $action;
         $query['format'] = 'json';
         $query['formatversion'] = '2';
 
         try {
-            $response = $this->httpClient->request('GET', $this->url . '?' . http_build_query($query));
+            $response = $this->httpClient->request(
+                'GET',
+                $this->url . '?' . http_build_query($query)
+            );
 
-            if (!empty($response->getBody())) return $response->getBody();
+//            LogHelper::logInfo(
+//                '[location: Wikidata::API::actionGet]' .
+//                '[statusCode: ' . $response->getStatusCode() . ']' .
+//                '[userAgent: ' . $this->userAgent . ']' .
+//                '[url: ' . $this->url . '?' . http_build_query($query) . ']'
+//            );
+
+            if ($response->getStatusCode() != 200) return [];
+
+            $result = json_decode($response->getBody(), true);
+            if (empty($result) || json_last_error() !== JSON_ERROR_NONE) return [];
+
+            return $result;
 
         } catch (GuzzleException|Exception $ex) {
             error_log($ex->getMessage());
         }
 
-        return '';
+        return [];
     }
 
     /**
@@ -218,9 +235,9 @@ class Api
      * @param string $action
      * @param array|null $query
      * @param array|null $form
-     * @return string
+     * @return array
      */
-    public function actionPost(string $action, ?array $query = null, ?array $form = null): string
+    public function actionPost(string $action, ?array $query = null, ?array $form = null): array
     {
         $query['action'] = $action;
         $query['format'] = 'json';
@@ -231,17 +248,32 @@ class Api
         try {
             $response = $this->httpClient->request(
                 'POST',
-                $this->url . '?' . http_build_query($query), [
-                'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
-                'form_params' => $form]);
+                $this->url . '?' . http_build_query($query),
+                [
+                    'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
+                    'form_params' => $form
+                ]
+            );
 
-            if (!empty($response->getBody())) return $response->getBody();
+//            LogHelper::logInfo(
+//                '[location: Wikidata::API::actionPost]' .
+//                '[statusCode: ' . $response->getStatusCode() . ']' .
+//                '[userAgent: ' . $this->userAgent . ']' .
+//                '[url: ' . $this->url . '?' . http_build_query($query) . ']'
+//            );
+
+            if ($response->getStatusCode() != 200) return [];
+
+            $result = json_decode($response->getBody(), true);
+            if (empty($result) || json_last_error() !== JSON_ERROR_NONE) return [];
+
+            return $result;
 
         } catch (GuzzleException|Exception $ex) {
             error_log($ex->getMessage());
         }
 
-        return '';
+        return [];
     }
 
 }

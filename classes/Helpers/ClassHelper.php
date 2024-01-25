@@ -32,10 +32,12 @@ class ClassHelper
 
         $objVars = [];
 
-        for ($i = 0; $i < count($properties); $i++)
-            $objVars[$properties[$i]->name] = null;
+        for ($i = 0; $i < count($properties); $i++) $objVars[$properties[$i]->name] = null;
 
-        error_log($reflect->getName() . '(objVars): ' . json_encode($objVars, JSON_UNESCAPED_SLASHES));
+//        LogHelper::logInfo(
+//            'ClassHelper->getObjectProperties' .
+//            '(' . $reflect->getName() . '): ' .
+//            json_encode($objVars, JSON_UNESCAPED_SLASHES));
 
         return $objVars;
     }
@@ -60,6 +62,11 @@ class ClassHelper
                 $objVars[$properties[$i]->name] = null;
             }
         }
+
+//        LogHelper::logInfo(
+//            'ClassHelper->getObjectPropertiesWithValues' .
+//            '(' . $reflect->getName() . '): ' .
+//            json_encode($objVars, JSON_UNESCAPED_SLASHES));
 
         return $objVars;
     }

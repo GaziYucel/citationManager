@@ -14,6 +14,7 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Wikidata;
 
+use APP\plugins\generic\optimetaCitations\classes\Helpers\LogHelper;
 use APP\plugins\generic\optimetaCitations\classes\PID\Wikidata;
 use APP\plugins\generic\optimetaCitations\classes\Wikidata\DataModels\Property;
 use APP\plugins\generic\optimetaCitations\classes\DataModels\CitationModel;
@@ -47,12 +48,18 @@ class Enrich
     {
         $this->plugin = $plugin;
 
-        $this->api = new Api($this->plugin);
+        $username = $this->plugin->getSetting($this->plugin->getCurrentContextId(),
+            OptimetaCitationsPlugin::OPTIMETA_CITATIONS_WIKIDATA_USERNAME);
+
+        $password = $this->plugin->getSetting($this->plugin->getCurrentContextId(),
+            OptimetaCitationsPlugin::OPTIMETA_CITATIONS_WIKIDATA_PASSWORD);
+
+        $this->api = new Api($username, $password);
 
         $isProduction = false;
         if ($this->plugin->getSetting(
-            $this->plugin->getCurrentContextId(),
-            OptimetaCitationsPlugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
+                $this->plugin->getCurrentContextId(),
+                OptimetaCitationsPlugin::OPTIMETA_CITATIONS_IS_PRODUCTION_KEY) === 'true') {
             $isProduction = true;
         }
 
@@ -72,6 +79,8 @@ class Enrich
 
         $citation->wikidata_qid = $this->getQid($doi);
 
+//        error_log('Wikidata::Enrich::getEnriched: ' . $doi);
+
         $objWikidata = new Wikidata();
         $citation->wikidata_url = $objWikidata->addPrefixToPid($citation->wikidata_qid);
 
@@ -86,6 +95,8 @@ class Enrich
      */
     public function getQid(string $doi): string
     {
+        error_log('Wikidata::Enrich::getQid: ' . $doi);
+
         if (empty($doi)) return '';
 
         $action = 'query';
@@ -95,19 +106,24 @@ class Enrich
             "srsearch" => $doi,
             "srlimit" => "2"];
 
-        $response = json_decode($this->api->actionGet($action, $query), true);
-
-        if (empty($response) || $response['query']['search']) return '';
-
+        $response = $this->api->actionGet($action, $query);
+        if (empty($response) || empty($response['query']['search'])) return '';
 
         $qids = [];
-        foreach($response['query']['search'] as $index => $item) {
+        foreach ($response['query']['search'] as $index => $item) {
             if (!empty($item['title'])) $qids[] = $item['title'];
         }
 
         return $this->checkAndReturnCorrectQid($qids, $doi);
     }
 
+    /**
+     * Check received qid's with doi and return correct qid
+     *
+     * @param array $qids
+     * @param string $doi
+     * @return string
+     */
     private function checkAndReturnCorrectQid(array $qids, string $doi): string
     {
         if (empty($qids) || empty($doi)) return false;
@@ -115,11 +131,11 @@ class Enrich
         $action = 'wbgetentities';
         $query = ["ids" => implode('|', $qids)];
 
-        $response = json_decode($this->api->actionGet($action, $query), true);
+        $response = $this->api->actionGet($action, $query);
 
         if (empty($response) || empty($response['entities'])) return '';
 
-        foreach($response['entities'] as $qid => $item) {
+        foreach ($response['entities'] as $qid => $item) {
             if (strtolower($doi) === strtolower($this->getDoiFromItem($item))) return $qid;
         }
 

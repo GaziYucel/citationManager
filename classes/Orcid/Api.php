@@ -15,16 +15,16 @@
 namespace APP\plugins\generic\optimetaCitations\classes\Orcid;
 
 use APP\core\Application;
+use APP\plugins\generic\optimetaCitations\classes\Helpers\LogHelper;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
 class Api
 {
     /**
-     * @var OptimetaCitationsPlugin
+     * @var string
      */
-    public OptimetaCitationsPlugin $plugin;
+    public string $userAgent = OPTIMETA_CITATIONS_PLUGIN_NAME;
 
     /**
      * @var string
@@ -36,15 +36,19 @@ class Api
      */
     public Client $httpClient;
 
-    function __construct(OptimetaCitationsPlugin $plugin)
+    function __construct(?string $url = '')
     {
-        $this->plugin = $plugin;
+        $this->userAgent = Application::get()->getName() . '/' . $this->userAgent;
 
-        $this->httpClient = new Client([
-            'headers' => [
-                'User-Agent' => Application::get()->getName() . '/' . $this->plugin->getDisplayName(),
-                'Accept' => 'application/json'],
-            'verify' => false]);
+        $this->httpClient = new Client(
+            [
+                'headers' => [
+                    'User-Agent' => $this->userAgent,
+                    'Accept' => 'application/json'
+                ],
+                'verify' => false
+            ]
+        );
     }
 
     /**
@@ -53,22 +57,31 @@ class Api
      * @param string $orcid
      * @return array
      */
-    public function getObjectFromApi(string $orcid): array
+    public function getFromApi(string $orcid): array
     {
         try {
-            $response = $this->httpClient->request('GET', $this->url . '/' . $orcid);
+            $response = $this->httpClient->request(
+                'GET',
+                $this->url . '/' . $orcid);
+
+            LogHelper::logInfo(
+                '[statusCode: ' . $response->getStatusCode() . ']' .
+                '[userAgent: ' . $this->userAgent . ']' .
+                '[url: ' . $this->url . '/' . $orcid . ']' .
+                '[response: ' . json_encode($response, JSON_UNESCAPED_SLASHES) . ']'
+            );
 
             if ($response->getStatusCode() != 200) return [];
 
-            $orcidObject = json_decode($response->getBody(), true);
+            $result = json_decode($response->getBody(), true);
+            if (empty($result) || json_last_error() !== JSON_ERROR_NONE) return [];
 
-            if (empty($orcidObject) || json_last_error() !== JSON_ERROR_NONE) return [];
+            return $result;
 
-            return $orcidObject;
         } catch (GuzzleException|\Exception $ex) {
             error_log($ex->getMessage());
         }
 
-        return [];
+        return '{}';
     }
 }

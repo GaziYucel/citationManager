@@ -40,6 +40,8 @@ class DepositorTask extends ScheduledTask
      */
     public function executeActions(): bool
     {
+        return false; // todo: disabled, do something useful
+
         $plugin = $this->plugin;
         if (!$plugin->getEnabled()) {
             $this->addExecutionLogEntry(
