@@ -15,8 +15,8 @@
 namespace APP\plugins\generic\optimetaCitations\classes\OpenAlex;
 
 use APP\plugins\generic\optimetaCitations\classes\Helpers\LogHelper;
-use APP\plugins\generic\optimetaCitations\classes\Model\AuthorModel;
-use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\classes\DataModels\AuthorModel;
+use APP\plugins\generic\optimetaCitations\classes\DataModels\CitationModel;
 use APP\plugins\generic\optimetaCitations\classes\OpenAlex\DataModels\Work;
 use APP\plugins\generic\optimetaCitations\classes\PID\OpenAlex;
 use APP\plugins\generic\optimetaCitations\classes\PID\Orcid;

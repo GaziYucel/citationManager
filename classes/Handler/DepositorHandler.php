@@ -17,7 +17,7 @@ namespace APP\plugins\generic\optimetaCitations\classes\Handler;
 use APP\core\Application;
 use APP\core\Services;
 use APP\plugins\generic\optimetaCitations\classes\Deposit\Wikidata;
-use APP\plugins\generic\optimetaCitations\classes\Model\WorkModel;
+use APP\plugins\generic\optimetaCitations\classes\DataModels\WorkModel;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 use APP\submission\Submission;
 use Exception;

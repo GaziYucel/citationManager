@@ -14,7 +14,7 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Orcid;
 
-use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\classes\DataModels\CitationModel;
 use APP\plugins\generic\optimetaCitations\classes\Orcid\DataModels\Author;
 use APP\plugins\generic\optimetaCitations\classes\PID\Orcid;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;

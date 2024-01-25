@@ -14,7 +14,7 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Db;
 
-use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\classes\DataModels\CitationModel;
 use PKP\db\DAO;
 use PKP\db\DAOResultFactory;
 

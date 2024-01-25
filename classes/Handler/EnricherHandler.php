@@ -14,7 +14,7 @@
 
 namespace APP\plugins\generic\optimetaCitations\classes\Handler;
 
-use APP\plugins\generic\optimetaCitations\classes\Model\CitationModel;
+use APP\plugins\generic\optimetaCitations\classes\DataModels\CitationModel;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;
 
 class EnricherHandler

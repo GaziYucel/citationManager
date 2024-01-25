@@ -15,7 +15,7 @@
 namespace APP\plugins\generic\optimetaCitations\classes\Wikidata;
 
 use APP\plugins\generic\optimetaCitations\classes\PID\Wikidata;
-use APP\plugins\generic\optimetaCitations\classes\Wikidata\Model\Property;
+use APP\plugins\generic\optimetaCitations\classes\Wikidata\DataModels\Property;
 use APP\plugins\generic\optimetaCitations\classes\DataModels\CitationModel;
 use APP\plugins\generic\optimetaCitations\classes\PID\Doi;
 use APP\plugins\generic\optimetaCitations\OptimetaCitationsPlugin;

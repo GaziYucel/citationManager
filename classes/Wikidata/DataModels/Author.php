@@ -12,7 +12,7 @@
  * @brief Authors are people who create works.
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes\Wikidata\Model;
+namespace APP\plugins\generic\optimetaCitations\classes\Wikidata\DataModels;
 
 class Author
 {

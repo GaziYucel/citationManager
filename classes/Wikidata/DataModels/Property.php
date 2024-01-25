@@ -12,7 +12,7 @@
  * @brief Property on Wikidata.
  */
 
-namespace APP\plugins\generic\optimetaCitations\classes\Wikidata\Model;
+namespace APP\plugins\generic\optimetaCitations\classes\Wikidata\DataModels;
 
 class Property
 {
