@@ -1,0 +1,142 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-09-01T23:59:59+00:00\n"
+"PO-Revision-Date: 2022-07-01T23:59:59+00:00\n"
+"Language: \n"
+
+msgid "plugins.generic.optimetaCitations.displayName"
+msgstr "Optimeta Zitations-Plugin"
+
+msgid "plugins.generic.optimetaCitations.description"
+msgstr "Optimeta Zitations-Plugin"
+
+msgid "plugins.generic.optimetaCitations.publicationStatement"
+msgstr "Veröffentlichungserklärung"
+
+msgid "plugins.generic.optimetaCitations.publicationStatement.description"
+msgstr "Fügen Sie eine Beschreibung der Publikation hinzu, die auf jeder Landing Page der "
+"Publikation erscheinen soll."
+
+msgid "plugins.generic.optimetaCitations.publication.label"
+msgstr "Zitations-Manager"
+
+msgid "plugins.generic.optimetaCitations.deposit.button"
+msgstr "Übermitteln"
+
+msgid "plugins.generic.optimetaCitations.deposit.question"
+msgstr "Sind Sie sich sicher, dass Sie die Zitationen an die oben genannten Websites übermitteln wollen?"
+
+msgid "plugins.generic.optimetaCitations.deposit.message.not_published"
+msgstr "Die Publikation muss einer Ausgabe zugeordnet werden, benötigt einen DOI und muss veröffentlicht "
+"werden, bevor eine Übermittlung an die Websites möglich ist."
+
+msgid "plugins.generic.optimetaCitations.clear.button"
+msgstr "Löschen"
+
+msgid "plugins.generic.optimetaCitations.clear.question"
+msgstr "Die strukturierten Zitationen werden entfernt, wenn Sie auf OK klicken. Sind Sie sich sicher?"
+
+msgid "plugins.generic.optimetaCitations.citations.empty.description"
+msgstr "Es sind keine strukturierten Zitationen vorhanden. Bitte klicken Sie auf den oben stehenden "
+"Button \"Verarbeiten\", um die Zitationen zu strukturieren und anzureichern."
+
+msgid "plugins.generic.optimetaCitations.process.button"
+msgstr "Verarbeiten"
+
+msgid "plugins.generic.optimetaCitations.process.label"
+msgstr "Strukturierte Literaturhinweise/Zitationen"
+
+msgid "plugins.generic.optimetaCitations.process.description"
+msgstr "Bitte benutzen Sie den Button \"Verarbeiten\", um die Zitationen zu strukturieren und anzureichern.<br/>"
+"Nach der Extraktion der DOIs werden zusätzliche Metadaten von externen Websites erfasst und unten angezeigt.<br/>"
+"Die Übermittlung dieser Metadaten erfolgt automatisch, wenn dieser Beitrag veröffentlicht wird und einen DOI erhält."
+"Alternativ kann die Metadatenübermittlung manuell über den Button \"Übermitteln\" erfolgen."
+
+msgid "plugins.generic.optimetaCitations.process.question"
+msgstr "Die strukturierten Zitationen werden überschrieben, wenn Sie auf OK klicken. Alle Ihre Änderungen gehen "
+"dabei verloren. Sind Sie sich sicher?"
+
+msgid "plugins.generic.optimetaCitations.author.add.button"
+msgstr "Autor hinzufügen"
+
+msgid "plugins.generic.optimetaCitations.author.remove.question"
+msgstr "Sind Sie sich sicher, dass Sie diesen Autor löschen wollen?"
+
+msgid "plugins.generic.optimetaCitations.publication.success"
+msgstr "Die Zitationen wurden aktualisiert."
+
+msgid "plugins.generic.optimetaCitations.settings.description"
+msgstr "Geben Sie Ihre Authentifizierungsinformationen für Open-Access-Websites ein, auf denen Sie "
+"Zitationen hinterlegen möchten."
+
+msgid "plugins.generic.optimetaCitations.settings.form.saved"
+msgstr "Einstellungen erfolgreich gespeichert"
+
+msgid "plugins.generic.optimetaCitations.settings.wikidata_title"
+msgstr "Wikidata"
+
+msgid "plugins.generic.optimetaCitations.settings.wikidata_username"
+msgstr "Wikidata Benutzername"
+
+msgid "plugins.generic.optimetaCitations.settings.wikidata_password"
+msgstr "Wikidata Passwort"
+
+msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url"
+msgstr "Wikidata API URL"
+
+msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url_test"
+msgstr "test (https://test.wikidata.org/w/api.php)"
+
+msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url_prod"
+msgstr "production (https://www.wikidata.org/w/api.php)"
+
+msgid "plugins.generic.optimetaCitations.settings.open_citations_title"
+msgstr "Open Citations CROCI "
+"<a href='https://github.com/TIBHannover/optimetaCitations/blob/main/README.md#registering-for-opencitationsorg-croci' "
+"target='_blank'><i class='fa fa-question-circle' aria-hidden='true'></i></a>"
+
+msgid "plugins.generic.optimetaCitations.settings.open_citations_owner"
+msgstr "Github-Besitzer für OpenCitations-Deposits"
+
+msgid "plugins.generic.optimetaCitations.settings.open_citations_repository"
+msgstr "Github-Repository-Name für OpenCitations-Deposits"
+
+msgid "plugins.generic.optimetaCitations.settings.open_citations_token"
+msgstr "Github Token für OpenCitations-Deposits"
+
+msgid "plugins.generic.optimetaCitations.settings.test.button"
+msgstr "Einstellungen testen"
+
+msgid "plugins.generic.optimetaCitations.not_implemented"
+msgstr "Diese Funktion ist noch nicht implementiert."
+
+msgid "plugins.generic.optimetaCitations.settings.initialise.button"
+msgstr "Plugin initialisieren"
+
+msgid "plugins.generic.optimetaCitations.settings.initialise.notification"
+msgstr "Initialisierung des Plugins war erfolgreich"
+
+msgid "plugins.generic.optimetaCitations.settings.deposit.button"
+msgstr "Publikation übermitteln"
+
+msgid "plugins.generic.optimetaCitations.settings.deposit.notification"
+msgstr "Alle veröffentlichten Publikationen sind übermittelt."
+
+msgid "plugins.generic.optimetaCitations.settings.show_structured_frontend.title"
+msgstr "Whether show or hide the structured citations at front."
+
+msgid "plugins.generic.optimetaCitations.settings.show_structured_frontend.checkbox"
+msgstr "If checked, the structured citations will be shown."
+
+msgid "plugins.generic.optimetaCitations.settings.is_production_environment.title"
+msgstr "Is this a production instance?"
+
+msgid "plugins.generic.optimetaCitations.settings.is_production_environment.checkbox"
+msgstr "If checked, this installation is assumed a production environment."

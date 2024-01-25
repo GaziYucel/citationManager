@@ -6,74 +6,59 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit205e7fc175dbc92c2ca8148adbc3ad81
 {
-    public static $prefixLengthsPsr4 = array (
-        'O' => 
-        array (
-            'Optimeta\\Shared\\' => 16,
-        ),
-    );
-
-    public static $prefixDirsPsr4 = array (
-        'Optimeta\\Shared\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/tibhannover/optimeta/src',
-        ),
-    );
-
     public static $classMap = array (
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Components\\Forms\\PublicationForm' => __DIR__ . '/../..' . '/classes/Components/Forms/PublicationForm.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Components\\Forms\\SettingsForm' => __DIR__ . '/../..' . '/classes/Components/Forms/SettingsForm.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\DataModels\\AuthorModel' => __DIR__ . '/../..' . '/classes/DataModels/AuthorModel.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\DataModels\\CitationModel' => __DIR__ . '/../..' . '/classes/DataModels/CitationModel.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\DataModels\\WorkModel' => __DIR__ . '/../..' . '/classes/DataModels/WorkModel.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Db\\CitationsExtended' => __DIR__ . '/../..' . '/classes/Db/CitationsExtended.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Db\\CitationsExtendedDAO' => __DIR__ . '/../..' . '/classes/Db/CitationsExtendedDAO.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Db\\PluginDAO' => __DIR__ . '/../..' . '/classes/Db/PluginDAO.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Db\\PluginMigration' => __DIR__ . '/../..' . '/classes/Db/PluginMigration.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Deposit\\Wikidata' => __DIR__ . '/../..' . '/classes/Deposit/WikiData.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Frontend\\Article' => __DIR__ . '/../..' . '/classes/Frontend/Article.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\GitHub\\Api' => __DIR__ . '/../..' . '/classes/GitHub/Api.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Handler\\DepositorHandler' => __DIR__ . '/../..' . '/classes/Handler/DepositorHandler.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Handler\\EnricherHandler' => __DIR__ . '/../..' . '/classes/Handler/EnricherHandler.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Handler\\ParserHandler' => __DIR__ . '/../..' . '/classes/Handler/ParserHandler.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Handler\\PluginAPIHandler' => __DIR__ . '/../..' . '/classes/Handler/PluginAPIHandler.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Helpers\\ClassHelper' => __DIR__ . '/../..' . '/classes/Helpers/ClassHelper.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Helpers\\LogHelper' => __DIR__ . '/../..' . '/classes/Helpers/LogHelper.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenAlex\\Api' => __DIR__ . '/../..' . '/classes/OpenAlex/Api.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenAlex\\DataModels\\Author' => __DIR__ . '/../..' . '/classes/OpenAlex/DataModels/Author.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenAlex\\DataModels\\Venue' => __DIR__ . '/../..' . '/classes/OpenAlex/DataModels/Venue.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenAlex\\DataModels\\Work' => __DIR__ . '/../..' . '/classes/OpenAlex/DataModels/Work.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenAlex\\Enrich' => __DIR__ . '/../..' . '/classes/OpenAlex/Enrich.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenCitations\\Api' => __DIR__ . '/../..' . '/classes/OpenCitations/Api.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenCitations\\DataModels\\WorkCitation' => __DIR__ . '/../..' . '/classes/OpenCitations/DataModels/WorkCitation.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenCitations\\DataModels\\WorkMetaData' => __DIR__ . '/../..' . '/classes/OpenCitations/DataModels/WorkMetaData.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\OpenCitations\\Deposit' => __DIR__ . '/../..' . '/classes/OpenCitations/Deposit.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Orcid\\Api' => __DIR__ . '/../..' . '/classes/Orcid/Api.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Orcid\\DataModels\\Author' => __DIR__ . '/../..' . '/classes/Orcid/DataModels/Author.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Orcid\\Enrich' => __DIR__ . '/../..' . '/classes/Orcid/Enrich.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\PID\\Arxiv' => __DIR__ . '/../..' . '/classes/PID/Arxiv.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\PID\\Doi' => __DIR__ . '/../..' . '/classes/PID/Doi.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\PID\\Handle' => __DIR__ . '/../..' . '/classes/PID/Handle.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\PID\\OpenAlex' => __DIR__ . '/../..' . '/classes/PID/OpenAlex.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\PID\\Orcid' => __DIR__ . '/../..' . '/classes/PID/Orcid.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\PID\\Ror' => __DIR__ . '/../..' . '/classes/PID/Ror.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\PID\\Url' => __DIR__ . '/../..' . '/classes/PID/Url.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\PID\\Urn' => __DIR__ . '/../..' . '/classes/PID/Urn.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\PID\\Wikidata' => __DIR__ . '/../..' . '/classes/PID/Wikidata.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Wikidata\\Api' => __DIR__ . '/../..' . '/classes/Wikidata/Api.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Wikidata\\Enrich' => __DIR__ . '/../..' . '/classes/Wikidata/Enrich.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Wikidata\\Model\\Article' => __DIR__ . '/../..' . '/classes/Wikidata/Model/Article.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Wikidata\\Model\\Author' => __DIR__ . '/../..' . '/classes/Wikidata/Model/Author.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Wikidata\\Model\\Language' => __DIR__ . '/../..' . '/classes/Wikidata/Model/Language.php',
+        'APP\\plugins\\generic\\optimetaCitations\\classes\\Wikidata\\Model\\Property' => __DIR__ . '/../..' . '/classes/Wikidata/Model/Property.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'DepositorTask' => __DIR__ . '/../..' . '/classes/ScheduledTasks/DepositorTask.inc.php',
-        'Optimeta\\Citations\\Components\\Forms\\PublicationForm' => __DIR__ . '/../..' . '/classes/Components/Forms/PublicationForm.inc.php',
-        'Optimeta\\Citations\\Components\\Forms\\SettingsForm' => __DIR__ . '/../..' . '/classes/Components/Forms/SettingsForm.inc.php',
-        'Optimeta\\Citations\\Dao\\CitationsExtended' => __DIR__ . '/../..' . '/classes/Dao/CitationsExtended.inc.php',
-        'Optimeta\\Citations\\Dao\\CitationsExtendedDAO' => __DIR__ . '/../..' . '/classes/Dao/CitationsExtendedDao.inc.php',
-        'Optimeta\\Citations\\Dao\\PluginDAO' => __DIR__ . '/../..' . '/classes/Dao/PluginDao.inc.php',
-        'Optimeta\\Citations\\Debug' => __DIR__ . '/../..' . '/classes/Debug.inc.php',
-        'Optimeta\\Citations\\Deposit\\Depositor' => __DIR__ . '/../..' . '/classes/Deposit/Depositor.inc.php',
-        'Optimeta\\Citations\\Deposit\\OpenCitations' => __DIR__ . '/../..' . '/classes/Deposit/OpenCitations.inc.php',
-        'Optimeta\\Citations\\Deposit\\WikiData' => __DIR__ . '/../..' . '/classes/Deposit/WikiData.inc.php',
-        'Optimeta\\Citations\\Enrich\\Enricher' => __DIR__ . '/../..' . '/classes/Enrich/Enricher.inc.php',
-        'Optimeta\\Citations\\Enrich\\OpenAlex' => __DIR__ . '/../..' . '/classes/Enrich/OpenAlex.inc.php',
-        'Optimeta\\Citations\\Enrich\\Orcid' => __DIR__ . '/../..' . '/classes/Enrich/Orcid.php',
-        'Optimeta\\Citations\\Enrich\\WikiData' => __DIR__ . '/../..' . '/classes/Enrich/WikiData.inc.php',
-        'Optimeta\\Citations\\Frontend\\Article' => __DIR__ . '/../..' . '/classes/Frontend/Article.inc.php',
-        'Optimeta\\Citations\\Handler\\PluginAPIHandler' => __DIR__ . '/../..' . '/classes/Handler/PluginAPIHandler.inc.php',
-        'Optimeta\\Citations\\Install\\OptimetaCitationsMigration' => __DIR__ . '/../..' . '/classes/Install/OptimetaCitationsMigration.inc.php',
-        'Optimeta\\Citations\\Model\\AuthorModel' => __DIR__ . '/../..' . '/classes/Model/AuthorModel.inc.php',
-        'Optimeta\\Citations\\Model\\CitationModel' => __DIR__ . '/../..' . '/classes/Model/CitationModel.inc.php',
-        'Optimeta\\Citations\\Model\\WorkModel' => __DIR__ . '/../..' . '/classes/Model/WorkModel.inc.php',
-        'Optimeta\\Citations\\Parse\\Parser' => __DIR__ . '/../..' . '/classes/Parse/Parser.inc.php',
-        'Optimeta\\Shared\\CrossRef\\CrossRefBase' => __DIR__ . '/..' . '/tibhannover/optimeta/src/CrossRef/CrossRefBase.php',
-        'Optimeta\\Shared\\GitHub\\GitHubBase' => __DIR__ . '/..' . '/tibhannover/optimeta/src/GitHub/GitHubBase.php',
-        'Optimeta\\Shared\\OpenAlex\\Model\\Author' => __DIR__ . '/..' . '/tibhannover/optimeta/src/OpenAlex/Model/Author.php',
-        'Optimeta\\Shared\\OpenAlex\\Model\\Venue' => __DIR__ . '/..' . '/tibhannover/optimeta/src/OpenAlex/Model/Venue.php',
-        'Optimeta\\Shared\\OpenAlex\\Model\\Work' => __DIR__ . '/..' . '/tibhannover/optimeta/src/OpenAlex/Model/Work.php',
-        'Optimeta\\Shared\\OpenAlex\\OpenAlexBase' => __DIR__ . '/..' . '/tibhannover/optimeta/src/OpenAlex/OpenAlexBase.php',
-        'Optimeta\\Shared\\OpenCitations\\Model\\WorkCitation' => __DIR__ . '/..' . '/tibhannover/optimeta/src/OpenCitations/Model/WorkCitation.php',
-        'Optimeta\\Shared\\OpenCitations\\Model\\WorkMetaData' => __DIR__ . '/..' . '/tibhannover/optimeta/src/OpenCitations/Model/WorkMetaData.php',
-        'Optimeta\\Shared\\OpenCitations\\OpenCitationsBase' => __DIR__ . '/..' . '/tibhannover/optimeta/src/OpenCitations/OpenCitationsBase.php',
-        'Optimeta\\Shared\\Orcid\\Model\\Author' => __DIR__ . '/..' . '/tibhannover/optimeta/src/Orcid/Model/Author.php',
-        'Optimeta\\Shared\\Orcid\\OrcidBase' => __DIR__ . '/..' . '/tibhannover/optimeta/src/Orcid/OrcidBase.php',
-        'Optimeta\\Shared\\Pid\\Arxiv' => __DIR__ . '/..' . '/tibhannover/optimeta/src/Pid/Arxiv.php',
-        'Optimeta\\Shared\\Pid\\Doi' => __DIR__ . '/..' . '/tibhannover/optimeta/src/Pid/Doi.php',
-        'Optimeta\\Shared\\Pid\\Handle' => __DIR__ . '/..' . '/tibhannover/optimeta/src/Pid/Handle.php',
-        'Optimeta\\Shared\\Pid\\Orcid' => __DIR__ . '/..' . '/tibhannover/optimeta/src/Pid/Orcid.php',
-        'Optimeta\\Shared\\Pid\\Ror' => __DIR__ . '/..' . '/tibhannover/optimeta/src/Pid/Ror.php',
-        'Optimeta\\Shared\\Pid\\Url' => __DIR__ . '/..' . '/tibhannover/optimeta/src/Pid/Url.php',
-        'Optimeta\\Shared\\Pid\\Urn' => __DIR__ . '/..' . '/tibhannover/optimeta/src/Pid/Urn.php',
-        'Optimeta\\Shared\\WikiData\\Api' => __DIR__ . '/..' . '/tibhannover/optimeta/src/WikiData/Api.php',
-        'Optimeta\\Shared\\WikiData\\Model\\Article' => __DIR__ . '/..' . '/tibhannover/optimeta/src/WikiData/Model/Article.php',
-        'Optimeta\\Shared\\WikiData\\Model\\Author' => __DIR__ . '/..' . '/tibhannover/optimeta/src/WikiData/Model/Author.php',
-        'Optimeta\\Shared\\WikiData\\Model\\Language' => __DIR__ . '/..' . '/tibhannover/optimeta/src/WikiData/Model/Language.php',
-        'Optimeta\\Shared\\WikiData\\Model\\Property' => __DIR__ . '/..' . '/tibhannover/optimeta/src/WikiData/Model/Property.php',
-        'Optimeta\\Shared\\WikiData\\WikiDataBase' => __DIR__ . '/..' . '/tibhannover/optimeta/src/WikiData/WikiDataBase.php',
+        'DepositorTask' => __DIR__ . '/../..' . '/classes/ScheduledTasks/DepositorTask.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit205e7fc175dbc92c2ca8148adbc3ad81::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit205e7fc175dbc92c2ca8148adbc3ad81::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit205e7fc175dbc92c2ca8148adbc3ad81::$classMap;
 
         }, null, ClassLoader::class);
