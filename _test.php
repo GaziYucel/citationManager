@@ -25,6 +25,7 @@ $client = new Client(
 
 $url = 'https://www.wikidata.org/w/api.php?prop=&list=search&srsearch=10.7717%2Fpeerj.1990&srlimit=2&action=query&format=json&formatversion=2';
 //$url = 'https://pub.orcid.org/v2.1/0000-0002-4411-9674';
+$url = 'https://api.crossref.org/works?query.bibliographic=';
 
 $response = $client->get($url);
 

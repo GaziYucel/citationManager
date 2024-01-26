@@ -21,7 +21,7 @@ class OpenAlex
      *
      * @var string
      */
-    public string $prefix = 'https://openalex.org/works';
+    public string $prefix = 'https://openalex.org';
 
     /**
      * Incorrect prefixes

@@ -90,7 +90,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
         'openAlexURL' => '',
         'wikidataURL' => '',
         'orcidURL' => '',
-        'doiURL' => '',
+        'doiUrl' => '',
         'citationsParsed' => '',
         'submissionId' => ''];
 
@@ -151,6 +151,8 @@ class OptimetaCitationsPlugin extends GenericPlugin
             $objOpenAlex = new OpenAlex();
             $objDoi = new Doi();
 
+            LogHelper::logInfo('doi: ' . $objDoi->prefix);
+
             $objectHelper = new ClassHelper();
             $this->templateParameters = [
                 'customScript' => '',
@@ -165,7 +167,7 @@ class OptimetaCitationsPlugin extends GenericPlugin
                 'openAlexURL' => $objOpenAlex->prefix,
                 'wikidataURL' => $objWikidata->prefix,
                 'orcidURL' => $objOrcid->prefix,
-                'doiURL' => $objDoi->prefix];
+                'doiUrl' => $objDoi->prefix];
 
             $citationsExtendedDAO = new CitationsExtendedDAO();
             DAORegistry::registerDAO('CitationsExtendedDAO', $citationsExtendedDAO);
