@@ -83,3 +83,5 @@ If you have none please register one through https://www.wikidata.org/w/index.ph
 12. At "Wikidata bot password", fill in the password which you have saved previously
 13. At "Wikidata api url", select the environment (test for test.wikidata.org and production for www.wikidata.org)
 14. Click Save
+
+---
