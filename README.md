@@ -238,9 +238,6 @@ If you have none please register one through https://www.wikidata.org/w/index.ph
   same as in the folder "/classes". This is done by the helper class "TestsHelper".
 - If isDebugMode = true, debug information will be written to the log file (see LogHelper class) 
   such as API calls. _Sensitive information (passwords) will be written in plain text._
-```
-public const isTestMode = true;
-```
 
 ### Tests
 
