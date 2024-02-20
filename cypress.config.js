@@ -4,8 +4,6 @@ const { dotenv } = require("dotenv").config({
 });
 const fs = require("fs");
 
-console.log(process.env);
-
 module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {

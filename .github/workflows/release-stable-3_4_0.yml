@@ -1,0 +1,32 @@
+name: release-package-stable-3_4_0
+
+on:
+  workflow_dispatch: ~
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  REPOSITORY_OWNER: ${{ github.repository_owner }}
+  REPOSITORY_NAME: ${{ github.event.repository.name }}
+
+permissions: write-all
+
+jobs:
+  release_package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: echo data
+        run:
+          echo "variables"
+          dateTime=$(date +%Y-%m-%d_%H-%M-%S)
+          branchName="stable-3_4_0"
+          file="_simpleTest_$dateTime.txt"
+          message="Update $file on $dateTime"
+          content="${dateTime} "
+          repositoryOwner=${{ env.REPOSITORY_OWNER }}
+          repositoryName=${{ env.REPOSITORY_NAME }}
+        
+          echo $repositoryOwner
+          echo $repositoryName

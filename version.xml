@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE version SYSTEM "../../../lib/pkp/dtd/pluginVersion.dtd">
 <version>
-	<application>optimetaCitations</application>
+	<application>citationManager</application>
 	<type>plugins.generic</type>
-	<release>1.0.1.0</release>
+	<release>1.1.0.0</release>
 	<date>2022-07-15</date>
 	<lazy-load>1</lazy-load>
-	<class>OptimetaCitationsPlugin</class>
+	<class>CitationManagerPlugin</class>
 </version>

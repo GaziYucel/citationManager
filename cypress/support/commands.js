@@ -1,22 +1,12 @@
 /**
  * @file cypress/tests/support/commands.js
- * 
- * Based on https://github.com/pkp/pkp-lib/blob/main/cypress/support/commands.js
  *
- * Copyright (c) 2022 OPTIMETA project
- * Copyright (c) 2022 Daniel Nüst
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ * @copyright (c) 2022 Gazi Yücel
+ * @copyright (c) 2022 Daniel Nüst
+ * @license Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * Examples for custom commands and overwrite existing commands:
- * -- This is a parent command --
- * Cypress.Commands.add('login', (email, password) => { ... })
- * -- This is a child command --
- * Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
- * -- This is a dual command --
- * Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
- * -- This will overwrite an existing command --
- * Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
- * For more comprehensive examples of custom commands please read more here: https://on.cypress.io/custom-commands
+ * @see https://github.com/pkp/pkp-lib/blob/main/cypress/support/commands.js
+ * @see https://on.cypress.io/custom-commands
  */
 
 import 'cypress-file-upload';
@@ -342,7 +332,7 @@ Cypress.Commands.add('createSubmissionAndPublish', (data, context) => {
         if ('subtitle' in chapter) {
             cy.get('form[id="editChapterForm"] input[id^="subtitle-' + locale + '"]').type(chapter.subtitle, { delay: 0 });
         }
-        cy.get('div.pkp_modal_panel div:contains("Add Chapter")').click(); // FIXME: Resolve focus problem on title field
+        cy.get('div.pkp_modal_panel div:contains("Add Chapter")').click(); // fixme: Resolve focus problem on title field
 
         cy.flushNotifications();
         cy.get('form[id="editChapterForm"] button:contains("Save")').click();
@@ -444,7 +434,7 @@ Cypress.Commands.add('recordEditorialRecommendation', recommendation => {
 });
 
 Cypress.Commands.add('assignReviewer', name => {
-    cy.wait(2000); // FIXME: Occasional problems opening the grid
+    cy.wait(2000); // fixme: Occasional problems opening the grid
     cy.get('a[id^="component-grid-users-reviewer-reviewergrid-addReviewer-button-"]').click();
     cy.waitJQuery();
     cy.get('.listPanel--selectReviewer .pkpSearch__input', { timeout: 20000 }).type(name, { delay: 0 });

@@ -1,0 +1,858 @@
+{
+  "id": "https://openalex.org/W3153417482",
+  "doi": "https://doi.org/10.3897/rio.7.e66264",
+  "title": "Strengthening the Open Access publishing system through open citations and spatiotemporal metadata ",
+  "display_name": "Strengthening the Open Access publishing system through open citations and spatiotemporal metadata ",
+  "publication_year": 2021,
+  "publication_date": "2021-04-14",
+  "ids": {
+    "openalex": "https://openalex.org/W3153417482",
+    "doi": "https://doi.org/10.3897/rio.7.e66264",
+    "mag": "3153417482"
+  },
+  "language": "en",
+  "primary_location": {
+    "is_oa": true,
+    "landing_page_url": "https://doi.org/10.3897/rio.7.e66264",
+    "pdf_url": "https://riojournal.com/article/66264/download/pdf/",
+    "source": {
+      "id": "https://openalex.org/S2738614666",
+      "display_name": "Research Ideas and Outcomes",
+      "issn_l": "2367-7163",
+      "issn": [
+        "2367-7163"
+      ],
+      "is_oa": true,
+      "is_in_doaj": true,
+      "host_organization": "https://openalex.org/P4310321056",
+      "host_organization_name": "Pensoft Publishers",
+      "host_organization_lineage": [
+        "https://openalex.org/P4310321056"
+      ],
+      "host_organization_lineage_names": [
+        "Pensoft Publishers"
+      ],
+      "type": "journal"
+    },
+    "license": "cc-by",
+    "version": "publishedVersion",
+    "is_accepted": true,
+    "is_published": true
+  },
+  "type": "article",
+  "type_crossref": "journal-article",
+  "indexed_in": [
+    "crossref"
+  ],
+  "open_access": {
+    "is_oa": true,
+    "oa_status": "gold",
+    "oa_url": "https://riojournal.com/article/66264/download/pdf/",
+    "any_repository_has_fulltext": true
+  },
+  "authorships": [
+    {
+      "author_position": "first",
+      "author": {
+        "id": "https://openalex.org/A5021239193",
+        "display_name": "Christian Hauschke",
+        "orcid": "https://orcid.org/0000-0003-2499-7741"
+      },
+      "institutions": [],
+      "countries": [],
+      "is_corresponding": false,
+      "raw_author_name": "Christian Hauschke",
+      "raw_affiliation_string": "",
+      "raw_affiliation_strings": []
+    },
+    {
+      "author_position": "middle",
+      "author": {
+        "id": "https://openalex.org/A5003874630",
+        "display_name": "Daniel N\u00fcst",
+        "orcid": "https://orcid.org/0000-0002-0024-5046"
+      },
+      "institutions": [],
+      "countries": [],
+      "is_corresponding": false,
+      "raw_author_name": "Daniel N\u00fcst",
+      "raw_affiliation_string": "",
+      "raw_affiliation_strings": []
+    },
+    {
+      "author_position": "middle",
+      "author": {
+        "id": "https://openalex.org/A5044312914",
+        "display_name": "Anette Cordts",
+        "orcid": null
+      },
+      "institutions": [],
+      "countries": [],
+      "is_corresponding": false,
+      "raw_author_name": "Anette Cordts",
+      "raw_affiliation_string": "",
+      "raw_affiliation_strings": []
+    },
+    {
+      "author_position": "last",
+      "author": {
+        "id": "https://openalex.org/A5086279703",
+        "display_name": "Svantje Lilienthal",
+        "orcid": null
+      },
+      "institutions": [],
+      "countries": [],
+      "is_corresponding": false,
+      "raw_author_name": "Svantje Lilienthal",
+      "raw_affiliation_string": "",
+      "raw_affiliation_strings": []
+    }
+  ],
+  "countries_distinct_count": 0,
+  "institutions_distinct_count": 0,
+  "corresponding_author_ids": [],
+  "corresponding_institution_ids": [],
+  "apc_list": {
+    "value": 299,
+    "currency": "EUR",
+    "value_usd": 322,
+    "provenance": "doaj"
+  },
+  "apc_paid": {
+    "value": 299,
+    "currency": "EUR",
+    "value_usd": 322,
+    "provenance": "doaj"
+  },
+  "has_fulltext": false,
+  "cited_by_count": 0,
+  "cited_by_percentile_year": {
+    "min": 0,
+    "max": 66
+  },
+  "biblio": {
+    "volume": "7",
+    "issue": null,
+    "first_page": null,
+    "last_page": null
+  },
+  "is_retracted": false,
+  "is_paratext": false,
+  "keywords": [
+    {
+      "keyword": "open access publishing system",
+      "score": 0.6287
+    },
+    {
+      "keyword": "open citations",
+      "score": 0.6166
+    },
+    {
+      "keyword": "spatiotemporal metadata",
+      "score": 0.4865
+    }
+  ],
+  "concepts": [
+    {
+      "id": "https://openalex.org/C2778531742",
+      "wikidata": "https://www.wikidata.org/wiki/Q17009281",
+      "display_name": "Discoverability",
+      "level": 2,
+      "score": 0.988225
+    },
+    {
+      "id": "https://openalex.org/C93518851",
+      "wikidata": "https://www.wikidata.org/wiki/Q180160",
+      "display_name": "Metadata",
+      "level": 2,
+      "score": 0.8580319
+    },
+    {
+      "id": "https://openalex.org/C41008148",
+      "wikidata": "https://www.wikidata.org/wiki/Q21198",
+      "display_name": "Computer science",
+      "level": 0,
+      "score": 0.68894196
+    },
+    {
+      "id": "https://openalex.org/C136764020",
+      "wikidata": "https://www.wikidata.org/wiki/Q466",
+      "display_name": "World Wide Web",
+      "level": 1,
+      "score": 0.672858
+    },
+    {
+      "id": "https://openalex.org/C4924752",
+      "wikidata": "https://www.wikidata.org/wiki/Q184148",
+      "display_name": "Plug-in",
+      "level": 2,
+      "score": 0.64700925
+    },
+    {
+      "id": "https://openalex.org/C151719136",
+      "wikidata": "https://www.wikidata.org/wiki/Q3972943",
+      "display_name": "Publishing",
+      "level": 2,
+      "score": 0.6062738
+    },
+    {
+      "id": "https://openalex.org/C2777462167",
+      "wikidata": "https://www.wikidata.org/wiki/Q7432048",
+      "display_name": "Scholarly communication",
+      "level": 3,
+      "score": 0.5792186
+    },
+    {
+      "id": "https://openalex.org/C2780535194",
+      "wikidata": "https://www.wikidata.org/wiki/Q309901",
+      "display_name": "Open data",
+      "level": 2,
+      "score": 0.55539423
+    },
+    {
+      "id": "https://openalex.org/C2778805511",
+      "wikidata": "https://www.wikidata.org/wiki/Q1713",
+      "display_name": "Citation",
+      "level": 2,
+      "score": 0.5524131
+    },
+    {
+      "id": "https://openalex.org/C2778149293",
+      "wikidata": "https://www.wikidata.org/wiki/Q309823",
+      "display_name": "Open science",
+      "level": 2,
+      "score": 0.5378712
+    },
+    {
+      "id": "https://openalex.org/C123403432",
+      "wikidata": "https://www.wikidata.org/wiki/Q654068",
+      "display_name": "Visibility",
+      "level": 2,
+      "score": 0.42941606
+    },
+    {
+      "id": "https://openalex.org/C23123220",
+      "wikidata": "https://www.wikidata.org/wiki/Q816826",
+      "display_name": "Information retrieval",
+      "level": 1,
+      "score": 0.34445614
+    },
+    {
+      "id": "https://openalex.org/C17744445",
+      "wikidata": "https://www.wikidata.org/wiki/Q36442",
+      "display_name": "Political science",
+      "level": 0,
+      "score": 0.180044
+    },
+    {
+      "id": "https://openalex.org/C205649164",
+      "wikidata": "https://www.wikidata.org/wiki/Q1071",
+      "display_name": "Geography",
+      "level": 0,
+      "score": 0.11195496
+    },
+    {
+      "id": "https://openalex.org/C121332964",
+      "wikidata": "https://www.wikidata.org/wiki/Q413",
+      "display_name": "Physics",
+      "level": 0,
+      "score": 0.0
+    },
+    {
+      "id": "https://openalex.org/C1276947",
+      "wikidata": "https://www.wikidata.org/wiki/Q333",
+      "display_name": "Astronomy",
+      "level": 1,
+      "score": 0.0
+    },
+    {
+      "id": "https://openalex.org/C153294291",
+      "wikidata": "https://www.wikidata.org/wiki/Q25261",
+      "display_name": "Meteorology",
+      "level": 1,
+      "score": 0.0
+    },
+    {
+      "id": "https://openalex.org/C199539241",
+      "wikidata": "https://www.wikidata.org/wiki/Q7748",
+      "display_name": "Law",
+      "level": 1,
+      "score": 0.0
+    },
+    {
+      "id": "https://openalex.org/C199360897",
+      "wikidata": "https://www.wikidata.org/wiki/Q9143",
+      "display_name": "Programming language",
+      "level": 1,
+      "score": 0.0
+    }
+  ],
+  "mesh": [],
+  "locations_count": 5,
+  "locations": [
+    {
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.3897/rio.7.e66264",
+      "pdf_url": "https://riojournal.com/article/66264/download/pdf/",
+      "source": {
+        "id": "https://openalex.org/S2738614666",
+        "display_name": "Research Ideas and Outcomes",
+        "issn_l": "2367-7163",
+        "issn": [
+          "2367-7163"
+        ],
+        "is_oa": true,
+        "is_in_doaj": true,
+        "host_organization": "https://openalex.org/P4310321056",
+        "host_organization_name": "Pensoft Publishers",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310321056"
+        ],
+        "host_organization_lineage_names": [
+          "Pensoft Publishers"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true
+    },
+    {
+      "is_oa": true,
+      "landing_page_url": "https://zenodo.org/record/4708593",
+      "pdf_url": "https://zenodo.org/record/4708593/files/RIO_article_66264.pdf",
+      "source": {
+        "id": "https://openalex.org/S4306400562",
+        "display_name": "Zenodo (CERN European Organization for Nuclear Research)",
+        "issn_l": null,
+        "issn": null,
+        "is_oa": true,
+        "is_in_doaj": false,
+        "host_organization": "https://openalex.org/I67311998",
+        "host_organization_name": "European Organization for Nuclear Research",
+        "host_organization_lineage": [
+          "https://openalex.org/I67311998"
+        ],
+        "host_organization_lineage_names": [
+          "European Organization for Nuclear Research"
+        ],
+        "type": "repository"
+      },
+      "license": "cc-by",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true
+    },
+    {
+      "is_oa": true,
+      "landing_page_url": "https://zenodo.org/record/7261560",
+      "pdf_url": "https://zenodo.org/record/7261560/files/OPTIMETA_OSIU2022.pdf",
+      "source": {
+        "id": "https://openalex.org/S4306400562",
+        "display_name": "Zenodo (CERN European Organization for Nuclear Research)",
+        "issn_l": null,
+        "issn": null,
+        "is_oa": true,
+        "is_in_doaj": false,
+        "host_organization": "https://openalex.org/I67311998",
+        "host_organization_name": "European Organization for Nuclear Research",
+        "host_organization_lineage": [
+          "https://openalex.org/I67311998"
+        ],
+        "host_organization_lineage_names": [
+          "European Organization for Nuclear Research"
+        ],
+        "type": "repository"
+      },
+      "license": "cc-by",
+      "version": "submittedVersion",
+      "is_accepted": false,
+      "is_published": false
+    },
+    {
+      "is_oa": true,
+      "landing_page_url": "https://zenodo.org/record/7312937",
+      "pdf_url": "https://zenodo.org/record/7312937/files/OPTIMETA_OSIU2022.pdf",
+      "source": {
+        "id": "https://openalex.org/S4306400562",
+        "display_name": "Zenodo (CERN European Organization for Nuclear Research)",
+        "issn_l": null,
+        "issn": null,
+        "is_oa": true,
+        "is_in_doaj": false,
+        "host_organization": "https://openalex.org/I67311998",
+        "host_organization_name": "European Organization for Nuclear Research",
+        "host_organization_lineage": [
+          "https://openalex.org/I67311998"
+        ],
+        "host_organization_lineage_names": [
+          "European Organization for Nuclear Research"
+        ],
+        "type": "repository"
+      },
+      "license": "cc-by",
+      "version": "submittedVersion",
+      "is_accepted": false,
+      "is_published": false
+    },
+    {
+      "is_oa": true,
+      "landing_page_url": "https://zenodo.org/record/7261523",
+      "pdf_url": "https://zenodo.org/record/7261523/files/OPTIMETA%20?download=1",
+      "source": {
+        "id": "https://openalex.org/S4306400562",
+        "display_name": "Zenodo (CERN European Organization for Nuclear Research)",
+        "issn_l": null,
+        "issn": null,
+        "is_oa": true,
+        "is_in_doaj": false,
+        "host_organization": "https://openalex.org/I67311998",
+        "host_organization_name": "European Organization for Nuclear Research",
+        "host_organization_lineage": [
+          "https://openalex.org/I67311998"
+        ],
+        "host_organization_lineage_names": [
+          "European Organization for Nuclear Research"
+        ],
+        "type": "repository"
+      },
+      "license": "cc-by",
+      "version": "submittedVersion",
+      "is_accepted": false,
+      "is_published": false
+    }
+  ],
+  "best_oa_location": {
+    "is_oa": true,
+    "landing_page_url": "https://doi.org/10.3897/rio.7.e66264",
+    "pdf_url": "https://riojournal.com/article/66264/download/pdf/",
+    "source": {
+      "id": "https://openalex.org/S2738614666",
+      "display_name": "Research Ideas and Outcomes",
+      "issn_l": "2367-7163",
+      "issn": [
+        "2367-7163"
+      ],
+      "is_oa": true,
+      "is_in_doaj": true,
+      "host_organization": "https://openalex.org/P4310321056",
+      "host_organization_name": "Pensoft Publishers",
+      "host_organization_lineage": [
+        "https://openalex.org/P4310321056"
+      ],
+      "host_organization_lineage_names": [
+        "Pensoft Publishers"
+      ],
+      "type": "journal"
+    },
+    "license": "cc-by",
+    "version": "publishedVersion",
+    "is_accepted": true,
+    "is_published": true
+  },
+  "sustainable_development_goals": [
+    {
+      "id": "https://metadata.un.org/sdg/17",
+      "display_name": "Partnerships for the goals",
+      "score": 0.49
+    }
+  ],
+  "grants": [
+    {
+      "funder": "https://openalex.org/F4320321114",
+      "funder_display_name": "Bundesministerium f\u00fcr Bildung und Forschung",
+      "award_id": null
+    }
+  ],
+  "referenced_works_count": 20,
+  "referenced_works": [
+    "https://openalex.org/W39254241",
+    "https://openalex.org/W2054581441",
+    "https://openalex.org/W2092355105",
+    "https://openalex.org/W2113170311",
+    "https://openalex.org/W2158880505",
+    "https://openalex.org/W2302501749",
+    "https://openalex.org/W2305422018",
+    "https://openalex.org/W2314982138",
+    "https://openalex.org/W2369996029",
+    "https://openalex.org/W2496371950",
+    "https://openalex.org/W2752908011",
+    "https://openalex.org/W2785328103",
+    "https://openalex.org/W2790556459",
+    "https://openalex.org/W2807032798",
+    "https://openalex.org/W2897964725",
+    "https://openalex.org/W2900747520",
+    "https://openalex.org/W2938946739",
+    "https://openalex.org/W2966344753",
+    "https://openalex.org/W3016379482",
+    "https://openalex.org/W3092485496"
+  ],
+  "related_works": [
+    "https://openalex.org/W2400751427",
+    "https://openalex.org/W4367498856",
+    "https://openalex.org/W2482697570",
+    "https://openalex.org/W2738396072",
+    "https://openalex.org/W2345835657",
+    "https://openalex.org/W3108638207",
+    "https://openalex.org/W4285196440",
+    "https://openalex.org/W4283270898",
+    "https://openalex.org/W4229077818",
+    "https://openalex.org/W3167992294"
+  ],
+  "ngrams_url": "https://api.openalex.org/works/W3153417482/ngrams",
+  "abstract_inverted_index": {
+    "The": [
+      0,
+      103
+    ],
+    "BMBF": [
+      1
+    ],
+    "project": [
+      2
+    ],
+    "OPTIMETA": [
+      3,
+      120
+    ],
+    "aims": [
+      4
+    ],
+    "to": [
+      5,
+      38
+    ],
+    "strengthen": [
+      6
+    ],
+    "the": [
+      7,
+      71,
+      76,
+      87,
+      95,
+      122,
+      134
+    ],
+    "Open": [
+      8,
+      34
+    ],
+    "Access": [
+      9
+    ],
+    "publishing": [
+      10
+    ],
+    "system": [
+      11
+    ],
+    "by": [
+      12,
+      48,
+      78,
+      131
+    ],
+    "connecting": [
+      13
+    ],
+    "open": [
+      14,
+      20,
+      46
+    ],
+    "citations": [
+      15
+    ],
+    "and": [
+      16,
+      44,
+      57,
+      60,
+      65,
+      94,
+      99,
+      108,
+      116,
+      136,
+      143
+    ],
+    "spatiotemporal": [
+      17
+    ],
+    "metadata": [
+      18
+    ],
+    "from": [
+      19
+    ],
+    "access": [
+      21
+    ],
+    "journals": [
+      22,
+      93,
+      115,
+      127
+    ],
+    "with": [
+      23,
+      112
+    ],
+    "openly": [
+      24
+    ],
+    "accessible": [
+      25,
+      66
+    ],
+    "data": [
+      26,
+      47
+    ],
+    "sources.": [
+      27
+    ],
+    "For": [
+      28
+    ],
+    "this": [
+      29
+    ],
+    "purpose,": [
+      30
+    ],
+    "we": [
+      31
+    ],
+    "will": [
+      32,
+      69,
+      105
+    ],
+    "extend": [
+      33
+    ],
+    "Journal": [
+      35
+    ],
+    "Systems": [
+      36
+    ],
+    "(OJS)": [
+      37
+    ],
+    "give": [
+      39
+    ],
+    "it": [
+      40
+    ],
+    "functionalities": [
+      41
+    ],
+    "for": [
+      42,
+      53,
+      84
+    ],
+    "collecting": [
+      43
+    ],
+    "distributing": [
+      45
+    ],
+    "developing": [
+      49
+    ],
+    "two": [
+      50
+    ],
+    "OJS": [
+      51
+    ],
+    "plugins": [
+      52,
+      77
+    ],
+    "capturing": [
+      54
+    ],
+    "citation": [
+      55
+    ],
+    "networks": [
+      56
+    ],
+    "articles'": [
+      58
+    ],
+    "spatial": [
+      59
+    ],
+    "temporal": [
+      61
+    ],
+    "properties": [
+      62
+    ],
+    "as": [
+      63,
+      97,
+      128
+    ],
+    "machine-readable": [
+      64
+    ],
+    "metadata.": [
+      67,
+      147
+    ],
+    "We": [
+      68
+    ],
+    "ensure": [
+      70
+    ],
+    "target": [
+      72
+    ],
+    "group-orientated": [
+      73
+    ],
+    "design": [
+      74
+    ],
+    "of": [
+      75,
+      91,
+      101,
+      124,
+      138,
+      145
+    ],
+    "performing": [
+      79
+    ],
+    "a": [
+      80
+    ],
+    "comprehensive": [
+      81
+    ],
+    "needs": [
+      82
+    ],
+    "analysis": [
+      83
+    ],
+    "key": [
+      85
+    ],
+    "stakeholders:": [
+      86
+    ],
+    "editors": [
+      88
+    ],
+    "or": [
+      89
+    ],
+    "operators": [
+      90
+    ],
+    "OA": [
+      92,
+      117,
+      126,
+      139
+    ],
+    "researchers,": [
+      96
+    ],
+    "authors": [
+      98
+    ],
+    "readers": [
+      100
+    ],
+    "articles.": [
+      102
+    ],
+    "developments": [
+      104
+    ],
+    "be": [
+      106
+    ],
+    "designed": [
+      107
+    ],
+    "tested": [
+      109
+    ],
+    "in": [
+      110
+    ],
+    "cooperation": [
+      111
+    ],
+    "several": [
+      113
+    ],
+    "independent": [
+      114,
+      125
+    ],
+    "publishers.": [
+      118
+    ],
+    "Overall,": [
+      119
+    ],
+    "supports": [
+      121
+    ],
+    "attraction": [
+      123
+    ],
+    "publication": [
+      129
+    ],
+    "venues": [
+      130
+    ],
+    "substantially": [
+      132
+    ],
+    "improving": [
+      133
+    ],
+    "discoverability": [
+      135
+    ],
+    "visibility": [
+      137
+    ],
+    "publications": [
+      140
+    ],
+    "through": [
+      141
+    ],
+    "enrichment": [
+      142
+    ],
+    "interlinking": [
+      144
+    ],
+    "article": [
+      146
+    ]
+  },
+  "cited_by_api_url": "https://api.openalex.org/works?filter=cites:W3153417482",
+  "counts_by_year": [],
+  "updated_date": "2024-01-22T08:46:07.835704",
+  "created_date": "2021-04-26"
+}

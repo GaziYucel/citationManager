@@ -1,20 +1,21 @@
 {
-  "name": "optimeta/citations",
-  "description": "Create and extract citation data and transfer to open access data sources",
+  "name": "ojs/citationmanager",
+  "description": "OJS plugin which extracts and enriches citation data and deposits to external open access data services",
   "license": "GPL-3.0-or-later",
   "keywords": [
-    "Optimeta",
-    "Citations"
+    "ojs",
+    "citationmanager",
+    "citations",
+    "publishing",
+    "metadata",
+    "research",
+    "communication",
+    "open",
+    "science"
   ],
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/tibhannover/optimeta-plugin-shared.git"
-    }
-  ],
+  "repositories": [],
   "require": {
-    "php": ">=7.3",
-    "tibhannover/optimeta": "dev-main"
+    "php": ">=8.1"
   },
   "autoload": {
     "classmap": [
@@ -22,6 +23,6 @@
     ]
   },
   "config": {},
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "prefer-stable": true
 }
