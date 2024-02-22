@@ -11,129 +11,135 @@ msgstr ""
 "PO-Revision-Date: 2022-07-01T23:59:59+00:00\n"
 "Language: \n"
 
-msgid "plugins.generic.optimetaCitations.name"
-msgstr "Optimeta Citations Plugin"
+msgid "plugins.generic.citationManager.displayName"
+msgstr "Citation Manager Plugin"
 
-msgid "plugins.generic.optimetaCitations.description"
-msgstr "Optimeta Citations Plugin"
+msgid "plugins.generic.citationManager.description"
+msgstr "Citation Manager Plugin"
 
-msgid "plugins.generic.optimetaCitations.publicationStatement"
+msgid "plugins.generic.citationManager.publicationStatement"
 msgstr "Publication Statement"
 
-msgid "plugins.generic.optimetaCitations.publicationStatement.description"
+msgid "plugins.generic.citationManager.publicationStatement.description"
 msgstr "Add a publication statement that you would like to appear on every publication's landing page"
 
-msgid "plugins.generic.optimetaCitations.publication.label"
-msgstr "Citas+"
+msgid "plugins.generic.citationManager.publication.label"
+msgstr "Citas Manager"
 
-msgid "plugins.generic.optimetaCitations.deposit.button"
+msgid "plugins.generic.citationManager.deposit.button"
 msgstr "Deposit"
 
-msgid "plugins.generic.optimetaCitations.deposit.question"
+msgid "plugins.generic.citationManager.deposit.question"
 msgstr "Are you sure you want to submit the citations to the predefined external websites?"
 
-msgid "plugins.generic.optimetaCitations.deposit.message.not_published"
+msgid "plugins.generic.citationManager.deposit.message.not_published"
 msgstr "The publication needs to be assigned to an issue, needs an identifier (DOI) and published before "
 "deposit is possible."
 
-msgid "plugins.generic.optimetaCitations.clear.button"
+msgid "plugins.generic.citationManager.clear.button"
 msgstr "Clear"
 
-msgid "plugins.generic.optimetaCitations.clear.question"
+msgid "plugins.generic.citationManager.clear.question"
 msgstr "The current parsed citations will be removed if you click OK. Are you sure?"
 
-msgid "plugins.generic.optimetaCitations.citations.empty.description"
+msgid "plugins.generic.citationManager.citations.empty.description"
 msgstr "Parsed citations are empty. Please use the button above to parse and enrich the citations."
 
-msgid "plugins.generic.optimetaCitations.process.button"
+msgid "plugins.generic.citationManager.process.button"
 msgstr "Process"
 
-msgid "plugins.generic.optimetaCitations.process.label"
+msgid "plugins.generic.citationManager.process.label"
 msgstr "Structured references/citations"
 
-msgid "plugins.generic.optimetaCitations.process.description"
+msgid "plugins.generic.citationManager.process.description"
 msgstr "Please use the Process button to structure and enrich the citations. <br/>"
 "After DOIs are extracted, additional metadata from external websites will be collected and displayed below.<br/>."
-"Submission of this metadata occurs automatically when this article is published and receives a DOI."
+"Submission of this metadata occurs automatically when this article is published and receives a DOI.<br/>"
 "Alternatively, metadata submission can be done manually using the Submit button."
 
-msgid "plugins.generic.optimetaCitations.process.question"
+msgid "plugins.generic.citationManager.process.question"
 msgstr "The current structured citations will be overwritten if you click OK. All your modifications "
 "will be lost. Are you sure?"
 
-msgid "plugins.generic.optimetaCitations.author.add.button"
+msgid "plugins.generic.citationManager.author.add.button"
 msgstr "Add Author"
 
-msgid "plugins.generic.optimetaCitations.author.remove.question"
+msgid "plugins.generic.citationManager.author.remove.question"
 msgstr "Are you sure you want to delete this author?"
 
-msgid "plugins.generic.optimetaCitations.publication.success"
+msgid "plugins.generic.citationManager.publication.success"
 msgstr "The citations have been updated."
 
-msgid "plugins.generic.optimetaCitations.settings.description"
+msgid "plugins.generic.citationManager.settings.description"
 msgstr "Fill in your authentication info for Open Access websites where you want to deposit citations"
 
-msgid "plugins.generic.optimetaCitations.settings.form.saved"
+msgid "plugins.generic.citationManager.settings.form.saved"
 msgstr "Settings saved successfully"
 
-msgid "plugins.generic.optimetaCitations.settings.wikidata_title"
+msgid "plugins.generic.citationManager.settings.wikidata_title"
 msgstr "Wikidata"
 
-msgid "plugins.generic.optimetaCitations.settings.wikidata_username"
+msgid "plugins.generic.citationManager.settings.wikidata_username"
 msgstr "Wikidata username"
 
-msgid "plugins.generic.optimetaCitations.settings.wikidata_password"
+msgid "plugins.generic.citationManager.settings.wikidata_password"
 msgstr "Wikidata password"
 
-msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url"
+msgid "plugins.generic.citationManager.settings.wikidata_api_url"
 msgstr "Wikidata API URL"
 
-msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url_test"
+msgid "plugins.generic.citationManager.settings.wikidata_api_url_test"
 msgstr "test (https://test.wikidata.org/w/api.php)"
 
-msgid "plugins.generic.optimetaCitations.settings.wikidata_api_url_prod"
+msgid "plugins.generic.citationManager.settings.wikidata_api_url_prod"
 msgstr "production (https://www.wikidata.org/w/api.php)"
 
-msgid "plugins.generic.optimetaCitations.settings.open_citations_title"
+msgid "plugins.generic.citationManager.settings.open_citations_title"
 msgstr "Open Citations CROCI "
-"<a href='https://github.com/TIBHannover/optimetaCitations/blob/main/README.md#registering-for-opencitationsorg-croci' "
+"<a href='https://github.com/TIBHannover/citationManager/blob/main/README.md#registering-for-opencitationsorg-croci' "
 "target='_blank'><i class='fa fa-question-circle' aria-hidden='true'></i></a>"
 
-msgid "plugins.generic.optimetaCitations.settings.open_citations_owner"
+msgid "plugins.generic.citationManager.settings.open_citations_owner"
 msgstr "Github Owner for OpenCitations deposits"
 
-msgid "plugins.generic.optimetaCitations.settings.open_citations_repository"
+msgid "plugins.generic.citationManager.settings.open_citations_repository"
 msgstr "Github Repository name for OpenCitations deposits"
 
-msgid "plugins.generic.optimetaCitations.settings.open_citations_token"
+msgid "plugins.generic.citationManager.settings.open_citations_token"
 msgstr "Github Token for OpenCitations deposits"
 
-msgid "plugins.generic.optimetaCitations.settings.test.button"
-msgstr "Test Settings"
+msgid "plugins.generic.citationManager.settings.status.button"
+msgstr "Status"
 
-msgid "plugins.generic.optimetaCitations.not_implemented"
+msgid "plugins.generic.citationManager.not_implemented"
 msgstr "This function is not implemented yet"
 
-msgid "plugins.generic.optimetaCitations.settings.initialise.button"
+msgid "plugins.generic.citationManager.settings.initialise.button"
 msgstr "Initialise Plugin"
 
-msgid "plugins.generic.optimetaCitations.settings.initialise.notification"
+msgid "plugins.generic.citationManager.settings.initialise.notification"
 msgstr "Initialising Plugin successful"
 
-msgid "plugins.generic.optimetaCitations.settings.deposit.button"
-msgstr "Deposit all published"
+msgid "plugins.generic.citationManager.settings.process.button"
+msgstr "Batch process"
 
-msgid "plugins.generic.optimetaCitations.settings.deposit.notification"
+msgid "plugins.generic.citationManager.settings.process.notification"
+msgstr "All publications are processed"
+
+msgid "plugins.generic.citationManager.settings.deposit.button"
+msgstr "Batch deposit"
+
+msgid "plugins.generic.citationManager.settings.deposit.notification"
 msgstr "All published publications are deposited"
 
-msgid "plugins.generic.optimetaCitations.settings.show_structured_frontend.title"
+msgid "plugins.generic.citationManager.settings.show_structured_frontend.title"
 msgstr "Whether show or hide the structured citations at front."
 
-msgid "plugins.generic.optimetaCitations.settings.show_structured_frontend.checkbox"
+msgid "plugins.generic.citationManager.settings.show_structured_frontend.checkbox"
 msgstr "If checked, the structured citations will be shown."
 
-msgid "plugins.generic.optimetaCitations.settings.is_production_environment.title"
+msgid "plugins.generic.citationManager.settings.is_production_environment.title"
 msgstr "Is this a production instance?"
 
-msgid "plugins.generic.optimetaCitations.settings.is_production_environment.checkbox"
+msgid "plugins.generic.citationManager.settings.is_production_environment.checkbox"
 msgstr "If checked, this installation is assumed a production environment."

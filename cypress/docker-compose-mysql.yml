@@ -1,4 +1,10 @@
-version: '3.6' 
+# @file cypress/docker-compose-mysql.yml
+#
+# @copyright (c) 2022 Gazi Yücel
+# @copyright (c) 2022 Daniel Nüst
+# @license Distributed under the GNU GPL v3. For full terms see the file LICENSE.
+
+version: '3.6'
 
 networks:
   inside:
@@ -29,7 +35,7 @@ services:
             - "${OJS_PORT:-8080}:80"
         volumes:
             - ./logs:/var/log/apache2
-            - ../:/var/www/html/plugins/generic/optimetaCitations
+            - ../:/var/www/html/plugins/generic/citationManager
         depends_on:
             - db
         networks:

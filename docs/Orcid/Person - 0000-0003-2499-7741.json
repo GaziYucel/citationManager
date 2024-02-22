@@ -1,0 +1,5018 @@
+{
+  "orcid-identifier": {
+    "uri": "https://orcid.org/0000-0003-2499-7741",
+    "path": "0000-0003-2499-7741",
+    "host": "orcid.org"
+  },
+  "preferences": {
+    "locale": "en"
+  },
+  "history": {
+    "creation-method": "WEBSITE",
+    "completion-date": null,
+    "submission-date": {
+      "value": 1350386976606
+    },
+    "last-modified-date": {
+      "value": 1705402033496
+    },
+    "claimed": true,
+    "source": null,
+    "deactivation-date": null,
+    "verified-email": true,
+    "verified-primary-email": true
+  },
+  "person": {
+    "last-modified-date": {
+      "value": 1668073126312
+    },
+    "name": {
+      "created-date": {
+        "value": 1460764361854
+      },
+      "last-modified-date": {
+        "value": 1460764361854
+      },
+      "given-names": {
+        "value": "Christian"
+      },
+      "family-name": {
+        "value": "Hauschke"
+      },
+      "credit-name": null,
+      "source": null,
+      "visibility": "public",
+      "path": "0000-0003-2499-7741"
+    },
+    "other-names": {
+      "last-modified-date": null,
+      "other-name": [],
+      "path": "/0000-0003-2499-7741/other-names"
+    },
+    "biography": null,
+    "researcher-urls": {
+      "last-modified-date": {
+        "value": 1552493644414
+      },
+      "researcher-url": [
+        {
+          "created-date": {
+            "value": 1552493644414
+          },
+          "last-modified-date": {
+            "value": 1552493644414
+          },
+          "source": {
+            "source-orcid": {
+              "uri": "https://orcid.org/0000-0003-2499-7741",
+              "path": "0000-0003-2499-7741",
+              "host": "orcid.org"
+            },
+            "source-client-id": null,
+            "source-name": {
+              "value": "Christian Hauschke"
+            },
+            "assertion-origin-orcid": null,
+            "assertion-origin-client-id": null,
+            "assertion-origin-name": null
+          },
+          "url-name": "VIVO profile at TIB",
+          "url": {
+            "value": "https://vivo.tib.eu/fis/display/n0000-0003-2499-7741"
+          },
+          "visibility": "public",
+          "path": "/0000-0003-2499-7741/researcher-urls/1683288",
+          "put-code": 1683288,
+          "display-index": 1
+        }
+      ],
+      "path": "/0000-0003-2499-7741/researcher-urls"
+    },
+    "emails": {
+      "last-modified-date": {
+        "value": 1524564441238
+      },
+      "email": [
+        {
+          "created-date": {
+            "value": 1524564400245
+          },
+          "last-modified-date": {
+            "value": 1524564441238
+          },
+          "source": {
+            "source-orcid": {
+              "uri": "https://orcid.org/0000-0003-2499-7741",
+              "path": "0000-0003-2499-7741",
+              "host": "orcid.org"
+            },
+            "source-client-id": null,
+            "source-name": {
+              "value": "Christian Hauschke"
+            },
+            "assertion-origin-orcid": null,
+            "assertion-origin-client-id": null,
+            "assertion-origin-name": null
+          },
+          "email": "christian.hauschke@tib.eu",
+          "path": null,
+          "visibility": "public",
+          "verified": true,
+          "primary": false,
+          "put-code": null
+        }
+      ],
+      "path": "/0000-0003-2499-7741/email"
+    },
+    "addresses": {
+      "last-modified-date": {
+        "value": 1465226976952
+      },
+      "address": [
+        {
+          "created-date": {
+            "value": 1453660093021
+          },
+          "last-modified-date": {
+            "value": 1465226976952
+          },
+          "source": {
+            "source-orcid": {
+              "uri": "https://orcid.org/0000-0003-2499-7741",
+              "path": "0000-0003-2499-7741",
+              "host": "orcid.org"
+            },
+            "source-client-id": null,
+            "source-name": {
+              "value": "Christian Hauschke"
+            },
+            "assertion-origin-orcid": null,
+            "assertion-origin-client-id": null,
+            "assertion-origin-name": null
+          },
+          "country": {
+            "value": "DE"
+          },
+          "visibility": "public",
+          "path": "/0000-0003-2499-7741/address/282471",
+          "put-code": 282471,
+          "display-index": 0
+        }
+      ],
+      "path": "/0000-0003-2499-7741/address"
+    },
+    "keywords": {
+      "last-modified-date": {
+        "value": 1556262514112
+      },
+      "keyword": [
+        {
+          "created-date": {
+            "value": 1556262514108
+          },
+          "last-modified-date": {
+            "value": 1556262514108
+          },
+          "source": {
+            "source-orcid": {
+              "uri": "https://orcid.org/0000-0003-2499-7741",
+              "path": "0000-0003-2499-7741",
+              "host": "orcid.org"
+            },
+            "source-client-id": null,
+            "source-name": {
+              "value": "Christian Hauschke"
+            },
+            "assertion-origin-orcid": null,
+            "assertion-origin-client-id": null,
+            "assertion-origin-name": null
+          },
+          "content": "Open Science",
+          "visibility": "public",
+          "path": "/0000-0003-2499-7741/keywords/1248752",
+          "put-code": 1248752,
+          "display-index": 2
+        },
+        {
+          "created-date": {
+            "value": 1556262514112
+          },
+          "last-modified-date": {
+            "value": 1556262514112
+          },
+          "source": {
+            "source-orcid": {
+              "uri": "https://orcid.org/0000-0003-2499-7741",
+              "path": "0000-0003-2499-7741",
+              "host": "orcid.org"
+            },
+            "source-client-id": null,
+            "source-name": {
+              "value": "Christian Hauschke"
+            },
+            "assertion-origin-orcid": null,
+            "assertion-origin-client-id": null,
+            "assertion-origin-name": null
+          },
+          "content": "Research Information",
+          "visibility": "public",
+          "path": "/0000-0003-2499-7741/keywords/1248753",
+          "put-code": 1248753,
+          "display-index": 1
+        }
+      ],
+      "path": "/0000-0003-2499-7741/keywords"
+    },
+    "external-identifiers": {
+      "last-modified-date": {
+        "value": 1668073126312
+      },
+      "external-identifier": [
+        {
+          "created-date": {
+            "value": 1552924111404
+          },
+          "last-modified-date": {
+            "value": 1668073126312
+          },
+          "source": {
+            "source-orcid": null,
+            "source-client-id": {
+              "uri": "https://orcid.org/client/0000-0002-5982-8983",
+              "path": "0000-0002-5982-8983",
+              "host": "orcid.org"
+            },
+            "source-name": {
+              "value": "Scopus - Elsevier"
+            },
+            "assertion-origin-orcid": {
+              "uri": "https://orcid.org/0000-0003-2499-7741",
+              "path": "0000-0003-2499-7741",
+              "host": "orcid.org"
+            },
+            "assertion-origin-client-id": null,
+            "assertion-origin-name": {
+              "value": "Christian Hauschke"
+            }
+          },
+          "external-id-type": "Scopus Author ID",
+          "external-id-value": "57207348664",
+          "external-id-url": {
+            "value": "http://www.scopus.com/inward/authorDetails.url?authorID=57207348664&partnerID=MN8TOARS"
+          },
+          "external-id-relationship": "self",
+          "visibility": "public",
+          "path": "/0000-0003-2499-7741/external-identifiers/1343212",
+          "put-code": 1343212,
+          "display-index": 2
+        },
+        {
+          "created-date": {
+            "value": 1599725069186
+          },
+          "last-modified-date": {
+            "value": 1668073126303
+          },
+          "source": {
+            "source-orcid": null,
+            "source-client-id": {
+              "uri": "https://orcid.org/client/APP-4DPEW6SVSNQHKC8G",
+              "path": "APP-4DPEW6SVSNQHKC8G",
+              "host": "orcid.org"
+            },
+            "source-name": {
+              "value": "Loop"
+            },
+            "assertion-origin-orcid": null,
+            "assertion-origin-client-id": null,
+            "assertion-origin-name": null
+          },
+          "external-id-type": "Loop profile",
+          "external-id-value": "1083848",
+          "external-id-url": {
+            "value": "http://loop.frontiersin.org/people/1083848/overview?referrer=orcid_profile"
+          },
+          "external-id-relationship": "self",
+          "visibility": "public",
+          "path": "/0000-0003-2499-7741/external-identifiers/1803004",
+          "put-code": 1803004,
+          "display-index": 1
+        }
+      ],
+      "path": "/0000-0003-2499-7741/external-identifiers"
+    },
+    "path": "/0000-0003-2499-7741/person"
+  },
+  "activities-summary": {
+    "last-modified-date": {
+      "value": 1690442803432
+    },
+    "distinctions": {
+      "last-modified-date": null,
+      "affiliation-group": [],
+      "path": "/0000-0003-2499-7741/distinctions"
+    },
+    "educations": {
+      "last-modified-date": null,
+      "affiliation-group": [],
+      "path": "/0000-0003-2499-7741/educations"
+    },
+    "employments": {
+      "last-modified-date": {
+        "value": 1635925671916
+      },
+      "affiliation-group": [
+        {
+          "last-modified-date": {
+            "value": 1635187080592
+          },
+          "external-ids": {
+            "external-id": []
+          },
+          "summaries": [
+            {
+              "employment-summary": {
+                "created-date": {
+                  "value": 1499677994658
+                },
+                "last-modified-date": {
+                  "value": 1635187080592
+                },
+                "source": {
+                  "source-orcid": {
+                    "uri": "https://orcid.org/0000-0003-2499-7741",
+                    "path": "0000-0003-2499-7741",
+                    "host": "orcid.org"
+                  },
+                  "source-client-id": null,
+                  "source-name": {
+                    "value": "Christian Hauschke"
+                  },
+                  "assertion-origin-orcid": null,
+                  "assertion-origin-client-id": null,
+                  "assertion-origin-name": null
+                },
+                "put-code": 4238239,
+                "department-name": "Open Science Lab",
+                "role-title": null,
+                "start-date": {
+                  "year": {
+                    "value": "2016"
+                  },
+                  "month": null,
+                  "day": null
+                },
+                "end-date": null,
+                "organization": {
+                  "name": "Technische Informationsbibliothek",
+                  "address": {
+                    "city": "Hannover",
+                    "region": "Niedersachsen",
+                    "country": "DE"
+                  },
+                  "disambiguated-organization": {
+                    "disambiguated-organization-identifier": "28359",
+                    "disambiguation-source": "RINGGOLD"
+                  }
+                },
+                "url": {
+                  "value": "https://tib.eu"
+                },
+                "external-ids": null,
+                "display-index": "1",
+                "visibility": "public",
+                "path": "/0000-0003-2499-7741/employment/4238239"
+              }
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1635925671916
+          },
+          "external-ids": {
+            "external-id": []
+          },
+          "summaries": [
+            {
+              "employment-summary": {
+                "created-date": {
+                  "value": 1394791789384
+                },
+                "last-modified-date": {
+                  "value": 1635925671916
+                },
+                "source": {
+                  "source-orcid": {
+                    "uri": "https://orcid.org/0000-0003-2499-7741",
+                    "path": "0000-0003-2499-7741",
+                    "host": "orcid.org"
+                  },
+                  "source-client-id": null,
+                  "source-name": {
+                    "value": "Christian Hauschke"
+                  },
+                  "assertion-origin-orcid": null,
+                  "assertion-origin-client-id": null,
+                  "assertion-origin-name": null
+                },
+                "put-code": 161734,
+                "department-name": "Library",
+                "role-title": null,
+                "start-date": {
+                  "year": {
+                    "value": "2006"
+                  },
+                  "month": null,
+                  "day": null
+                },
+                "end-date": {
+                  "year": {
+                    "value": "2016"
+                  },
+                  "month": null,
+                  "day": null
+                },
+                "organization": {
+                  "name": "Hochschule Hannover",
+                  "address": {
+                    "city": "Hannover",
+                    "region": "Niedersachsen",
+                    "country": "DE"
+                  },
+                  "disambiguated-organization": {
+                    "disambiguated-organization-identifier": "40242",
+                    "disambiguation-source": "RINGGOLD"
+                  }
+                },
+                "url": null,
+                "external-ids": null,
+                "display-index": "1",
+                "visibility": "public",
+                "path": "/0000-0003-2499-7741/employment/161734"
+              }
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1635925535507
+          },
+          "external-ids": {
+            "external-id": []
+          },
+          "summaries": [
+            {
+              "employment-summary": {
+                "created-date": {
+                  "value": 1635925535507
+                },
+                "last-modified-date": {
+                  "value": 1635925535507
+                },
+                "source": {
+                  "source-orcid": {
+                    "uri": "https://orcid.org/0000-0003-2499-7741",
+                    "path": "0000-0003-2499-7741",
+                    "host": "orcid.org"
+                  },
+                  "source-client-id": null,
+                  "source-name": {
+                    "value": "Christian Hauschke"
+                  },
+                  "assertion-origin-orcid": null,
+                  "assertion-origin-client-id": null,
+                  "assertion-origin-name": null
+                },
+                "put-code": 16275200,
+                "department-name": "ULB",
+                "role-title": null,
+                "start-date": {
+                  "year": {
+                    "value": "2004"
+                  },
+                  "month": null,
+                  "day": null
+                },
+                "end-date": {
+                  "year": {
+                    "value": "2006"
+                  },
+                  "month": null,
+                  "day": null
+                },
+                "organization": {
+                  "name": "Heinrich Heine University Düsseldorf",
+                  "address": {
+                    "city": "Düsseldorf",
+                    "region": null,
+                    "country": "DE"
+                  },
+                  "disambiguated-organization": {
+                    "disambiguated-organization-identifier": "grid.411327.2",
+                    "disambiguation-source": "GRID"
+                  }
+                },
+                "url": null,
+                "external-ids": null,
+                "display-index": "1",
+                "visibility": "public",
+                "path": "/0000-0003-2499-7741/employment/16275200"
+              }
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1635925655390
+          },
+          "external-ids": {
+            "external-id": []
+          },
+          "summaries": [
+            {
+              "employment-summary": {
+                "created-date": {
+                  "value": 1635925655390
+                },
+                "last-modified-date": {
+                  "value": 1635925655390
+                },
+                "source": {
+                  "source-orcid": {
+                    "uri": "https://orcid.org/0000-0003-2499-7741",
+                    "path": "0000-0003-2499-7741",
+                    "host": "orcid.org"
+                  },
+                  "source-client-id": null,
+                  "source-name": {
+                    "value": "Christian Hauschke"
+                  },
+                  "assertion-origin-orcid": null,
+                  "assertion-origin-client-id": null,
+                  "assertion-origin-name": null
+                },
+                "put-code": 16275220,
+                "department-name": "Library",
+                "role-title": null,
+                "start-date": {
+                  "year": {
+                    "value": "2002"
+                  },
+                  "month": null,
+                  "day": null
+                },
+                "end-date": {
+                  "year": {
+                    "value": "2004"
+                  },
+                  "month": null,
+                  "day": null
+                },
+                "organization": {
+                  "name": "Hochschule Magdeburg-Stendal",
+                  "address": {
+                    "city": "Magdeburg",
+                    "region": "Sachsen-Anhalt",
+                    "country": "DE"
+                  },
+                  "disambiguated-organization": {
+                    "disambiguated-organization-identifier": "38905",
+                    "disambiguation-source": "RINGGOLD"
+                  }
+                },
+                "url": null,
+                "external-ids": null,
+                "display-index": "1",
+                "visibility": "public",
+                "path": "/0000-0003-2499-7741/employment/16275220"
+              }
+            }
+          ]
+        }
+      ],
+      "path": "/0000-0003-2499-7741/employments"
+    },
+    "fundings": {
+      "last-modified-date": null,
+      "group": [],
+      "path": "/0000-0003-2499-7741/fundings"
+    },
+    "invited-positions": {
+      "last-modified-date": null,
+      "affiliation-group": [],
+      "path": "/0000-0003-2499-7741/invited-positions"
+    },
+    "memberships": {
+      "last-modified-date": null,
+      "affiliation-group": [],
+      "path": "/0000-0003-2499-7741/memberships"
+    },
+    "peer-reviews": {
+      "last-modified-date": null,
+      "group": [],
+      "path": "/0000-0003-2499-7741/peer-reviews"
+    },
+    "qualifications": {
+      "last-modified-date": null,
+      "affiliation-group": [],
+      "path": "/0000-0003-2499-7741/qualifications"
+    },
+    "research-resources": {
+      "last-modified-date": null,
+      "group": [],
+      "path": "/0000-0003-2499-7741/research-resources"
+    },
+    "services": {
+      "last-modified-date": null,
+      "affiliation-group": [],
+      "path": "/0000-0003-2499-7741/services"
+    },
+    "works": {
+      "last-modified-date": {
+        "value": 1690442803432
+      },
+      "group": [
+        {
+          "last-modified-date": {
+            "value": 1690442698419
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.48550/ARXIV.2301.01502",
+                "external-id-normalized": {
+                  "value": "10.48550/arxiv.2301.01502",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": {
+                  "value": "https://doi.org/10.48550/ARXIV.2301.01502"
+                },
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 139389988,
+              "created-date": {
+                "value": 1690442693476
+              },
+              "last-modified-date": {
+                "value": 1690442698419
+              },
+              "source": {
+                "source-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "source-client-id": null,
+                "source-name": {
+                  "value": "Christian Hauschke"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Enriching the scholarly metadata commons with citation metadata and spatio-temporal metadata to support responsible research assessment and research discovery"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.48550/ARXIV.2301.01502",
+                    "external-id-normalized": {
+                      "value": "10.48550/arxiv.2301.01502",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": {
+                      "value": "https://doi.org/10.48550/ARXIV.2301.01502"
+                    },
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": {
+                "value": "https://arxiv.org/abs/2301.01502"
+              },
+              "type": "preprint",
+              "publication-date": {
+                "year": {
+                  "value": "2023"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": null,
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/139389988",
+              "display-index": "1"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1690442573200
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.5281/zenodo.7458528",
+                "external-id-normalized": {
+                  "value": "10.5281/zenodo.7458528",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 124962901,
+              "created-date": {
+                "value": 1671468685894
+              },
+              "last-modified-date": {
+                "value": 1690442573200
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Synergien und Herausforderungen bei der Integration von Repositorien mit Forschungsinformationssystemen"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/zenodo.7458528",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.7458528",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2022"
+                },
+                "month": {
+                  "value": "12"
+                },
+                "day": {
+                  "value": "19"
+                }
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/124962901",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1668077166662
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.3389/frma.2022.1010504",
+                "external-id-normalized": {
+                  "value": "10.3389/frma.2022.1010504",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": {
+                  "value": "https://doi.org/10.3389/frma.2022.1010504"
+                },
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 122514829,
+              "created-date": {
+                "value": 1668077166662
+              },
+              "last-modified-date": {
+                "value": 1668077166662
+              },
+              "source": {
+                "source-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "source-client-id": null,
+                "source-name": {
+                  "value": "Christian Hauschke"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "ORCID coverage in research institutions"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.3389/frma.2022.1010504",
+                    "external-id-normalized": {
+                      "value": "10.3389/frma.2022.1010504",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": {
+                      "value": "https://doi.org/10.3389/frma.2022.1010504"
+                    },
+                    "external-id-relationship": "self"
+                  },
+                  {
+                    "external-id-type": "issn",
+                    "external-id-value": "2504-0537",
+                    "external-id-normalized": {
+                      "value": "2504-0537",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": {
+                      "value": "https://portal.issn.org/resource/ISSN/2504-0537"
+                    },
+                    "external-id-relationship": "part-of"
+                  }
+                ]
+              },
+              "url": {
+                "value": "http://dx.doi.org/10.3389/frma.2022.1010504"
+              },
+              "type": "journal-article",
+              "publication-date": {
+                "year": {
+                  "value": "2022"
+                },
+                "month": {
+                  "value": "11"
+                },
+                "day": {
+                  "value": "10"
+                }
+              },
+              "journal-title": {
+                "value": "Frontiers in Research Metrics and Analytics"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/122514829",
+              "display-index": "1"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1690442613736
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.3897/rio.8.e82563",
+                "external-id-normalized": {
+                  "value": "10.3897/rio.8.e82563",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": {
+                  "value": "https://doi.org/10.3897/rio.8.e82563"
+                },
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 111359910,
+              "created-date": {
+                "value": 1649825862869
+              },
+              "last-modified-date": {
+                "value": 1690442613736
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-9884-1913",
+                  "path": "0000-0001-9884-1913",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "Crossref"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "FID Civil Engineering, Architecture and Urbanism digital - A platform for science (BAUdigital)"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.3897/rio.8.e82563",
+                    "external-id-normalized": {
+                      "value": "10.3897/rio.8.e82563",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": {
+                      "value": "https://doi.org/10.3897/rio.8.e82563"
+                    },
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": {
+                "value": "https://doi.org/10.3897/rio.8.e82563"
+              },
+              "type": "journal-article",
+              "publication-date": {
+                "year": {
+                  "value": "2022"
+                },
+                "month": {
+                  "value": "04"
+                },
+                "day": {
+                  "value": "06"
+                }
+              },
+              "journal-title": {
+                "value": "Research Ideas and Outcomes"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/111359910",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1690442617984
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.5334/dsj-2022-011",
+                "external-id-normalized": {
+                  "value": "10.5334/dsj-2022-011",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": {
+                  "value": "https://doi.org/10.5334/dsj-2022-011"
+                },
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 111359909,
+              "created-date": {
+                "value": 1649825862317
+              },
+              "last-modified-date": {
+                "value": 1690442617984
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-9884-1913",
+                  "path": "0000-0001-9884-1913",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "Crossref"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Persistent Identification for Conferences"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5334/dsj-2022-011",
+                    "external-id-normalized": {
+                      "value": "10.5334/dsj-2022-011",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": {
+                      "value": "https://doi.org/10.5334/dsj-2022-011"
+                    },
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": {
+                "value": "https://doi.org/10.5334/dsj-2022-011"
+              },
+              "type": "journal-article",
+              "publication-date": {
+                "year": {
+                  "value": "2022"
+                },
+                "month": {
+                  "value": "04"
+                },
+                "day": {
+                  "value": "05"
+                }
+              },
+              "journal-title": {
+                "value": "Data Science Journal"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/111359909",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1690442803432
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.34657/7666",
+                "external-id-normalized": {
+                  "value": "10.34657/7666",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": {
+                  "value": "https://doi.org/10.34657/7666"
+                },
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 139390075,
+              "created-date": {
+                "value": 1690442799121
+              },
+              "last-modified-date": {
+                "value": 1690442803432
+              },
+              "source": {
+                "source-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "source-client-id": null,
+                "source-name": {
+                  "value": "Christian Hauschke"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Wirkungen von Open Access. Literaturstudie über empirische Arbeiten 2010-2021"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.34657/7666",
+                    "external-id-normalized": {
+                      "value": "10.34657/7666",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": {
+                      "value": "https://doi.org/10.34657/7666"
+                    },
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": {
+                "value": "https://oa.tib.eu/renate/handle/123456789/8628"
+              },
+              "type": "report",
+              "publication-date": {
+                "year": {
+                  "value": "2022"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": null,
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/139390075",
+              "display-index": "1"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1631784473289
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.3389/frma.2021.694307",
+                "external-id-normalized": {
+                  "value": "10.3389/frma.2021.694307",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": {
+                  "value": "https://doi.org/10.3389/frma.2021.694307"
+                },
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 100037259,
+              "created-date": {
+                "value": 1631784473289
+              },
+              "last-modified-date": {
+                "value": 1631784473289
+              },
+              "source": {
+                "source-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "source-client-id": null,
+                "source-name": {
+                  "value": "Christian Hauschke"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Enhancing Knowledge Graph Extraction and Validation From Scholarly Publications Using Bibliographic Metadata"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.3389/frma.2021.694307",
+                    "external-id-normalized": {
+                      "value": "10.3389/frma.2021.694307",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": {
+                      "value": "https://doi.org/10.3389/frma.2021.694307"
+                    },
+                    "external-id-relationship": "self"
+                  },
+                  {
+                    "external-id-type": "issn",
+                    "external-id-value": "2504-0537",
+                    "external-id-normalized": {
+                      "value": "2504-0537",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": {
+                      "value": "https://portal.issn.org/resource/ISSN/2504-0537"
+                    },
+                    "external-id-relationship": "part-of"
+                  }
+                ]
+              },
+              "url": {
+                "value": "http://dx.doi.org/10.3389/frma.2021.694307"
+              },
+              "type": "journal-article",
+              "publication-date": {
+                "year": {
+                  "value": "2021"
+                },
+                "month": {
+                  "value": "05"
+                },
+                "day": {
+                  "value": "28"
+                }
+              },
+              "journal-title": {
+                "value": "Frontiers in Research Metrics and Analytics"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/100037259",
+              "display-index": "1"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1654056199132
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.3897/rio.7.e66264",
+                "external-id-normalized": {
+                  "value": "10.3897/rio.7.e66264",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": {
+                  "value": "https://doi.org/10.3897/rio.7.e66264"
+                },
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 92185349,
+              "created-date": {
+                "value": 1618396292353
+              },
+              "last-modified-date": {
+                "value": 1654056199132
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-9884-1913",
+                  "path": "0000-0001-9884-1913",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "Crossref"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Strengthening the Open Access publishing system through open citations and spatiotemporal metadata "
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.3897/rio.7.e66264",
+                    "external-id-normalized": {
+                      "value": "10.3897/rio.7.e66264",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": {
+                      "value": "https://doi.org/10.3897/rio.7.e66264"
+                    },
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": {
+                "value": "https://doi.org/10.3897/rio.7.e66264"
+              },
+              "type": "journal-article",
+              "publication-date": {
+                "year": {
+                  "value": "2021"
+                },
+                "month": {
+                  "value": "04"
+                },
+                "day": {
+                  "value": "14"
+                }
+              },
+              "journal-title": {
+                "value": "Research Ideas and Outcomes"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/92185349",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1654155718889
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.1080/19386389.2021.1999156",
+                "external-id-normalized": {
+                  "value": "10.1080/19386389.2021.1999156",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": {
+                  "value": "https://doi.org/10.1080/19386389.2021.1999156"
+                },
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 102470287,
+              "created-date": {
+                "value": 1635853368599
+              },
+              "last-modified-date": {
+                "value": 1654155718889
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-9884-1913",
+                  "path": "0000-0001-9884-1913",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "Crossref"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Roadmap to FAIR Research Information in Open Infrastructures"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.1080/19386389.2021.1999156",
+                    "external-id-normalized": {
+                      "value": "10.1080/19386389.2021.1999156",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": {
+                      "value": "https://doi.org/10.1080/19386389.2021.1999156"
+                    },
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": {
+                "value": "https://doi.org/10.1080/19386389.2021.1999156"
+              },
+              "type": "journal-article",
+              "publication-date": {
+                "year": {
+                  "value": "2021"
+                },
+                "month": {
+                  "value": "04"
+                },
+                "day": {
+                  "value": "03"
+                }
+              },
+              "journal-title": {
+                "value": "Journal of Library Metadata"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/102470287",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1654058665582
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.5281/zenodo.3900193",
+                "external-id-normalized": {
+                  "value": "10.5281/zenodo.3900193",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              },
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.5281/zenodo.3900192",
+                "external-id-normalized": {
+                  "value": "10.5281/zenodo.3900192",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 75855701,
+              "created-date": {
+                "value": 1592496964129
+              },
+              "last-modified-date": {
+                "value": 1653922270689
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Research Profile Ownership through User Studies: A Case Study in the German National Research System"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/zenodo.3900193",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.3900193",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2020"
+                },
+                "month": {
+                  "value": "06"
+                },
+                "day": {
+                  "value": "18"
+                }
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/75855701",
+              "display-index": "0"
+            },
+            {
+              "put-code": 75855704,
+              "created-date": {
+                "value": 1592496964715
+              },
+              "last-modified-date": {
+                "value": 1653922270709
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Research Profile Ownership through User Studies: A Case Study in the German National Research System"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/zenodo.3900192",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.3900192",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2020"
+                },
+                "month": {
+                  "value": "06"
+                },
+                "day": {
+                  "value": "18"
+                }
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/75855704",
+              "display-index": "0"
+            },
+            {
+              "put-code": 92577507,
+              "created-date": {
+                "value": 1619034440757
+              },
+              "last-modified-date": {
+                "value": 1654058665582
+              },
+              "source": {
+                "source-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "source-client-id": null,
+                "source-name": {
+                  "value": "Christian Hauschke"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Research Profile Ownership through User Studies: A Case Study in the German National Research System"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/zenodo.3900193",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.3900193",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  },
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/zenodo.3900192",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.3900192",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2020"
+                },
+                "month": {
+                  "value": "06"
+                },
+                "day": {
+                  "value": "18"
+                }
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/92577507",
+              "display-index": "-1"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1654058665529
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.5281/zenodo.3896516",
+                "external-id-normalized": {
+                  "value": "10.5281/zenodo.3896516",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              },
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.5281/zenodo.3896517",
+                "external-id-normalized": {
+                  "value": "10.5281/zenodo.3896517",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 75724063,
+              "created-date": {
+                "value": 1592312652672
+              },
+              "last-modified-date": {
+                "value": 1653921516291
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "AEON - Towards an Academic Events Ontology"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/zenodo.3896517",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.3896517",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2020"
+                },
+                "month": {
+                  "value": "06"
+                },
+                "day": {
+                  "value": "16"
+                }
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/75724063",
+              "display-index": "0"
+            },
+            {
+              "put-code": 75724065,
+              "created-date": {
+                "value": 1592312655842
+              },
+              "last-modified-date": {
+                "value": 1653921516298
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "AEON - Towards an Academic Events Ontology"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/zenodo.3896516",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.3896516",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2020"
+                },
+                "month": {
+                  "value": "06"
+                },
+                "day": {
+                  "value": "16"
+                }
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/75724065",
+              "display-index": "0"
+            },
+            {
+              "put-code": 92577498,
+              "created-date": {
+                "value": 1619034440547
+              },
+              "last-modified-date": {
+                "value": 1654058665529
+              },
+              "source": {
+                "source-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "source-client-id": null,
+                "source-name": {
+                  "value": "Christian Hauschke"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "AEON - Towards an Academic Events Ontology"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/zenodo.3896516",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.3896516",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  },
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/zenodo.3896517",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.3896517",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2020"
+                },
+                "month": {
+                  "value": "06"
+                },
+                "day": {
+                  "value": "16"
+                }
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/92577498",
+              "display-index": "-1"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1653784385622
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.31263/voebm.v72i2.2808",
+                "external-id-normalized": {
+                  "value": "10.31263/voebm.v72i2.2808",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": {
+                  "value": "https://doi.org/10.31263/voebm.v72i2.2808"
+                },
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 60859493,
+              "created-date": {
+                "value": 1566502816886
+              },
+              "last-modified-date": {
+                "value": 1579180356294
+              },
+              "source": {
+                "source-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "source-client-id": null,
+                "source-name": {
+                  "value": "Christian Hauschke"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Open Science und die Bibliothek – Aktionsfelder und Berufsbild"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.31263/voebm.v72i2.2808",
+                    "external-id-normalized": {
+                      "value": "10.31263/voebm.v72i2.2808",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": {
+                      "value": "https://doi.org/10.31263/voebm.v72i2.2808"
+                    },
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": {
+                "value": "https://doi.org/10.31263/voebm.v72i2.2808"
+              },
+              "type": "journal-article",
+              "publication-date": {
+                "year": {
+                  "value": "2019"
+                },
+                "month": {
+                  "value": "08"
+                },
+                "day": {
+                  "value": "15"
+                }
+              },
+              "journal-title": {
+                "value": "Mitteilungen der Vereinigung Österreichischer Bibliothekarinnen und Bibliothekare"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/60859493",
+              "display-index": "1"
+            },
+            {
+              "put-code": 60802695,
+              "created-date": {
+                "value": 1566490397748
+              },
+              "last-modified-date": {
+                "value": 1653784385622
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-9884-1913",
+                  "path": "0000-0001-9884-1913",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "Crossref"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Open Science und die Bibliothek – Aktionsfelder und Berufsbild"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.31263/voebm.v72i2.2808",
+                    "external-id-normalized": {
+                      "value": "10.31263/voebm.v72i2.2808",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": {
+                      "value": "https://doi.org/10.31263/voebm.v72i2.2808"
+                    },
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": {
+                "value": "https://doi.org/10.31263/voebm.v72i2.2808"
+              },
+              "type": "journal-article",
+              "publication-date": {
+                "year": {
+                  "value": "2019"
+                },
+                "month": {
+                  "value": "08"
+                },
+                "day": {
+                  "value": "15"
+                }
+              },
+              "journal-title": {
+                "value": "Mitteilungen der Vereinigung Österreichischer Bibliothekarinnen und Bibliothekare"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/60802695",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1653767634721
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.5281/zenodo.3242680",
+                "external-id-normalized": {
+                  "value": "10.5281/zenodo.3242680",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 58319957,
+              "created-date": {
+                "value": 1560186651686
+              },
+              "last-modified-date": {
+                "value": 1653767634721
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "ROSI – Open Metrics for Open Repositories"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/zenodo.3242680",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.3242680",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "conference-poster",
+              "publication-date": {
+                "year": {
+                  "value": "2019"
+                },
+                "month": {
+                  "value": "06"
+                },
+                "day": {
+                  "value": "11"
+                }
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/58319957",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1653767848302
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.5281/zenodo.3243485",
+                "external-id-normalized": {
+                  "value": "10.5281/zenodo.3243485",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 58360914,
+              "created-date": {
+                "value": 1560266850434
+              },
+              "last-modified-date": {
+                "value": 1653767848302
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Registry of [Open] Scientometric Data Sources – Technische Evaluierung von Offenen Datenquellen"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/zenodo.3243485",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.3243485",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "conference-poster",
+              "publication-date": {
+                "year": {
+                  "value": "2019"
+                },
+                "month": {
+                  "value": "06"
+                },
+                "day": {
+                  "value": "05"
+                }
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/58360914",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1653693222145
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "eid",
+                "external-id-value": "2-s2.0-85062469790",
+                "external-id-normalized": {
+                  "value": "2-s2.0-85062469790",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              },
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.1016/j.procs.2019.01.074",
+                "external-id-normalized": {
+                  "value": "10.1016/j.procs.2019.01.074",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 55419283,
+              "created-date": {
+                "value": 1552924113790
+              },
+              "last-modified-date": {
+                "value": 1653693222145
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0002-5982-8983",
+                  "path": "0000-0002-5982-8983",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "Scopus - Elsevier"
+                },
+                "assertion-origin-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": {
+                  "value": "Christian Hauschke"
+                }
+              },
+              "title": {
+                "title": {
+                  "value": "The Research Core Dataset (KDSF) in the Linked Data context"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.1016/j.procs.2019.01.074",
+                    "external-id-normalized": {
+                      "value": "10.1016/j.procs.2019.01.074",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  },
+                  {
+                    "external-id-type": "eid",
+                    "external-id-value": "2-s2.0-85062469790",
+                    "external-id-normalized": {
+                      "value": "2-s2.0-85062469790",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": {
+                "value": "http://www.scopus.com/inward/record.url?eid=2-s2.0-85062469790&partnerID=MN8TOARS"
+              },
+              "type": "conference-paper",
+              "publication-date": {
+                "year": {
+                  "value": "2019"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": {
+                "value": "Procedia Computer Science"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/55419283",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1653784385615
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.3897/rio.4.e31656",
+                "external-id-normalized": {
+                  "value": "10.3897/rio.4.e31656",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": {
+                  "value": "https://doi.org/10.3897/rio.4.e31656"
+                },
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 60802694,
+              "created-date": {
+                "value": 1566490397593
+              },
+              "last-modified-date": {
+                "value": 1653784385615
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-9884-1913",
+                  "path": "0000-0001-9884-1913",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "Crossref"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Reference implementation for open scientometric indicators (ROSI)"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.3897/rio.4.e31656",
+                    "external-id-normalized": {
+                      "value": "10.3897/rio.4.e31656",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": {
+                      "value": "https://doi.org/10.3897/rio.4.e31656"
+                    },
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": {
+                "value": "https://doi.org/10.3897/rio.4.e31656"
+              },
+              "type": "journal-article",
+              "publication-date": {
+                "year": {
+                  "value": "2018"
+                },
+                "month": {
+                  "value": "11"
+                },
+                "day": {
+                  "value": "15"
+                }
+              },
+              "journal-title": {
+                "value": "Research Ideas and Outcomes"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/60802694",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1654058665547
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.5281/ZENODO.1287885",
+                "external-id-normalized": {
+                  "value": "10.5281/zenodo.1287885",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              },
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.5281/ZENODO.1287884",
+                "external-id-normalized": {
+                  "value": "10.5281/zenodo.1287884",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 47336889,
+              "created-date": {
+                "value": 1533935583593
+              },
+              "last-modified-date": {
+                "value": 1653628247525
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Supporting A Vivo Regional Community"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/ZENODO.1287885",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.1287885",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2018"
+                },
+                "month": {
+                  "value": "06"
+                },
+                "day": {
+                  "value": "12"
+                }
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/47336889",
+              "display-index": "0"
+            },
+            {
+              "put-code": 47336890,
+              "created-date": {
+                "value": 1533935583730
+              },
+              "last-modified-date": {
+                "value": 1653628247532
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Supporting A Vivo Regional Community"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/ZENODO.1287884",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.1287884",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2018"
+                },
+                "month": {
+                  "value": "06"
+                },
+                "day": {
+                  "value": "12"
+                }
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/47336890",
+              "display-index": "0"
+            },
+            {
+              "put-code": 92577501,
+              "created-date": {
+                "value": 1619034440631
+              },
+              "last-modified-date": {
+                "value": 1654058665547
+              },
+              "source": {
+                "source-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "source-client-id": null,
+                "source-name": {
+                  "value": "Christian Hauschke"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Supporting A Vivo Regional Community"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/ZENODO.1287884",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.1287884",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  },
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/ZENODO.1287885",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.1287885",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2018"
+                },
+                "month": {
+                  "value": "06"
+                },
+                "day": {
+                  "value": "12"
+                }
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/92577501",
+              "display-index": "-1"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1524730766888
+          },
+          "external-ids": {
+            "external-id": []
+          },
+          "work-summary": [
+            {
+              "put-code": 44039877,
+              "created-date": {
+                "value": 1524730760672
+              },
+              "last-modified-date": {
+                "value": 1524730766888
+              },
+              "source": {
+                "source-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "source-client-id": null,
+                "source-name": {
+                  "value": "Christian Hauschke"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Integrating data from distributed sources via lookup services"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": []
+              },
+              "url": {
+                "value": "https://pro.europeana.eu/page/issue-9-swib"
+              },
+              "type": "journal-article",
+              "publication-date": {
+                "year": {
+                  "value": "2018"
+                },
+                "month": {
+                  "value": "03"
+                },
+                "day": {
+                  "value": "05"
+                }
+              },
+              "journal-title": {
+                "value": "EuropeanaTech Insight"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/44039877",
+              "display-index": "1"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1653755263806
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.6084/M9.FIGSHARE.6465149",
+                "external-id-normalized": {
+                  "value": "10.6084/m9.figshare.6465149",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              },
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.6084/m9.figshare.6465149.v1",
+                "external-id-normalized": {
+                  "value": "10.6084/m9.figshare.6465149.v1",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 47389031,
+              "created-date": {
+                "value": 1533927837272
+              },
+              "last-modified-date": {
+                "value": 1619034602050
+              },
+              "source": {
+                "source-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "source-client-id": null,
+                "source-name": {
+                  "value": "Christian Hauschke"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "User perceptions, feedback, and stories"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.6084/m9.figshare.6465149.v1",
+                    "external-id-normalized": {
+                      "value": "10.6084/m9.figshare.6465149.v1",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  },
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.6084/M9.FIGSHARE.6465149",
+                    "external-id-normalized": {
+                      "value": "10.6084/m9.figshare.6465149",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2018"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": {
+                "value": "Figshare"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/47389031",
+              "display-index": "1"
+            },
+            {
+              "put-code": 47338968,
+              "created-date": {
+                "value": 1533941918377
+              },
+              "last-modified-date": {
+                "value": 1653628261489
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "User perceptions, feedback, and stories.pdf"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.6084/M9.FIGSHARE.6465149",
+                    "external-id-normalized": {
+                      "value": "10.6084/m9.figshare.6465149",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2018"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": {
+                "value": "Figshare"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/47338968",
+              "display-index": "0"
+            },
+            {
+              "put-code": 56090086,
+              "created-date": {
+                "value": 1554372193180
+              },
+              "last-modified-date": {
+                "value": 1653755263806
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "User perceptions, feedback, and stories.pdf"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.6084/m9.figshare.6465149.v1",
+                    "external-id-normalized": {
+                      "value": "10.6084/m9.figshare.6465149.v1",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2018"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": {
+                "value": "Figshare"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/56090086",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1653596716231
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.5281/zenodo.321651",
+                "external-id-normalized": {
+                  "value": "10.5281/zenodo.321651",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 43586124,
+              "created-date": {
+                "value": 1523596563403
+              },
+              "last-modified-date": {
+                "value": 1653596716231
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Umsetzung Des Kdsf-Datenmodells In Vivo"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/zenodo.321651",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.321651",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "conference-poster",
+              "publication-date": {
+                "year": {
+                  "value": "2017"
+                },
+                "month": {
+                  "value": "02"
+                },
+                "day": {
+                  "value": "22"
+                }
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/43586124",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1654058665468
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.5446/30808",
+                "external-id-normalized": {
+                  "value": "10.5446/30808",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              },
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.5281/zenodo.568669",
+                "external-id-normalized": {
+                  "value": "10.5281/zenodo.568669",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              },
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.5281/ZENODO.1464108",
+                "external-id-normalized": {
+                  "value": "10.5281/zenodo.1464108",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 34851868,
+              "created-date": {
+                "value": 1499677637831
+              },
+              "last-modified-date": {
+                "value": 1653509983648
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "VIVO - eine Einführung"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5446/30808",
+                    "external-id-normalized": {
+                      "value": "10.5446/30808",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2017"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": {
+                "value": "Technische Informationsbibliothek (TIB)"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/34851868",
+              "display-index": "0"
+            },
+            {
+              "put-code": 43586132,
+              "created-date": {
+                "value": 1523596564345
+              },
+              "last-modified-date": {
+                "value": 1653596716282
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Vivo - Eine Einführung"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/zenodo.568669",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.568669",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2017"
+                },
+                "month": {
+                  "value": "04"
+                },
+                "day": {
+                  "value": "25"
+                }
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/43586132",
+              "display-index": "0"
+            },
+            {
+              "put-code": 49560800,
+              "created-date": {
+                "value": 1540017846728
+              },
+              "last-modified-date": {
+                "value": 1653643526963
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Vivo - Eine Einführung"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/ZENODO.1464108",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.1464108",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2018"
+                },
+                "month": {
+                  "value": "10"
+                },
+                "day": {
+                  "value": "16"
+                }
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/49560800",
+              "display-index": "0"
+            },
+            {
+              "put-code": 92577490,
+              "created-date": {
+                "value": 1619034440390
+              },
+              "last-modified-date": {
+                "value": 1654058665468
+              },
+              "source": {
+                "source-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "source-client-id": null,
+                "source-name": {
+                  "value": "Christian Hauschke"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Vivo - Eine Einführung"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/ZENODO.1464108",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.1464108",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  },
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/zenodo.568669",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.568669",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  },
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5446/30808",
+                    "external-id-normalized": {
+                      "value": "10.5446/30808",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2018"
+                },
+                "month": {
+                  "value": "10"
+                },
+                "day": {
+                  "value": "16"
+                }
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/92577490",
+              "display-index": "-1"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1653509983661
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.5281/ZENODO.60515",
+                "external-id-normalized": {
+                  "value": "10.5281/zenodo.60515",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 34851871,
+              "created-date": {
+                "value": 1499677653142
+              },
+              "last-modified-date": {
+                "value": 1653509983661
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Output of webXray analysis of German library websites"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/ZENODO.60515",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.60515",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "data-set",
+              "publication-date": {
+                "year": {
+                  "value": "2016"
+                },
+                "month": {
+                  "value": "08"
+                },
+                "day": {
+                  "value": "19"
+                }
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/34851871",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1653438214605
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.11588/IP.2016.1.28559",
+                "external-id-normalized": {
+                  "value": "10.11588/ip.2016.1.28559",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 24267342,
+              "created-date": {
+                "value": 1463944022827
+              },
+              "last-modified-date": {
+                "value": 1653438214605
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Roving Librarians in der Zentralbibliothek der Hochschule Hannover: ein Experiment"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.11588/IP.2016.1.28559",
+                    "external-id-normalized": {
+                      "value": "10.11588/ip.2016.1.28559",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2016"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": {
+                "value": "University Library Heidelberg"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/24267342",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1653453574922
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.11588/IP.2016.2.32678",
+                "external-id-normalized": {
+                  "value": "10.11588/ip.2016.2.32678",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 27053032,
+              "created-date": {
+                "value": 1475076528534
+              },
+              "last-modified-date": {
+                "value": 1490949790471
+              },
+              "source": {
+                "source-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "source-client-id": null,
+                "source-name": {
+                  "value": "Christian Hauschke"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Third-Party-Elemente in deutschen Bibliothekswebseiten"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.11588/IP.2016.2.32678",
+                    "external-id-normalized": {
+                      "value": "10.11588/ip.2016.2.32678",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  },
+                  {
+                    "external-id-type": "issn",
+                    "external-id-value": "2297-3249",
+                    "external-id-normalized": {
+                      "value": "2297-3249",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "part-of"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "journal-article",
+              "publication-date": {
+                "year": {
+                  "value": "2016"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": {
+                "value": "Informationspraxis"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/27053032",
+              "display-index": "1"
+            },
+            {
+              "put-code": 27052968,
+              "created-date": {
+                "value": 1475076159090
+              },
+              "last-modified-date": {
+                "value": 1653453574922
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Third-Party-Elemente in deutschen Bibliothekswebseiten"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.11588/IP.2016.2.32678",
+                    "external-id-normalized": {
+                      "value": "10.11588/ip.2016.2.32678",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2016"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": {
+                "value": "University Library Heidelberg"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/27052968",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1653448634571
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.5281/ZENODO.50969",
+                "external-id-normalized": {
+                  "value": "10.5281/zenodo.50969",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 26073673,
+              "created-date": {
+                "value": 1471346633301
+              },
+              "last-modified-date": {
+                "value": 1653448634571
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "URLs von Webseiten mit Typ Bibliothek aus Lobid.org"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/ZENODO.50969",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.50969",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "data-set",
+              "publication-date": {
+                "year": {
+                  "value": "2016"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/26073673",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1490949790471
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.11588/IP.2015.1.18489",
+                "external-id-normalized": {
+                  "value": "10.11588/ip.2015.1.18489",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 23487553,
+              "created-date": {
+                "value": 1433951264692
+              },
+              "last-modified-date": {
+                "value": 1490949790471
+              },
+              "source": {
+                "source-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "source-client-id": null,
+                "source-name": {
+                  "value": "Christian Hauschke"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Editorial - Willkommen bei der ersten Ausgabe der Informationspraxis!"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.11588/IP.2015.1.18489",
+                    "external-id-normalized": {
+                      "value": "10.11588/ip.2015.1.18489",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  },
+                  {
+                    "external-id-type": "issn",
+                    "external-id-value": "2297-3249",
+                    "external-id-normalized": {
+                      "value": "2297-3249",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "part-of"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "journal-article",
+              "publication-date": {
+                "year": {
+                  "value": "2015"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": {
+                "value": "Informationspraxis"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/23487553",
+              "display-index": "1"
+            },
+            {
+              "put-code": 16866190,
+              "created-date": {
+                "value": 1433926384008
+              },
+              "last-modified-date": {
+                "value": 1490949790471
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Editorial - Willkommen bei der ersten Ausgabe der Informationspraxis!"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.11588/IP.2015.1.18489",
+                    "external-id-normalized": {
+                      "value": "10.11588/ip.2015.1.18489",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2015"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": null,
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/16866190",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1653433645895
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.11588/IP.2015.2.23784",
+                "external-id-normalized": {
+                  "value": "10.11588/ip.2015.2.23784",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 23487572,
+              "created-date": {
+                "value": 1460389835480
+              },
+              "last-modified-date": {
+                "value": 1490949790471
+              },
+              "source": {
+                "source-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "source-client-id": null,
+                "source-name": {
+                  "value": "Christian Hauschke"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Erstellung wiederverwendbarer RDF-Geodaten mit Google Refine"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.11588/IP.2015.2.23784",
+                    "external-id-normalized": {
+                      "value": "10.11588/ip.2015.2.23784",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  },
+                  {
+                    "external-id-type": "issn",
+                    "external-id-value": "2297-3249",
+                    "external-id-normalized": {
+                      "value": "2297-3249",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "part-of"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "journal-article",
+              "publication-date": {
+                "year": {
+                  "value": "2015"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": {
+                "value": "Informationspraxis"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/23487572",
+              "display-index": "2"
+            },
+            {
+              "put-code": 23479204,
+              "created-date": {
+                "value": 1460377307515
+              },
+              "last-modified-date": {
+                "value": 1653433645895
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Erstellung wiederverwendbarer RDF-Geodaten mit Google Refine"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.11588/IP.2015.2.23784",
+                    "external-id-normalized": {
+                      "value": "10.11588/ip.2015.2.23784",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2015"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": {
+                "value": "University Library Heidelberg"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/23479204",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1653438214610
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.5281/ZENODO.30992",
+                "external-id-normalized": {
+                  "value": "10.5281/zenodo.30992",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 24267343,
+              "created-date": {
+                "value": 1463944023257
+              },
+              "last-modified-date": {
+                "value": 1653438214610
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "VIVO an der Hochschule Hannover - Beispiel: Forschungsprojekte"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/ZENODO.30992",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.30992",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2015"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/24267343",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1653453574928
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "http://dx.doi.org/10.5281/zenodo.13101",
+                "external-id-normalized": {
+                  "value": "10.5281/zenodo.13101",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 14678424,
+              "created-date": {
+                "value": 1417724323838
+              },
+              "last-modified-date": {
+                "value": 1619034628305
+              },
+              "source": {
+                "source-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "source-client-id": null,
+                "source-name": {
+                  "value": "Christian Hauschke"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Geodata"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "http://dx.doi.org/10.5281/zenodo.13101",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.13101",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "data-set",
+              "publication-date": {
+                "year": {
+                  "value": "2014"
+                },
+                "month": {
+                  "value": "12"
+                },
+                "day": {
+                  "value": "04"
+                }
+              },
+              "journal-title": null,
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/14678424",
+              "display-index": "0"
+            },
+            {
+              "put-code": 27052970,
+              "created-date": {
+                "value": 1475076171060
+              },
+              "last-modified-date": {
+                "value": 1653453574928
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "geodata: Populated places for VIVO"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.5281/ZENODO.13101",
+                    "external-id-normalized": {
+                      "value": "10.5281/zenodo.13101",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "data-set",
+              "publication-date": {
+                "year": {
+                  "value": "2014"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": {
+                "value": "Zenodo"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/27052970",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1653347370344
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.2314/COSCV1",
+                "external-id-normalized": {
+                  "value": "10.2314/coscv1",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 13164316,
+              "created-date": {
+                "value": 1405596975989
+              },
+              "last-modified-date": {
+                "value": 1653347370344
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "CoScience - Gemeinsam forschen und publizieren mit dem Netz"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.2314/COSCV1",
+                    "external-id-normalized": {
+                      "value": "10.2314/coscv1",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2014"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": {
+                "value": "Technische Informationsbibliothek (TIB), Hannover"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/13164316",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1490949790471
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.6084/M9.FIGSHARE.647329",
+                "external-id-normalized": {
+                  "value": "10.6084/m9.figshare.647329",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 13164317,
+              "created-date": {
+                "value": 1405596989631
+              },
+              "last-modified-date": {
+                "value": 1490949790471
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Members of Deutscher Bibliotheksverband e. V. (dbv)"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.6084/M9.FIGSHARE.647329",
+                    "external-id-normalized": {
+                      "value": "10.6084/m9.figshare.647329",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "data-set",
+              "publication-date": {
+                "year": {
+                  "value": "2013"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": null,
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/13164317",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1490949790471
+          },
+          "external-ids": {
+            "external-id": []
+          },
+          "work-summary": [
+            {
+              "put-code": 7912392,
+              "created-date": {
+                "value": 1365066232078
+              },
+              "last-modified-date": {
+                "value": 1490949790471
+              },
+              "source": {
+                "source-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "source-client-id": null,
+                "source-name": {
+                  "value": "Christian Hauschke"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Lernen 2.0"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": null,
+              "url": {
+                "value": "http://nbn-resolving.de/urn:nbn:de:bsz:960-opus-3677"
+              },
+              "type": "journal-article",
+              "publication-date": {
+                "year": {
+                  "value": "2010"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": null,
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/7912392",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1653509984043
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.18452/8872",
+                "external-id-normalized": {
+                  "value": "10.18452/8872",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 34851912,
+              "created-date": {
+                "value": 1499677688563
+              },
+              "last-modified-date": {
+                "value": 1653509984043
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0001-8099-6984",
+                  "path": "0000-0001-8099-6984",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "DataCite"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Libworld. Biblioblogs global"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.18452/8872",
+                    "external-id-normalized": {
+                      "value": "10.18452/8872",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": {
+                "year": {
+                  "value": "2007"
+                },
+                "month": {
+                  "value": "11"
+                },
+                "day": {
+                  "value": "01"
+                }
+              },
+              "journal-title": {
+                "value": "Humboldt-Universität zu Berlin"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/34851912",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1653492414232
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "eid",
+                "external-id-value": "2-s2.0-85011165245",
+                "external-id-normalized": {
+                  "value": "2-s2.0-85011165245",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              },
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.1080/00048623.2006.10755322",
+                "external-id-normalized": {
+                  "value": "10.1080/00048623.2006.10755322",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 10866944,
+              "created-date": {
+                "value": 1385461585022
+              },
+              "last-modified-date": {
+                "value": 1619034643949
+              },
+              "source": {
+                "source-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "source-client-id": null,
+                "source-name": {
+                  "value": "Christian Hauschke"
+                },
+                "assertion-origin-orcid": null,
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": null
+              },
+              "title": {
+                "title": {
+                  "value": "Teaching Information Literacy with the Lerninformationssystem"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.1080/00048623.2006.10755322",
+                    "external-id-normalized": {
+                      "value": "10.1080/00048623.2006.10755322",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": {
+                "value": "http://nbn-resolving.de/urn:nbn:de:bsz:960-opus-10"
+              },
+              "type": "journal-article",
+              "publication-date": {
+                "year": {
+                  "value": "2006"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": {
+                "value": "Australian Academic & Research Libraries"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/10866944",
+              "display-index": "0"
+            },
+            {
+              "put-code": 31520163,
+              "created-date": {
+                "value": 1490949803354
+              },
+              "last-modified-date": {
+                "value": 1653492414232
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0002-5982-8983",
+                  "path": "0000-0002-5982-8983",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "Scopus - Elsevier"
+                },
+                "assertion-origin-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": {
+                  "value": "Christian Hauschke"
+                }
+              },
+              "title": {
+                "title": {
+                  "value": "Teaching information literacy with the lerninformationssystem"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.1080/00048623.2006.10755322",
+                    "external-id-normalized": {
+                      "value": "10.1080/00048623.2006.10755322",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  },
+                  {
+                    "external-id-type": "eid",
+                    "external-id-value": "2-s2.0-85011165245",
+                    "external-id-normalized": {
+                      "value": "2-s2.0-85011165245",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": {
+                "value": "http://www.scopus.com/inward/record.url?eid=2-s2.0-85011165245&partnerID=MN8TOARS"
+              },
+              "type": "journal-article",
+              "publication-date": {
+                "year": {
+                  "value": "2006"
+                },
+                "month": null,
+                "day": null
+              },
+              "journal-title": {
+                "value": "Australian Academic and Research Libraries"
+              },
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/31520163",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1490949790471
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "isbn",
+                "external-id-value": "9783110278736",
+                "external-id-normalized": {
+                  "value": "9783110278736",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              },
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.1515/9783110278736.232",
+                "external-id-normalized": {
+                  "value": "10.1515/9783110278736.232",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 10424989,
+              "created-date": {
+                "value": 1383049536834
+              },
+              "last-modified-date": {
+                "value": 1490949790471
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0002-3054-1567",
+                  "path": "0000-0002-3054-1567",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "Crossref Metadata Search"
+                },
+                "assertion-origin-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": {
+                  "value": "Christian Hauschke"
+                }
+              },
+              "title": {
+                "title": {
+                  "value": "Empfehlungen zur Öffnung bibliothekarischer Daten v.1.0 veröffentlicht am 31. Oktober 2011"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.1515/9783110278736.232",
+                    "external-id-normalized": {
+                      "value": "10.1515/9783110278736.232",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  },
+                  {
+                    "external-id-type": "isbn",
+                    "external-id-value": "9783110278736",
+                    "external-id-normalized": {
+                      "value": "9783110278736",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "other",
+              "publication-date": null,
+              "journal-title": null,
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/10424989",
+              "display-index": "0"
+            }
+          ]
+        },
+        {
+          "last-modified-date": {
+            "value": 1490949790471
+          },
+          "external-ids": {
+            "external-id": [
+              {
+                "external-id-type": "doi",
+                "external-id-value": "10.1515/bd.2006.40.4.466",
+                "external-id-normalized": {
+                  "value": "10.1515/bd.2006.40.4.466",
+                  "transient": true
+                },
+                "external-id-normalized-error": null,
+                "external-id-url": null,
+                "external-id-relationship": "self"
+              }
+            ]
+          },
+          "work-summary": [
+            {
+              "put-code": 10424878,
+              "created-date": {
+                "value": 1383049436501
+              },
+              "last-modified-date": {
+                "value": 1490949790471
+              },
+              "source": {
+                "source-orcid": null,
+                "source-client-id": {
+                  "uri": "https://orcid.org/client/0000-0002-3054-1567",
+                  "path": "0000-0002-3054-1567",
+                  "host": "orcid.org"
+                },
+                "source-name": {
+                  "value": "Crossref Metadata Search"
+                },
+                "assertion-origin-orcid": {
+                  "uri": "https://orcid.org/0000-0003-2499-7741",
+                  "path": "0000-0003-2499-7741",
+                  "host": "orcid.org"
+                },
+                "assertion-origin-client-id": null,
+                "assertion-origin-name": {
+                  "value": "Christian Hauschke"
+                }
+              },
+              "title": {
+                "title": {
+                  "value": "Informationsvermittlung: Personalisiertes Lernen in der Bibliothek: das Düsseldorfer Online-Tutorial (DOT) Informationskompetenz"
+                },
+                "subtitle": null,
+                "translated-title": null
+              },
+              "external-ids": {
+                "external-id": [
+                  {
+                    "external-id-type": "doi",
+                    "external-id-value": "10.1515/bd.2006.40.4.466",
+                    "external-id-normalized": {
+                      "value": "10.1515/bd.2006.40.4.466",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "self"
+                  },
+                  {
+                    "external-id-type": "issn",
+                    "external-id-value": "2194-9646",
+                    "external-id-normalized": {
+                      "value": "2194-9646",
+                      "transient": true
+                    },
+                    "external-id-normalized-error": null,
+                    "external-id-url": null,
+                    "external-id-relationship": "part-of"
+                  }
+                ]
+              },
+              "url": null,
+              "type": "journal-article",
+              "publication-date": null,
+              "journal-title": null,
+              "visibility": "public",
+              "path": "/0000-0003-2499-7741/work/10424878",
+              "display-index": "0"
+            }
+          ]
+        }
+      ],
+      "path": "/0000-0003-2499-7741/works"
+    },
+    "path": "/0000-0003-2499-7741/activities"
+  },
+  "path": "/0000-0003-2499-7741"
+}

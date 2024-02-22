@@ -1,27 +1,38 @@
 {
-  "name": "optimeta/citations",
-  "description": "Create and extract citation data and transfer to open access data sources",
-  "license": "GPL-3.0-or-later",
-  "keywords": [
-    "Optimeta",
-    "Citations"
-  ],
-  "repositories": [
+  "name": "ojs/citationmanager",
+  "description": "OJS plugin which extracts and enriches citation data and deposits to external open access data services",
+  "type": "project",
+  "license": "GPL-3.0 license",
+  "authors": [
     {
-      "type": "vcs",
-      "url": "https://github.com/tibhannover/optimeta-plugin-shared.git"
+      "name": "GaziYucel",
+      "email": "GaziYucel@users.noreply.github.com"
     }
   ],
-  "require": {
-    "php": ">=7.3",
-    "tibhannover/optimeta": "dev-main"
-  },
+  "keywords": [
+    "ojs",
+    "citationmanager",
+    "citations",
+    "publishing",
+    "metadata",
+    "research",
+    "communication",
+    "open",
+    "science"
+  ],
   "autoload": {
     "classmap": [
       "classes/"
     ]
   },
-  "config": {},
-  "minimum-stability": "dev",
-  "prefer-stable": true
+  "autoload-dev": {
+    "classmap": [
+      "tests/classes",
+      "classes/"
+    ]
+  },
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=8.0"
+  }
 }

@@ -1,7 +1,6 @@
 {
-  "name": "optimetacitations",
-  "version": "1.0.0",
-  "description": "OJS plugin enhancing citation metadata",
+  "name": "citationmanager",
+  "description": "OJS plugin which extracts and enriches citation data and deposits to external open access data services",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -23,10 +22,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TIBHannover/optimetaCitations.git"
+    "url": "git+https://github.com/TIBHannover/citationManager.git"
   },
   "keywords": [
-    "OJS",
+    "ojs",
+    "citationmanager",
+    "citations",
     "publishing",
     "metadata",
     "research",
@@ -37,9 +38,9 @@
   "author": "Daniel Nüst",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/TIBHannover/optimetaCitations/issues"
+    "url": "https://github.com/TIBHannover/citationManager/issues"
   },
-  "homepage": "https://github.com/TIBHannover/optimetaCitations#readme",
+  "homepage": "https://github.com/TIBHannover/citationManager#readme",
   "jshintConfig": {
     "expr": true,
     "esversion": 6

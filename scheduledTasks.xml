@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
-  * TaskScheduler.xml
+  * @file TaskScheduler.xml
   *
-  * Copyright (c) 2021+ TIB Hannover
-  * Copyright (c) 2021+ Gazi Yucel
-  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+  * @copyright (c) 2021+ TIB Hannover
+  * @copyright (c) 2021+ Gazi Yücel
+  * @license Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
   *
-  * OptimetaCitationsPlugin Task Scheduler
-  *
-  * This file describes the scheduled task that will submit citations to external OA websites
+  * @class CitationManagerPlugin-Task-Scheduler
+  * @brief This file describes the scheduled task that will submit citations to external OA websites
   *
   -->
 <!DOCTYPE scheduled_tasks SYSTEM "../../../lib/pkp/dtd/scheduledTasks.dtd">
 <scheduled_tasks>
-	<task class="plugins.generic.optimetaCitations.classes.ScheduledTasks.DepositorTask">
-		<descr>Submit citations to external Open Access Websites</descr>
-		<frequency dayofweek="*" month="*" day="*" hour="*" minute="*/15" />
-	</task>
+    <task class="\APP\plugins\generic\citationManager\classes\ScheduledTasks\ProcessTask">
+        <descr>Submit citations to external Open Access Websites</descr>
+        <frequency dayofweek="*" month="*" day="*" hour="*" minute="*/15"/>
+    </task>
+    <task class="\APP\plugins\generic\citationManager\classes\ScheduledTasks\DepositTask">
+        <descr>Submit citations to external Open Access Websites</descr>
+        <frequency dayofweek="*" month="*" day="*" hour="*" minute="*/15"/>
+    </task>
 </scheduled_tasks>

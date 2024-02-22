@@ -1,0 +1,34 @@
+/**
+ * @file assets/css/frontend.css
+ *
+ * @copyright (c) 2021+ TIB Hannover
+ * @copyright (c) 2021+ Gazi Yücel
+ * @license Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @style citationManager
+ * @brief Frontend stylesheet for the plugin.
+ */
+
+.citationManager-Button {
+    display: inline-block;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0 .5em;
+    line-height: 20px;
+}
+
+.citationManager-Button span {
+    display: block;
+}
+
+.citationManager-ButtonGreen {
+    background-color: #60a917;
+}
+
+.citationManager-ButtonGrey {
+    background-color: #cccccc;
+}
+
+.citationManager-ButtonRed {
+    background-color: #00ffff;
+}

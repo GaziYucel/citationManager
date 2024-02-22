@@ -1,12 +1,11 @@
 /**
  * @file cypress/e2e/integration/10-installation.cy.js
  *
- * Copyright (c) 2022 OPTIMETA project
- * Copyright (c) 2022 Daniel Nüst, Gazi Yücel
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ * @copyright (c) 2022 Gazi Yücel
+ * @copyright (c) 2022 Daniel Nüst
+ * @license Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * Based on file cypress/tests/data/10-Installation.spec.js
- *
+ * @brief
  */
 
 describe('Install OJS and configure journal, issue and users', function () {

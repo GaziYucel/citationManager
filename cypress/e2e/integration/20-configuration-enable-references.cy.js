@@ -1,10 +1,11 @@
 /**
  * @file cypress/e2e/integration/20-configuration-enable-references.cy.js
  *
- * Copyright (c) 2022 OPTIMETA project
- * Copyright (c) 2022 Daniel Nüst, Gazi Yücel
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ * @copyright (c) 2022 Gazi Yücel
+ * @copyright (c) 2022 Daniel Nüst
+ * @license Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
+ * @brief
  */
 
 describe('Enable builtin references', function () {

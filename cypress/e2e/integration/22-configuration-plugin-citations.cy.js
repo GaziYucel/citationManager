@@ -1,13 +1,14 @@
 /**
  * @file cypress/e2e/integration/22-configuration-plugin-citations.cy.js
  *
- * Copyright (c) 2022 OPTIMETA project
- * Copyright (c) 2022 Daniel Nüst, Gazi Yücel
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ * @copyright (c) 2022 Gazi Yücel
+ * @copyright (c) 2022 Daniel Nüst
+ * @license Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
+ * @brief
  */
 
-describe('OPTIMETA Citations Plugin Configuration', function () {
+describe('Citation Manager Plugin Configuration', function () {
 
     it('Disable Plugin', function () {
         cy.login('admin');
@@ -21,15 +22,15 @@ describe('OPTIMETA Citations Plugin Configuration', function () {
         cy.wait(2000);
 
         // disable plugin if enabled
-        cy.get('input[id^="select-cell-optimetacitationsplugin-enabled"]')
+        cy.get('input[id^="select-cell-CitationManagerPlugin-enabled"]')
             .then($btn => {
                 if ($btn.attr('checked') === 'checked') {
-                    cy.get('input[id^="select-cell-optimetacitationsplugin-enabled"]').uncheck();
+                    cy.get('input[id^="select-cell-CitationManagerPlugin-enabled"]').uncheck();
                     cy.get('div[class*="pkp_modal_panel"] button[class*="pkpModalConfirmButton"]').click();
                     cy.wait(1000);
 
                     // check if disabled
-                    cy.get('div:contains(\'The plugin "Optimeta Citations Plugin" has been disabled.\')');
+                    cy.get('div:contains(\'The plugin "Citation Manager Plugin" has been disabled.\')');
                 }
             });
     });
@@ -46,11 +47,11 @@ describe('OPTIMETA Citations Plugin Configuration', function () {
         cy.wait(2000);
 
         // Find and enable the plugin
-        cy.get('input[id^="select-cell-optimetacitationsplugin-enabled"]').check();
+        cy.get('input[id^="select-cell-CitationManagerPlugin-enabled"]').check();
         cy.wait(1000);
 
         // check if enabled
-        cy.get('div:contains(\'The plugin "Optimeta Citations Plugin" has been enabled.\')');
+        cy.get('div:contains(\'The plugin "Citation Manager Plugin" has been enabled.\')');
     });
 
     it('Configure Plugin', function () {
@@ -64,27 +65,27 @@ describe('OPTIMETA Citations Plugin Configuration', function () {
         cy.wait(2000);
 
         // Open the settings form
-        cy.get('tr[id="component-grid-settings-plugins-settingsplugingrid-category-generic-row-optimetacitationsplugin"] a[class="show_extras"]').click();
-        cy.get('a[id^="component-grid-settings-plugins-settingsplugingrid-category-generic-row-optimetacitationsplugin-settings-button"]').click();
+        cy.get('tr[id="component-grid-settings-plugins-settingsplugingrid-category-generic-row-CitationManagerPlugin"] a[class="show_extras"]').click();
+        cy.get('a[id^="component-grid-settings-plugins-settingsplugingrid-category-generic-row-CitationManagerPlugin-settings-button"]').click();
 
         // Fill out settings form
 
         // Open Citations
-        cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Open_Citations_Owner"]')
+        cy.get('form[id="citationManagerSettings"] input[name^="CitationManager_OpenCitations_Owner"]')
             .clear().type(Cypress.env("OPEN_CITATIONS_OWNER"));
-        cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Open_Citations_Repository"]')
+        cy.get('form[id="citationManagerSettings"] input[name^="CitationManager_OpenCitations_Repository"]')
             .clear().type(Cypress.env("OPEN_CITATIONS_REPOSITORY"));
-        cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Open_Citations_Token"]')
+        cy.get('form[id="citationManagerSettings"] input[name^="CitationManager_OpenCitations_Token"]')
             .clear().type(Cypress.env("GITHUB_TOKEN"));
 
         // Wikidata
-        cy.get('form[id="optimetaCitationsSettings"] input[name^="OptimetaCitations_Wikidata_Username"]')
+        cy.get('form[id="citationManagerSettings"] input[name^="CitationManager_Wikidata_Username"]')
             .clear().type('wikidata-username');
-        cy.get('form[id="optimetaCitationsSettings"] input[name="OptimetaCitations_Wikidata_Password"]')
+        cy.get('form[id="citationManagerSettings"] input[name="CitationManager_Wikidata_Password"]')
             .clear().type('wikidata-password');
 
         // submit settings form
-        cy.get('form[id="optimetaCitationsSettings"] button[id^="submitFormButton"]').click();
+        cy.get('form[id="citationManagerSettings"] button[id^="submitFormButton"]').click();
     });
 
     it('Has the citations management UI in the third submissions step', function () {
@@ -110,7 +111,7 @@ describe('OPTIMETA Citations Plugin Configuration', function () {
         cy.wait(2000);
 
         // checking contents
-        cy.get('#optimetaCitations').should('exist');
+        cy.get('#citationManager').should('exist');
     });
 
 });

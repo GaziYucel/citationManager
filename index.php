@@ -1,17 +1,15 @@
 <?php
 /**
- * @file plugins/generic/optimetaCitations/index.php
+ * @file index.php
  *
  * Copyright (c) 2021+ TIB Hannover
- * Copyright (c) 2021+ Gazi Yucel
+ * Copyright (c) 2021+ Gazi Yücel
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class OptimetaCitationsPlugin
- * @ingroup plugins_generic_optimetacitations
- *
- * @brief Wrapper for the OptimetaCitations plugin.
+ * @class CitationManagerPlugin
+ * @brief Wrapper for the CitationManager plugin.
  */
 
-require_once('OptimetaCitationsPlugin.inc.php');
+require_once('CitationManagerPlugin.php');
 
-return new OptimetaCitationsPlugin();
+return new CitationManagerPlugin();

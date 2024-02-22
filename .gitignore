@@ -1,10 +1,11 @@
-# PHPStorm
+# phpstorm
 .idea/**
 
-# Visual Studio Code
+# vscode
 .vscode/**
 
 # node_modules
 node_modules/**
 
-cypress/logs/
+# cypress logs
+cypress/logs/**

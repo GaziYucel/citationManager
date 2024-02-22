@@ -1,10 +1,11 @@
 /**
  * @file cypress/e2e/integration/30-submission.cy.js
  *
- * Copyright (c) 2022 OPTIMETA project
- * Copyright (c) 2022 Daniel Nüst, Gazi Yücel
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ * @copyright (c) 2022 Gazi Yücel
+ * @copyright (c) 2022 Daniel Nüst
+ * @license Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
+ * @brief
  */
 
 describe('Submission, enrich and deposit', function () {
@@ -14,10 +15,10 @@ describe('Submission, enrich and deposit', function () {
     before(function () {
         submission = {
             id: 0,
-            prefix: 'OPTIMETA',
+            prefix: 'OJSCitationManager',
             title: 'Strengthening the Open Access publishing system through open citations and spatiotemporal metadata',
             subtitle: 'open access publishing, open research information, geospatial metadata, open citations',
-            abstract: 'The BMBF project OPTIMETA aims to strengthen the Open Access publishing system by connecting open citations and spatiotemporal metadata from open access journals with openly accessible data sources. For this purpose, we will extend Open Journal Systems (OJS) to give it functionalities for collecting and distributing open data by developing two OJS plugins for capturing citation networks and articles\' spatial and temporal properties as machine-readable and accessible metadata. We will ensure the target group-orientated design of the plugins by performing a comprehensive needs analysis for key stakeholders: the editors or operators of OA journals and the researchers, as authors and readers of articles. The developments will be designed and tested in cooperation with several independent journals and OA publishers. Overall, OPTIMETA supports the attraction of independent OA journals as publication venues by substantially improving the discoverability and visibility of OA publications through enrichment and interlinking of article metadata.',
+            abstract: 'The BMBF project aims to strengthen the Open Access publishing system by connecting open citations and spatiotemporal metadata from open access journals with openly accessible data sources. For this purpose, we will extend Open Journal Systems (OJS) to give it functionalities for collecting and distributing open data by developing two OJS plugins for capturing citation networks and articles\' spatial and temporal properties as machine-readable and accessible metadata. We will ensure the target group-orientated design of the plugins by performing a comprehensive needs analysis for key stakeholders: the editors or operators of OA journals and the researchers, as authors and readers of articles. The developments will be designed and tested in cooperation with several independent journals and OA publishers. Overall, supports the attraction of independent OA journals as publication venues by substantially improving the discoverability and visibility of OA publications through enrichment and interlinking of article metadata.',
             issue: '1'
         };
     });
@@ -91,7 +92,7 @@ describe('Submission, enrich and deposit', function () {
         cy.get('#buttonProcess').click();
         cy.on('window:confirm', () => true);
         cy.wait(10000);
-        cy.get('.optimetaRow').should('have.length', 3);
+        cy.get('.citationManagerRow').should('have.length', 3);
         cy.wait(2000);
 
         // Save and continue
@@ -205,10 +206,10 @@ describe('Submission, enrich and deposit', function () {
         cy.wait(2000);
 
         // Select tab Citations > Deposit
-        cy.get('button#optimetaCitations-button').click();
+        cy.get('button#citationManager-button').click();
 
-        // remove class "optimetaDisabled" from #buttonDeposit
-        cy.get('#buttonDeposit').invoke('removeClass', 'optimetaDisabled');
+        // remove class "citationManagerDisabled" from #buttonDeposit
+        cy.get('#buttonDeposit').invoke('removeClass', 'citationManagerDisabled');
 
         // click #buttonDeposit and confirm
         cy.get('#buttonDeposit').click();
