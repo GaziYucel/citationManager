@@ -11,24 +11,18 @@
  */
 
 // todo: show citation manager tab only if $canAccessPublication && $metadataEnabled
-// todo: wikidata labels / titles multiple locales
 
 namespace APP\plugins\generic\citationManager;
 
-if (!CitationManagerPlugin::isTestMode) {
-    require_once(__DIR__ . '/vendor/autoload.php');
-} else {
-    require_once(__DIR__ . '/classes/Helpers/TestsHelper.php');
-    \APP\plugins\generic\citationManager\classes\Helpers\TestsHelper::overrideClasses();
-}
+require_once(__DIR__ . '/vendor/autoload.php');
 
-use APP\core\Request;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\AuthorModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\PublicationMetadata;
 use APP\plugins\generic\citationManager\classes\Db\PluginSchema;
 use APP\plugins\generic\citationManager\classes\FrontEnd\ArticleView;
 use APP\plugins\generic\citationManager\classes\Handlers\PluginAPIHandler;
 use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
+use APP\plugins\generic\citationManager\classes\Helpers\LogHelper;
 use APP\plugins\generic\citationManager\classes\PID\Doi;
 use APP\plugins\generic\citationManager\classes\PID\GitHubIssue;
 use APP\plugins\generic\citationManager\classes\PID\OpenAlex;
@@ -39,9 +33,10 @@ use APP\plugins\generic\citationManager\classes\Settings\Manage;
 use APP\plugins\generic\citationManager\classes\Workflow\SubmissionWizard;
 use APP\plugins\generic\citationManager\classes\Workflow\WorkflowSave;
 use APP\plugins\generic\citationManager\classes\Workflow\WorkflowTab;
+use Application;
+use Config;
 use PKP\core\APIRouter;
 use PKP\core\JSONMessage;
-use PKP\core\PKPApplication;
 use PKP\plugins\GenericPlugin;
 use PKP\plugins\Hook;
 use Throwable;
@@ -57,7 +52,7 @@ class CitationManagerPlugin extends GenericPlugin
     /** @var string Key for the publication metadata saved in publication */
     public const CITATION_MANAGER_METADATA_PUBLICATION = CITATION_MANAGER_PLUGIN_NAME . '_MetadataPublication';
     /** @var string Key for the author metadata saved in author */
-    public const CITATION_MANAGER_METADATA_AUTHORS = CITATION_MANAGER_PLUGIN_NAME . '_MetadataAuthors';
+    public const CITATION_MANAGER_METADATA_AUTHOR = CITATION_MANAGER_PLUGIN_NAME . '_MetadataAuthor';
     /** @var string Key for structured citations saved in publications */
     public const CITATION_MANAGER_CITATIONS_STRUCTURED = CITATION_MANAGER_PLUGIN_NAME . '_CitationsStructured';
     /** @var string Key used for the form used in workflow and submission wizard */
@@ -72,10 +67,11 @@ class CitationManagerPlugin extends GenericPlugin
     public const CITATION_MANAGER_OPEN_CITATIONS_REPOSITORY = CITATION_MANAGER_PLUGIN_NAME . '_OpenCitations_Repository';
     /** @var string GitHub APi token used for Open Citations */
     public const CITATION_MANAGER_OPEN_CITATIONS_TOKEN = CITATION_MANAGER_PLUGIN_NAME . '_OpenCitations_Token';
+
     /** @var true Whether debugging mode is activated, careful with exposing secrets! */
     public const isDebugMode = true;
     /** @var true Whether testing mode. If this is enabled, classes in "tests/classes" are used. */
-    public const isTestMode = true;
+    private bool $isTestMode = true;
     /** @var array These are parameters which are used in templates in the front en backend. @see initPlugin() */
     public array $templateParameters = [];
 
@@ -84,54 +80,47 @@ class CitationManagerPlugin extends GenericPlugin
     {
         if (parent::register($category, $path, $mainContextId)) {
 
-            Hook::add('Installer::postInstall', [$this, 'updateSchema']);
-
             if ($this->getEnabled()) {
 
-                Hook::add('AcronPlugin::parseCronTab', function (string $hookName, array $args) {
+                Hook::add('AcronPlugin::parseCronTab', function ($hookName, $args) {
                     $taskFilesPath =& $args[0];
                     $taskFilesPath[] = $this->getPluginPath() . DIRECTORY_SEPARATOR . 'scheduledTasks.xml';
                     return false;
                 });
 
                 $pluginSchema = new PluginSchema();
-                Hook::add('Schema::get::context', function (string $hookName, array $args) use ($pluginSchema) {
-                    $pluginSchema->addToSchemaContext($hookName, $args);
-                });
-                Hook::add('Schema::get::publication', function (string $hookName, array $args) use ($pluginSchema) {
+                Hook::add('Schema::get::publication', function ($hookName, $args) use ($pluginSchema) {
                     $pluginSchema->addToSchemaPublication($hookName, $args);
                 });
-                Hook::add('Schema::get::author', function (string $hookName, array $args) use ($pluginSchema) {
+                Hook::add('Schema::get::author', function ($hookName, $args) use ($pluginSchema) {
                     $pluginSchema->addToSchemaAuthor($hookName, $args);
                 });
 
                 $this->initPlugin($category, $path, $mainContextId);
 
                 $submissionWizard = new SubmissionWizard($this);
-                Hook::add('Template::SubmissionWizard::Section', function (string $hookName, array $args) use ($submissionWizard) {
+                Hook::add('Template::SubmissionWizard::Section', function ($hookName, $args) use ($submissionWizard) {
                     $submissionWizard->execute($hookName, $args);
                 });
 
                 $workflowTab = new WorkflowTab($this);
-                Hook::add('Template::Workflow', function (string $hookName, array $args) use ($workflowTab) {
+                Hook::add('Template::Workflow', function ($hookName, $args) use ($workflowTab) {
                     $workflowTab->execute($hookName, $args);
                 });
 
                 $workflowSave = new WorkflowSave($this);
-                Hook::add('Publication::edit', function (string $hookName, array $args) use ($workflowSave) {
+                Hook::add('Publication::edit', function ($hookName, $args) use ($workflowSave) {
                     $workflowSave->execute($hookName, $args);
                 });
 
                 $articlePage = new ArticleView($this);
-                Hook::add('TemplateManager::display', function (string $hookName, array $args) use ($articlePage) {
+                Hook::add('TemplateManager::display', function ($hookName, $args) use ($articlePage) {
                     $articlePage->execute($hookName, $args);
                 });
 
-                Hook::add('Dispatcher::dispatch', function (string $hookName, array $args) {
+                Hook::add('Dispatcher::dispatch', function ($hookName, $args) {
                     try {
-                        /* @var Request $request */
                         $request = $args[0];
-
                         $router = $request->getRouter();
 
                         if ($router instanceof APIRouter
@@ -169,11 +158,15 @@ class CitationManagerPlugin extends GenericPlugin
         $request = $this->getRequest();
         $context = $request->getContext();
 
+        $isTestMode = strtolower(Config::getVar(CITATION_MANAGER_PLUGIN_NAME, 'isTestMode'));
+        if (!empty($isTestMode) && ($isTestMode === 'true' || $isTestMode === '1'))
+            $this->isTestMode = true;
+
         $apiBaseUrl = '';
         if (!empty($context) && !empty($context->getData('urlPath'))) {
             $apiBaseUrl = $request->getDispatcher()->url(
                 $request,
-                PKPApplication::ROUTE_API,
+                Application::ROUTE_API,
                 $context->getData('urlPath'),
                 '');
         }
@@ -213,12 +206,6 @@ class CitationManagerPlugin extends GenericPlugin
         return $manage->execute($args, $request);
     }
 
-    /** @copydoc Plugin::updateSchema() */
-    public function updateSchema($hookName, $args): void
-    {
-        // there is nothing to see here
-    }
-
     /** @copydoc PKPPlugin::getDescription */
     public function getDescription(): string
     {
@@ -229,6 +216,11 @@ class CitationManagerPlugin extends GenericPlugin
     public function getDisplayName(): string
     {
         return __('plugins.generic.citationManager.displayName');
+    }
+
+    public function getIsTestMode(): bool
+    {
+        return $this->isTestMode;
     }
 }
 

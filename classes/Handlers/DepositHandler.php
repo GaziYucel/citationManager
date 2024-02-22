@@ -12,15 +12,13 @@
 
 namespace APP\plugins\generic\citationManager\classes\Handlers;
 
-use APP\core\Application;
-use APP\facades\Repo;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\JournalMetadata;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\PublicationMetadata;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
 use APP\plugins\generic\citationManager\classes\External\OpenCitations\Deposit as OpenCitationsDeposit;
 use APP\plugins\generic\citationManager\classes\External\Wikidata\Deposit as WikidataDeposit;
-use APP\submission\Submission;
+use Application;
 use Exception;
 
 class DepositHandler
@@ -60,17 +58,19 @@ class DepositHandler
                             PublicationMetadata $publicationMetadata,
                             array               $citations): bool
     {
-        $publication = Repo::publication()->get($publicationId);
-        $issue = Repo::issue()->get($publication->getData('issueId'));
+        $pluginDao = new PluginDAO();
+	
+        $publication = $pluginDao->getPublication($publicationId);
+        $issue = $pluginDao->getIssue($publication->getData('issueId'));
         $locale = $publication->getData('locale');
 
         if (empty($submissionId) || empty($publicationId) || empty($citations) ||
-            empty($publication->getDoi()) || empty($locale) || empty($issue)) {
+            empty($publication->getStoredPubId('doi')) || empty($locale) || empty($issue)) {
             return false;
         }
 
         $context = $this->plugin->getRequest()->getContext();
-        $submission = Repo::submission()->get($submissionId);
+        $submission = $pluginDao->getSubmission($submissionId);
 
         // OpenCitations
         $depositOC = new OpenCitationsDeposit($this->plugin);
@@ -130,9 +130,7 @@ class DepositHandler
 
         foreach ($contextIds as $contextId) {
 
-            $submissions = Repo::submission()->getCollector()
-                ->filterByContextIds([$contextId])
-                ->filterByStatus([Submission::STATUS_PUBLISHED]);
+            $submissions = $pluginDao->getBatchDepositSubmissions($contextId);
 
             foreach ($submissions as $submission) {
 

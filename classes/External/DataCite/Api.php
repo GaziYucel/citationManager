@@ -12,9 +12,9 @@
 
 namespace APP\plugins\generic\citationManager\classes\External\DataCite;
 
-use APP\core\Application;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\External\ApiAbstract;
+use Application;
 use GuzzleHttp\Client;
 
 class Api extends ApiAbstract
@@ -53,6 +53,6 @@ class Api extends ApiAbstract
     {
         if (empty($doi)) return [];
 
-        return $this->apiRequest('GET', '/dois/' . $doi, []);
+        return $this->apiRequest('GET', $this->url . '/dois/' . $doi, []);
     }
 }

@@ -12,11 +12,13 @@
 
 namespace APP\plugins\generic\citationManager\classes\ScheduledTasks;
 
+// import('lib.pkp.classes.scheduledTask.ScheduledTask');
+
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\Handlers\DepositHandler;
-use PKP\plugins\PluginRegistry;
-use PKP\scheduledTask\ScheduledTask;
-use PKP\scheduledTask\ScheduledTaskHelper;
+use PluginRegistry;
+use ScheduledTask;
+use ScheduledTaskHelper;
 
 class DepositTask extends ScheduledTask
 {
@@ -45,7 +47,7 @@ class DepositTask extends ScheduledTask
             return false;
         }
 
-        $depositor = new DepositHandler();
+        $depositor = new DepositHandler($this->plugin);
         $result = $depositor->batchExecute();
 
         if (!$result) {

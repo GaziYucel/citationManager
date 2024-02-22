@@ -14,12 +14,6 @@ namespace APP\plugins\generic\citationManager\classes\DataModels\Metadata;
 
 class AuthorMetadata
 {
-    /** @var int|null The author id in OJS. */
-    public ?int $id = null;
-
-    /** @var string|null The ORCID ID for this author. */
-    public ?string $orcid_id = null;
-
     /** @var string|null $openalex_id OpenAlex ID. */
     public ?string $openalex_id = null;
 

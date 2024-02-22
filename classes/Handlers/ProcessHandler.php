@@ -12,8 +12,6 @@
 
 namespace APP\plugins\generic\citationManager\classes\Handlers;
 
-use APP\core\Application;
-use APP\facades\Repo;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
@@ -26,8 +24,9 @@ use APP\plugins\generic\citationManager\classes\PID\Doi;
 use APP\plugins\generic\citationManager\classes\PID\Handle;
 use APP\plugins\generic\citationManager\classes\PID\Url;
 use APP\plugins\generic\citationManager\classes\PID\Urn;
-use APP\publication\Publication;
-use APP\submission\Submission;
+use Application;
+use Publication;
+use Submission;
 use Exception;
 
 class ProcessHandler
@@ -37,7 +36,6 @@ class ProcessHandler
 
     /** @var array|null [ { CitationModel }, ... ] */
     private ?array $citations = null;
-
 
     /** @param CitationManagerPlugin $plugin */
     public function __construct(CitationManagerPlugin $plugin)
@@ -99,7 +97,6 @@ class ProcessHandler
                 Doi::normalize($rowRaw));
 
             // parse url (after parsing doi)
-            $pidUrl = new Url();
             $citation->url = Url::extractFromString($rowRaw);
 
             // handle
@@ -176,9 +173,7 @@ class ProcessHandler
 
         foreach ($contextIds as $contextId) {
 
-            $submissions = Repo::submission()->getCollector()
-                ->filterByContextIds([$contextId])
-                ->filterByStatus([Submission::STATUS_PUBLISHED]);
+            $submissions = $pluginDao->getBatchProcessSubmissions($contextId);
 
             /* @var Submission $submission */
             foreach ($submissions as $submission) {

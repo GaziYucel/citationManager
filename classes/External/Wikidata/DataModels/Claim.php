@@ -31,7 +31,6 @@ class Claim
         ];
 
         $languageModel = new Language();
-
         $localeWd = $languageModel->getLanguageCode($locale);
 
         if ($localeWd !== $languageModel->defaultLanguage) {
@@ -118,11 +117,14 @@ class Claim
      *
      * @param string $property
      * @param string $value
-     * @param string $language
+     * @param string $locale
      * @return array
      */
-    public function getMonoLingualText(string $property, string $value, string $language): array
+    public function getMonoLingualText(string $property, string $value, string $locale): array
     {
+        $languageModel = new Language();
+        $localeWd = $languageModel->getLanguageCode($locale);
+
         return [
             'mainsnak' =>
                 [
@@ -132,7 +134,7 @@ class Claim
                         'value' =>
                             [
                                 'text' => $value,
-                                'language' => $language
+                                'language' => $localeWd
                             ],
                         'type' => 'monolingualtext'
                     ],

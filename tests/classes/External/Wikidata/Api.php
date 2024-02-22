@@ -12,11 +12,10 @@
 
 namespace APP\plugins\generic\citationManager\classes\External\Wikidata;
 
-use APP\core\Application;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\External\ApiAbstract;
-use APP\plugins\generic\citationManager\classes\External\Wikidata\DataModels\ClaimExistingItem;
 use APP\plugins\generic\citationManager\classes\Helpers\ArrayHelper;
+use Application;
 use GuzzleHttp\Client;
 
 class Api extends ApiAbstract
@@ -24,27 +23,22 @@ class Api extends ApiAbstract
     /** @var string $url The base URL for API requests. */
     public string $url = 'https://test.wikidata.org/w/api.php';
 
-    /** @var string $username The username for authentication. */
-    public string $username;
+    /** @var string|null $username The username for authentication. */
+    public ?string $username = '';
 
-    /** @var string $password The password for authentication. */
-    public string $password;
+    /** @var string|null $password The password for authentication. */
+    public ?string $password = '';
 
     /** @var bool $isLoggedIn Whether the client is logged in. */
     public bool $isLoggedIn = false;
 
-    /** @var string $loginToken The login token. */
-    public string $loginToken;
+    /** @var string|null $loginToken The login token. */
+    public ?string $loginToken = '';
 
-    /** @var string $csrfToken The CSRF token. */
-    public string $csrfToken;
-
-    /** @var int $maxLoginAttempts Maximum number of login attempts. */
-    public int $maxLoginAttempts = 3;
+    /** @var string|null $csrfToken The CSRF token. */
+    public ?string $csrfToken = '';
 
     /**
-     * Api constructor.
-     *
      * @param CitationManagerPlugin $plugin
      * @param string|null $url The base URL for API requests (optional).
      */
@@ -182,7 +176,6 @@ class Api extends ApiAbstract
      * Search for pid and return search results
      *
      * @param string $pid e.g. doi, orcid_id
-     *
      * @return array [ entities ]
      */
     public function search(string $pid): array
@@ -206,7 +199,6 @@ class Api extends ApiAbstract
      *
      * @param string $property
      * @param string $pid e.g. doi, orcid_id
-     *
      * @return array
      * @see https://www.wikidata.org/wiki/Special:ApiSandbox#action=wbgetentities&ids=Q106622495
      */
@@ -242,7 +234,6 @@ class Api extends ApiAbstract
      * Return qid in $item object (array)
      *
      * @param array $item
-     *
      * @return string
      */
     public function getQidFromItem(array $item): string
@@ -257,7 +248,6 @@ class Api extends ApiAbstract
      * Add item and return qid
      *
      * @param array $data
-     *
      * @return string
      */
     public function addItemAndReturnQid(array $data): string
@@ -278,7 +268,6 @@ class Api extends ApiAbstract
      * Get item
      *
      * @param string $qid
-     *
      * @return array
      */
     public function getItemWithQid(string $qid): array
@@ -299,23 +288,16 @@ class Api extends ApiAbstract
      *
      * @param string $referencingQid
      * @param string $property
-     * @param string $referencedQid
-     *
+     * @param array $value
      * @return bool
      */
-    public function createWikibaseItemClaim(string $referencingQid, string $property, string $referencedQid): bool
+    public function createWikibaseItemClaim(string $referencingQid, string $property, array $value): bool
     {
         $action = 'wbcreateclaim';
         $query['entity'] = $referencingQid;
         $query['snaktype'] = "value";
         $query['property'] = $property;
-
-        $claim = new ClaimExistingItem();
-        $value = $claim->getWikibaseItem($referencedQid);
-
-        $form = [
-            'value' => json_encode($value)
-        ];
+        $form['value'] = json_encode($value);
 
         $response = $this->actionPost($action, $query, $form);
 
@@ -330,7 +312,6 @@ class Api extends ApiAbstract
      *
      * @param string $action The API action.
      * @param array $query Additional query parameters.
-     *
      * @return array The response body as an associative array.
      */
     public function actionGet(string $action, array $query = []): array
@@ -342,7 +323,7 @@ class Api extends ApiAbstract
 
         return $this->apiRequest(
             'GET',
-            '?' . http_build_query($query),
+            $this->url . '?' . http_build_query($query),
             []
         );
     }
@@ -353,7 +334,6 @@ class Api extends ApiAbstract
      * @param string $action The API action.
      * @param array|null $query Additional query parameters.
      * @param array|null $form Form parameters.
-     *
      * @return array The response body as an associative array.
      */
     public function actionPost(string $action, ?array $query = null, ?array $form = null): array
@@ -367,7 +347,7 @@ class Api extends ApiAbstract
 
         return $this->apiRequest(
             'POST',
-            '?' . http_build_query($query),
+            $this->url . '?' . http_build_query($query),
             [
                 'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
                 'form_params' => $form

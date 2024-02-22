@@ -1,0 +1,38 @@
+{
+  "instanceOf": {
+    "pid": "P97010",
+    "default": "Q227265"
+  },
+  "title": {
+    "pid": "P97011",
+    "default": ""
+  },
+  "author": {
+    "pid": "P97009",
+    "default": ""
+  },
+  "authorNameString": {
+    "pid": "P97012",
+    "default": ""
+  },
+  "publicationDate": {
+    "pid": "P97013",
+    "default": ""
+  },
+  "publishedIn": {
+    "pid": "P97014",
+    "default": ""
+  },
+  "volume": {
+    "pid": "P97015",
+    "default": ""
+  },
+  "citesWork": {
+    "pid": "P97016",
+    "default": ""
+  },
+  "doi": {
+    "pid": "P97017",
+    "default": ""
+  }
+}

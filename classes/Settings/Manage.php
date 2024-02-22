@@ -12,14 +12,14 @@
 
 namespace APP\plugins\generic\citationManager\classes\Settings;
 
-use APP\core\Application;
-use APP\notification\Notification;
-use APP\notification\NotificationManager;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\Handlers\DepositHandler;
 use APP\plugins\generic\citationManager\classes\Handlers\ProcessHandler;
+use Application;
+use DAO;
 use PKP\core\JSONMessage;
-use PKP\db\DAO;
+use APP\notification\Notification;
+use APP\notification\NotificationManager;
 
 class Manage
 {

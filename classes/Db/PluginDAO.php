@@ -12,9 +12,7 @@
 
 namespace APP\plugins\generic\citationManager\classes\Db;
 
-use APP\core\Services;
 use APP\facades\Repo;
-use APP\journal\JournalDAO;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\AuthorMetadata;
@@ -22,7 +20,16 @@ use APP\plugins\generic\citationManager\classes\DataModels\Metadata\JournalMetad
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\PublicationMetadata;
 use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
 use APP\plugins\generic\citationManager\classes\Helpers\LogHelper;
-use PKP\context\Context;
+use APP\submission\Collector;
+use Author;
+use DAORegistry;
+use Exception;
+use Issue;
+use Journal;
+use JournalDAO;
+use Publication;
+use Services;
+use Submission;
 
 class PluginDAO
 {
@@ -39,7 +46,7 @@ class PluginDAO
         if (empty($publicationId))
             return [];
 
-        $publication = Repo::publication()->get($publicationId);
+        $publication = $this->getPublication($publicationId);
 
         $fromDb =
             json_decode(
@@ -73,14 +80,14 @@ class PluginDAO
         if (empty($publicationId))
             return false;
 
-        $publication = Repo::publication()->get($publicationId);
+        $publication = $this->getPublication($publicationId);
 
         $publication->setData(
             CitationManagerPlugin::CITATION_MANAGER_CITATIONS_STRUCTURED,
             json_encode($citations)
         );
 
-        Repo::publication()->dao->update($publication);
+        $this->savePublication($publication);
 
         return true;
     }
@@ -97,7 +104,7 @@ class PluginDAO
         if (empty($publicationId))
             return new PublicationMetadata();
 
-        $publication = Repo::publication()->get($publicationId);
+        $publication = $this->getPublication($publicationId);
 
         $fromDb = json_decode(
             $publication->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_PUBLICATION),
@@ -122,14 +129,14 @@ class PluginDAO
         if (empty($publicationId))
             return false;
 
-        $publication = Repo::publication()->get($publicationId);
+        $publication = $this->getPublication($publicationId);
 
         $publication->setData(
             CitationManagerPlugin::CITATION_MANAGER_METADATA_PUBLICATION,
             json_encode($publicationMetadata)
         );
 
-        Repo::publication()->dao->update($publication);
+        $this->savePublication($publication);
 
         return true;
     }
@@ -146,10 +153,10 @@ class PluginDAO
         if (empty($authorId))
             return new AuthorMetadata();
 
-        $author = Repo::author()->get($authorId);
+        $author = $this->getAuthor($authorId);
 
         $fromDb = json_decode(
-            $author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHORS),
+            $author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR),
             true
         );
 
@@ -171,14 +178,14 @@ class PluginDAO
         if (empty($authorId))
             return false;
 
-        $author = Repo::author()->get($authorId);
+        $author = $this->getAuthor($authorId);
 
         $author->setData(
-            CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHORS,
+            CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR,
             json_encode($authorMetadata)
         );
 
-        Repo::author()->dao->update($author);
+        $this->saveAuthor($author);
 
         return true;
     }
@@ -195,7 +202,7 @@ class PluginDAO
         if (empty($publicationId))
             return new JournalMetadata();
 
-        $publication = Repo::publication()->get($publicationId);
+        $publication = $this->getPublication($publicationId);
 
         $fromDb = json_decode(
             $publication->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_JOURNAL),
@@ -220,70 +227,88 @@ class PluginDAO
         if (empty($publicationId))
             return false;
 
-        $publication = Repo::publication()->get($publicationId);
+        $publication = $this->getPublication($publicationId);
 
         $publication->setData(
             CitationManagerPlugin::CITATION_MANAGER_METADATA_JOURNAL,
             json_encode($journalMetadata)
         );
 
+        $this->savePublication($publication);
+
+        return true;
+    }
+
+    /* OJS getters */
+    public function getJournal(int $journalId): ?Journal
+    {
+        /* @var JournalDAO $dao */
+        $dao = DAORegistry::getDAO('JournalDAO');
+        /* @var Journal */
+        return $dao->getById($journalId);
+    }
+    public function getIssue(int $issueId): ?Issue
+    {
+        return Repo::issue()->get($issueId);
+    }
+    public function getSubmission(int $submissionId): ?Submission
+    {
+        return Repo::submission()->get($submissionId);
+    }
+    public function getPublication(int $publicationId): ?Publication
+    {
+        return Repo::publication()->get($publicationId);
+    }
+    public function getAuthor(int $authorId): ?Author
+    {
+        return Repo::author()->get($authorId);
+    }
+
+    /* OJS setters */
+    public function saveJournal(Journal $journal): void
+    {
+        /* @var JournalDAO $dao */
+        $dao = DAORegistry::getDAO('JournalDAO');
+        $dao->updateObject($journal);
+    }
+    public function saveIssue(Issue $issue): void
+    {
+        Repo::issue()->dao->update($issue);
+    }
+    public function saveSubmission(Submission $submission): void
+    {
+        Repo::submission()->dao->update($submission);
+    }
+    public function savePublication(Publication $publication): void
+    {
         Repo::publication()->dao->update($publication);
-
-        return true;
+    }
+    public function saveAuthor(Author $author): void
+    {
+        Repo::author()->dao->update($author);
     }
 
     /**
-     * This method retrieves JournalModel for a context and returns normalized to JournalModel.
-     * If nothing found, the method returns a new JournalModel.
+     * Gets submissions for batch process
      *
      * @param int $contextId
-     * @return JournalMetadata
+     * @return Collector
      */
-    public function getJournalMetadata_does_not_work_in_ApiHandler(int $contextId): JournalMetadata
+    public function getBatchProcessSubmissions(int $contextId): Collector
     {
-        if (empty($contextId))
-            return new JournalMetadata();
-
-        /* @var Context $context */
-        $context = Services::get('context')->get($contextId);
-
-        $fromDb = json_decode(
-            $context->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_JOURNAL),
-            true
-        );
-
-        if (CitationManagerPlugin::isDebugMode) LogHelper::logInfo([$contextId, $fromDb]);
-
-        if (empty($fromDb) || json_last_error() !== JSON_ERROR_NONE)
-            return new JournalMetadata();
-
-        return ClassHelper::getClassWithValuesAssigned(new JournalMetadata(), $fromDb);
+        return Repo::submission()->getCollector()->filterByContextIds([$contextId]);
     }
 
     /**
-     * This method saves JournalModel for a context.
+     * Gets submissions for batch deposit
      *
      * @param int $contextId
-     * @param JournalMetadata $journalMetadata
-     * @return bool
+     * @return Collector
      */
-    public function saveJournalMetadata_does_not_work_in_ApiHandler(int $contextId, JournalMetadata $journalMetadata): bool
+    public function getBatchDepositSubmissions(int $contextId): Collector
     {
-        if (empty($contextId))
-            return false;
-
-        $contextDao = new JournalDAO();
-
-        $context = $contextDao->getById($contextId);
-        $context->setData(
-            CitationManagerPlugin::CITATION_MANAGER_METADATA_JOURNAL,
-            json_encode($journalMetadata)
-        );
-
-        $contextDao->updateObject($context);
-
-        if (CitationManagerPlugin::isDebugMode) LogHelper::logInfo([$contextId, $context, $journalMetadata]);
-
-        return true;
+        return Repo::submission()->getCollector()
+            ->filterByContextIds([$contextId])
+            ->filterByStatus([Submission::STATUS_PUBLISHED]);
     }
 }

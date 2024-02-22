@@ -12,8 +12,8 @@
 
 namespace APP\plugins\generic\citationManager\classes\External\Crossref;
 
-use APP\core\Application;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
+use Application;
 use APP\plugins\generic\citationManager\classes\External\ApiAbstract;
 use GuzzleHttp\Client;
 
@@ -53,6 +53,6 @@ class Api extends ApiAbstract
     {
         if(empty($search)) return [];
 
-        return $this->apiRequest('GET', '/works/?query.bibliographic=' . $search, []);
+        return $this->apiRequest('GET', $this->url . '/works/?query.bibliographic=' . $search, []);
     }
 }

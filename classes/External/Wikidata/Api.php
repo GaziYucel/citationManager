@@ -12,10 +12,10 @@
 
 namespace APP\plugins\generic\citationManager\classes\External\Wikidata;
 
-use APP\core\Application;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\External\ApiAbstract;
 use APP\plugins\generic\citationManager\classes\Helpers\ArrayHelper;
+use Application;
 use GuzzleHttp\Client;
 
 class Api extends ApiAbstract
@@ -23,23 +23,20 @@ class Api extends ApiAbstract
     /** @var string $url The base URL for API requests. */
     public string $url = 'https://www.wikidata.org/w/api.php';
 
-    /** @var string $username The username for authentication. */
-    public string $username;
+    /** @var string|null $username The username for authentication. */
+    public ?string $username = '';
 
-    /** @var string $password The password for authentication. */
-    public string $password;
+    /** @var string|null $password The password for authentication. */
+    public ?string $password = '';
 
     /** @var bool $isLoggedIn Whether the client is logged in. */
     public bool $isLoggedIn = false;
 
-    /** @var string $loginToken The login token. */
-    public string $loginToken;
+    /** @var string|null $loginToken The login token. */
+    public ?string $loginToken = '';
 
-    /** @var string $csrfToken The CSRF token. */
-    public string $csrfToken;
-
-    /** @var int $maxLoginAttempts Maximum number of login attempts. */
-    public int $maxLoginAttempts = 3;
+    /** @var string|null $csrfToken The CSRF token. */
+    public ?string $csrfToken = '';
 
     /**
      * @param CitationManagerPlugin $plugin
@@ -326,7 +323,7 @@ class Api extends ApiAbstract
 
         return $this->apiRequest(
             'GET',
-            '?' . http_build_query($query),
+            $this->url . '?' . http_build_query($query),
             []
         );
     }
@@ -350,7 +347,7 @@ class Api extends ApiAbstract
 
         return $this->apiRequest(
             'POST',
-            '?' . http_build_query($query),
+            $this->url . '?' . http_build_query($query),
             [
                 'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
                 'form_params' => $form

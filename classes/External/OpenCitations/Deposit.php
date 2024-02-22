@@ -12,22 +12,25 @@
 
 namespace APP\plugins\generic\citationManager\classes\External\OpenCitations;
 
-use APP\issue\Issue;
-use APP\journal\Journal;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\AuthorModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\PublicationMetadata;
+use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
 use APP\plugins\generic\citationManager\classes\External\DepositAbstract;
 use APP\plugins\generic\citationManager\classes\External\OpenCitations\DataModels\WorkCitingCited;
 use APP\plugins\generic\citationManager\classes\External\OpenCitations\DataModels\WorkMetaData;
 use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
+use APP\plugins\generic\citationManager\classes\Helpers\LogHelper;
 use APP\plugins\generic\citationManager\classes\PID\Arxiv;
 use APP\plugins\generic\citationManager\classes\PID\Doi;
 use APP\plugins\generic\citationManager\classes\PID\Handle;
 use APP\plugins\generic\citationManager\classes\PID\Orcid;
-use APP\publication\Publication;
-use APP\submission\Submission;
+use Author;
+use Issue;
+use Journal;
+use Publication;
+use Submission;
 
 class Deposit extends DepositAbstract
 {
@@ -85,11 +88,13 @@ class Deposit extends DepositAbstract
 
         // authors
         $authors = [];
-        if (!empty($publication->getData('authors')))
-            $authors = json_decode($publication->getData('authors'), true);
+        foreach ($publication->getData('authors') as $id => $authorLC) {
+            /* @var Author $authorLC */
+            $authors[] = (array)$authorLC;
+        }
 
         // title of GitHub issue
-        $title = $this->getTitle($publication->getDoi());
+        $title = $this->getTitle($publication->getStoredPubId('doi'));
 
         // body of GitHub issue
         $body =
@@ -98,7 +103,7 @@ class Deposit extends DepositAbstract
             $this->getCitationsCsv($citations) . PHP_EOL .
             $this->separator . PHP_EOL .
             ClassHelper::getClassPropertiesAsCsv(new WorkCitingCited()) . PHP_EOL .
-            $this->getRelationsCsv($citations, $publication->getDoi(), $publicationDate) . PHP_EOL;
+            $this->getRelationsCsv($citations, $publication->getStoredPubId('doi'), $publicationDate) . PHP_EOL;
 
         $githubIssueId = $this->api->addIssue($title, $body);
 
@@ -145,7 +150,7 @@ class Deposit extends DepositAbstract
         return
             str_replace(
                 '{domain} {pid}',
-                $_SERVER['SERVER_NAME'] . ' ' . 'doi:' . $doi(),
+                $_SERVER['SERVER_NAME'] . ' ' . 'doi:' . $doi,
                 $this->titleSyntax
             );
     }

@@ -51,7 +51,7 @@ abstract class ApiAbstract
         if ($method !== 'POST' && $method !== 'GET') return [];
 
         try {
-            $response = $this->httpClient->request($method, $this->url . $url, $options);
+            $response = $this->httpClient->request($method, $url, $options);
 
             if (!str_contains('200,201,202', (string)$response->getStatusCode())) {
                 return [];
@@ -62,7 +62,7 @@ abstract class ApiAbstract
             if (empty($result) || json_last_error() !== JSON_ERROR_NONE) return [];
 
             if (CitationManagerPlugin::isDebugMode)
-                LogHelper::logInfo([$method, $this->url . $url, $options, $response->getStatusCode(), $result]);
+                LogHelper::logInfo([$method, $url, $options, $response->getStatusCode(), $result]);
 
             return $result;
 

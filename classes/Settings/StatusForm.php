@@ -14,9 +14,9 @@
 namespace APP\plugins\generic\citationManager\classes\Settings;
 
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
-use PKP\form\Form;
-use PKP\form\validation\FormValidatorCSRF;
-use PKP\form\validation\FormValidatorPost;
+use Form;
+use FormValidatorCSRF;
+use FormValidatorPost;
 
 class StatusForm extends Form
 {

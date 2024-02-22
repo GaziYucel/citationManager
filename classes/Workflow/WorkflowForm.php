@@ -46,5 +46,13 @@ class WorkflowForm extends FormComponent
             'isMultilingual' => false,
             'value' => $pluginDao->getPublicationMetadata($publicationId)
         ]));
+
+        $this->addField(new FieldText(
+            CitationManagerPlugin::CITATION_MANAGER_METADATA_JOURNAL, [
+            'label' => '',
+            'description' => '',
+            'isMultilingual' => false,
+            'value' => $pluginDao->getJournalMetadata($publicationId)
+        ]));
     }
 }

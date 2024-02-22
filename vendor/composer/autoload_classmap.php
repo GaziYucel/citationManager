@@ -42,6 +42,7 @@ return array(
     'APP\\plugins\\generic\\citationManager\\classes\\Handlers\\PluginAPIHandler' => $baseDir . '/classes/Handlers/PluginAPIHandler.php',
     'APP\\plugins\\generic\\citationManager\\classes\\Handlers\\ProcessHandler' => $baseDir . '/classes/Handlers/ProcessHandler.php',
     'APP\\plugins\\generic\\citationManager\\classes\\Helpers\\ArrayHelper' => $baseDir . '/classes/Helpers/ArrayHelper.php',
+    'APP\\plugins\\generic\\citationManager\\classes\\Helpers\\AutoloaderHelper' => $baseDir . '/classes/Helpers/AutoloaderHelper.php',
     'APP\\plugins\\generic\\citationManager\\classes\\Helpers\\ClassHelper' => $baseDir . '/classes/Helpers/ClassHelper.php',
     'APP\\plugins\\generic\\citationManager\\classes\\Helpers\\LogHelper' => $baseDir . '/classes/Helpers/LogHelper.php',
     'APP\\plugins\\generic\\citationManager\\classes\\Helpers\\StringHelper' => $baseDir . '/classes/Helpers/StringHelper.php',

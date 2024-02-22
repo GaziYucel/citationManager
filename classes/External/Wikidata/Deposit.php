@@ -12,11 +12,9 @@
 
 namespace APP\plugins\generic\citationManager\classes\External\Wikidata;
 
-use APP\author\Author;
-use APP\issue\Issue;
-use APP\journal\Journal;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\AuthorMetadata;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\PublicationMetadata;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
 use APP\plugins\generic\citationManager\classes\External\DepositAbstract;
@@ -25,9 +23,12 @@ use APP\plugins\generic\citationManager\classes\External\Wikidata\DataModels\Pro
 use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
 use APP\plugins\generic\citationManager\classes\Helpers\LogHelper;
 use APP\plugins\generic\citationManager\classes\PID\Orcid;
-use APP\publication\Publication;
-use APP\submission\Submission;
-use PKP\context\Context;
+use Author;
+use Context;
+use Issue;
+use Journal;
+use Publication;
+use Submission;
 
 class Deposit extends DepositAbstract
 {
@@ -69,6 +70,10 @@ class Deposit extends DepositAbstract
                             PublicationMetadata $publicationMetadata,
                             array               $citations): bool
     {
+        $this->publicationMetadata = $publicationMetadata;
+        $this->citations = $citations;
+
+        // return false if required data not provided
         if (!$this->api->isDepositPossible()) return false;
 
         $locale = $publication->getData('locale');
@@ -84,24 +89,23 @@ class Deposit extends DepositAbstract
 
         // author(s)
         $authors = [];
-        $authorsLazyCollection = $publication->getData('authors');
-        foreach ($authorsLazyCollection as $index => $authorLC) {
+        foreach ($publication->getData('authors') as $id => $authorLC) {
             /* @var Author $authorLC */
+            $author = (array)$authorLC;
+            $metadata = json_decode($author['_data'][CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR], true);
+            $metadata = ClassHelper::getClassWithValuesAssigned(new AuthorMetadata(), $metadata);
+            if (empty($metadata)) $metadata = new AuthorMetadata();
+            $author['_data'][CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR] = $metadata;
+
             $orcidId = Orcid::removePrefix($authorLC->getData('orcid'));
-            $displayName = $authorLC->getGivenName($locale) . ' ' . $authorLC->getFamilyName($locale);
-            $authorMetadata = $pluginDao->getAuthorMetadata($authorLC->getId());
-            $authorMetadata->orcid_id = $orcidId;
-            $pluginDao->saveAuthorMetadata($authorLC->getId(), $authorMetadata);
+            $displayName = trim($authorLC->getGivenName($locale) . ' ' . $authorLC->getFamilyName($locale));
 
-            if (empty($authorMetadata->wikidata_id) && !empty($orcidId) && !empty($displayName)) {
-                $authorMetadata->wikidata_id = $this->processAuthor($locale, $orcidId, $displayName);
-                $pluginDao->saveAuthorMetadata($authorLC->getId(), $authorMetadata);
+            if (empty($metadata->wikidata_id) && !empty($orcidId) && !empty($displayName)) {
+                $metadata->wikidata_id = $this->processAuthor($locale, $orcidId, $displayName);
             }
-
-            // assign to new array to response
-            $author = (array)$authorLC->_data;
-            $author['authorMetadata'] = $authorMetadata;
             $authors[] = $author;
+
+            $pluginDao->saveAuthorMetadata($authorLC->getId(), $metadata);
         }
 
         // cited articles
@@ -129,16 +133,22 @@ class Deposit extends DepositAbstract
         $item = $this->api->getItemWithQid($publicationMetadata->wikidata_id);
 
         // published in main article
-        $this->addReferenceClaim($item, (array)$journalMetaData, $this->property->publishedIn['id']);
+        $this->addReferenceClaim($item,
+            (array)$journalMetaData,
+            $this->property->publishedIn['id']);
 
         // authors in main article
         foreach ($authors as $index => $entity) {
-            $this->addReferenceClaim($item, $authors['authorMetadata'], $this->property->author['id']);
+            $this->addReferenceClaim($item,
+                (array)$entity['_data'][CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR],
+                $this->property->author['id']);
         }
 
         // cites work in main article
         foreach ($citations as $index => $entity) {
-            $this->addReferenceClaim($item, $entity, $this->property->citesWork['id']);
+            $this->addReferenceClaim($item,
+                (array)$entity,
+                $this->property->citesWork['id']);
         }
 
         return true;
@@ -308,11 +318,15 @@ class Deposit extends DepositAbstract
      */
     private function processMainArticle(string $locale, Issue $issue, Publication $publication): string
     {
+        $pluginDao = new PluginDAO();
+
         // find qid and return qid if found
         $qid = $this->api
             ->getQidFromItem($this->api
                 ->getItemWithPropertyAndPid(
-                    $this->property->doi['id'], $publication->getDoi()));
+                    $this->property->doi['id'], $publication->getStoredPubId('doi')
+                )
+            );
         if (!empty($qid)) return $qid;
 
         // not found, create and return qid
@@ -325,7 +339,7 @@ class Deposit extends DepositAbstract
                 $this->property->instanceOfScientificArticle['default']),
             $claim->getExternalId(
                 $this->property->doi['id'],
-                $publication->getDoi()),
+                $publication->getStoredPubId('doi')),
             $claim->getMonoLingualText(
                 $this->property->title['id'],
                 $publication->getData('title')[$locale],

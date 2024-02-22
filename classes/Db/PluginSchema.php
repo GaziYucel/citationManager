@@ -13,8 +13,6 @@
 namespace APP\plugins\generic\citationManager\classes\Db;
 
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
-use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
-use APP\plugins\generic\citationManager\classes\Helpers\LogHelper;
 
 class PluginSchema
 {
@@ -50,15 +48,6 @@ class PluginSchema
             'validation' => ['nullable']
         ];
 
-        $schema->properties->{CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHORS} = (object)[
-            'type' => 'string',
-            'multilingual' => false,
-            'apiSummary' => true,
-            'validation' => ['nullable']
-        ];
-
-        if (CitationManagerPlugin::isDebugMode) LogHelper::logInfo('');
-
         return false;
     }
 
@@ -80,8 +69,6 @@ class PluginSchema
             'validation' => ['nullable']
         ];
 
-        if (CitationManagerPlugin::isDebugMode) LogHelper::logInfo('');
-
         return false;
     }
 
@@ -96,14 +83,12 @@ class PluginSchema
     {
         $schema = &$args[0];
 
-        $schema->properties->{CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHORS} = (object)[
+        $schema->properties->{CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR} = (object)[
             'type' => 'string',
             'multilingual' => false,
             'apiSummary' => true,
             'validation' => ['nullable']
         ];
-
-        if (CitationManagerPlugin::isDebugMode) LogHelper::logInfo('');
 
         return false;
     }

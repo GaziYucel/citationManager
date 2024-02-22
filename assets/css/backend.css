@@ -10,7 +10,8 @@
  */
 
 input[name="CitationManagerPlugin_CitationsStructured"],
-input[name="CitationManagerPlugin_MetadataPublication"] {
+input[name="CitationManagerPlugin_MetadataJournal"],
+input[name="CitationManagerPlugin_MetadataPublication"]{
     display: none;
 }
 

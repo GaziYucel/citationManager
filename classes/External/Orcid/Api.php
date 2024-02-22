@@ -12,9 +12,9 @@
 
 namespace APP\plugins\generic\citationManager\classes\External\Orcid;
 
-use APP\core\Application;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\External\ApiAbstract;
+use Application;
 use GuzzleHttp\Client;
 
 class Api extends ApiAbstract
@@ -51,6 +51,6 @@ class Api extends ApiAbstract
     {
         if (empty($orcidId)) return [];
 
-        return $this->apiRequest('GET', '/' . $orcidId, []);
+        return $this->apiRequest('GET', $this->url . '/' . $orcidId, []);
     }
 }

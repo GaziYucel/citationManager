@@ -12,16 +12,20 @@
 
 namespace APP\plugins\generic\citationManager\classes\Handlers;
 
+import('lib.pkp.classes.handler.APIHandler');
+import('lib.pkp.classes.security.authorization.PolicySet');
+import('lib.pkp.classes.security.authorization.RoleBasedHandlerOperationPolicy');
+
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\PublicationMetadata;
 use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
-use PKP\core\APIResponse;
-use PKP\handler\APIHandler;
-use PKP\security\authorization\PolicySet;
-use PKP\security\authorization\RoleBasedHandlerOperationPolicy;
-use PKP\security\Role;
+use APIResponse;
+use APIHandler;
+use PolicySet;
+use RoleBasedHandlerOperationPolicy;
 use Slim\Http\Request as SlimRequest;
 use Slim\Http\Response;
+use PKP\security\Role;
 
 class PluginAPIHandler extends APIHandler
 {
@@ -39,6 +43,8 @@ class PluginAPIHandler extends APIHandler
         ]
     ];
 
+    private array $roles = [Role::ROLE_ID_MANAGER, Role::ROLE_ID_SUB_EDITOR, Role::ROLE_ID_ASSISTANT, Role::ROLE_ID_REVIEWER, Role::ROLE_ID_AUTHOR];
+
     /** @param CitationManagerPlugin $plugin */
     public function __construct(CitationManagerPlugin $plugin)
     {
@@ -51,12 +57,12 @@ class PluginAPIHandler extends APIHandler
                 [
                     'pattern' => $this->getEndpointPattern() . '/process',
                     'handler' => [$this, 'process'],
-                    'roles' => [Role::ROLE_ID_MANAGER, Role::ROLE_ID_SUB_EDITOR, Role::ROLE_ID_ASSISTANT, Role::ROLE_ID_REVIEWER, Role::ROLE_ID_AUTHOR],
+                    'roles' => $this->roles,
                 ],
                 [
                     'pattern' => $this->getEndpointPattern() . '/deposit',
                     'handler' => [$this, 'deposit'],
-                    'roles' => [Role::ROLE_ID_MANAGER, Role::ROLE_ID_SUB_EDITOR, Role::ROLE_ID_ASSISTANT, Role::ROLE_ID_REVIEWER, Role::ROLE_ID_AUTHOR],
+                    'roles' => $this->roles,
                 ]
             ],
             'GET' => []
@@ -137,7 +143,7 @@ class PluginAPIHandler extends APIHandler
         if (empty($submissionId) || empty($publicationId) || empty($publicationMetadata) || empty($citations))
             return $response->withJson($this->responseBody, 200);
 
-        $depositor = new DepositHandler();
+        $depositor = new DepositHandler($this->plugin);
         $depositor->execute(
             $submissionId,
             $publicationId,

@@ -12,14 +12,16 @@
 
 namespace APP\plugins\generic\citationManager\classes\Workflow;
 
-use APP\author\Author;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\AuthorMetadata;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
+use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
 use APP\plugins\generic\citationManager\classes\Helpers\LogHelper;
 use APP\plugins\generic\citationManager\classes\PID\Orcid;
-use APP\publication\Publication;
+use Application;
+use Author;
 use Exception;
-use PKP\core\PKPApplication;
+use Publication;
 
 class WorkflowTab
 {
@@ -51,10 +53,11 @@ class WorkflowTab
         $submissionId = $submission->getId();
         $publication = $submission->getLatestPublication();
         $publicationId = $publication->getId();
+        $locale = $publication->getData('locale');
 
         $apiBaseUrl = $request->getDispatcher()->url(
             $request,
-            PKPApplication::ROUTE_API,
+            Application::ROUTE_API,
             $context->getData('urlPath'),
             '');
 
@@ -75,20 +78,25 @@ class WorkflowTab
 
         $pluginDao = new PluginDAO();
 
-        /* @var Author $author */
-        $authorsA = [];
-        $authors = $publication->getData('authors');
-        foreach ($authors as $id => $author) {
-            $authorA = (array)$author->_data;
-            $authorA['orcid'] = Orcid::removePrefix($authorA['orcid']);
-            $authorA['authorMetadata'] = json_decode($authorA[CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHORS]);
+        /* @var Author $authorLC */
+        $authors = [];
+        foreach ($publication->getData('authors') as $id => $authorLC) {
+            /* @var Author $authorLC */
+            $author = (array)$authorLC;
+            $metadata = json_decode($author['_data'][CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR], true);
+            $metadata = ClassHelper::getClassWithValuesAssigned(new AuthorMetadata(), $metadata);
+            if (empty($metadata)) $metadata = new AuthorMetadata();
+            $author['_data'][CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR] = $metadata;
 
-            $authorsA[] = $authorA;
+            $author['_data']['displayName'] = trim($authorLC->getGivenName($locale) . ' ' . $authorLC->getFamilyName($locale));
+            $author['_data']['orcid'] = Orcid::removePrefix($authorLC->getData('orcid'));
+
+            $authors[] = $author;
         }
 
-        $this->plugin->templateParameters['locale'] = json_encode($publication->getDefaultLocale());
+        $this->plugin->templateParameters['locale'] = $locale;
         $this->plugin->templateParameters['journalMetadata'] = json_encode($pluginDao->getJournalMetadata($publicationId));
-        $this->plugin->templateParameters['authors'] = json_encode($authorsA);
+        $this->plugin->templateParameters['authors'] = json_encode($authors);
 
         $this->plugin->templateParameters['publicationMetadata'] = json_encode($pluginDao->getPublicationMetadata($publicationId));
         $this->plugin->templateParameters['structuredCitations'] = json_encode($pluginDao->getCitations($publicationId));

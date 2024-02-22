@@ -12,9 +12,9 @@
 
 namespace APP\plugins\generic\citationManager\classes\External\OpenAlex;
 
-use APP\core\Application;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\External\ApiAbstract;
+use Application;
 use GuzzleHttp\Client;
 
 class Api extends ApiAbstract

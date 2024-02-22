@@ -12,15 +12,15 @@
 
 namespace APP\plugins\generic\citationManager\classes\FrontEnd;
 
-use APP\core\Application;
+use Application;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
 use APP\plugins\generic\citationManager\classes\PID\Doi;
 use APP\plugins\generic\citationManager\classes\PID\OpenAlex;
 use APP\plugins\generic\citationManager\classes\PID\Orcid;
 use APP\plugins\generic\citationManager\classes\PID\Wikidata;
-use APP\publication\Publication;
-use APP\template\TemplateManager;
+use Publication;
+use TemplateManager;
 use SmartyException;
 
 class ArticleView

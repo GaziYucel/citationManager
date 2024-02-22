@@ -36,17 +36,17 @@
                             Authors
                             <span v-for="(row, i) in citationManagerApp.authors" class="citationManager-Outline" style="margin-right: 5px;">
                                 <span class="citationManager-Tag">
-                                    {{ row.givenName[citationManagerApp.locale] + ' ' + row.familyName[citationManagerApp.locale] }}
+                                    {{ row._data.displayName }}
                                 </span><a class="citationManager-Button citationManager-ButtonGreen"
-                                        v-if="row.orcid" :href="'{$url.orcid}/' + row.orcid" target="_blank">iD
+                                        v-if="row._data.orcid" :href="'{$url.orcid}/' + row._data.orcid" target="_blank">iD
                                 </a><span class="citationManager-Button citationManager-ButtonGrey"
-                                          v-if="!row.orcid">iD
+                                          v-if="!row._data.orcid">iD
                                 </span><a class="citationManager-Button citationManager-ButtonGreen"
-                                   v-if="row.authorMetadata.wikidata_id"
-                                   :href="'{$url.wikidata}/' + row.authorMetadata.wikidata_id"
+                                   v-if="row._data.metadata.wikidata_id"
+                                   :href="'{$url.wikidata}/' + row._data.metadata.wikidata_id"
                                    target="_blank">WD
                                 </a><span class="citationManager-Button citationManager-ButtonGrey"
-                                        v-if="!row.authorMetadata.wikidata_id">WD
+                                        v-if="!row._data.metadata.wikidata_id">WD
                                 </span></span>
                         </div>
                     </div>
@@ -247,10 +247,10 @@
             <span>{{ citationManagerApp.workingCitations           = workingPublication.CitationManagerPlugin_CitationsStructured }}</span>
             <span>{{ citationManagerApp.workingPublicationMetadata = workingPublication.CitationManagerPlugin_MetadataPublication }}</span>
             <span>{{ citationManagerApp.workingJournalMetadata = workingPublication.CitationManagerPlugin_MetadataJournal }}</span>
-            <span>{{ citationManagerApp.workingAuthorsMetadata = workingPublication.CitationManagerPlugin_MetadataAuthors }}</span>
             <span>{{ citationManagerApp.workingPublicationId       = workingPublication.id }}</span>
             <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[0]['value'] = citationManagerApp.citationsJsonComputed }}</span>
             <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[1]['value'] = citationManagerApp.publicationMetadataJsonComputed }}</span>
+            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[2]['value'] = citationManagerApp.journalMetadataJsonComputed }}</span>
             <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.action             = '{$apiBaseUrl}submissions/' + workingPublication.submissionId + '/publications/' + workingPublication.id }}</span>
         </div>
         <pkp-form v-bind="components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}" @set="set"/>
@@ -262,14 +262,13 @@
     let citationManagerApp = new pkp.Vue({
         // el: '#citationManager',
         data: {
-            locale: {$locale},
+            locale: '{$locale}',
             csrfToken: pkp.currentUser.csrfToken,
             citations: {$structuredCitations},
             citationsHelper: [],
             citationsRaw: '', // workingPublication.citationsRaw
             journalMetadata: {$journalMetadata},
-            authors: {$authors},
-            authorsMetadata: [],
+            authorsIn: {$authors},
             author: {$authorModel},
             publicationMetadata: {$publicationMetadata},
             statusCodePublished: pkp.const.STATUS_PUBLISHED,
@@ -289,10 +288,13 @@
             publicationMetadataJsonComputed: function () {
                 return JSON.stringify(this.publicationMetadata);
             },
+            journalMetadataJsonComputed: function () {
+                return JSON.stringify(this.journalMetadata);
+            },
             isStructured: function () {
                 return this.citations.length !== 0;
             },
-            isPublished() {
+            isPublished: function () {
                 let isPublished = false;
 
                 if (this.statusCodePublished === this.publicationStatus) {
@@ -305,6 +307,14 @@
                 }
 
                 return isPublished;
+            },
+            authors: function() {
+                let result = this.authorsIn;
+                for (let i = 0; i < result.length; i++) {
+                    result[i]['_data']['metadata'] =
+                        result[i]['_data']['{CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR}']
+                }
+                return result;
             }
         },
         methods: {
@@ -461,10 +471,6 @@
                     this.workingJournalMetadata = [];
                     if (this.workingJournalMetadata && this.workingJournalMetadata.length > 0) {
                         this.journalMetadata = JSON.parse(this.workingJournalMetadata);
-                    }
-                    this.workingAuthorsMetadata = [];
-                    if (this.workingAuthorsMetadata && this.workingAuthorsMetadata.length > 0) {
-                        this.authorsMetadata = JSON.parse(this.workingAuthorsMetadata);
                     }
                 }
                 console.log(oldValue + ' > ' + newValue);

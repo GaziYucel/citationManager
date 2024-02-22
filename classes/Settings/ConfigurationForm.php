@@ -12,14 +12,14 @@
 
 namespace APP\plugins\generic\citationManager\classes\Settings;
 
-use APP\core\Application;
-use APP\notification\Notification;
-use APP\notification\NotificationManager;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
-use APP\template\TemplateManager;
+use Application;
 use PKP\form\Form;
 use PKP\form\validation\FormValidatorCSRF;
 use PKP\form\validation\FormValidatorPost;
+use APP\notification\Notification;
+use APP\notification\NotificationManager;
+use TemplateManager;
 
 class ConfigurationForm extends Form
 {

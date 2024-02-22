@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit8866b815ef739200c238e77e2888123b
+class ComposerStaticInit17b2eb832ba4a3646c1e9ad7c60c2c2b
 {
     public static $classMap = array (
         'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Citation\\AuthorModel' => __DIR__ . '/../..' . '/classes/DataModels/Citation/AuthorModel.php',
@@ -43,6 +43,7 @@ class ComposerStaticInit8866b815ef739200c238e77e2888123b
         'APP\\plugins\\generic\\citationManager\\classes\\Handlers\\PluginAPIHandler' => __DIR__ . '/../..' . '/classes/Handlers/PluginAPIHandler.php',
         'APP\\plugins\\generic\\citationManager\\classes\\Handlers\\ProcessHandler' => __DIR__ . '/../..' . '/classes/Handlers/ProcessHandler.php',
         'APP\\plugins\\generic\\citationManager\\classes\\Helpers\\ArrayHelper' => __DIR__ . '/../..' . '/classes/Helpers/ArrayHelper.php',
+        'APP\\plugins\\generic\\citationManager\\classes\\Helpers\\AutoloaderHelper' => __DIR__ . '/../..' . '/classes/Helpers/AutoloaderHelper.php',
         'APP\\plugins\\generic\\citationManager\\classes\\Helpers\\ClassHelper' => __DIR__ . '/../..' . '/classes/Helpers/ClassHelper.php',
         'APP\\plugins\\generic\\citationManager\\classes\\Helpers\\LogHelper' => __DIR__ . '/../..' . '/classes/Helpers/LogHelper.php',
         'APP\\plugins\\generic\\citationManager\\classes\\Helpers\\StringHelper' => __DIR__ . '/../..' . '/classes/Helpers/StringHelper.php',
@@ -75,7 +76,7 @@ class ComposerStaticInit8866b815ef739200c238e77e2888123b
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->classMap = ComposerStaticInit8866b815ef739200c238e77e2888123b::$classMap;
+            $loader->classMap = ComposerStaticInit17b2eb832ba4a3646c1e9ad7c60c2c2b::$classMap;
 
         }, null, ClassLoader::class);
     }

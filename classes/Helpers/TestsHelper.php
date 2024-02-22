@@ -52,9 +52,10 @@ class TestsHelper
             }
 
         // require once all files
-        foreach ($classes as $key => $path)
+        foreach ($classes as $key => $path) {
             require_once($path);
 
-//        LogHelper::logInfo(['isTestMode', true]);
+            LogHelper::logInfo(['isTestMode', true]);
+        }
     }
 }

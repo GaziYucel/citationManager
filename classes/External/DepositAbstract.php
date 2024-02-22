@@ -12,12 +12,12 @@
 
 namespace APP\plugins\generic\citationManager\classes\External;
 
-use APP\issue\Issue;
-use APP\journal\Journal;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\PublicationMetadata;
-use APP\publication\Publication;
-use APP\submission\Submission;
+use Issue;
+use Journal;
+use Publication;
+use Submission;
 
 abstract class DepositAbstract
 {

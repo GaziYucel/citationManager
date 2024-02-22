@@ -233,9 +233,6 @@ If you have none please register one through https://www.wikidata.org/w/index.ph
   autoload files: `composer dump-autoload -o`.
 - Running `composer install -o` or `composer update -o` will also generate the autoload files.
 - The `-o` option generates the optimised files ready for production.
-- If isTestMode = true, then classes in the folder "/tests/classes" will be required instead of the 
-  classes in the "/classes" folder. The folder structure, namespace and class names should be the 
-  same as in the folder "/classes". This is done by the helper class "TestsHelper".
 - If isDebugMode = true, debug information will be written to the log file (see LogHelper class) 
   such as API calls. _Sensitive information (passwords) will be written in plain text._
 
