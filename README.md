@@ -118,7 +118,7 @@ Get the correct version for you OJS version:
   _Note the correct version for you OJS version._
 - Alternatively, download the code with the option 'Download ZIP'. 
   _Note the correct branch for your OJS version._
-- Extract the downloaded file to `/plugins/generic/latexConverter`.
+- Extract the downloaded file to `/plugins/generic/citationManager`.
 
 ### Configuration of the plugin
 
