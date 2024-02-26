@@ -21,9 +21,9 @@
     "science"
   ],
   "autoload": {
-    "classmap": [
-      "classes/"
-    ]
+    "psr-4": {
+      "APP\\plugins\\generic\\citationManager\\classes\\": "classes/"
+    }
   },
   "autoload-dev": {
     "classmap": [

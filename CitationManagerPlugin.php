@@ -20,7 +20,7 @@ import('lib.pkp.classes.handler.APIHandler');
 import('lib.pkp.classes.linkAction.request.AjaxAction');
 
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\AuthorModel;
-use APP\plugins\generic\citationManager\classes\DataModels\Metadata\PublicationMetadata;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use APP\plugins\generic\citationManager\classes\Db\PluginSchema;
 use APP\plugins\generic\citationManager\classes\FrontEnd\ArticleView;
 use APP\plugins\generic\citationManager\classes\Handlers\PluginAPIHandler;
@@ -66,8 +66,6 @@ class CitationManagerPlugin extends GenericPlugin
 
     /** @var true Whether debugging mode is activated, careful with exposing secrets! */
     public const isDebugMode = true;
-    /** @var true Whether testing mode. If this is enabled, classes in "tests/classes" are used. */
-    public bool $isTestMode = true;
     /** @var array These are parameters which are used in templates in the front en backend. @see initPlugin() */
     public array $templateParameters = [];
 
@@ -154,10 +152,6 @@ class CitationManagerPlugin extends GenericPlugin
         $request = $this->getRequest();
         $context = $request->getContext();
 
-        $isTestMode = strtolower(Config::getVar(CITATION_MANAGER_PLUGIN_NAME, 'isTestMode'));
-        if (!empty($isTestMode) && ($isTestMode === 'true' || $isTestMode === '1'))
-            $this->isTestMode = true;
-
         $apiBaseUrl = '';
         if (!empty($context) && !empty($context->getData('urlPath'))) {
             $apiBaseUrl = $request->getDispatcher()->url(
@@ -174,7 +168,7 @@ class CitationManagerPlugin extends GenericPlugin
             'journalMetadata' => '',
             'authors' => '',
             'authorModel' => json_encode(ClassHelper::getClassAsArrayNullAssigned(new AuthorModel())),
-            'publicationMetadata' => json_encode(ClassHelper::getClassAsArrayNullAssigned(new PublicationMetadata())),
+            'publicationMetadata' => json_encode(ClassHelper::getClassAsArrayNullAssigned(new MetadataPublication())),
             'structuredCitations' => '',
             'url' => [
                 'doi' => Doi::prefix,
@@ -214,9 +208,29 @@ class CitationManagerPlugin extends GenericPlugin
         return __('plugins.generic.citationManager.displayName');
     }
 
-    public function getIsTestMode(): bool
+    /**
+     * Load a setting  or load it from the config.inc.php if it is specified there.
+     *
+     * @param int $contextId The context or journal identifier.
+     * @param string $name The name of the setting.
+     * @return mixed|null|false The setting value or null if not found.
+     */
+    public function getSetting($contextId, $name): mixed
     {
-        return $this->isTestMode;
+        switch ($name) {
+            case 'isTestMode':
+                $config_value = Config::getVar(CITATION_MANAGER_PLUGIN_NAME, 'isTestMode');
+                if (!empty($config_value) && (strtolower($config_value) === 'true' || (string)$config_value === '1')){
+                    $config_value = true;
+                } else if (!empty($config_value)) {
+                    $config_value = false;
+                }
+                break;
+            default:
+                return parent::getSetting($contextId, $name);
+        }
+
+        return $config_value ?: parent::getSetting($contextId, $name);
     }
 }
 

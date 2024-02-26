@@ -1,22 +1,19 @@
 <?php
 /**
- * @file classes/DataModels/JournalMetadata.php
+ * @file classes/DataModels/MetadataAuthor.php
  *
  * @copyright (c) 2021+ TIB Hannover
  * @copyright (c) 2021+ Gazi Yücel
  * @license Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class JournalMetadata
- * @brief Metadata for Journal
+ * @class MetadataAuthor
+ * @brief Metadata for Author
  */
 
 namespace APP\plugins\generic\citationManager\classes\DataModels\Metadata;
 
-class JournalMetadata
+class MetadataAuthor
 {
-    /** @var int|null The journal id in OJS. */
-    public ?int $id = null;
-
     /** @var string|null $openalex_id OpenAlex ID. */
     public ?string $openalex_id = null;
 

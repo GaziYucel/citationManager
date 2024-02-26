@@ -13,7 +13,7 @@
 namespace APP\plugins\generic\citationManager\classes\Workflow;
 
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
-use APP\plugins\generic\citationManager\classes\DataModels\Metadata\AuthorMetadata;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataAuthor;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
 use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
 use APP\plugins\generic\citationManager\classes\Helpers\LogHelper;
@@ -84,8 +84,8 @@ class WorkflowTab
             /* @var Author $authorLC */
             $author = (array)$authorLC;
             $metadata = json_decode($author['_data'][CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR], true);
-            $metadata = ClassHelper::getClassWithValuesAssigned(new AuthorMetadata(), $metadata);
-            if (empty($metadata)) $metadata = new AuthorMetadata();
+            $metadata = ClassHelper::getClassWithValuesAssigned(new MetadataAuthor(), $metadata);
+            if (empty($metadata)) $metadata = new MetadataAuthor();
             $author['_data'][CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR] = $metadata;
 
             $author['_data']['displayName'] = trim($authorLC->getGivenName($locale) . ' ' . $authorLC->getFamilyName($locale));
@@ -95,10 +95,10 @@ class WorkflowTab
         }
 
         $this->plugin->templateParameters['locale'] = $locale;
-        $this->plugin->templateParameters['journalMetadata'] = json_encode($pluginDao->getJournalMetadata($publicationId));
+        $this->plugin->templateParameters['journalMetadata'] = json_encode($pluginDao->getMetadataJournal($publicationId));
         $this->plugin->templateParameters['authors'] = json_encode($authors);
 
-        $this->plugin->templateParameters['publicationMetadata'] = json_encode($pluginDao->getPublicationMetadata($publicationId));
+        $this->plugin->templateParameters['publicationMetadata'] = json_encode($pluginDao->getMetadataPublication($publicationId));
         $this->plugin->templateParameters['structuredCitations'] = json_encode($pluginDao->getCitations($publicationId));
 
         $templateMgr->assign($this->plugin->templateParameters);

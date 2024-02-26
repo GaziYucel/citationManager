@@ -8,9 +8,9 @@ $baseDir = dirname($vendorDir);
 return array(
     'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Citation\\AuthorModel' => $baseDir . '/classes/DataModels/Citation/AuthorModel.php',
     'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Citation\\CitationModel' => $baseDir . '/classes/DataModels/Citation/CitationModel.php',
-    'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Metadata\\AuthorMetadata' => $baseDir . '/classes/DataModels/Metadata/AuthorMetadata.php',
-    'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Metadata\\JournalMetadata' => $baseDir . '/classes/DataModels/Metadata/JournalMetadata.php',
-    'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Metadata\\PublicationMetadata' => $baseDir . '/classes/DataModels/Metadata/PublicationMetadata.php',
+    'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Metadata\\MetadataAuthor' => $baseDir . '/classes/DataModels/Metadata/MetadataAuthor.php',
+    'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Metadata\\MetadataJournal' => $baseDir . '/classes/DataModels/Metadata/MetadataJournal.php',
+    'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Metadata\\MetadataPublication' => $baseDir . '/classes/DataModels/Metadata/MetadataPublication.php',
     'APP\\plugins\\generic\\citationManager\\classes\\Db\\PluginDAO' => $baseDir . '/classes/Db/PluginDAO.php',
     'APP\\plugins\\generic\\citationManager\\classes\\Db\\PluginSchema' => $baseDir . '/classes/Db/PluginSchema.php',
     'APP\\plugins\\generic\\citationManager\\classes\\External\\ApiAbstract' => $baseDir . '/classes/External/ApiAbstract.php',

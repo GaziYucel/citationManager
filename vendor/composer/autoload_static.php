@@ -6,12 +6,26 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitbf655105f141664dd961e455f0c3b885
 {
+    public static $prefixLengthsPsr4 = array (
+        'A' => 
+        array (
+            'APP\\plugins\\generic\\citationManager\\classes\\' => 44,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'APP\\plugins\\generic\\citationManager\\classes\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/classes',
+        ),
+    );
+
     public static $classMap = array (
         'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Citation\\AuthorModel' => __DIR__ . '/../..' . '/classes/DataModels/Citation/AuthorModel.php',
         'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Citation\\CitationModel' => __DIR__ . '/../..' . '/classes/DataModels/Citation/CitationModel.php',
-        'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Metadata\\AuthorMetadata' => __DIR__ . '/../..' . '/classes/DataModels/Metadata/AuthorMetadata.php',
-        'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Metadata\\JournalMetadata' => __DIR__ . '/../..' . '/classes/DataModels/Metadata/JournalMetadata.php',
-        'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Metadata\\PublicationMetadata' => __DIR__ . '/../..' . '/classes/DataModels/Metadata/PublicationMetadata.php',
+        'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Metadata\\MetadataAuthor' => __DIR__ . '/../..' . '/classes/DataModels/Metadata/MetadataAuthor.php',
+        'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Metadata\\MetadataJournal' => __DIR__ . '/../..' . '/classes/DataModels/Metadata/MetadataJournal.php',
+        'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Metadata\\MetadataPublication' => __DIR__ . '/../..' . '/classes/DataModels/Metadata/MetadataPublication.php',
         'APP\\plugins\\generic\\citationManager\\classes\\Db\\PluginDAO' => __DIR__ . '/../..' . '/classes/Db/PluginDAO.php',
         'APP\\plugins\\generic\\citationManager\\classes\\Db\\PluginSchema' => __DIR__ . '/../..' . '/classes/Db/PluginSchema.php',
         'APP\\plugins\\generic\\citationManager\\classes\\External\\ApiAbstract' => __DIR__ . '/../..' . '/classes/External/ApiAbstract.php',
@@ -76,6 +90,8 @@ class ComposerStaticInitbf655105f141664dd961e455f0c3b885
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInitbf655105f141664dd961e455f0c3b885::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitbf655105f141664dd961e455f0c3b885::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInitbf655105f141664dd961e455f0c3b885::$classMap;
 
         }, null, ClassLoader::class);

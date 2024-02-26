@@ -15,7 +15,7 @@ namespace APP\plugins\generic\citationManager\classes\External\OpenCitations;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\AuthorModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
-use APP\plugins\generic\citationManager\classes\DataModels\Metadata\PublicationMetadata;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
 use APP\plugins\generic\citationManager\classes\External\DepositAbstract;
 use APP\plugins\generic\citationManager\classes\External\OpenCitations\DataModels\WorkCitingCited;
@@ -34,8 +34,8 @@ use Submission;
 
 class Deposit extends DepositAbstract
 {
-    /** @var PublicationMetadata|null */
-    private ?PublicationMetadata $publicationMetadata = null;
+    /** @var MetadataPublication|null */
+    private ?MetadataPublication $publicationMetadata = null;
 
     /** @var array|null */
     private ?array $citations = null;
@@ -63,7 +63,7 @@ class Deposit extends DepositAbstract
      * @param Issue $issue
      * @param Submission $submission
      * @param Publication $publication
-     * @param PublicationMetadata $publicationMetadata
+     * @param MetadataPublication $publicationMetadata
      * @param array $citations
      * @return bool
      */
@@ -71,7 +71,7 @@ class Deposit extends DepositAbstract
                             Issue               $issue,
                             Submission          $submission,
                             Publication         $publication,
-                            PublicationMetadata $publicationMetadata,
+                            MetadataPublication $publicationMetadata,
                             array               $citations): bool
     {
         $this->publicationMetadata = $publicationMetadata;
@@ -129,12 +129,12 @@ class Deposit extends DepositAbstract
     /**
      * Return publication metadata
      *
-     * @return PublicationMetadata
+     * @return MetadataPublication
      */
-    public function getPublicationMetadata(): PublicationMetadata
+    public function getPublicationMetadata(): MetadataPublication
     {
         if (empty($this->publicationMetadata))
-            return new PublicationMetadata();
+            return new MetadataPublication();
 
         return $this->publicationMetadata;
     }

@@ -13,7 +13,7 @@
 namespace APP\plugins\generic\citationManager\classes\External;
 
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
-use APP\plugins\generic\citationManager\classes\DataModels\Metadata\PublicationMetadata;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use Issue;
 use Journal;
 use Publication;
@@ -34,7 +34,7 @@ abstract class DepositAbstract
      * @param Issue $issue
      * @param Submission $submission
      * @param Publication $publication
-     * @param PublicationMetadata $publicationMetadata
+     * @param MetadataPublication $publicationMetadata
      * @param array $citations
      * @return bool
      */
@@ -42,7 +42,7 @@ abstract class DepositAbstract
                             Issue               $issue,
                             Submission          $submission,
                             Publication         $publication,
-                            PublicationMetadata $publicationMetadata,
+                            MetadataPublication $publicationMetadata,
                             array               $citations): bool
     {
         return true;

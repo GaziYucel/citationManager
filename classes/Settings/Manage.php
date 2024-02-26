@@ -12,14 +12,14 @@
 
 namespace APP\plugins\generic\citationManager\classes\Settings;
 
+use Application;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\Handlers\DepositHandler;
 use APP\plugins\generic\citationManager\classes\Handlers\ProcessHandler;
-use Application;
-use DAO;
 use JSONMessage;
 use Notification;
 use NotificationManager;
+use DAO;
 
 class Manage
 {

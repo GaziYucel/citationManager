@@ -1,18 +1,18 @@
 <?php
 /**
- * @file classes/DataModels/PublicationMetadata.php
+ * @file classes/DataModels/MetadataPublication.php
  *
  * @copyright (c) 2021+ TIB Hannover
  * @copyright (c) 2021+ Gazi Yücel
  * @license Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class PublicationMetadata
+ * @class MetadataPublication
  * @brief Metadata for Publication
  */
 
 namespace APP\plugins\generic\citationManager\classes\DataModels\Metadata;
 
-class PublicationMetadata
+class MetadataPublication
 {
     /** @var int|null The publication id in OJS. */
     public ?int $id = null;

@@ -16,7 +16,13 @@ use Config;
 
 class LogHelper
 {
-    public static $regexes = [
+    /**
+     * Regex for capturing sensitive data, e.g. password, token.
+     * These regexes are meant for json syntax.
+     *
+     * @var array|string[]
+     */
+    public static array $regexes = [
         '/(?<=password":")(.*?)(?=\")/',
         '/(?<=token":")(.*?)(?=\")/',
         '/(?<=token )(.*?)(?=\")/'
@@ -30,8 +36,8 @@ class LogHelper
      */
     public static function logInfo(mixed $message): bool
     {
-        if (empty($message)) $message = '-empty-';
-
+        $level = 'INF';
+        $message = self::processMessage($message, $level);
         return self::writeToFile($message, 'INF');
     }
 
@@ -43,60 +49,58 @@ class LogHelper
      */
     public static function logError(mixed $message): bool
     {
-        if (empty($message)) $message = '-empty-';
-
-        return self::writeToFile($message, 'ERR');
+        $level = 'ERR';
+        $message = self::processMessage($message, $level);
+        return self::writeToFile($message, $level);
     }
 
     /**
-     * Write a message to a log file.
+     * Log an debug message.
      *
-     * @param mixed $message The message to be logged.
-     * @param string $level The log level (e.g., 'INF' for informational, 'ERR' for error).
+     * @param mixed $message The error message to be logged.
      * @return bool Returns true on success, false on failure.
      */
-    private static function writeToFile(mixed $message, string $level): bool
+    public static function logDebug(mixed $message): bool
     {
-        // path of log file
-        $path = Config::getVar('files', 'files_dir');
-        $file = strtolower(str_replace(['\\classes\\Helpers', '\\'], ['', '_'], __NAMESPACE__ . '.log'));
-        $filePath = $path . DIRECTORY_SEPARATOR . $file;
+        $level = 'DBG';
+        $message = self::processMessage($message, $level);
+        return self::writeToFile($message, $level);
+    }
+
+    /**
+     * Change object / array to string, normalize whitespace
+     *
+     * @param mixed $message
+     * @param string $level
+     * @return string
+     */
+    private static function processMessage(mixed $message, string $level): string
+    {
+        if (empty($message)) $message = '-empty-';
 
         // convert message to string
         if (is_object($message) || is_array($message)) {
             $message = json_encode($message, JSON_UNESCAPED_SLASHES);
             if (json_last_error() !== JSON_ERROR_NONE) $message = var_export($message, true);
         }
+
+        // line endings, whitespace
         $message = str_replace(array("\r", "\n"), ' ', $message);
         $message = preg_replace('!\s+!', ' ', $message);
 
         // get debug backtrace
-        $backTrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+        $backTrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
+        $message = date('Y-m-d H:i:s') . substr(microtime(), 1, 4) . ' ' . $level . ' ' .
+            $backTrace[2]['class'] . '\\' . $backTrace[2]['function'] . ': ' . $message . "\n";
 
-        // debug information if debug mode enabled
-        $debugMessage = '';
-        if (\CitationManagerPlugin::isDebugMode) {
-            // $debugMessage = '                            ' . json_encode($backTrace, JSON_UNESCAPED_SLASHES) . "\n";
+        // add extra debug information if debug level
+        if($level === 'DBG') {
+            $backTrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+            $message .= '                            ' . json_encode($backTrace, JSON_UNESCAPED_SLASHES) . "\n";
         }
 
-        // message to write
-        $message =
-            date('Y-m-d H:i:s') . substr(microtime(), 1, 4) . ' ' . $level . ' ' .
-            $backTrace[2]['class'] . '\\' . $backTrace[2]['function'] . ': ' . $message . "\n" .
-            $debugMessage;
-
-        $message = self::removeSensitive($message);
-
-        return error_log($message, 3, $filePath);
-    }
-
-    /**
-     * Try to remove sensitive information such as passwords
-     * @param string $message
-     * @return string
-     */
-    private static function removeSensitive(string $message): string
-    {
+        // remove sensitive information such as passwords
+        // do this after converting to json
         foreach (self::$regexes as $index => $regex) {
             $matches = [];
             preg_match($regex, $message, $matches);
@@ -106,5 +110,20 @@ class LogHelper
 
         return $message;
     }
-}
 
+    /**
+     * Write message to a log file.
+     *
+     * @param mixed $message The message to be logged.
+     * @param string $level The log level.
+     * @return bool Returns true on success, false on failure.
+     */
+    private static function writeToFile(mixed $message, string $level): bool
+    {
+        $path = Config::getVar('files', 'files_dir');
+        $file = strtolower(str_replace(['\\classes\\Helpers', '\\'], ['', '_'], __NAMESPACE__ . '.log'));
+        $filePath = $path . DIRECTORY_SEPARATOR . $file;
+
+        return error_log($message, 3, $filePath);
+    }
+}
