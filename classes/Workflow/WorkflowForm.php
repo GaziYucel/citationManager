@@ -44,7 +44,7 @@ class WorkflowForm extends FormComponent
             'label' => '',
             'description' => '',
             'isMultilingual' => false,
-            'value' => $pluginDao->getPublicationMetadata($publicationId)
+            'value' => $pluginDao->getMetadataPublication($publicationId)
         ]));
 
         $this->addField(new FieldText(
@@ -52,7 +52,7 @@ class WorkflowForm extends FormComponent
             'label' => '',
             'description' => '',
             'isMultilingual' => false,
-            'value' => $pluginDao->getJournalMetadata($publicationId)
+            'value' => $pluginDao->getMetadataJournal($publicationId)
         ]));
     }
 }

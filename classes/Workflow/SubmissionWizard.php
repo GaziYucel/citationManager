@@ -42,7 +42,7 @@ class SubmissionWizard
 
         $pluginDao = new PluginDAO();
         $this->plugin->templateParameters['publicationMetadata'] =
-            json_encode($pluginDao->getPublicationMetadata($publication->getId()));
+            json_encode($pluginDao->getMetadataPublication($publication->getId()));
 
         $this->plugin->templateParameters['structuredCitations'] =
             json_encode($pluginDao->getCitations($publication->getId()));

@@ -28,9 +28,10 @@ class Language
     {
         $languages = $this->languages();
 
-        if (!empty($locale) &&
-            array_key_exists(strtolower($locale), $languages)) {
-            return $languages[strtolower($locale)];
+        if(!empty($locale)){
+            if(!empty($languages[strtolower($locale)])){
+                return $languages[strtolower($locale)];
+            }
         }
 
         return $this->defaultLanguage;

@@ -14,8 +14,8 @@ namespace APP\plugins\generic\citationManager\classes\External\Wikidata;
 
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
-use APP\plugins\generic\citationManager\classes\DataModels\Metadata\AuthorMetadata;
-use APP\plugins\generic\citationManager\classes\DataModels\Metadata\PublicationMetadata;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataAuthor;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
 use APP\plugins\generic\citationManager\classes\External\DepositAbstract;
 use APP\plugins\generic\citationManager\classes\External\Wikidata\DataModels\Claim;
@@ -32,8 +32,8 @@ use Submission;
 
 class Deposit extends DepositAbstract
 {
-    /** @var PublicationMetadata|null */
-    private ?PublicationMetadata $publicationMetadata = null;
+    /** @var MetadataPublication|null */
+    private ?MetadataPublication $publicationMetadata = null;
 
     /** @var array|null */
     private ?array $citations = [];
@@ -59,7 +59,7 @@ class Deposit extends DepositAbstract
      * @param Issue $issue
      * @param Submission $submission
      * @param Publication $publication
-     * @param PublicationMetadata $publicationMetadata
+     * @param MetadataPublication $publicationMetadata
      * @param array $citations
      * @return bool
      */
@@ -67,7 +67,7 @@ class Deposit extends DepositAbstract
                             Issue               $issue,
                             Submission          $submission,
                             Publication         $publication,
-                            PublicationMetadata $publicationMetadata,
+                            MetadataPublication $publicationMetadata,
                             array               $citations): bool
     {
         $this->publicationMetadata = $publicationMetadata;
@@ -81,10 +81,10 @@ class Deposit extends DepositAbstract
         $pluginDao = new PluginDAO();
 
         // journal
-        $journalMetaData = $pluginDao->getJournalMetadata($publication->getId());
+        $journalMetaData = $pluginDao->getMetadataJournal($publication->getId());
         if (empty($journalMetaData->wikidata_id)) {
             $journalMetaData->wikidata_id = $this->processJournal($locale, $context);
-            $pluginDao->saveJournalMetadata($publication->getId(), $journalMetaData);
+            $pluginDao->saveMetadataJournal($publication->getId(), $journalMetaData);
         }
 
         // author(s)
@@ -93,8 +93,8 @@ class Deposit extends DepositAbstract
             /* @var Author $authorLC */
             $author = (array)$authorLC;
             $metadata = json_decode($author['_data'][CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR], true);
-            $metadata = ClassHelper::getClassWithValuesAssigned(new AuthorMetadata(), $metadata);
-            if (empty($metadata)) $metadata = new AuthorMetadata();
+            $metadata = ClassHelper::getClassWithValuesAssigned(new MetadataAuthor(), $metadata);
+            if (empty($metadata)) $metadata = new MetadataAuthor();
             $author['_data'][CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR] = $metadata;
 
             $orcidId = Orcid::removePrefix($authorLC->getData('orcid'));
@@ -105,7 +105,7 @@ class Deposit extends DepositAbstract
             }
             $authors[] = $author;
 
-            $pluginDao->saveAuthorMetadata($authorLC->getId(), $metadata);
+            $pluginDao->saveMetadataAuthor($authorLC->getId(), $metadata);
         }
 
         // cited articles
@@ -157,12 +157,12 @@ class Deposit extends DepositAbstract
     /**
      * Return publication metadata
      *
-     * @return PublicationMetadata
+     * @return MetadataPublication
      */
-    public function getPublicationMetadata(): PublicationMetadata
+    public function getPublicationMetadata(): MetadataPublication
     {
         if (empty($this->publicationMetadata))
-            return new PublicationMetadata();
+            return new MetadataPublication();
 
         return $this->publicationMetadata;
     }

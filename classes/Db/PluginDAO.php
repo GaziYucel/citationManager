@@ -15,20 +15,17 @@ namespace APP\plugins\generic\citationManager\classes\Db;
 use APP\facades\Repo;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
-use APP\plugins\generic\citationManager\classes\DataModels\Metadata\AuthorMetadata;
-use APP\plugins\generic\citationManager\classes\DataModels\Metadata\JournalMetadata;
-use APP\plugins\generic\citationManager\classes\DataModels\Metadata\PublicationMetadata;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataAuthor;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
-use APP\plugins\generic\citationManager\classes\Helpers\LogHelper;
-use APP\submission\Collector;
 use Author;
 use DAORegistry;
-use Exception;
+use APP\submission\Collector;
 use Issue;
 use Journal;
 use JournalDAO;
 use Publication;
-use Services;
 use Submission;
 
 class PluginDAO
@@ -93,16 +90,16 @@ class PluginDAO
     }
 
     /**
-     * This method retrieves publicationWork for a publication and returns normalized to PublicationMetadata.
-     * If nothing found, the method returns a new PublicationMetadata.
+     * This method retrieves publicationWork for a publication and returns normalized to MetadataPublication.
+     * If nothing found, the method returns a new MetadataPublication.
      *
      * @param int $publicationId
-     * @return PublicationMetadata
+     * @return MetadataPublication
      */
-    public function getPublicationMetadata(int $publicationId): PublicationMetadata
+    public function getMetadataPublication(int $publicationId): MetadataPublication
     {
         if (empty($publicationId))
-            return new PublicationMetadata();
+            return new MetadataPublication();
 
         $publication = $this->getPublication($publicationId);
 
@@ -112,19 +109,19 @@ class PluginDAO
         );
 
         if (empty($fromDb) || json_last_error() !== JSON_ERROR_NONE)
-            return new PublicationMetadata();
+            return new MetadataPublication();
 
-        return ClassHelper::getClassWithValuesAssigned(new PublicationMetadata(), $fromDb);
+        return ClassHelper::getClassWithValuesAssigned(new MetadataPublication(), $fromDb);
     }
 
     /**
      * This method saves publicationWork for a publication.
      *
      * @param int $publicationId
-     * @param PublicationMetadata $publicationMetadata
+     * @param MetadataPublication $metadataPublication
      * @return bool
      */
-    public function savePublicationMetadata(int $publicationId, PublicationMetadata $publicationMetadata): bool
+    public function saveMetadataPublication(int $publicationId, MetadataPublication $metadataPublication): bool
     {
         if (empty($publicationId))
             return false;
@@ -133,7 +130,7 @@ class PluginDAO
 
         $publication->setData(
             CitationManagerPlugin::CITATION_MANAGER_METADATA_PUBLICATION,
-            json_encode($publicationMetadata)
+            json_encode($metadataPublication)
         );
 
         $this->savePublication($publication);
@@ -143,15 +140,15 @@ class PluginDAO
 
     /**
      * This method retrieves author metadata for an author and returns normalized.
-     * If nothing found, the method returns a new AuthorMetadata.
+     * If nothing found, the method returns a new MetadataAuthor.
      *
      * @param int $authorId
-     * @return AuthorMetadata
+     * @return MetadataAuthor
      */
-    public function getAuthorMetadata(int $authorId): AuthorMetadata
+    public function getMetadataAuthor(int $authorId): MetadataAuthor
     {
         if (empty($authorId))
-            return new AuthorMetadata();
+            return new MetadataAuthor();
 
         $author = $this->getAuthor($authorId);
 
@@ -161,19 +158,19 @@ class PluginDAO
         );
 
         if (empty($fromDb) || json_last_error() !== JSON_ERROR_NONE)
-            return new AuthorMetadata();
+            return new MetadataAuthor();
 
-        return ClassHelper::getClassWithValuesAssigned(new AuthorMetadata(), $fromDb);
+        return ClassHelper::getClassWithValuesAssigned(new MetadataAuthor(), $fromDb);
     }
 
     /**
      * This method saves publicationWork for a publication.
      *
      * @param int $authorId
-     * @param AuthorMetadata $authorMetadata
+     * @param MetadataAuthor $metadataAuthor
      * @return bool
      */
-    public function saveAuthorMetadata(int $authorId, AuthorMetadata $authorMetadata): bool
+    public function saveMetadataAuthor(int $authorId, MetadataAuthor $metadataAuthor): bool
     {
         if (empty($authorId))
             return false;
@@ -182,7 +179,7 @@ class PluginDAO
 
         $author->setData(
             CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR,
-            json_encode($authorMetadata)
+            json_encode($metadataAuthor)
         );
 
         $this->saveAuthor($author);
@@ -195,12 +192,12 @@ class PluginDAO
      * If nothing found, the method returns a new JournalModel.
      *
      * @param int $publicationId
-     * @return JournalMetadata
+     * @return MetadataJournal
      */
-    public function getJournalMetadata(int $publicationId): JournalMetadata
+    public function getMetadataJournal(int $publicationId): MetadataJournal
     {
         if (empty($publicationId))
-            return new JournalMetadata();
+            return new MetadataJournal();
 
         $publication = $this->getPublication($publicationId);
 
@@ -210,19 +207,19 @@ class PluginDAO
         );
 
         if (empty($fromDb) || json_last_error() !== JSON_ERROR_NONE)
-            return new JournalMetadata();
+            return new MetadataJournal();
 
-        return ClassHelper::getClassWithValuesAssigned(new JournalMetadata(), $fromDb);
+        return ClassHelper::getClassWithValuesAssigned(new MetadataJournal(), $fromDb);
     }
 
     /**
      * This method saves JournalModel to publication_settings.
      *
      * @param int $publicationId
-     * @param JournalMetadata $journalMetadata
+     * @param MetadataJournal $metadataJournal
      * @return bool
      */
-    public function saveJournalMetadata(int $publicationId, JournalMetadata $journalMetadata): bool
+    public function saveMetadataJournal(int $publicationId, MetadataJournal $metadataJournal): bool
     {
         if (empty($publicationId))
             return false;
@@ -231,7 +228,7 @@ class PluginDAO
 
         $publication->setData(
             CitationManagerPlugin::CITATION_MANAGER_METADATA_JOURNAL,
-            json_encode($journalMetadata)
+            json_encode($metadataJournal)
         );
 
         $this->savePublication($publication);

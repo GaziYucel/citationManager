@@ -13,8 +13,8 @@
 namespace APP\plugins\generic\citationManager\classes\Handlers;
 
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
-use APP\plugins\generic\citationManager\classes\DataModels\Metadata\JournalMetadata;
-use APP\plugins\generic\citationManager\classes\DataModels\Metadata\PublicationMetadata;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
 use APP\plugins\generic\citationManager\classes\External\OpenCitations\Deposit as OpenCitationsDeposit;
 use APP\plugins\generic\citationManager\classes\External\Wikidata\Deposit as WikidataDeposit;
@@ -26,11 +26,11 @@ class DepositHandler
     /** @var CitationManagerPlugin */
     protected CitationManagerPlugin $plugin;
 
-    /** @var JournalMetadata|null */
-    private ?JournalMetadata $journalMetadata = null;
+    /** @var MetadataJournal|null */
+    private ?MetadataJournal $journalMetadata = null;
 
-    /** @var PublicationMetadata|null */
-    private ?PublicationMetadata $publicationMetadata = null;
+    /** @var MetadataPublication|null */
+    private ?MetadataPublication $publicationMetadata = null;
 
     /** @var array|null */
     private ?array $citations = null;
@@ -49,13 +49,13 @@ class DepositHandler
      *
      * @param string $submissionId The ID of the submission.
      * @param string $publicationId The ID of the publication.
-     * @param PublicationMetadata $publicationMetadata The PublicationMetadata of the publication.
+     * @param MetadataPublication $publicationMetadata The MetadataPublication of the publication.
      * @param array $citations Array of citations to be deposited.
      * @return bool
      */
     public function execute(string              $submissionId,
                             string              $publicationId,
-                            PublicationMetadata $publicationMetadata,
+                            MetadataPublication $publicationMetadata,
                             array               $citations): bool
     {
         $pluginDao = new PluginDAO();
@@ -101,7 +101,7 @@ class DepositHandler
 
         // save to database
         $pluginDao = new PluginDAO();
-        $pluginDao->savePublicationMetadata($publicationId, $this->publicationMetadata);
+        $pluginDao->saveMetadataPublication($publicationId, $this->publicationMetadata);
         $pluginDao->saveCitations($publicationId, $this->citations);
 
         return true;
@@ -138,13 +138,13 @@ class DepositHandler
 
                 foreach ($publications as $publication) {
 
-                    $this->publicationMetadata = new PublicationMetadata();
+                    $this->publicationMetadata = new MetadataPublication();
                     $this->citations = [];
 
                     $this->execute(
                         $submission->getId(),
                         $publication->getId(),
-                        $pluginDao->getPublicationMetadata($publication->getId()),
+                        $pluginDao->getMetadataPublication($publication->getId()),
                         $pluginDao->getCitations($publication->getId()));
                 }
             }
@@ -156,12 +156,12 @@ class DepositHandler
     /**
      * Return publication metadata
      *
-     * @return PublicationMetadata
+     * @return MetadataPublication
      */
-    public function getPublicationMetadata(): PublicationMetadata
+    public function getPublicationMetadata(): MetadataPublication
     {
         if (empty($this->publicationMetadata))
-            return new PublicationMetadata();
+            return new MetadataPublication();
 
         return $this->publicationMetadata;
     }

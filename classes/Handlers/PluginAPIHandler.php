@@ -17,7 +17,7 @@ import('lib.pkp.classes.security.authorization.PolicySet');
 import('lib.pkp.classes.security.authorization.RoleBasedHandlerOperationPolicy');
 
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
-use APP\plugins\generic\citationManager\classes\DataModels\Metadata\PublicationMetadata;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
 use APIResponse;
 use APIHandler;
@@ -147,7 +147,7 @@ class PluginAPIHandler extends APIHandler
         $depositor->execute(
             $submissionId,
             $publicationId,
-            ClassHelper::getClassWithValuesAssigned(new PublicationMetadata(), $publicationMetadata),
+            ClassHelper::getClassWithValuesAssigned(new MetadataPublication(), $publicationMetadata),
             $citations);
 
         $this->responseBody['message-type'] = 'deposit';

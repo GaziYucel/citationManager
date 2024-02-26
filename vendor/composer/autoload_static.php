@@ -6,6 +6,20 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit17b2eb832ba4a3646c1e9ad7c60c2c2b
 {
+    public static $prefixLengthsPsr4 = array (
+        'A' => 
+        array (
+            'APP\\plugins\\generic\\citationManager\\classes\\' => 44,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'APP\\plugins\\generic\\citationManager\\classes\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/classes',
+        ),
+    );
+
     public static $classMap = array (
         'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Citation\\AuthorModel' => __DIR__ . '/../..' . '/classes/DataModels/Citation/AuthorModel.php',
         'APP\\plugins\\generic\\citationManager\\classes\\DataModels\\Citation\\CitationModel' => __DIR__ . '/../..' . '/classes/DataModels/Citation/CitationModel.php',
@@ -76,6 +90,8 @@ class ComposerStaticInit17b2eb832ba4a3646c1e9ad7c60c2c2b
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit17b2eb832ba4a3646c1e9ad7c60c2c2b::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit17b2eb832ba4a3646c1e9ad7c60c2c2b::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit17b2eb832ba4a3646c1e9ad7c60c2c2b::$classMap;
 
         }, null, ClassLoader::class);
