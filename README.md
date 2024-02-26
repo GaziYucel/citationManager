@@ -50,17 +50,24 @@ Citation Manager for OJS
 
 ### Deposit to OpenCitations
 
-**Metadata**
+1. Metadata
+   - id
+   - title
+   - author
+   - pub_date
+   - venue
+   - volume
+   - issue
+   - page
+   - type
+   - publisher
+   - editor
 
-| id | title | author | pub_date | venue | volume | issue | page | type | publisher | editor |
-|----|-------|--------|----------|-------|--------|-------|------|------|-----------|--------|
-|    |       |        |          |       |        |       |      |      |           |        |
-
-**Citing and cited relation**
-
-| citing_id | citing_publication_date | cited_id | cited_publication_date |
-|-----------|-------------------------|----------|------------------------|
-|           |                         |          |                        |
+2. Citing and cited relation
+   - citing_id
+   - citing_publication_date
+   - cited_id
+   - cited_publication_date
 
 Please see https://github.com/opencitations/crowdsourcing for more information.
 
