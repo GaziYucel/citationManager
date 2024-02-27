@@ -18,8 +18,9 @@ use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPubl
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
 use APP\plugins\generic\citationManager\classes\External\OpenCitations\Deposit as OpenCitationsDeposit;
 use APP\plugins\generic\citationManager\classes\External\Wikidata\Deposit as WikidataDeposit;
-use Application;
+use APP\core\Application;
 use Exception;
+use PKP\plugins\PluginRegistry;
 
 class DepositHandler
 {
@@ -38,9 +39,10 @@ class DepositHandler
     /** @var array|null */
     private ?array $authors = [];
 
-    /** @param CitationManagerPlugin $plugin */
-    public function __construct(CitationManagerPlugin $plugin)
+    public function __construct()
     {
+        /** @var CitationManagerPlugin $plugin */
+        $plugin = PluginRegistry::getPlugin('generic',  strtolower(CITATION_MANAGER_PLUGIN_NAME));
         $this->plugin = $plugin;
     }
 

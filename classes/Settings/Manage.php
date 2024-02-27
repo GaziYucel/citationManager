@@ -53,7 +53,7 @@ class Manage
                 $form->initData();
                 return new JSONMessage(true, $form->fetch($request));
             case 'batch_process':
-                $process = new ProcessHandler($this->plugin);
+                $process = new ProcessHandler();
                 $process->batchExecute();
                 $notificationManager = new NotificationManager();
                 $notificationManager->createTrivialNotification(
@@ -62,7 +62,7 @@ class Manage
                     array('contents' => __('plugins.generic.citationManager.settings.process.notification')));
                 return DAO::getDataChangedEvent();
             case 'batch_deposit':
-                $deposit = new DepositHandler($this->plugin);
+                $deposit = new DepositHandler();
                 $deposit->batchExecute();
                 $notificationManager = new NotificationManager();
                 $notificationManager->createTrivialNotification(

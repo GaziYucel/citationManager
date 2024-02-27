@@ -52,6 +52,6 @@ class Api extends ApiAbstract
     {
         if(empty($doi)) return [];
 
-        return $this->apiRequest('GET', '/' . 'works/doi:' . $doi, []);
+        return $this->apiRequest('GET', $this->url . '/works/doi:' . $doi, []);
     }
 }

@@ -92,7 +92,7 @@ class Deposit extends DepositAbstract
         foreach ($publication->getData('authors') as $id => $authorLC) {
             /* @var Author $authorLC */
             $author = (array)$authorLC;
-            $metadata = json_decode($author['_data'][CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR], true);
+            $metadata = json_decode($authorLC->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR), true);
             $metadata = ClassHelper::getClassWithValuesAssigned(new MetadataAuthor(), $metadata);
             if (empty($metadata)) $metadata = new MetadataAuthor();
             $author['_data'][CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR] = $metadata;
@@ -114,7 +114,7 @@ class Deposit extends DepositAbstract
             /* @var CitationModel $citation */
             $citation = Classhelper::getClassWithValuesAssigned(new CitationModel(), $citations[$i]);
 
-            if (empty($citation->wikidata_id))
+            if ($citation->isProcessed && empty($citation->wikidata_id))
                 $citation->wikidata_id = $this->processCitedArticle($locale, $citation);
 
             $citations[$i] = $citation;

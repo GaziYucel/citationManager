@@ -50,6 +50,9 @@ abstract class ApiAbstract
     {
         if ($method !== 'POST' && $method !== 'GET') return [];
 
+        $response = null;
+        $result = null;
+
         try {
             $response = $this->httpClient->request($method, $url, $options);
 
@@ -67,6 +70,7 @@ abstract class ApiAbstract
             return $result;
 
         } catch (GuzzleException $e) {
+            LogHelper::logDebug([$method, $url, $options, $response, $result]);
             error_log(__METHOD__ . ' ' . $e->getMessage());
         }
 

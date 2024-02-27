@@ -24,7 +24,8 @@ use APP\plugins\generic\citationManager\classes\PID\Doi;
 use APP\plugins\generic\citationManager\classes\PID\Handle;
 use APP\plugins\generic\citationManager\classes\PID\Url;
 use APP\plugins\generic\citationManager\classes\PID\Urn;
-use Application;
+use APP\core\Application;
+use PKP\plugins\PluginRegistry;
 use Publication;
 use Submission;
 use Exception;
@@ -37,9 +38,10 @@ class ProcessHandler
     /** @var array|null [ { CitationModel }, ... ] */
     private ?array $citations = null;
 
-    /** @param CitationManagerPlugin $plugin */
-    public function __construct(CitationManagerPlugin $plugin)
+    public function __construct()
     {
+        /** @var CitationManagerPlugin $plugin */
+        $plugin = PluginRegistry::getPlugin('generic',  strtolower(CITATION_MANAGER_PLUGIN_NAME));
         $this->plugin = $plugin;
     }
 

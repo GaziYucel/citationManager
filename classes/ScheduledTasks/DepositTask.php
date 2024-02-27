@@ -12,34 +12,25 @@
 
 namespace APP\plugins\generic\citationManager\classes\ScheduledTasks;
 
-// import('lib.pkp.classes.scheduledTask.ScheduledTask');
-
-use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\Handlers\DepositHandler;
-use PluginRegistry;
-use ScheduledTask;
-use ScheduledTaskHelper;
+use PKP\plugins\PluginRegistry;
+use PKP\scheduledTask\ScheduledTask;
+use PKP\scheduledTask\ScheduledTaskHelper;
 
 class DepositTask extends ScheduledTask
 {
-    /** @var CitationManagerPlugin */
-    var CitationManagerPlugin $plugin;
-
     /** @copydoc ScheduledTask::__construct */
     function __construct($args)
     {
-        $plugin = PluginRegistry::getPlugin('generic',  strtolower(CITATION_MANAGER_PLUGIN_NAME));
-
-        /** @var CitationManagerPlugin $plugin */
-        $this->plugin = $plugin;
-
         parent::__construct($args);
     }
 
     /** @copydoc ScheduledTask::executeActions() */
     public function executeActions(): bool
     {
-        $plugin = $this->plugin;
+        /** @var \APP\plugins\generic\citationManager\CitationManagerPlugin $plugin */
+        $plugin = PluginRegistry::getPlugin('generic',  strtolower(CITATION_MANAGER_PLUGIN_NAME));
+
         if (!$plugin->getEnabled()) {
             $this->addExecutionLogEntry(
                 __METHOD__ . '->pluginEnabled=false [' . date('Y-m-d H:i:s') . ']',
@@ -47,7 +38,7 @@ class DepositTask extends ScheduledTask
             return false;
         }
 
-        $depositor = new DepositHandler($this->plugin);
+        $depositor = new DepositHandler();
         $result = $depositor->batchExecute();
 
         if (!$result) {
