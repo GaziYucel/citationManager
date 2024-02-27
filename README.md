@@ -24,7 +24,7 @@ Citation Manager for OJS
 - [License](#license)
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
 # Features
 
@@ -246,13 +246,13 @@ If you have none please register one through https://www.wikidata.org/w/index.ph
   autoload files: `composer dump-autoload -o --no-dev`.
 - Running `composer install -o --no-dev` or `composer update -o --no-dev` will also generate the autoload files.
 - The `-o` option generates the optimised files ready for production.
-- If you are developing, you might use the classes in `tests/classes`. 
-  Test or sandbox versions of API's will be used in this case, e.g.  test.wikidata.org. 
-  For using this, use `composer dump-autoload -o --dev` for creating the autoload files. 
+- If you are developing, you might use the classes in `tests/classes`.
+  Test or sandbox versions of API's will be used in this case, e.g.  test.wikidata.org.
+  For using this, use `composer dump-autoload -o --dev` for creating the autoload files.
 - If isDebugMode = true, debug information will be written to the log file (see LogHelper class)
   such as API calls. _Careful with sensitive information, (passwords, tokens) will be written in plain text._
-  Debug information is written to the log file in the `files_dir` directory of your OJS instance. 
-  You can find this in your config.inc.php file. 
+  Debug information is written to the log file in the `files_dir` directory of your OJS instance.
+  You can find this in your config.inc.php file.
 
 ### Tests
 
