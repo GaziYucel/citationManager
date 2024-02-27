@@ -14,9 +14,6 @@ namespace APP\plugins\generic\citationManager\classes\DataModels\Metadata;
 
 class MetadataPublication
 {
-    /** @var int|null The publication id in OJS. */
-    public ?int $id = null;
-
     /** @var string|null $openalex_id OpenAlex ID. */
     public ?string $openalex_id = null;
 
