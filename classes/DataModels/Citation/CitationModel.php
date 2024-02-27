@@ -50,13 +50,13 @@ class CitationModel
     /** @var array|null List of Author objects, e.g. [ AuthorModel, AuthorModel, ... ] */
     public ?array $authors = null;
 
-    /* @var string|null Name of the journal */
+    /** @var string|null Name of the journal */
     public ?string $journal_name = null;
 
-    /* @var string|null Issn_l of the journal */
+    /** @var string|null Issn_l of the journal */
     public ?string $journal_issn_l = null;
 
-    /* @var string|null Publisher name of the journal */
+    /** @var string|null Publisher name of the journal */
     public ?string $journal_publisher = null;
 
     /** @var string|null URL for the work. */
