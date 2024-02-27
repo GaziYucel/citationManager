@@ -45,6 +45,26 @@ msgstr "The current parsed citations will be removed if you click OK. Are you su
 msgid "plugins.generic.citationManager.citations.empty.description"
 msgstr "Parsed citations are empty. Please use the button above to parse and enrich the citations."
 
+msgid "plugins.generic.citationManager.wizard.label"
+msgstr "Citation Manager"
+
+msgid "plugins.generic.citationManager.wizard.description"
+msgstr "After submission of this article, the references will be processed further.<br/>"
+"First PID's (e.g. DOI) will be extracted from the references.<br/>"
+"With these PID's, additional metadata from external services (e.g. OpenAlex, Orcid) will be collected.<br/>"
+"After publication of this article, the structured metadata will be deposited to external services (e.g. Wikidata, OpenCitations)<br/>"
+"Additionally, the structured citations can be edited on the tab Citation Manager.<br/>"
+
+msgid "plugins.generic.citationManager.wizard.label"
+msgstr "Citation Manager"
+
+msgid "plugins.generic.citationManager.wizard.description"
+msgstr "After submission of this article, the references will be processed further.<br/>"
+"First PID's (e.g. DOI) will be extracted from the references.<br/>"
+"With these PID's, additional metadata from external services (e.g. OpenAlex, Orcid) will be collected.<br/>"
+"After publication of this article, the structured metadata will be deposited to external services (e.g. Wikidata, OpenCitations)<br/>"
+"Additionally, the structured citations can be edited on the tab Citation Manager.<br/>"
+
 msgid "plugins.generic.citationManager.process.button"
 msgstr "Process"
 

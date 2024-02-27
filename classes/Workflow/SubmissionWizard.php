@@ -13,7 +13,6 @@
 namespace APP\plugins\generic\citationManager\classes\Workflow;
 
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
-use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
 
 class SubmissionWizard
 {
@@ -36,19 +35,8 @@ class SubmissionWizard
     public function execute(string $hookname, array $args): void
     {
         $templateMgr = &$args[1];
-
-        $submission = $templateMgr->getTemplateVars('submission');
-        $publication = $submission->getCurrentPublication();
-
-        $pluginDao = new PluginDAO();
-        $this->plugin->templateParameters['publicationMetadata'] =
-            json_encode($pluginDao->getMetadataPublication($publication->getId()));
-
-        $this->plugin->templateParameters['structuredCitations'] =
-            json_encode($pluginDao->getCitations($publication->getId()));
-
-        $templateMgr->assign($this->plugin->templateParameters);
-
-        $templateMgr->display($this->plugin->getTemplateResource("submissionWizard.tpl"));
+        $templateMgr->display(
+            $this->plugin->getTemplateResource("submissionWizard.tpl")
+        );
     }
 }

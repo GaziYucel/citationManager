@@ -93,7 +93,7 @@ class CitationManagerPlugin extends GenericPlugin
                 $this->initPlugin($category, $path, $mainContextId);
 
                 $submissionWizard = new SubmissionWizard($this);
-                HookRegistry::register('Template::SubmissionWizard::Section', function ($hookName, $args) use ($submissionWizard) {
+                HookRegistry::register('Templates::Submission::SubmissionMetadataForm::AdditionalMetadata', function ($hookName, $args) use ($submissionWizard) {
                     $submissionWizard->execute($hookName, $args);
                 });
 
@@ -220,7 +220,7 @@ class CitationManagerPlugin extends GenericPlugin
         switch ($name) {
             case 'isTestMode':
                 $config_value = Config::getVar(CITATION_MANAGER_PLUGIN_NAME, 'isTestMode');
-                if (!empty($config_value) && (strtolower($config_value) === 'true' || (string)$config_value === '1')){
+                if (!empty($config_value) && (strtolower($config_value) === 'true' || (string)$config_value === '1')) {
                     $config_value = true;
                 } else if (!empty($config_value)) {
                     $config_value = false;
