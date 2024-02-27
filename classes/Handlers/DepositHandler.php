@@ -20,6 +20,7 @@ use APP\plugins\generic\citationManager\classes\External\OpenCitations\Deposit a
 use APP\plugins\generic\citationManager\classes\External\Wikidata\Deposit as WikidataDeposit;
 use Application;
 use Exception;
+use PluginRegistry;
 
 class DepositHandler
 {
@@ -38,9 +39,10 @@ class DepositHandler
     /** @var array|null */
     private ?array $authors = [];
 
-    /** @param CitationManagerPlugin $plugin */
-    public function __construct(CitationManagerPlugin $plugin)
+    public function __construct()
     {
+        /** @var CitationManagerPlugin $plugin */
+        $plugin = PluginRegistry::getPlugin('generic',  strtolower(CITATION_MANAGER_PLUGIN_NAME));
         $this->plugin = $plugin;
     }
 

@@ -16,7 +16,6 @@ import('lib.pkp.classes.handler.APIHandler');
 import('lib.pkp.classes.security.authorization.PolicySet');
 import('lib.pkp.classes.security.authorization.RoleBasedHandlerOperationPolicy');
 
-use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
 use APIResponse;
@@ -28,9 +27,6 @@ use Slim\Http\Response;
 
 class PluginAPIHandler extends APIHandler
 {
-    /** @var CitationManagerPlugin */
-    protected CitationManagerPlugin $plugin;
-
     /** @var array Structure of the response body */
     private array $responseBody = [
         'status' => 'ok',
@@ -44,10 +40,8 @@ class PluginAPIHandler extends APIHandler
 
     private array $roles = [ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR, ROLE_ID_ASSISTANT, ROLE_ID_REVIEWER, ROLE_ID_AUTHOR];
 
-    /** @param CitationManagerPlugin $plugin */
-    public function __construct(CitationManagerPlugin $plugin)
+    public function __construct()
     {
-        $this->plugin = $plugin;
         $this->_handlerPath = CITATION_MANAGER_PLUGIN_NAME;
 
         // Configure API endpoints
@@ -106,7 +100,7 @@ class PluginAPIHandler extends APIHandler
         if (empty($submissionId) || empty($publicationId) || empty($citationsRaw))
             return $response->withJson($this->responseBody, 200);
 
-        $process = new ProcessHandler($this->plugin);
+        $process = new ProcessHandler();
         $process->execute($submissionId, $publicationId, $citationsRaw);
 
         $this->responseBody['message-type'] = 'process';
@@ -142,7 +136,7 @@ class PluginAPIHandler extends APIHandler
         if (empty($submissionId) || empty($publicationId) || empty($publicationMetadata) || empty($citations))
             return $response->withJson($this->responseBody, 200);
 
-        $depositor = new DepositHandler($this->plugin);
+        $depositor = new DepositHandler();
         $depositor->execute(
             $submissionId,
             $publicationId,

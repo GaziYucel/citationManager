@@ -19,6 +19,7 @@ class ClassHelper
 {
     /**
      * Get public properties of an object and assign null values.
+     *
      * @param object $class The object for which properties are retrieved and assigned null values.
      * @return array An associative array with property names as keys and null values.
      */
@@ -29,6 +30,7 @@ class ClassHelper
 
     /**
      * Get public properties of an object and assign provided values.
+     *
      * @param object $class  The object for which properties are retrieved and values assigned.
      * @param ?array  $values An associative array with property names as keys and corresponding values.
      * @return array An associative array with property names as keys and assigned values.
@@ -53,12 +55,15 @@ class ClassHelper
 
     /**
      * Get a class instance with public properties assigned values.
+     *
      * @param object $class  The class instance to be populated.
-     * @param array  $values An associative array with property names as keys and corresponding values.
+     * @param array|null  $values An associative array with property names as keys and corresponding values.
      * @return object An instance of the class with properties assigned values.
      */
-    public static function getClassWithValuesAssigned(object $class, array $values): object
+    public static function getClassWithValuesAssigned(object $class, ?array $values): object
     {
+        if(empty($values)) return new $class();
+
         $object = new $class();
 
         $reflect = new ReflectionClass($class);
@@ -75,6 +80,7 @@ class ClassHelper
 
     /**
      * Get public properties of an object as an array
+     *
      * @param object $class The object for which properties are retrieved.
      * @return array A with property names as keys.
      */
@@ -94,6 +100,7 @@ class ClassHelper
 
     /**
      * Get class public properties as a csv, e.g. "id","title","pub_date"
+     *
      * @param object $class
      * @return string
      */

@@ -18,27 +18,21 @@ use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\Handlers\ProcessHandler;
 use PluginRegistry;
 use ScheduledTask;
-use ScheduledTaskHelper;
 
 class ProcessTask extends ScheduledTask
 {
-    /** @var CitationManagerPlugin */
-    var CitationManagerPlugin $plugin;
-
     /** @copydoc ScheduledTask::__construct */
     function __construct($args)
     {
-        /* @var CitationManagerPlugin $plugin */
-        $plugin = PluginRegistry::getPlugin('generic',  strtolower(CITATION_MANAGER_PLUGIN_NAME));
-        $this->plugin = $plugin;
-
         parent::__construct($args);
     }
 
     /** @copydoc ScheduledTask::executeActions() */
     public function executeActions(): bool
     {
-        $plugin = $this->plugin;
+        /** @var \APP\plugins\generic\citationManager\CitationManagerPlugin $plugin */
+        $plugin = PluginRegistry::getPlugin('generic',  strtolower(CITATION_MANAGER_PLUGIN_NAME));
+
         if (!$plugin->getEnabled()) {
             $this->addExecutionLogEntry(
                 __METHOD__ . '->pluginEnabled=false [' . date('Y-m-d H:i:s') . ']',
