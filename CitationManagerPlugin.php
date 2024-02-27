@@ -224,7 +224,7 @@ class CitationManagerPlugin extends GenericPlugin
         switch ($name) {
             case 'isTestMode':
                 $config_value = Config::getVar(CITATION_MANAGER_PLUGIN_NAME, 'isTestMode');
-                if (!empty($config_value) && (strtolower($config_value) === 'true' || (string)$config_value === '1')){
+                if (!empty($config_value) && (strtolower($config_value) === 'true' || (string)$config_value === '1')) {
                     $config_value = true;
                 } else if (!empty($config_value)) {
                     $config_value = false;
