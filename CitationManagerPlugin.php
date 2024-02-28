@@ -69,7 +69,7 @@ class CitationManagerPlugin extends GenericPlugin
     public const CITATION_MANAGER_OPEN_CITATIONS_TOKEN = CITATION_MANAGER_PLUGIN_NAME . '_OpenCitations_Token';
 
     /** @var true Whether debugging mode is activated, careful with exposing secrets! */
-    public const isDebugMode = true;
+    public const isDebugMode = false;
     /** @var array These are parameters which are used in templates in the front en backend. @see initPlugin() */
     public array $templateParameters = [];
 

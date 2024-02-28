@@ -12,6 +12,7 @@
 
 namespace APP\plugins\generic\citationManager\classes\Workflow;
 
+use APP\core\Application;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
 use PKP\components\forms\FieldText;
@@ -52,7 +53,7 @@ class WorkflowForm extends FormComponent
             'label' => '',
             'description' => '',
             'isMultilingual' => false,
-            'value' => $pluginDao->getMetadataJournal($publicationId)
+            'value' => $pluginDao->getMetadataJournal(Application::get()->getRequest()->getContext()->getId())
         ]));
     }
 }

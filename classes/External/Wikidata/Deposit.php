@@ -81,10 +81,10 @@ class Deposit extends DepositAbstract
         $pluginDao = new PluginDAO();
 
         // journal
-        $journalMetaData = $pluginDao->getMetadataJournal($publication->getId());
+        $journalMetaData = $pluginDao->getMetadataJournal($context->getId());
         if (empty($journalMetaData->wikidata_id)) {
             $journalMetaData->wikidata_id = $this->processJournal($locale, $context);
-            $pluginDao->saveMetadataJournal($publication->getId(), $journalMetaData);
+            $pluginDao->saveMetadataJournal($context->getId(), $journalMetaData);
         }
 
         // author(s)
