@@ -103,6 +103,6 @@ class WorkflowTab
 
         $templateMgr->assign($this->plugin->templateParameters);
 
-        $templateMgr->display($this->plugin->getTemplateResource("publicationTab.tpl"));
+        $templateMgr->display($this->plugin->getTemplateResource("workflowTab.tpl"));
     }
 }

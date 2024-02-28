@@ -52,6 +52,19 @@ class Api extends ApiAbstract
     {
         if(empty($doi)) return [];
 
-        return $this->apiRequest('GET', '/' . 'works/doi:' . $doi, []);
+        return $this->apiRequest('GET', $this->url . '/works/doi:' . $doi, []);
+    }
+
+    /**
+     * Retrieves information about a work from the OpenAlex API based on DOI.
+     *
+     * @param string $issn The International Standard Serial Number (ISSN) to retrieve information for.
+     * @return array The response body as an associative array.
+     */
+    public function getSource(string $issn): array
+    {
+        if(empty($issn)) return [];
+
+        return $this->apiRequest('GET', $this->url . '/sources/issn:' . $issn, []);
     }
 }
