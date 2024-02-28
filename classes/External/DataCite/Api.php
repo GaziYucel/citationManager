@@ -49,7 +49,7 @@ class Api extends ApiAbstract
      * @param string $doi The Digital Object Identifier (DOI) to retrieve information for.
      * @return array The response body as an associative array.
      */
-    public function getDois(string $doi): array
+    public function getWork(string $doi): array
     {
         if (empty($doi)) return [];
 
