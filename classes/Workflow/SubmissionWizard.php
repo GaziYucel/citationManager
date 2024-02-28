@@ -26,7 +26,7 @@ class SubmissionWizard
     }
 
     /**
-     * Show citations part on step 3 in submission wizard
+     * Structured citations on submission wizard page
      *
      * @param string $hookname
      * @param array $args

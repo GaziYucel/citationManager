@@ -95,7 +95,7 @@ class WorkflowTab
         }
 
         $this->plugin->templateParameters['locale'] = $locale;
-        $this->plugin->templateParameters['journalMetadata'] = json_encode($pluginDao->getMetadataJournal($publicationId));
+        $this->plugin->templateParameters['journalMetadata'] = json_encode($pluginDao->getMetadataJournal($context->getId()));
         $this->plugin->templateParameters['authors'] = json_encode($authors);
 
         $this->plugin->templateParameters['publicationMetadata'] = json_encode($pluginDao->getMetadataPublication($publicationId));

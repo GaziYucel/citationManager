@@ -192,21 +192,24 @@ class PluginDAO
     }
 
     /**
-     * This method retrieves JournalModel from publication_settings and returns normalized to JournalModel.
+     * This method retrieves JournalModel from journal_settings and returns normalized to JournalModel.
      * If nothing found, the method returns a new JournalModel.
      *
-     * @param int $publicationId
+     * @param int $contextId
      * @return MetadataJournal
      */
-    public function getMetadataJournal(int $publicationId): MetadataJournal
+    public function getMetadataJournal(int $contextId): MetadataJournal
     {
-        if (empty($publicationId))
+        if (empty($contextId))
             return new MetadataJournal();
 
-        $publication = $this->getPublication($publicationId);
+        // Reload the context schema
+        Services::get('schema')->get(SCHEMA_CONTEXT, true);
+
+        $journal = $this->getJournal($contextId);
 
         $fromDb = json_decode(
-            $publication->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_JOURNAL),
+            $journal->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_JOURNAL),
             true
         );
 
@@ -217,25 +220,28 @@ class PluginDAO
     }
 
     /**
-     * This method saves JournalModel to publication_settings.
+     * This method saves JournalModel to journal_settings.
      *
-     * @param int $publicationId
+     * @param int $contextId
      * @param MetadataJournal $metadataJournal
      * @return bool
      */
-    public function saveMetadataJournal(int $publicationId, MetadataJournal $metadataJournal): bool
+    public function saveMetadataJournal(int $contextId, MetadataJournal $metadataJournal): bool
     {
-        if (empty($publicationId))
+        if (empty($contextId))
             return false;
 
-        $publication = $this->getPublication($publicationId);
+        // Reload the context schema
+        Services::get('schema')->get(SCHEMA_CONTEXT, true);
 
-        $publication->setData(
+        $journal = $this->getJournal($contextId);
+
+        $journal->setData(
             CitationManagerPlugin::CITATION_MANAGER_METADATA_JOURNAL,
             json_encode($metadataJournal)
         );
 
-        $this->savePublication($publication);
+        $this->saveJournal($journal);
 
         return true;
     }
