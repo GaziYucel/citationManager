@@ -12,18 +12,18 @@
 
 namespace APP\plugins\generic\citationManager\classes\Handlers;
 
-use APP\facades\Repo;
-use APP\author\Author;
-use APP\core\Application;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataAuthor;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
-use APP\publication\Publication;
-use APP\submission\Submission;
-use PKP\plugins\PluginRegistry;
+use Author;
+use Application;
+use Publication;
+use Submission;
+use PluginRegistry;
 use Exception;
+use APP\facades\Repo;
 
 class DepositHandler
 {
@@ -146,6 +146,7 @@ class DepositHandler
                 ->filterByContextIds([$contextId])
                 ->filterByStatus([Submission::STATUS_PUBLISHED]);
 
+            /* @var Submission $submission */
             foreach ($submissions as $submission) {
 
                 $publications = $submission->getPublishedPublications();

@@ -25,10 +25,10 @@ use APP\plugins\generic\citationManager\classes\PID\Arxiv;
 use APP\plugins\generic\citationManager\classes\PID\Doi;
 use APP\plugins\generic\citationManager\classes\PID\Handle;
 use APP\plugins\generic\citationManager\classes\PID\Orcid;
-use PKP\context\Context;
-use APP\issue\Issue;
-use APP\publication\Publication;
-use APP\submission\Submission;
+use Context;
+use Issue;
+use Publication;
+use Submission;
 
 class Deposit extends DepositAbstract
 {

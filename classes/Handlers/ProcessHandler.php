@@ -12,9 +12,6 @@
 
 namespace APP\plugins\generic\citationManager\classes\Handlers;
 
-use APP\facades\Repo;
-use APP\author\Author;
-use APP\core\Application;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataAuthor;
@@ -27,10 +24,13 @@ use APP\plugins\generic\citationManager\classes\PID\Doi;
 use APP\plugins\generic\citationManager\classes\PID\Handle;
 use APP\plugins\generic\citationManager\classes\PID\Url;
 use APP\plugins\generic\citationManager\classes\PID\Urn;
-use APP\publication\Publication;
-use APP\submission\Submission;
-use PKP\plugins\PluginRegistry;
+use Author;
+use Application;
+use Publication;
+use Submission;
+use PluginRegistry;
 use Exception;
+use APP\facades\Repo;
 
 class ProcessHandler
 {

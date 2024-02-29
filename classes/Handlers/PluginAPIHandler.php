@@ -12,13 +12,17 @@
 
 namespace APP\plugins\generic\citationManager\classes\Handlers;
 
-use PKP\core\APIResponse;
-use PKP\handler\APIHandler;
-use PKP\security\authorization\PolicySet;
-use PKP\security\authorization\RoleBasedHandlerOperationPolicy;
+import('lib.pkp.classes.handler.APIHandler');
+import('lib.pkp.classes.security.authorization.PolicySet');
+import('lib.pkp.classes.security.authorization.RoleBasedHandlerOperationPolicy');
+
+use APIResponse;
+use APIHandler;
+use APP\plugins\generic\citationManager\CitationManagerPlugin;
+use PolicySet;
+use RoleBasedHandlerOperationPolicy;
 use Slim\Http\Request as SlimRequest;
 use Slim\Http\Response;
-use PKP\security\Role;
 
 class PluginAPIHandler extends APIHandler
 {
@@ -35,8 +39,6 @@ class PluginAPIHandler extends APIHandler
         ]
     ];
 
-    private array $roles = [Role::ROLE_ID_MANAGER, Role::ROLE_ID_SUB_EDITOR, Role::ROLE_ID_ASSISTANT, Role::ROLE_ID_REVIEWER, Role::ROLE_ID_AUTHOR];
-
     public function __construct()
     {
         $this->_handlerPath = CITATION_MANAGER_PLUGIN_NAME;
@@ -47,12 +49,12 @@ class PluginAPIHandler extends APIHandler
                 [
                     'pattern' => $this->getEndpointPattern() . '/process',
                     'handler' => [$this, 'process'],
-                    'roles' => $this->roles,
+                    'roles' => CitationManagerPlugin::apiRoles,
                 ],
                 [
                     'pattern' => $this->getEndpointPattern() . '/deposit',
                     'handler' => [$this, 'deposit'],
-                    'roles' => $this->roles,
+                    'roles' => CitationManagerPlugin::apiRoles,
                 ]
             ],
             'GET' => []

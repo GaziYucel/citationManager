@@ -12,10 +12,11 @@
 
 namespace APP\plugins\generic\citationManager\classes\ScheduledTasks;
 
+use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\Handlers\ProcessHandler;
-use PKP\plugins\PluginRegistry;
-use PKP\scheduledTask\ScheduledTask;
-use PKP\scheduledTask\ScheduledTaskHelper;
+use PluginRegistry;
+use ScheduledTask;
+use ScheduledTaskHelper;
 
 class ProcessTask extends ScheduledTask
 {
@@ -28,7 +29,7 @@ class ProcessTask extends ScheduledTask
     /** @copydoc ScheduledTask::executeActions() */
     public function executeActions(): bool
     {
-        /** @var \APP\plugins\generic\citationManager\CitationManagerPlugin $plugin */
+        /** @var CitationManagerPlugin $plugin */
         $plugin = PluginRegistry::getPlugin('generic',  strtolower(CITATION_MANAGER_PLUGIN_NAME));
 
         if (!$plugin->getEnabled()) {

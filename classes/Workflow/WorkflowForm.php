@@ -14,7 +14,7 @@ namespace APP\plugins\generic\citationManager\classes\Workflow;
 
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
-use APP\core\Application;
+use Application;
 use PKP\components\forms\FieldText;
 use PKP\components\forms\FormComponent;
 

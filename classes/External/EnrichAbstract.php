@@ -15,10 +15,10 @@ namespace APP\plugins\generic\citationManager\classes\External;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
-use PKP\context\Context;
-use APP\issue\Issue;
-use APP\publication\Publication;
-use APP\submission\Submission;
+use Context;
+use Issue;
+use Publication;
+use Submission;
 
 abstract class EnrichAbstract
 {
