@@ -99,7 +99,7 @@ class WorkflowTab
         $this->plugin->templateParameters['authors'] = json_encode($authors);
 
         $this->plugin->templateParameters['metadataPublication'] = json_encode($pluginDao->getMetadataPublication($publicationId));
-        $this->plugin->templateParameters['structuredCitations'] = json_encode($pluginDao->getCitations($publicationId));
+        $this->plugin->templateParameters['citationsStructured'] = json_encode($pluginDao->getCitations($publicationId));
 
         $templateMgr->assign($this->plugin->templateParameters);
 

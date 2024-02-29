@@ -169,7 +169,7 @@ class CitationManagerPlugin extends GenericPlugin
             'authors' => '',
             'authorModel' => json_encode(ClassHelper::getClassAsArrayNullAssigned(new AuthorModel())),
             'metadataPublication' => json_encode(ClassHelper::getClassAsArrayNullAssigned(new MetadataPublication())),
-            'structuredCitations' => '',
+            'citationsStructured' => '',
             'url' => [
                 'doi' => Doi::prefix,
                 'openAlex' => OpenAlex::prefix,
