@@ -15,9 +15,6 @@ namespace APP\plugins\generic\citationManager\classes\Workflow;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataAuthor;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
-use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
-use APP\plugins\generic\citationManager\classes\Helpers\LogHelper;
-use APP\plugins\generic\citationManager\classes\PID\Orcid;
 use Application;
 use Author;
 use Exception;
@@ -78,28 +75,21 @@ class WorkflowTab
 
         $pluginDao = new PluginDAO();
 
-        /* @var Author $authorLC */
+        // author(s)
         $authors = [];
-        foreach ($publication->getData('authors') as $id => $authorLC) {
-            /* @var Author $authorLC */
-            $author = (array)$authorLC;
-            $metadata = json_decode($authorLC->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR), true);
-            $metadata = ClassHelper::getClassWithValuesAssigned(new MetadataAuthor(), $metadata);
-            if (empty($metadata)) $metadata = new MetadataAuthor();
-            $author['_data'][CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR] = $metadata;
-
-            $author['_data']['displayName'] = trim($authorLC->getGivenName($locale) . ' ' . $authorLC->getFamilyName($locale));
-            $author['_data']['orcid'] = Orcid::removePrefix($authorLC->getData('orcid'));
-
+        foreach ($publication->getData('authors') as $id => $author) {
+            /* @var Author $author */
+            $metadataAuthor = $author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR);
+            if (empty($metadataAuthor)) {
+                $author->setData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR, new MetadataAuthor());
+            }
             $authors[] = $author;
         }
 
         $this->plugin->templateParameters['metadataJournal'] = json_encode($pluginDao->getMetadataJournal($context->getId()));
         $this->plugin->templateParameters['authors'] = json_encode($authors);
-
         $this->plugin->templateParameters['metadataPublication'] = json_encode($pluginDao->getMetadataPublication($publicationId));
         $this->plugin->templateParameters['citationsStructured'] = json_encode($pluginDao->getCitations($publicationId));
-
         $templateMgr->assign($this->plugin->templateParameters);
 
         $templateMgr->display($this->plugin->getTemplateResource("workflowTab.tpl"));

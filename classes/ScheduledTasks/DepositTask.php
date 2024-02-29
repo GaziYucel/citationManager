@@ -12,11 +12,14 @@
 
 namespace APP\plugins\generic\citationManager\classes\ScheduledTasks;
 
+import('lib.pkp.classes.plugins.PluginRegistry');
 import('lib.pkp.classes.scheduledTask.ScheduledTask');
 
+use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\Handlers\DepositHandler;
 use PluginRegistry;
 use ScheduledTask;
+use ScheduledTaskHelper;
 
 class DepositTask extends ScheduledTask
 {
@@ -29,7 +32,7 @@ class DepositTask extends ScheduledTask
     /** @copydoc ScheduledTask::executeActions() */
     public function executeActions(): bool
     {
-        /** @var \APP\plugins\generic\citationManager\CitationManagerPlugin $plugin */
+        /** @var CitationManagerPlugin $plugin */
         $plugin = PluginRegistry::getPlugin('generic',  strtolower(CITATION_MANAGER_PLUGIN_NAME));
 
         if (!$plugin->getEnabled()) {
@@ -39,7 +42,7 @@ class DepositTask extends ScheduledTask
             return false;
         }
 
-        $depositor = new DepositHandler($this->plugin);
+        $depositor = new DepositHandler();
         $result = $depositor->batchExecute();
 
         if (!$result) {

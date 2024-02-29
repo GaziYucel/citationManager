@@ -12,8 +12,6 @@
 
 namespace APP\plugins\generic\citationManager\classes\Handlers;
 
-use Author;
-use Application;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataAuthor;
@@ -26,6 +24,8 @@ use APP\plugins\generic\citationManager\classes\PID\Doi;
 use APP\plugins\generic\citationManager\classes\PID\Handle;
 use APP\plugins\generic\citationManager\classes\PID\Url;
 use APP\plugins\generic\citationManager\classes\PID\Urn;
+use Author;
+use Application;
 use Publication;
 use Submission;
 use PluginRegistry;

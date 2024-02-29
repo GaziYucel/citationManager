@@ -14,10 +14,12 @@ namespace APP\plugins\generic\citationManager\classes\External\Wikidata;
 
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataAuthor;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use APP\plugins\generic\citationManager\classes\External\EnrichAbstract;
 use APP\plugins\generic\citationManager\classes\External\Wikidata\DataModels\Property;
+use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
 use APP\plugins\generic\citationManager\classes\PID\Orcid;
 use APP\plugins\generic\citationManager\classes\PID\Wikidata;
 use Author;
@@ -128,7 +130,8 @@ class Enrich extends EnrichAbstract
      */
     public function processAuthor(Author $author): Author
     {
-        $metadata = $author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR);
+        $metadata = json_decode($author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR), true);
+        $metadata = ClassHelper::getClassWithValuesAssigned(new MetadataAuthor(), $metadata);
 
         $orcidId = Orcid::removePrefix($author->getData('orcid'));
 

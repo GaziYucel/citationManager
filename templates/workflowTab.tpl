@@ -41,9 +41,9 @@
                     <strong>Authors</strong>
                     <span v-for="(row, i) in citationManagerApp.authors" class="citationManager-Outline" style="margin-right: 5px;">
                         <span class="citationManager-Tag">
-                            {{ row._data.displayName }}
+                            {{ row._data.givenName[citationManagerApp.locale] }} {{ row._data.familyName[citationManagerApp.locale] }}
                         </span><a class="citationManager-Button citationManager-ButtonGreen"
-                                  v-if="row._data.orcid" :href="'{$url.orcid}/' + row._data.orcid" target="_blank">iD
+                                  v-if="row._data.orcid" :href="row._data.orcid" target="_blank">iD
                         </a><span class="citationManager-Button citationManager-ButtonGrey"
                                   v-if="!row._data.orcid">iD
                         </span><a class="citationManager-Button citationManager-ButtonGreen"
@@ -245,17 +245,23 @@
 
     <div>
         <div class="citationManager-Hide">
-            <span>{{ citationManagerApp.citationsRaw = workingPublication.citationsRaw }}</span>
-            <span>{{ citationManagerApp.submissionId = workingPublication.submissionId }}</span>
-            <span>{{ citationManagerApp.publicationStatus = workingPublication.status }}</span>
+            <span>{{ citationManagerApp.citationsRaw               = workingPublication.citationsRaw }}</span>
+            <span>{{ citationManagerApp.submissionId               = workingPublication.submissionId }}</span>
+            <span>{{ citationManagerApp.publicationStatus          = workingPublication.status }}</span>
             <span>{{ citationManagerApp.workingCitationsStructured = workingPublication.CitationManagerPlugin_CitationsStructured }}</span>
             <span>{{ citationManagerApp.workingMetadataPublication = workingPublication.CitationManagerPlugin_MetadataPublication }}</span>
-            <span>{{ citationManagerApp.workingMetadataJournal = workingPublication.CitationManagerPlugin_MetadataJournal }}</span>
-            <span>{{ citationManagerApp.workingPublicationId = workingPublication.id }}</span>
-            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[0]['value'] = citationManagerApp.citationsStructuredJsonComputed }}</span>
-            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[1]['value'] = citationManagerApp.metadataPublicationJsonComputed }}</span>
-            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[2]['value'] = citationManagerApp.metadataJournalJsonComputed }}</span>
-            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.action = '{$apiBaseUrl}submissions/' + workingPublication.submissionId + '/publications/' + workingPublication.id }}</span>
+            <span>{{ citationManagerApp.workingMetadataJournal     = workingPublication.CitationManagerPlugin_MetadataJournal }}</span>
+            <span>{{ citationManagerApp.workingPublicationId       = workingPublication.id }}</span>
+            <span>{{ citationManagerApp.locale                     = workingPublication.locale }}</span>
+
+            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[0]['value']
+                = citationManagerApp.citationsStructuredJsonComputed }}</span>
+            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[1]['value']
+                = citationManagerApp.metadataPublicationJsonComputed }}</span>
+            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[2]['value']
+                = citationManagerApp.metadataJournalJsonComputed }}</span>
+            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.action
+                = '{$apiBaseUrl}submissions/' + workingPublication.submissionId + '/publications/' + workingPublication.id }}</span>
         </div>
         <pkp-form v-bind="components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}" @set="set"/>
     </div>
@@ -274,6 +280,7 @@
             citationsHelper: [],
             csrfToken: pkp.currentUser.csrfToken,
             statusCodePublished: pkp.const.STATUS_PUBLISHED,
+            locale: '',                     // workingPublication.locale
             publicationStatus: 0,           // workingPublication.status
             submissionId: 0,                // workingPublication.submissionId
             publicationId: 0,               // workingPublication.publicationId

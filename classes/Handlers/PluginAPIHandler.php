@@ -18,6 +18,7 @@ import('lib.pkp.classes.security.authorization.RoleBasedHandlerOperationPolicy')
 
 use APIResponse;
 use APIHandler;
+use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use PolicySet;
 use RoleBasedHandlerOperationPolicy;
 use Slim\Http\Request as SlimRequest;
@@ -38,8 +39,6 @@ class PluginAPIHandler extends APIHandler
         ]
     ];
 
-    private array $roles = [ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR, ROLE_ID_ASSISTANT, ROLE_ID_REVIEWER, ROLE_ID_AUTHOR];
-
     public function __construct()
     {
         $this->_handlerPath = CITATION_MANAGER_PLUGIN_NAME;
@@ -50,12 +49,12 @@ class PluginAPIHandler extends APIHandler
                 [
                     'pattern' => $this->getEndpointPattern() . '/process',
                     'handler' => [$this, 'process'],
-                    'roles' => $this->roles,
+                    'roles' => CitationManagerPlugin::apiRoles,
                 ],
                 [
                     'pattern' => $this->getEndpointPattern() . '/deposit',
                     'handler' => [$this, 'deposit'],
-                    'roles' => $this->roles,
+                    'roles' => CitationManagerPlugin::apiRoles,
                 ]
             ],
             'GET' => []

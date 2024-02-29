@@ -25,7 +25,6 @@ use APP\plugins\generic\citationManager\classes\Db\PluginSchema;
 use APP\plugins\generic\citationManager\classes\FrontEnd\ArticleView;
 use APP\plugins\generic\citationManager\classes\Handlers\PluginAPIHandler;
 use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
-use APP\plugins\generic\citationManager\classes\Helpers\LogHelper;
 use APP\plugins\generic\citationManager\classes\PID\Doi;
 use APP\plugins\generic\citationManager\classes\PID\GitHubIssue;
 use APP\plugins\generic\citationManager\classes\PID\OpenAlex;
@@ -41,6 +40,9 @@ define('CITATION_MANAGER_PLUGIN_NAME', basename(__FILE__, '.php'));
 
 class CitationManagerPlugin extends GenericPlugin
 {
+    /** @var true Whether debugging mode is activated, careful with exposing secrets! */
+    public const isDebugMode = false;
+
     /** @var string Whether show the structured or the raw citations */
     public const CITATION_MANAGER_FRONTEND_SHOW_STRUCTURED = CITATION_MANAGER_PLUGIN_NAME . '_FrontEndShowStructured';
     /** @var string Key for the journal metadata saved in journal */
@@ -63,9 +65,8 @@ class CitationManagerPlugin extends GenericPlugin
     public const CITATION_MANAGER_OPEN_CITATIONS_REPOSITORY = CITATION_MANAGER_PLUGIN_NAME . '_OpenCitations_Repository';
     /** @var string GitHub APi token used for Open Citations */
     public const CITATION_MANAGER_OPEN_CITATIONS_TOKEN = CITATION_MANAGER_PLUGIN_NAME . '_OpenCitations_Token';
-
-    /** @var true Whether debugging mode is activated, careful with exposing secrets! */
-    public const isDebugMode = false;
+    /** @var array Roles which can access PluginApiHandler */
+    public const apiRoles = [ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR, ROLE_ID_ASSISTANT, ROLE_ID_REVIEWER, ROLE_ID_AUTHOR];
     /** @var array These are parameters which are used in templates in the front en backend. @see initPlugin() */
     public array $templateParameters = [];
 
