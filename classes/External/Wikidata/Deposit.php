@@ -14,179 +14,121 @@ namespace APP\plugins\generic\citationManager\classes\External\Wikidata;
 
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
-use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataAuthor;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
 use APP\plugins\generic\citationManager\classes\External\DepositAbstract;
 use APP\plugins\generic\citationManager\classes\External\Wikidata\DataModels\Claim;
 use APP\plugins\generic\citationManager\classes\External\Wikidata\DataModels\Property;
 use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
-use APP\plugins\generic\citationManager\classes\Helpers\LogHelper;
 use APP\plugins\generic\citationManager\classes\PID\Orcid;
 use Author;
 use Context;
 use Issue;
-use Journal;
 use Publication;
 use Submission;
 
 class Deposit extends DepositAbstract
 {
-    /** @var MetadataPublication|null */
-    private ?MetadataPublication $metadataPublication = null;
-
-    /** @var array|null */
-    private ?array $citations = [];
-
-    /** @var array|null */
-    private ?array $authors = [];
-
     /** @var Property */
     private Property $property;
 
-    /** @param CitationManagerPlugin $plugin */
-    public function __construct(CitationManagerPlugin $plugin)
+    /** @copydoc EnrichAbstract::__construct */
+    public function __construct(CitationManagerPlugin $plugin,
+                                ?Context              $context,
+                                ?Issue                $issue,
+                                ?Submission           $submission,
+                                ?Publication          $publication,
+                                ?MetadataJournal      $metadataJournal,
+                                ?MetadataPublication  $metadataPublication,
+                                ?array                $authors,
+                                ?array                $citations)
     {
-        $this->plugin = $plugin;
+        parent::__construct($plugin, $context, $issue, $submission, $publication,
+            $metadataJournal, $metadataPublication, $authors, $citations);
+
         $this->api = new Api($plugin);
         $this->property = new Property();
     }
 
     /**
-     * Executes deposits to external services
+     * Process this external service
      *
-     * @param Journal $context
-     * @param Issue $issue
-     * @param Submission $submission
-     * @param Publication $publication
-     * @param MetadataPublication $metadataPublication
-     * @param array $citations
      * @return bool
      */
-    public function execute(Context             $context,
-                            Issue               $issue,
-                            Submission          $submission,
-                            Publication         $publication,
-                            MetadataPublication $metadataPublication,
-                            array               $citations): bool
+    public function execute(): bool
     {
-        $this->metadataPublication = $metadataPublication;
-        $this->citations = $citations;
-
         // return false if required data not provided
         if (!$this->api->isDepositPossible()) return false;
 
-        $locale = $publication->getData('locale');
+        $locale = $this->publication->getData('locale');
 
         $pluginDao = new PluginDAO();
 
         // journal
-        $metadataJournal = $pluginDao->getMetadataJournal($context->getId());
-        if (empty($metadataJournal->wikidata_id)) {
-            $metadataJournal->wikidata_id = $this->processJournal($locale, $context);
-            $pluginDao->saveMetadataJournal($context->getId(), $metadataJournal);
+        if (empty($this->metadataJournal->wikidata_id)) {
+            $this->metadataJournal->wikidata_id = $this->processJournal($locale, $this->context);
+            $pluginDao->saveMetadataJournal($this->publication->getId(), $this->metadataJournal);
         }
 
         // author(s)
-        $authors = [];
-        foreach ($publication->getData('authors') as $id => $authorLC) {
-            /* @var Author $authorLC */
-            $author = (array)$authorLC;
-            $metadata = json_decode($authorLC->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR), true);
-            $metadata = ClassHelper::getClassWithValuesAssigned(new MetadataAuthor(), $metadata);
-            if (empty($metadata)) $metadata = new MetadataAuthor();
-            $author['_data'][CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR] = $metadata;
+        $countAuthors = count($this->authors);
+        for ($i = 0; $i < $countAuthors; $i++) {
+            /* @var Author $author */
+            $author = $this->authors[$i];
+            $metadata = $author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR);
 
-            $orcidId = Orcid::removePrefix($authorLC->getData('orcid'));
-            $displayName = trim($authorLC->getGivenName($locale) . ' ' . $authorLC->getFamilyName($locale));
+            $orcidId = Orcid::removePrefix($author->getData('orcid'));
+            $displayName = trim($author->getGivenName($locale) . ' ' . $author->getFamilyName($locale));
 
-            if (empty($metadata->wikidata_id) && !empty($orcidId) && !empty($displayName)) {
+            if (empty($metadata->wikidata_id) && !empty($orcidId) && !empty($displayName))
                 $metadata->wikidata_id = $this->processAuthor($locale, $orcidId, $displayName);
-            }
-            $authors[] = $author;
 
-            $pluginDao->saveMetadataAuthor($authorLC->getId(), $metadata);
+            $author->setData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR, $metadata);
+
+            $this->authors[$i] = $author;
         }
 
         // cited articles
-        $countCitations = count($citations);
+        $countCitations = count($this->citations);
         for ($i = 0; $i < $countCitations; $i++) {
             /* @var CitationModel $citation */
-            $citation = Classhelper::getClassWithValuesAssigned(new CitationModel(), $citations[$i]);
+            $citation = Classhelper::getClassWithValuesAssigned(new CitationModel(), $this->citations[$i]);
 
             if ($citation->isProcessed && empty($citation->wikidata_id))
                 $citation->wikidata_id = $this->processCitedArticle($locale, $citation);
 
-            $citations[$i] = $citation;
+            $this->citations[$i] = $citation;
         }
 
         // main article
-        $metadataPublication->wikidata_id = $this->processMainArticle($locale, $issue, $publication);
+        $this->metadataPublication->wikidata_id = $this->processMainArticle($locale, $this->issue, $this->publication);
 
-        $this->metadataPublication = $metadataPublication;
-        $this->citations = $citations;
-        $this->authors = $authors;
-
-        if (empty($metadataPublication->wikidata_id)) return false;
+        if (empty($this->metadataPublication->wikidata_id)) return false;
 
         // get main article
-        $item = $this->api->getItemWithQid($metadataPublication->wikidata_id);
+        $item = $this->api->getItemWithQid($this->metadataPublication->wikidata_id);
 
         // published in main article
         $this->addReferenceClaim($item,
-            (array)$metadataJournal,
+            (array)$this->metadataJournal,
             $this->property->publishedIn['id']);
 
         // authors in main article
-        foreach ($authors as $index => $entity) {
+        foreach ($this->authors as $index => $entity) {
             $this->addReferenceClaim($item,
                 (array)$entity['_data'][CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR],
                 $this->property->author['id']);
         }
 
         // cites work in main article
-        foreach ($citations as $index => $entity) {
+        foreach ($this->citations as $index => $entity) {
             $this->addReferenceClaim($item,
                 (array)$entity,
                 $this->property->citesWork['id']);
         }
 
         return true;
-    }
-
-    /**
-     * Return publication metadata
-     *
-     * @return MetadataPublication
-     */
-    public function getMetadataPublication(): MetadataPublication
-    {
-        if (empty($this->metadataPublication))
-            return new MetadataPublication();
-
-        return $this->metadataPublication;
-    }
-
-    /**
-     * Return citations
-     *
-     * @return array
-     */
-    public function getCitations(): array
-    {
-        return $this->citations;
-    }
-
-    /**
-     * Return publication authors
-     *
-     * @return array
-     */
-    public function getAuthors(): array
-    {
-        if (empty($this->authors)) return [];
-
-        return $this->authors;
     }
 
     /**
@@ -361,11 +303,11 @@ class Deposit extends DepositAbstract
      * @param array $item https://www.wikidata.org/w/api.php?action=wbgetentities&ids=Q106622495
      * @param array $referenced MetadataAuthor, MetadataJournal
      * @param string $property
-     * @return bool
+     * @return void
      */
-    private function addReferenceClaim(array $item, array $referenced, string $property): bool
+    private function addReferenceClaim(array $item, array $referenced, string $property): void
     {
-        if (empty($referenced['wikidata_id'])) return false;
+        if (empty($referenced['wikidata_id'])) return;
 
         $createClaim = true;
 
@@ -381,12 +323,10 @@ class Deposit extends DepositAbstract
         $claim = new Claim();
 
         if ($createClaim) {
-            return $this->api->createWikibaseItemClaim(
+            $this->api->createWikibaseItemClaim(
                 $item['title'],
                 $property,
                 $claim->getWikibaseItemReference($referenced['wikidata_id']));
         }
-
-        return false;
     }
 }

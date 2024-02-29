@@ -15,31 +15,23 @@ namespace APP\plugins\generic\citationManager\classes\External\OpenCitations;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\AuthorModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
-use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
 use APP\plugins\generic\citationManager\classes\External\DepositAbstract;
 use APP\plugins\generic\citationManager\classes\External\OpenCitations\DataModels\WorkCitingCited;
 use APP\plugins\generic\citationManager\classes\External\OpenCitations\DataModels\WorkMetaData;
 use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
-use APP\plugins\generic\citationManager\classes\Helpers\LogHelper;
 use APP\plugins\generic\citationManager\classes\PID\Arxiv;
 use APP\plugins\generic\citationManager\classes\PID\Doi;
 use APP\plugins\generic\citationManager\classes\PID\Handle;
 use APP\plugins\generic\citationManager\classes\PID\Orcid;
-use Author;
+use Context;
 use Issue;
-use Journal;
 use Publication;
 use Submission;
 
 class Deposit extends DepositAbstract
 {
-    /** @var MetadataPublication|null */
-    private ?MetadataPublication $metadataPublication = null;
-
-    /** @var array|null */
-    private ?array $citations = null;
-
     /** @var string The syntax for the title of the issue */
     protected string $titleSyntax = 'deposit {domain} {pid}';
 
@@ -49,94 +41,57 @@ class Deposit extends DepositAbstract
     /** @var string Default article type */
     protected string $defaultType = 'journal article';
 
-    /** @param CitationManagerPlugin $plugin */
-    public function __construct(CitationManagerPlugin $plugin)
+    /** @copydoc EnrichAbstract::__construct */
+    public function __construct(CitationManagerPlugin $plugin,
+                                ?Context              $context,
+                                ?Issue                $issue,
+                                ?Submission           $submission,
+                                ?Publication          $publication,
+                                ?MetadataJournal      $metadataJournal,
+                                ?MetadataPublication  $metadataPublication,
+                                ?array                $authors,
+                                ?array                $citations)
     {
-        $this->plugin = $plugin;
+        parent::__construct($plugin, $context, $issue, $submission, $publication,
+            $metadataJournal, $metadataPublication, $authors, $citations);
+
         $this->api = new Api($plugin);
     }
 
     /**
-     * Executes deposits to external services
+     * Process this external service
      *
-     * @param Journal $context
-     * @param Issue $issue
-     * @param Submission $submission
-     * @param Publication $publication
-     * @param MetadataPublication $metadataPublication
-     * @param array $citations
      * @return bool
      */
-    public function execute(Journal             $context,
-                            Issue               $issue,
-                            Submission          $submission,
-                            Publication         $publication,
-                            MetadataPublication $metadataPublication,
-                            array               $citations): bool
+    public function execute(): bool
     {
-        $this->metadataPublication = $metadataPublication;
-        $this->citations = $citations;
-
         // return if already deposited
-        if (!empty($metadataPublication->opencitations_id)) return true;
+        if (!empty($this->metadataPublication->opencitations_id)) return true;
 
         // return false if required data not provided
         if (!$this->api->isDepositPossible()) return false;
 
         // all is good, proceed with deposit
-        $publicationDate = date('Y-m-d', strtotime($issue->getData('datePublished')));
-
-        // authors
-        $authors = [];
-        foreach ($publication->getData('authors') as $id => $authorLC) {
-            /* @var Author $authorLC */
-            $authors[] = (array)$authorLC;
-        }
+        $publicationDate = date('Y-m-d', strtotime($this->issue->getData('datePublished')));
 
         // title of GitHub issue
-        $title = $this->getTitle($publication->getStoredPubId('doi'));
+        $title = $this->getTitle($this->publication->getStoredPubId('doi'));
 
         // body of GitHub issue
         $body =
             ClassHelper::getClassPropertiesAsCsv(new WorkMetaData()) . PHP_EOL .
-            $this->getPublicationCsv($submission, $publication, $authors, $issue, $context) . PHP_EOL .
-            $this->getCitationsCsv($citations) . PHP_EOL .
+            $this->getPublicationCsv($this->submission, $this->publication, $this->authors, $this->issue, $this->context) . PHP_EOL .
+            $this->getCitationsCsv($this->citations) . PHP_EOL .
             $this->separator . PHP_EOL .
             ClassHelper::getClassPropertiesAsCsv(new WorkCitingCited()) . PHP_EOL .
-            $this->getRelationsCsv($citations, $publication->getStoredPubId('doi'), $publicationDate) . PHP_EOL;
+            $this->getRelationsCsv($this->citations, $this->publication->getStoredPubId('doi'), $publicationDate) . PHP_EOL;
 
         $githubIssueId = $this->api->addIssue($title, $body);
 
         if (!empty($githubIssueId) && $githubIssueId !== 0)
-            $metadataPublication->opencitations_id = $githubIssueId;
-
-        $this->metadataPublication = $metadataPublication;
-        $this->citations = $citations;
+            $this->metadataPublication->opencitations_id = $githubIssueId;
 
         return true;
-    }
-
-    /**
-     * Return citations
-     *
-     * @return array
-     */
-    public function getCitations(): array
-    {
-        return $this->citations;
-    }
-
-    /**
-     * Return publication metadata
-     *
-     * @return MetadataPublication
-     */
-    public function getMetadataPublication(): MetadataPublication
-    {
-        if (empty($this->metadataPublication))
-            return new MetadataPublication();
-
-        return $this->metadataPublication;
     }
 
     /**

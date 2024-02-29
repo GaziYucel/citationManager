@@ -12,38 +12,46 @@
 
 namespace APP\plugins\generic\citationManager\classes\Handlers;
 
+use Author;
+use Application;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataAuthor;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
-use APP\plugins\generic\citationManager\classes\External\OpenCitations\Deposit as OpenCitationsDeposit;
-use APP\plugins\generic\citationManager\classes\External\Wikidata\Deposit as WikidataDeposit;
-use Application;
-use Exception;
+use Publication;
+use Submission;
 use PluginRegistry;
+use Exception;
 use Services;
 
 class DepositHandler
 {
     /** @var CitationManagerPlugin */
-    protected CitationManagerPlugin $plugin;
+    public CitationManagerPlugin $plugin;
 
     /** @var MetadataJournal|null */
-    private ?MetadataJournal $metadataPublication = null;
+    private ?MetadataJournal $metadataJournal = null;
 
     /** @var MetadataPublication|null */
     private ?MetadataPublication $metadataPublication = null;
 
-    /** @var array|null */
-    private ?array $citations = null;
+    /** @var array|null [ { CitationModel }, ... ] */
+    private ?array $citations = [];
 
     /** @var array|null */
-    private ?array $authors = [];
+    private ?array $authors = null;
+
+    /** @var array|string[] */
+    private array $services = [
+        '\APP\plugins\generic\citationManager\classes\External\OpenCitations\Deposit',
+        '\APP\plugins\generic\citationManager\classes\External\Wikidata\Deposit'
+    ];
 
     public function __construct()
     {
         /** @var CitationManagerPlugin $plugin */
-        $plugin = PluginRegistry::getPlugin('generic',  strtolower(CITATION_MANAGER_PLUGIN_NAME));
+        $plugin = PluginRegistry::getPlugin('generic', strtolower(CITATION_MANAGER_PLUGIN_NAME));
         $this->plugin = $plugin;
     }
 
@@ -52,60 +60,61 @@ class DepositHandler
      *
      * @param string $submissionId The ID of the submission.
      * @param string $publicationId The ID of the publication.
-     * @param MetadataPublication $metadataPublication The MetadataPublication of the publication.
      * @param array $citations Array of citations to be deposited.
      * @return bool
      */
-    public function execute(string              $submissionId,
-                            string              $publicationId,
-                            MetadataPublication $metadataPublication,
-                            array               $citations): bool
+    public function execute(string $submissionId,
+                            string $publicationId,
+                            array  $citations): bool
     {
+        if (empty($submissionId) || empty($publicationId) || empty($citations)) return false;
+
         $pluginDao = new PluginDAO();
-	
-        $publication = $pluginDao->getPublication($publicationId);
-        $issue = $pluginDao->getIssue($publication->getData('issueId'));
-        $locale = $publication->getData('locale');
-
-        if (empty($submissionId) || empty($publicationId) || empty($citations) ||
-            empty($publication->getStoredPubId('doi')) || empty($locale) || empty($issue)) {
-            return false;
-        }
-
         $context = $this->plugin->getRequest()->getContext();
         $submission = $pluginDao->getSubmission($submissionId);
+        $publication = $pluginDao->getPublication($publicationId);
+        $issue = null;
+        if (!empty($publication->getData('issueId')))
+            $issue = $pluginDao->getIssue($publication->getData('issueId'));
+        $this->metadataJournal = $pluginDao->getMetadataJournal($context->getId());
+        $this->metadataPublication = $pluginDao->getMetadataPublication($publicationId);
+        $this->citations = $citations;
 
-        // OpenCitations
-        $depositOC = new OpenCitationsDeposit($this->plugin);
-        $depositOC->execute(
-            $context,
-            $issue,
-            $submission,
-            $publication,
-            $metadataPublication,
-            $citations
-        );
-        $this->metadataPublication = $depositOC->getMetadataPublication();
-        $this->citations = $depositOC->getCitations();
+        if (empty($publication->getStoredPubId('doi')) || empty($issue)) return false;
 
-        // Wikidata
-        $depositWD = new WikidataDeposit($this->plugin);
-        $depositWD->execute(
-            $context,
-            $issue,
-            $submission,
-            $publication,
-            $metadataPublication,
-            $citations
-        );
-        $this->metadataPublication = $depositWD->getMetadataPublication();
-        $this->citations = $depositWD->getCitations();
-        $this->authors = $depositWD->getAuthors();
+        // author(s)
+        foreach ($publication->getData('authors') as $id => $author) {
+            /* @var Author $author */
+            $metadataAuthor = $author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR);
+            if (empty($metadataAuthor)) {
+                $author->setData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR, new MetadataAuthor());
+            }
+            $this->authors[] = $author;
+        }
+
+        // iterate services
+        foreach ($this->services as $serviceClass) {
+            $service = new $serviceClass ($this->plugin, $context, $issue, $submission, $publication,
+                $this->metadataJournal, $this->metadataPublication, $this->authors, $this->citations);
+
+            $service->execute();
+
+            $this->metadataJournal = $service->getMetadataJournal();
+            $this->metadataPublication = $service->getMetadataPublication();
+            $this->authors = $service->getAuthors();
+            $this->citations = $service->getCitations();
+        }
 
         // save to database
-        $pluginDao = new PluginDAO();
+        $pluginDao->saveMetadataJournal($context->getId(), $this->metadataJournal);
         $pluginDao->saveMetadataPublication($publicationId, $this->metadataPublication);
         $pluginDao->saveCitations($publicationId, $this->citations);
+        /* @var Author $author */
+        foreach ($this->authors as $id => $author) {
+            $pluginDao->saveMetadataAuthor(
+                $author->getId(),
+                $author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR));
+        }
 
         return true;
     }
@@ -135,12 +144,14 @@ class DepositHandler
 
             $submissions = Services::get('submission')->getMany([
                 'contextId' => $contextId,
-                'status' => STATUS_PUBLISHED]);
+                'status' => STATUS_PUBLISHED]);;
 
+            /* @var Submission $submission */
             foreach ($submissions as $submission) {
 
                 $publications = $submission->getPublishedPublications();
 
+                /* @var Publication $publication */
                 foreach ($publications as $publication) {
 
                     $this->metadataPublication = new MetadataPublication();
@@ -149,7 +160,6 @@ class DepositHandler
                     $this->execute(
                         $submission->getId(),
                         $publication->getId(),
-                        $pluginDao->getMetadataPublication($publication->getId()),
                         $pluginDao->getCitations($publication->getId()));
                 }
             }
@@ -158,38 +168,22 @@ class DepositHandler
         return true;
     }
 
-    /**
-     * Return publication metadata
-     *
-     * @return MetadataPublication
-     */
+    // region getters
+    public function getMetadataJournal(): MetadataJournal
+    {
+        return $this->metadataJournal;
+    }
     public function getMetadataPublication(): MetadataPublication
     {
-        if (empty($this->metadataPublication))
-            return new MetadataPublication();
-
         return $this->metadataPublication;
     }
-
-    /**
-     * Return citations
-     *
-     * @return array
-     */
     public function getCitations(): array
     {
         return $this->citations;
     }
-
-    /**
-     * Return publication authors
-     *
-     * @return array
-     */
     public function getAuthors(): array
     {
-        if (empty($this->authors)) return [];
-
         return $this->authors;
     }
+    // endregion
 }

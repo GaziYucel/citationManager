@@ -14,8 +14,8 @@ namespace APP\plugins\generic\citationManager\classes\Settings;
 
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use AjaxAction;
-use AjaxModal;
 use LinkAction;
+use AjaxModal;
 
 class Actions
 {

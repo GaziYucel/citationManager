@@ -16,8 +16,6 @@ import('lib.pkp.classes.handler.APIHandler');
 import('lib.pkp.classes.security.authorization.PolicySet');
 import('lib.pkp.classes.security.authorization.RoleBasedHandlerOperationPolicy');
 
-use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
-use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
 use APIResponse;
 use APIHandler;
 use PolicySet;
@@ -33,8 +31,10 @@ class PluginAPIHandler extends APIHandler
         'message-type' => 'empty',
         'message-version' => '1',
         'message' => [
+            'metadataJournal' => [],
             'metadataPublication' => [],
-            'citations' => []
+            'citations' => [],
+            'authors' => []
         ]
     ];
 
@@ -104,9 +104,10 @@ class PluginAPIHandler extends APIHandler
         $process->execute($submissionId, $publicationId, $citationsRaw);
 
         $this->responseBody['message-type'] = 'process';
-        $this->responseBody['message'] = [
-            'metadataPublication' => [],
-            'citations' => $process->getCitations()];
+        $this->responseBody['message']['metadataJournal'] = $process->getMetadataJournal();
+        $this->responseBody['message']['metadataPublication'] = $process->getMetadataPublication();
+        $this->responseBody['message']['citations'] = $process->getCitations();
+        $this->responseBody['message']['authors'] = $process->getAuthors();
 
         return $response->withJson($this->responseBody, 200);
     }
@@ -127,29 +128,21 @@ class PluginAPIHandler extends APIHandler
                 $submissionId = trim($request->getUserVars()['submissionId']);
             if (isset($request->getUserVars()['publicationId']))
                 $publicationId = trim($request->getUserVars()['publicationId']);
-            if (isset($request->getUserVars()['metadataPublication']))
-                $metadataPublication = json_decode(trim($request->getUserVars()['metadataPublication']), true);
             if (isset($request->getUserVars()['citations']))
                 $citations = json_decode(trim($request->getUserVars()['citations']), true);
         }
 
-        if (empty($submissionId) || empty($publicationId) || empty($metadataPublication) || empty($citations))
+        if (empty($submissionId) || empty($publicationId) || empty($citations))
             return $response->withJson($this->responseBody, 200);
 
-        $depositor = new DepositHandler();
-        $depositor->execute(
-            $submissionId,
-            $publicationId,
-            ClassHelper::getClassWithValuesAssigned(new MetadataPublication(), $metadataPublication),
-            $citations);
+        $deposit = new DepositHandler();
+        $deposit->execute($submissionId, $publicationId, $citations);
 
         $this->responseBody['message-type'] = 'deposit';
-        $this->responseBody['message'] = [
-            'metadataPublication' => $depositor->getMetadataPublication(),
-            'citations' => $depositor->getCitations(),
-            'authors' => $depositor->getAuthors()
-        ];
-
+        $this->responseBody['message']['metadataJournal'] = $deposit->getMetadataJournal();
+        $this->responseBody['message']['metadataPublication'] = $deposit->getMetadataPublication();
+        $this->responseBody['message']['citations'] = $deposit->getCitations();
+        $this->responseBody['message']['authors'] = $deposit->getAuthors();
 
         return $response->withJson($this->responseBody, 200);
     }
