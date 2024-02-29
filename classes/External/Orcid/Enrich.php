@@ -12,36 +12,58 @@
 
 namespace APP\plugins\generic\citationManager\classes\External\Orcid;
 
+use APP\issue\Issue;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\AuthorModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use APP\plugins\generic\citationManager\classes\External\EnrichAbstract;
 use APP\plugins\generic\citationManager\classes\External\Orcid\DataModels\Mappings;
 use APP\plugins\generic\citationManager\classes\Helpers\ArrayHelper;
 use APP\plugins\generic\citationManager\classes\PID\Orcid;
+use APP\publication\Publication;
+use APP\submission\Submission;
+use PKP\context\Context;
 
 class Enrich extends EnrichAbstract
 {
-    /** @param CitationManagerPlugin $plugin */
-    public function __construct(CitationManagerPlugin $plugin)
+    /** @copydoc EnrichAbstract::__construct */
+    public function __construct(CitationManagerPlugin $plugin,
+                                ?Context              $journal,
+                                ?Issue                $issue,
+                                ?Submission           $submission,
+                                ?Publication          $publication,
+                                ?MetadataJournal      $metadataJournal,
+                                ?MetadataPublication  $metadataPublication,
+                                ?array                $authors,
+                                ?array                $citations)
     {
-        $this->plugin = $plugin;
+        parent::__construct($plugin, $journal, $issue, $submission, $publication,
+            $metadataJournal, $metadataPublication, $authors, $citations);
         $this->api = new Api($plugin);
     }
 
     /**
-     * Get all information from Orcid for the authors in this citation
+     * Process this external service
      *
-     * @param CitationModel $citation
-     * @return CitationModel
+     * @return bool
      */
-    public function execute(CitationModel $citation): CitationModel
+    public function execute(): bool
     {
-        if (empty($citation->authors)) return $citation;
+        $countCitations = count($this->citations);
+        for ($i = 0; $i < $countCitations; $i++) {
+            $this->citations[$i] = $this->processCitation($this->citations[$i]);
+        }
 
-        $count = count($citation->authors);
-        for ($i = 0; $i < $count; $i++) {
+        return true;
+    }
 
+    public function processCitation(CitationModel $citation): CitationModel
+    {
+        $countAuthors = count($citation->authors);
+
+        for ($i = 0; $i < $countAuthors; $i++) {
             /* @var AuthorModel $author */
             $author = $citation->authors[$i];
 

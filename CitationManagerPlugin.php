@@ -93,6 +93,9 @@ class CitationManagerPlugin extends GenericPlugin
                 Hook::add('Schema::get::author', function ($hookName, $args) use ($pluginSchema) {
                     $pluginSchema->addToSchemaAuthor($hookName, $args);
                 });
+                Hook::add('Schema::get::context', function ($hookName, $args) use ($pluginSchema) {
+                    $pluginSchema->addToSchemaContext($hookName, $args);
+                });
 
                 $this->initPlugin($category, $path, $mainContextId);
 
@@ -166,14 +169,13 @@ class CitationManagerPlugin extends GenericPlugin
         }
 
         $this->templateParameters = [
-            'locale' => '',
-            'assetsUrl' => $request->getBaseUrl() . '/' . $this->getPluginPath() . '/assets',
-            'apiBaseUrl' => $apiBaseUrl,
+            'citationsStructured' => '',
             'metadataJournal' => '',
+            'metadataPublication' => json_encode(ClassHelper::getClassAsArrayNullAssigned(new MetadataPublication())),
             'authors' => '',
             'authorModel' => json_encode(ClassHelper::getClassAsArrayNullAssigned(new AuthorModel())),
-            'metadataPublication' => json_encode(ClassHelper::getClassAsArrayNullAssigned(new MetadataPublication())),
-            'citationsStructured' => '',
+            'assetsUrl' => $request->getBaseUrl() . '/' . $this->getPluginPath() . '/assets',
+            'apiBaseUrl' => $apiBaseUrl,
             'url' => [
                 'doi' => Doi::prefix,
                 'openAlex' => OpenAlex::prefix,

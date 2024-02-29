@@ -15,45 +15,49 @@
                     <div class="pkpFormField__description">
                         {translate key="plugins.generic.citationManager.process.description"}
                     </div>
-                    <div>
-                        <div>
-                            Journal
-                            <a class="citationManager-Button citationManager-ButtonGreen"
-                               v-if="citationManagerApp.metadataJournal.openalex_id"
-                               :href="'{$url.wikidata}/' + citationManagerApp.metadataJournal.openalex_id"
-                               target="_blank"><span>OpenAlex</span>
-                            </a>
-                            <span class="citationManager-Button citationManager-ButtonGrey"
-                                  v-if="!citationManagerApp.metadataJournal.openalex_id">OpenAlex</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <strong>Journal</strong>
+                    <a class="citationManager-Button citationManager-ButtonGreen"
+                       v-if="citationManagerApp.metadataJournal.openalex_id"
+                       :href="'{$url.openAlex}/' + citationManagerApp.metadataJournal.openalex_id"
+                       target="_blank"><span>OpenAlex</span>
+                    </a>
+                    <span class="citationManager-Button citationManager-ButtonGrey"
+                          v-if="!citationManagerApp.metadataJournal.openalex_id">OpenAlex</span>
 
-                            <a class="citationManager-Button citationManager-ButtonGreen"
-                               v-if="citationManagerApp.metadataJournal.wikidata_id"
-                               :href="'{$url.wikidata}/' + citationManagerApp.metadataJournal.wikidata_id"
-                               target="_blank"><span>Wikidata</span></a>
-                            <span class="citationManager-Button citationManager-ButtonGrey"
-                                  v-if="!citationManagerApp.metadataJournal.wikidata_id">Wikidata</span>
-
-                            Authors
-                            <span v-for="(row, i) in citationManagerApp.authors" class="citationManager-Outline" style="margin-right: 5px;">
-                                <span class="citationManager-Tag">
-                                    {{ row._data.displayName }}
-                                </span><a class="citationManager-Button citationManager-ButtonGreen"
-                                        v-if="row._data.orcid" :href="'{$url.orcid}/' + row._data.orcid" target="_blank">iD
-                                </a><span class="citationManager-Button citationManager-ButtonGrey"
-                                          v-if="!row._data.orcid">iD
-                                </span><a class="citationManager-Button citationManager-ButtonGreen"
-                                   v-if="row._data.metadata.wikidata_id"
-                                   :href="'{$url.wikidata}/' + row._data.metadata.wikidata_id"
-                                   target="_blank">WD
-                                </a><span class="citationManager-Button citationManager-ButtonGrey"
-                                        v-if="!row._data.metadata.wikidata_id">WD
-                                </span></span>
-                        </div>
-                    </div>
+                    <a class="citationManager-Button citationManager-ButtonGreen"
+                       v-if="citationManagerApp.metadataJournal.wikidata_id"
+                       :href="'{$url.wikidata}/' + citationManagerApp.metadataJournal.wikidata_id"
+                       target="_blank"><span>Wikidata</span></a>
+                    <span class="citationManager-Button citationManager-ButtonGrey"
+                          v-if="!citationManagerApp.metadataJournal.wikidata_id">Wikidata</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <strong>Authors</strong>
+                    <span v-for="(row, i) in citationManagerApp.authors" class="citationManager-Outline" style="margin-right: 5px;">
+                        <span class="citationManager-Tag">
+                            {{ row._data.displayName }}
+                        </span><a class="citationManager-Button citationManager-ButtonGreen"
+                                  v-if="row._data.orcid" :href="'{$url.orcid}/' + row._data.orcid" target="_blank">iD
+                        </a><span class="citationManager-Button citationManager-ButtonGrey"
+                                  v-if="!row._data.orcid">iD
+                        </span><a class="citationManager-Button citationManager-ButtonGreen"
+                                  v-if="row._data.metadata.wikidata_id"
+                                  :href="'{$url.wikidata}/' + row._data.metadata.wikidata_id"
+                                  target="_blank">WD
+                        </a><span class="citationManager-Button citationManager-ButtonGrey"
+                                  v-if="!row._data.metadata.wikidata_id">WD
+                    </span></span>
                 </td>
             </tr>
             <tr>
                 <td>
+                    <strong>Publication</strong>
                     <a class="citationManager-Button citationManager-ButtonGreen"
                        v-if="citationManagerApp.metadataPublication.wikidata_id"
                        :href="'{$url.wikidata}/' + citationManagerApp.metadataPublication.wikidata_id"
@@ -75,7 +79,7 @@
                        :class="(citationManagerApp.isStructured && !citationManagerApp.isPublished)?'':'citationManager-Disabled'">
                         {translate key="plugins.generic.citationManager.clear.button"}</a>
                     <a @click="citationManagerApp.process()" id="buttonProcess" class="pkpButton"
-                       :class="(!citationManagerApp.isStructured && !citationManagerApp.isPublished)?'':'citationManager-Disabled'">
+                       :class="(!citationManagerApp.isPublished)?'':'citationManager-Disabled'">
                         {translate key="plugins.generic.citationManager.process.button"}</a>
                 </td>
             </tr>
@@ -262,23 +266,22 @@
     let citationManagerApp = new pkp.Vue({
         // el: '#citationManager',
         data: {
-            locale: '{$locale}',
-            csrfToken: pkp.currentUser.csrfToken,
             citations: {$citationsStructured},
-            citationsHelper: [],
-            citationsRaw: '', // workingPublication.citationsRaw
-            metadataJournal: {$metadataPublication},
+            metadataJournal: {$metadataJournal},
+            metadataPublication: {$metadataPublication},
             authorsIn: {$authors},
             author: {$authorModel},
-            metadataPublication: {$metadataPublication},
+            citationsHelper: [],
+            csrfToken: pkp.currentUser.csrfToken,
             statusCodePublished: pkp.const.STATUS_PUBLISHED,
-            publicationStatus: 0, // workingPublication.status
-            submissionId: 0, // workingPublication.submissionId
-            publicationId: 0, // workingPublication.publicationId
-            workingPublicationId: 0, // workingPublication.publicationId
-            workingCitationsStructured: [], // workingPublication.CitationManagerPlugin_StructuredCitations
+            publicationStatus: 0,           // workingPublication.status
+            submissionId: 0,                // workingPublication.submissionId
+            publicationId: 0,               // workingPublication.publicationId
+            citationsRaw: '',               // workingPublication.citationsRaw
+            workingPublicationId: 0,        // workingPublication.publicationId
+            workingCitationsStructured: [], // workingPublication.CitationManagerPlugin_CitationsStructured
             workingMetadataPublication: [], // workingPublication.CitationManagerPlugin_MetadataPublication
-            workingMetadataJournal: [], // workingPublication.CitationManagerPlugin_MetadataJournal
+            workingMetadataJournal: [],     // workingPublication.CitationManagerPlugin_MetadataJournal
         },
         computed: {
             citationsStructuredJsonComputed: function () {
@@ -383,9 +386,12 @@
                     },
                     success(response) {
                         let result = JSON.parse(JSON.stringify(response['message']));
-
+                        
+                        self.metadataJournal = result['metadataJournal'];
+                        self.metadataPublication = result['metadataPublication'];
                         self.citations = result['citations'];
                         self.citationsHelper = self.getCitationsHelper(result['citations']);
+                        self.authorsIn = result['authors'];
 
                         self.loadingImage(false);
                     }
@@ -406,9 +412,7 @@
                     data: {
                         submissionId: self.submissionId,
                         publicationId: self.publicationId,
-                        metadataPublication: JSON.stringify(self.metadataPublication),
                         citations: JSON.stringify(self.citations),
-                        // citationsRaw: self.citationsRaw
                     },
                     headers: {
                         'X-Csrf-Token': self.csrfToken,
@@ -418,10 +422,11 @@
                     success(response) {
                         let result = JSON.parse(JSON.stringify(response['message']));
 
+                        self.metadataJournal = result['metadataJournal'];
+                        self.metadataPublication = result['metadataPublication'];
                         self.citations = result['citations'];
                         self.citationsHelper = self.getCitationsHelper(result['citations']);
-                        self.metadataPublication = result['metadataPublication'];
-                        self.authors = result['authors'];
+                        self.authorsIn = result['authors'];
 
                         self.loadingImage(false);
                     }

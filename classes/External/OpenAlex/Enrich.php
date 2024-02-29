@@ -12,36 +12,78 @@
 
 namespace APP\plugins\generic\citationManager\classes\External\OpenAlex;
 
+use PKP\context\Context;
+use APP\issue\Issue;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\AuthorModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use APP\plugins\generic\citationManager\classes\External\EnrichAbstract;
 use APP\plugins\generic\citationManager\classes\External\OpenAlex\DataModels\Mappings;
 use APP\plugins\generic\citationManager\classes\Helpers\ArrayHelper;
 use APP\plugins\generic\citationManager\classes\PID\Doi;
 use APP\plugins\generic\citationManager\classes\PID\OpenAlex;
 use APP\plugins\generic\citationManager\classes\PID\Orcid;
+use APP\publication\Publication;
+use APP\submission\Submission;
 
 class Enrich extends EnrichAbstract
 {
-    /**
-     * Constructor
-     *
-     * @param CitationManagerPlugin $plugin
-     */
-    public function __construct(CitationManagerPlugin $plugin)
+    /** @copydoc EnrichAbstract::__construct */
+    public function __construct(CitationManagerPlugin $plugin,
+                                ?Context              $context,
+                                ?Issue                $issue,
+                                ?Submission           $submission,
+                                ?Publication          $publication,
+                                ?MetadataJournal      $metadataJournal,
+                                ?MetadataPublication  $metadataPublication,
+                                ?array                $authors,
+                                ?array                $citations)
     {
-        $this->plugin = $plugin;
+        parent::__construct($plugin, $context, $issue, $submission, $publication,
+            $metadataJournal, $metadataPublication, $authors, $citations);
+
         $this->api = new Api($plugin);
     }
 
     /**
-     * Get all information from OpenAlex and return as CitationModel
+     * Process this external service
+     *
+     * @return bool
+     */
+    public function execute(): bool
+    {
+        $this->metadataJournal = $this->getJournal(
+            $this->context->getData('onlineIssn'),
+            $this->metadataJournal);
+
+        $countCitations = count($this->citations);
+        for ($i = 0; $i < $countCitations; $i++) {
+            /* @var CitationModel $citation */
+            $citation = $this->citations[$i];
+
+            if ($citation->isProcessed || empty($citation->doi) || !empty($citation->openalex_id))
+                continue;
+
+            $citation = $this->getWork($citation);
+
+            if (!empty($citation->openalex_id)) $citation->isProcessed = true;
+            $citation->openalex_id = OpenAlex::removePrefix($citation->openalex_id);
+
+            $this->citations[$i] = $citation;
+        }
+
+        return true;
+    }
+
+    /**
+     * Get citation (work) from external service
      *
      * @param CitationModel $citation
      * @return CitationModel
      */
-    public function execute(CitationModel $citation): CitationModel
+    public function getWork(CitationModel $citation): CitationModel
     {
         $openAlexArray = $this->api->getWork(Doi::removePrefix($citation->doi));
 
@@ -65,11 +107,24 @@ class Enrich extends EnrichAbstract
             }
         }
 
-        if (!empty($citation->openalex_id)) $citation->isProcessed = true;
-
-        $citation->openalex_id = OpenAlex::removePrefix($citation->openalex_id);
-
         return $citation;
+    }
+
+    /**
+     * Get openalex id for journal
+     *
+     * @param string|null $issn
+     * @param MetadataJournal $metadataJournal
+     * @return MetadataJournal
+     */
+    public function getJournal(?string $issn, MetadataJournal $metadataJournal): MetadataJournal
+    {
+        $source = $this->api->getSource($issn);
+
+        if (!empty($source) && !empty($source['id']) && !empty($source['issn_l'] && $source['issn_l'] === $issn))
+            $metadataJournal->openalex_id = OpenAlex::removePrefix($source['id']);
+
+        return $metadataJournal;
     }
 
     /**
@@ -89,6 +144,15 @@ class Enrich extends EnrichAbstract
             } else {
                 $authorOut->$key = $authorIn[$key];
             }
+        }
+
+        $authorOut->display_name = trim(str_replace('null', '', $authorOut->display_name));
+        if (empty($authorOut->display_name)) $authorOut->display_name = $authorIn['raw_author_name'];
+
+        $authorDisplayNameParts = explode(' ', trim($authorOut->display_name));
+        if (count($authorDisplayNameParts) > 1) {
+            $authorOut->family_name = array_pop($authorDisplayNameParts);
+            $authorOut->given_name = implode(' ', $authorDisplayNameParts);
         }
 
         $authorOut->orcid_id = Orcid::removePrefix($authorOut->orcid_id);

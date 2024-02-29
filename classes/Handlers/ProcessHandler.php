@@ -12,13 +12,14 @@
 
 namespace APP\plugins\generic\citationManager\classes\Handlers;
 
+use APP\author\Author;
 use APP\facades\Repo;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataAuthor;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
-use APP\plugins\generic\citationManager\classes\External\OpenAlex\Enrich as OpenAlexEnrich;
-use APP\plugins\generic\citationManager\classes\External\Orcid\Enrich as OrcidEnrich;
-use APP\plugins\generic\citationManager\classes\External\Wikidata\Enrich as WikidataEnrich;
 use APP\plugins\generic\citationManager\classes\Helpers\StringHelper;
 use APP\plugins\generic\citationManager\classes\PID\Arxiv;
 use APP\plugins\generic\citationManager\classes\PID\Doi;
@@ -36,13 +37,29 @@ class ProcessHandler
     /** @var CitationManagerPlugin */
     public CitationManagerPlugin $plugin;
 
+    /** @var MetadataJournal|null */
+    private ?MetadataJournal $metadataJournal = null;
+
+    /** @var MetadataPublication|null */
+    private ?MetadataPublication $metadataPublication = null;
+
     /** @var array|null [ { CitationModel }, ... ] */
-    private ?array $citations = null;
+    private ?array $citations = [];
+
+    /** @var array|null */
+    private ?array $authors = null;
+
+    /** @var array|string[] */
+    private array $services = [
+        '\APP\plugins\generic\citationManager\classes\External\OpenAlex\Enrich',
+        '\APP\plugins\generic\citationManager\classes\External\Orcid\Enrich',
+        '\APP\plugins\generic\citationManager\classes\External\Wikidata\Enrich'
+    ];
 
     public function __construct()
     {
         /** @var CitationManagerPlugin $plugin */
-        $plugin = PluginRegistry::getPlugin('generic',  strtolower(CITATION_MANAGER_PLUGIN_NAME));
+        $plugin = PluginRegistry::getPlugin('generic', strtolower(CITATION_MANAGER_PLUGIN_NAME));
         $this->plugin = $plugin;
     }
 
@@ -58,95 +75,60 @@ class ProcessHandler
                             string $publicationId,
                             string $citationsRaw): bool
     {
-        if (empty($citationsRaw)) return false;
+        if (empty($submissionId) || empty($publicationId) || empty($citationsRaw)) return false;
 
-        // region cleanup and split citations
-        $citationsRaw = StringHelper::trim($citationsRaw);
-        $citationsRaw = StringHelper::stripSlashes($citationsRaw);
-        $citationsRaw = StringHelper::normalizeLineEndings($citationsRaw);
-        $citationsRaw = StringHelper::trim($citationsRaw, "\n");
-
-        if (empty($citationsRaw)) return false;
-
-        $citations = explode("\n", $citationsRaw);
-
-        $local = [];
-        foreach ($citations as $citationRaw) {
-            $citation = new CitationModel();
-            $citation->raw = $citationRaw;
-            $local[] = $citation;
-        }
-        $citations = $local;
-        // endregion
-
-        if (empty($citations)) return false;
-
-        // region pid extractor citations
-        $local = [];
-        foreach ($citations as $index => $citation) {
-            $rowRaw = $citation->raw;
-            $rowRaw = StringHelper::trim($rowRaw, ' .,');
-            $rowRaw = StringHelper::stripSlashes($rowRaw);
-            $rowRaw = StringHelper::normalizeWhiteSpace($rowRaw);
-            $rowRaw = StringHelper::removeNumberPrefixFromString($rowRaw);
-
-            // extract doi
-            $citation->doi = Doi::extractFromString($rowRaw);
-
-            // remove doi from raw
-            $rowRaw = str_replace(
-                Doi::addPrefix($citation->doi),
-                '',
-                Doi::normalize($rowRaw));
-
-            // parse url (after parsing doi)
-            $citation->url = Url::extractFromString($rowRaw);
-
-            // handle
-            $citation->url = Handle::normalize($citation->url);
-
-            // arxiv
-            $citation->url = Arxiv::normalize($citation->url);
-
-            // urn
-            $citation->urn = Urn::extractFromString($rowRaw);
-
-            $local[] = $citation;
-        }
-        $citations = $local;
-        // endregion
-
-        // region enrich citations
-        $local = [];
-        foreach ($citations as $index => $citation) {
-            // skip iteration if isProcessed or doi empty
-            if ($citation->isProcessed || empty($citation->doi)) {
-                $local[] = $citation;
-                continue;
-            }
-
-            // OpenAlex Work
-            $objOpenAlex = new OpenAlexEnrich($this->plugin);
-            $citation = $objOpenAlex->execute($citation);
-
-            // Wikidata
-            $objWikidata = new WikidataEnrich($this->plugin);
-            $citation = $objWikidata->execute($citation);
-
-            // Orcid
-            $objOrcid = new OrcidEnrich($this->plugin);
-            $citation = $objOrcid->execute($citation);
-
-            $local[] = $citation;
-        }
-        $citations = $local;
-        // endregion
-
-        $this->citations = $citations;
-
-        // save
         $pluginDao = new PluginDAO();
+        $context = $this->plugin->getRequest()->getContext();
+        $submission = $pluginDao->getSubmission($submissionId);
+        $publication = $pluginDao->getPublication($publicationId);
+        $issue = null;
+        if (!empty($publication->getData('issueId')))
+            $issue = $pluginDao->getIssue($publication->getData('issueId'));
+        $this->metadataJournal = $pluginDao->getMetadataJournal($context->getId());
+        $this->metadataPublication = $pluginDao->getMetadataPublication($publicationId);
+        $this->citations = [];
+
+        // author(s)
+        foreach ($publication->getData('authors') as $id => $author) {
+            /* @var Author $author */
+            $metadataAuthor = $author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR);
+            if (empty($metadataAuthor)) {
+                $author->setData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR, new MetadataAuthor());
+            }
+            $this->authors[] = $author;
+        }
+
+        // cleanup and split
+        $this->citations = $this->cleanupAndSplit($citationsRaw);
+
+        if (empty($this->citations)) return false;
+
+        // extract pid's
+        $this->citations = $this->extractPIDs($this->citations);
+
+        // iterate services
+        foreach ($this->services as $serviceClass) {
+            $service = new $serviceClass ($this->plugin, $context, $issue, $submission, $publication,
+                $this->metadataJournal, $this->metadataPublication, $this->authors, $this->citations);
+
+            $service->execute();
+
+            $this->metadataJournal = $service->getMetadataJournal();
+            $this->metadataPublication = $service->getMetadataPublication();
+            $this->authors = $service->getAuthors();
+            $this->citations = $service->getCitations();
+        }
+
+        // save to database
+        $pluginDao->saveMetadataJournal($context->getId(), $this->metadataJournal);
+        $pluginDao->saveMetadataPublication($publicationId, $this->metadataPublication);
         $pluginDao->saveCitations($publicationId, $this->citations);
+        /* @var Author $author */
+        foreach ($this->authors as $id => $author) {
+            $pluginDao->saveMetadataAuthor(
+                $author->getId(),
+                $author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR));
+        }
 
         return true;
     }
@@ -177,7 +159,7 @@ class ProcessHandler
         foreach ($contextIds as $contextId) {
 
             $submissions = Repo::submission()->getCollector()
-                ->filterByContextIds([$contextId]);;
+                ->filterByContextIds([$contextId]);
 
             /* @var Submission $submission */
             foreach ($submissions as $submission) {
@@ -204,12 +186,93 @@ class ProcessHandler
     }
 
     /**
-     * Return citations
+     * Cleans and splits citations raw
      *
+     * @param string $citationsRaw
      * @return array
      */
+    private function cleanupAndSplit(string $citationsRaw): array
+    {
+        $citationsRaw = StringHelper::trim($citationsRaw);
+        $citationsRaw = StringHelper::stripSlashes($citationsRaw);
+        $citationsRaw = StringHelper::normalizeLineEndings($citationsRaw);
+        $citationsRaw = StringHelper::trim($citationsRaw, "\n");
+
+        if (empty($citationsRaw)) return [];
+
+        $citations = explode("\n", $citationsRaw);
+
+        $local = [];
+        foreach ($citations as $citationRaw) {
+            $citation = new CitationModel();
+            $citation->raw = $citationRaw;
+            $local[] = $citation;
+        }
+
+
+        return $local;
+    }
+
+    /**
+     * Extract PID's
+     *
+     * @param array $citations
+     * @return array
+     */
+    private function extractPIDs(array $citations): array
+    {
+        $local = [];
+
+        foreach ($citations as $index => $citation) {
+            $rowRaw = $citation->raw;
+            $rowRaw = StringHelper::trim($rowRaw, ' .,');
+            $rowRaw = StringHelper::stripSlashes($rowRaw);
+            $rowRaw = StringHelper::normalizeWhiteSpace($rowRaw);
+            $rowRaw = StringHelper::removeNumberPrefixFromString($rowRaw);
+
+            // extract doi
+            $citation->doi = Doi::extractFromString($rowRaw);
+
+            // remove doi from raw
+            $rowRaw = str_replace(
+                Doi::addPrefix($citation->doi),
+                '',
+                Doi::normalize($rowRaw));
+
+            // parse url (after parsing doi)
+            $citation->url = Url::extractFromString($rowRaw);
+
+            // handle
+            $citation->url = Handle::normalize($citation->url);
+
+            // arxiv
+            $citation->url = Arxiv::normalize($citation->url);
+
+            // urn
+            $citation->urn = Urn::extractFromString($rowRaw);
+
+            $local[] = $citation;
+        }
+
+        return $local;
+    }
+
+    // region getters
+    public function getMetadataJournal(): MetadataJournal
+    {
+        return $this->metadataJournal;
+    }
+    public function getMetadataPublication(): MetadataPublication
+    {
+        return $this->metadataPublication;
+    }
     public function getCitations(): array
     {
         return $this->citations;
     }
+    public function getAuthors(): array
+    {
+        return $this->authors;
+    }
+    // endregion
 }
