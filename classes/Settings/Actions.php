@@ -14,8 +14,8 @@ namespace APP\plugins\generic\citationManager\classes\Settings;
 
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use PKP\linkAction\request\AjaxAction;
-use PKP\linkAction\request\AjaxModal;
 use PKP\linkAction\LinkAction;
+use PKP\linkAction\request\AjaxModal;
 
 class Actions
 {

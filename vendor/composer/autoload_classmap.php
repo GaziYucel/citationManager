@@ -15,7 +15,6 @@ return array(
     'APP\\plugins\\generic\\citationManager\\classes\\Db\\PluginSchema' => $baseDir . '/classes/Db/PluginSchema.php',
     'APP\\plugins\\generic\\citationManager\\classes\\External\\ApiAbstract' => $baseDir . '/classes/External/ApiAbstract.php',
     'APP\\plugins\\generic\\citationManager\\classes\\External\\Crossref\\Api' => $baseDir . '/classes/External/Crossref/Api.php',
-    'APP\\plugins\\generic\\citationManager\\classes\\External\\Crossref\\Enrich' => $baseDir . '/classes/External/Crossref/Enrich.php',
     'APP\\plugins\\generic\\citationManager\\classes\\External\\DataCite\\Api' => $baseDir . '/classes/External/DataCite/Api.php',
     'APP\\plugins\\generic\\citationManager\\classes\\External\\DepositAbstract' => $baseDir . '/classes/External/DepositAbstract.php',
     'APP\\plugins\\generic\\citationManager\\classes\\External\\EnrichAbstract' => $baseDir . '/classes/External/EnrichAbstract.php',

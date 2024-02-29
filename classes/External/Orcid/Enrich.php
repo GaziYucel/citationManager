@@ -12,7 +12,6 @@
 
 namespace APP\plugins\generic\citationManager\classes\External\Orcid;
 
-use APP\issue\Issue;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\AuthorModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
@@ -22,9 +21,10 @@ use APP\plugins\generic\citationManager\classes\External\EnrichAbstract;
 use APP\plugins\generic\citationManager\classes\External\Orcid\DataModels\Mappings;
 use APP\plugins\generic\citationManager\classes\Helpers\ArrayHelper;
 use APP\plugins\generic\citationManager\classes\PID\Orcid;
+use PKP\context\Context;
+use APP\issue\Issue;
 use APP\publication\Publication;
 use APP\submission\Submission;
-use PKP\context\Context;
 
 class Enrich extends EnrichAbstract
 {

@@ -30,7 +30,6 @@ class ComposerStaticInit17b2eb832ba4a3646c1e9ad7c60c2c2b
         'APP\\plugins\\generic\\citationManager\\classes\\Db\\PluginSchema' => __DIR__ . '/../..' . '/classes/Db/PluginSchema.php',
         'APP\\plugins\\generic\\citationManager\\classes\\External\\ApiAbstract' => __DIR__ . '/../..' . '/classes/External/ApiAbstract.php',
         'APP\\plugins\\generic\\citationManager\\classes\\External\\Crossref\\Api' => __DIR__ . '/../..' . '/classes/External/Crossref/Api.php',
-        'APP\\plugins\\generic\\citationManager\\classes\\External\\Crossref\\Enrich' => __DIR__ . '/../..' . '/classes/External/Crossref/Enrich.php',
         'APP\\plugins\\generic\\citationManager\\classes\\External\\DataCite\\Api' => __DIR__ . '/../..' . '/classes/External/DataCite/Api.php',
         'APP\\plugins\\generic\\citationManager\\classes\\External\\DepositAbstract' => __DIR__ . '/../..' . '/classes/External/DepositAbstract.php',
         'APP\\plugins\\generic\\citationManager\\classes\\External\\EnrichAbstract' => __DIR__ . '/../..' . '/classes/External/EnrichAbstract.php',

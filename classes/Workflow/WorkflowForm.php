@@ -12,9 +12,9 @@
 
 namespace APP\plugins\generic\citationManager\classes\Workflow;
 
-use APP\core\Application;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
+use APP\core\Application;
 use PKP\components\forms\FieldText;
 use PKP\components\forms\FormComponent;
 

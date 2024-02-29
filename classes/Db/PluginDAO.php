@@ -12,8 +12,8 @@
 
 namespace APP\plugins\generic\citationManager\classes\Db;
 
-use APP\core\Services;
 use APP\facades\Repo;
+use APP\core\Services;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataAuthor;
@@ -22,7 +22,6 @@ use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPubl
 use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
 use Author;
 use DAORegistry;
-use APP\submission\Collector;
 use Issue;
 use Journal;
 use JournalDAO;

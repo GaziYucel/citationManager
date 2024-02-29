@@ -12,8 +12,6 @@
 
 namespace APP\plugins\generic\citationManager\classes\External\Wikidata;
 
-use APP\author\Author;
-use APP\issue\Issue;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
@@ -22,6 +20,8 @@ use APP\plugins\generic\citationManager\classes\External\EnrichAbstract;
 use APP\plugins\generic\citationManager\classes\External\Wikidata\DataModels\Property;
 use APP\plugins\generic\citationManager\classes\PID\Orcid;
 use APP\plugins\generic\citationManager\classes\PID\Wikidata;
+use APP\author\Author;
+use APP\issue\Issue;
 use APP\publication\Publication;
 use APP\submission\Submission;
 use PKP\context\Context;

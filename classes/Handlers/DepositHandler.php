@@ -12,22 +12,18 @@
 
 namespace APP\plugins\generic\citationManager\classes\Handlers;
 
-use APP\author\Author;
 use APP\facades\Repo;
+use APP\author\Author;
+use APP\core\Application;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataAuthor;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
-use APP\plugins\generic\citationManager\classes\External\OpenCitations\Deposit as OpenCitationsDeposit;
-use APP\plugins\generic\citationManager\classes\External\Wikidata\Deposit as WikidataDeposit;
-use APP\core\Application;
-use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
-use APP\plugins\generic\citationManager\classes\PID\Orcid;
+use APP\publication\Publication;
 use APP\submission\Submission;
-use Exception;
-use Illuminate\Support\LazyCollection;
 use PKP\plugins\PluginRegistry;
+use Exception;
 
 class DepositHandler
 {
@@ -64,7 +60,6 @@ class DepositHandler
      *
      * @param string $submissionId The ID of the submission.
      * @param string $publicationId The ID of the publication.
-     * @param MetadataPublication $metadataPublication The MetadataPublication of the publication.
      * @param array $citations Array of citations to be deposited.
      * @return bool
      */
@@ -155,6 +150,7 @@ class DepositHandler
 
                 $publications = $submission->getPublishedPublications();
 
+                /* @var Publication $publication */
                 foreach ($publications as $publication) {
 
                     $this->metadataPublication = new MetadataPublication();

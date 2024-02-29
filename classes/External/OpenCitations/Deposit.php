@@ -12,7 +12,6 @@
 
 namespace APP\plugins\generic\citationManager\classes\External\OpenCitations;
 
-use APP\issue\Issue;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\AuthorModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
@@ -26,9 +25,10 @@ use APP\plugins\generic\citationManager\classes\PID\Arxiv;
 use APP\plugins\generic\citationManager\classes\PID\Doi;
 use APP\plugins\generic\citationManager\classes\PID\Handle;
 use APP\plugins\generic\citationManager\classes\PID\Orcid;
+use PKP\context\Context;
+use APP\issue\Issue;
 use APP\publication\Publication;
 use APP\submission\Submission;
-use PKP\context\Context;
 
 class Deposit extends DepositAbstract
 {
@@ -75,16 +75,16 @@ class Deposit extends DepositAbstract
         $publicationDate = date('Y-m-d', strtotime($this->issue->getData('datePublished')));
 
         // title of GitHub issue
-        $title = $this->constructTitle($this->publication->getStoredPubId('doi'));
+        $title = $this->getTitle($this->publication->getStoredPubId('doi'));
 
         // body of GitHub issue
         $body =
             ClassHelper::getClassPropertiesAsCsv(new WorkMetaData()) . PHP_EOL .
-            $this->constructPublicationCsv($this->submission, $this->publication, $this->authors, $this->issue, $this->context) . PHP_EOL .
-            $this->constructCitationsCsv($this->citations) . PHP_EOL .
+            $this->getPublicationCsv($this->submission, $this->publication, $this->authors, $this->issue, $this->context) . PHP_EOL .
+            $this->getCitationsCsv($this->citations) . PHP_EOL .
             $this->separator . PHP_EOL .
             ClassHelper::getClassPropertiesAsCsv(new WorkCitingCited()) . PHP_EOL .
-            $this->constructRelationsCsv($this->citations, $this->publication->getStoredPubId('doi'), $publicationDate) . PHP_EOL;
+            $this->getRelationsCsv($this->citations, $this->publication->getStoredPubId('doi'), $publicationDate) . PHP_EOL;
 
         $githubIssueId = $this->api->addIssue($title, $body);
 
@@ -100,7 +100,7 @@ class Deposit extends DepositAbstract
      * @param string $doi
      * @return string
      */
-    private function constructTitle(string $doi): string
+    private function getTitle(string $doi): string
     {
         return
             str_replace(
@@ -120,7 +120,7 @@ class Deposit extends DepositAbstract
      * @param $journal
      * @return string
      */
-    private function constructPublicationCsv($submission, $publication, $authors, $issue, $journal): string
+    private function getPublicationCsv($submission, $publication, $authors, $issue, $journal): string
     {
         $work = new WorkMetaData();
 
@@ -183,7 +183,7 @@ class Deposit extends DepositAbstract
      * @param array $citations
      * @return string
      */
-    private function constructCitationsCsv(array $citations): string
+    private function getCitationsCsv(array $citations): string
     {
         $values = '';
 
@@ -248,7 +248,7 @@ class Deposit extends DepositAbstract
      * @param string $publicationDate
      * @return string
      */
-    private function constructRelationsCsv(array $citations, string $doi, string $publicationDate): string
+    private function getRelationsCsv(array $citations, string $doi, string $publicationDate): string
     {
         $values = '';
 
