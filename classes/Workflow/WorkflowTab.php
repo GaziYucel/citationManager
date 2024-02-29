@@ -79,10 +79,9 @@ class WorkflowTab
         $authors = [];
         foreach ($publication->getData('authors') as $id => $author) {
             /* @var Author $author */
-            $metadataAuthor = $author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR);
-            if (empty($metadataAuthor)) {
-                $author->setData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR, new MetadataAuthor());
-            }
+            $metadataAuthor = json_decode($author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR));
+            if (empty($metadataAuthor)) $metadataAuthor = new MetadataAuthor();
+            $author->setData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR, $metadataAuthor);
             $authors[] = $author;
         }
 

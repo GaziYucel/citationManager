@@ -14,6 +14,7 @@ namespace APP\plugins\generic\citationManager\classes\External\Wikidata;
 
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
+use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataAuthor;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
@@ -74,9 +75,10 @@ class Deposit extends DepositAbstract
         // author(s)
         $countAuthors = count($this->authors);
         for ($i = 0; $i < $countAuthors; $i++) {
-            /* @var Author $author */
+            /** @var Author $author */
             $author = $this->authors[$i];
-            $metadata = $author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR);
+            $metadata = json_decode($author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR), true);
+            $metadata = ClassHelper::getClassWithValuesAssigned(new MetadataAuthor(), $metadata);
 
             $orcidId = Orcid::removePrefix($author->getData('orcid'));
             $displayName = trim($author->getGivenName($locale) . ' ' . $author->getFamilyName($locale));
@@ -115,16 +117,17 @@ class Deposit extends DepositAbstract
             $this->property->publishedIn['id']);
 
         // authors in main article
-        foreach ($this->authors as $index => $entity) {
+        foreach ($this->authors as $index => $author) {
+            /** @var Author $author */
             $this->addReferenceClaim($item,
-                (array)$entity['_data'][CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR],
+                (array)$author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR),
                 $this->property->author['id']);
         }
 
         // cites work in main article
-        foreach ($this->citations as $index => $entity) {
+        foreach ($this->citations as $index => $citation) {
             $this->addReferenceClaim($item,
-                (array)$entity,
+                (array)$citation,
                 $this->property->citesWork['id']);
         }
 

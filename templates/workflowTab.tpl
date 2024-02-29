@@ -5,21 +5,19 @@
      label="{translate key="plugins.generic.citationManager.publication.label"}">
 
     <div class="header">
+        <div>
+            <label class="pkpFormFieldLabel">
+                {translate key="plugins.generic.citationManager.process.label"}
+            </label>
+            <br/>
+            <div class="pkpFormField__description">
+                {translate key="plugins.generic.citationManager.process.description"}
+            </div>
+        </div>
         <table>
             <tr>
+                <td style="width: 80px;"><strong>{translate key="context.context"}</strong></td>
                 <td colspan="2">
-                    <label class="pkpFormFieldLabel">
-                        {translate key="plugins.generic.citationManager.process.label"}
-                    </label>
-                    <br/>
-                    <div class="pkpFormField__description">
-                        {translate key="plugins.generic.citationManager.process.description"}
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <strong>Journal</strong>
                     <a class="citationManager-Button citationManager-ButtonGreen"
                        v-if="citationManagerApp.metadataJournal.openalex_id"
                        :href="'{$url.openAlex}/' + citationManagerApp.metadataJournal.openalex_id"
@@ -37,8 +35,8 @@
                 </td>
             </tr>
             <tr>
+                <td><strong>{translate key="article.authors"}</strong></td>
                 <td colspan="2">
-                    <strong>Authors</strong>
                     <span v-for="(row, i) in citationManagerApp.authors" class="citationManager-Outline" style="margin-right: 5px;">
                         <span class="citationManager-Tag">
                             {{ row._data.givenName[citationManagerApp.locale] }} {{ row._data.familyName[citationManagerApp.locale] }}
@@ -56,8 +54,8 @@
                 </td>
             </tr>
             <tr>
+                <td><strong>{translate key="common.publication"}</strong></td>
                 <td>
-                    <strong>Publication</strong>
                     <a class="citationManager-Button citationManager-ButtonGreen"
                        v-if="citationManagerApp.metadataPublication.wikidata_id"
                        :href="'{$url.wikidata}/' + citationManagerApp.metadataPublication.wikidata_id"
