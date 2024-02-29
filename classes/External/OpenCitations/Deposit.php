@@ -35,7 +35,7 @@ use Submission;
 class Deposit extends DepositAbstract
 {
     /** @var MetadataPublication|null */
-    private ?MetadataPublication $publicationMetadata = null;
+    private ?MetadataPublication $metadataPublication = null;
 
     /** @var array|null */
     private ?array $citations = null;
@@ -63,7 +63,7 @@ class Deposit extends DepositAbstract
      * @param Issue $issue
      * @param Submission $submission
      * @param Publication $publication
-     * @param MetadataPublication $publicationMetadata
+     * @param MetadataPublication $metadataPublication
      * @param array $citations
      * @return bool
      */
@@ -71,14 +71,14 @@ class Deposit extends DepositAbstract
                             Issue               $issue,
                             Submission          $submission,
                             Publication         $publication,
-                            MetadataPublication $publicationMetadata,
+                            MetadataPublication $metadataPublication,
                             array               $citations): bool
     {
-        $this->publicationMetadata = $publicationMetadata;
+        $this->metadataPublication = $metadataPublication;
         $this->citations = $citations;
 
         // return if already deposited
-        if (!empty($publicationMetadata->opencitations_id)) return true;
+        if (!empty($metadataPublication->opencitations_id)) return true;
 
         // return false if required data not provided
         if (!$this->api->isDepositPossible()) return false;
@@ -108,9 +108,9 @@ class Deposit extends DepositAbstract
         $githubIssueId = $this->api->addIssue($title, $body);
 
         if (!empty($githubIssueId) && $githubIssueId !== 0)
-            $publicationMetadata->opencitations_id = $githubIssueId;
+            $metadataPublication->opencitations_id = $githubIssueId;
 
-        $this->publicationMetadata = $publicationMetadata;
+        $this->metadataPublication = $metadataPublication;
         $this->citations = $citations;
 
         return true;
@@ -131,12 +131,12 @@ class Deposit extends DepositAbstract
      *
      * @return MetadataPublication
      */
-    public function getPublicationMetadata(): MetadataPublication
+    public function getMetadataPublication(): MetadataPublication
     {
-        if (empty($this->publicationMetadata))
+        if (empty($this->metadataPublication))
             return new MetadataPublication();
 
-        return $this->publicationMetadata;
+        return $this->metadataPublication;
     }
 
     /**

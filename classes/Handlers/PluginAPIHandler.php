@@ -34,7 +34,7 @@ class PluginAPIHandler extends APIHandler
         'message-type' => 'empty',
         'message-version' => '1',
         'message' => [
-            'publicationMetadata' => [],
+            'metadataPublication' => [],
             'citations' => []
         ]
     ];
@@ -106,7 +106,7 @@ class PluginAPIHandler extends APIHandler
 
         $this->responseBody['message-type'] = 'process';
         $this->responseBody['message'] = [
-            'publicationMetadata' => [],
+            'metadataPublication' => [],
             'citations' => $process->getCitations()];
 
         return $response->withJson($this->responseBody, 200);
@@ -128,25 +128,25 @@ class PluginAPIHandler extends APIHandler
                 $submissionId = trim($request->getUserVars()['submissionId']);
             if (isset($request->getUserVars()['publicationId']))
                 $publicationId = trim($request->getUserVars()['publicationId']);
-            if (isset($request->getUserVars()['publicationMetadata']))
-                $publicationMetadata = json_decode(trim($request->getUserVars()['publicationMetadata']), true);
+            if (isset($request->getUserVars()['metadataPublication']))
+                $metadataPublication = json_decode(trim($request->getUserVars()['metadataPublication']), true);
             if (isset($request->getUserVars()['citations']))
                 $citations = json_decode(trim($request->getUserVars()['citations']), true);
         }
 
-        if (empty($submissionId) || empty($publicationId) || empty($publicationMetadata) || empty($citations))
+        if (empty($submissionId) || empty($publicationId) || empty($metadataPublication) || empty($citations))
             return $response->withJson($this->responseBody, 200);
 
         $depositor = new DepositHandler();
         $depositor->execute(
             $submissionId,
             $publicationId,
-            ClassHelper::getClassWithValuesAssigned(new MetadataPublication(), $publicationMetadata),
+            ClassHelper::getClassWithValuesAssigned(new MetadataPublication(), $metadataPublication),
             $citations);
 
         $this->responseBody['message-type'] = 'deposit';
         $this->responseBody['message'] = [
-            'publicationMetadata' => $depositor->getPublicationMetadata(),
+            'metadataPublication' => $depositor->getMetadataPublication(),
             'citations' => $depositor->getCitations(),
             'authors' => $depositor->getAuthors()
         ];

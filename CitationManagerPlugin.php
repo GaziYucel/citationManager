@@ -169,10 +169,10 @@ class CitationManagerPlugin extends GenericPlugin
             'locale' => '',
             'assetsUrl' => $request->getBaseUrl() . '/' . $this->getPluginPath() . '/assets',
             'apiBaseUrl' => $apiBaseUrl,
-            'journalMetadata' => '',
+            'metadataJournal' => '',
             'authors' => '',
             'authorModel' => json_encode(ClassHelper::getClassAsArrayNullAssigned(new AuthorModel())),
-            'publicationMetadata' => json_encode(ClassHelper::getClassAsArrayNullAssigned(new MetadataPublication())),
+            'metadataPublication' => json_encode(ClassHelper::getClassAsArrayNullAssigned(new MetadataPublication())),
             'structuredCitations' => '',
             'url' => [
                 'doi' => Doi::prefix,

@@ -12,6 +12,7 @@
 
 namespace APP\plugins\generic\citationManager\classes\Handlers;
 
+use APP\facades\Repo;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
@@ -175,7 +176,8 @@ class ProcessHandler
 
         foreach ($contextIds as $contextId) {
 
-            $submissions = $pluginDao->getBatchProcessSubmissions($contextId);
+            $submissions = Repo::submission()->getCollector()
+                ->filterByContextIds([$contextId]);;
 
             /* @var Submission $submission */
             foreach ($submissions as $submission) {

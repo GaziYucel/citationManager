@@ -33,7 +33,7 @@ use Submission;
 class Deposit extends DepositAbstract
 {
     /** @var MetadataPublication|null */
-    private ?MetadataPublication $publicationMetadata = null;
+    private ?MetadataPublication $metadataPublication = null;
 
     /** @var array|null */
     private ?array $citations = [];
@@ -59,7 +59,7 @@ class Deposit extends DepositAbstract
      * @param Issue $issue
      * @param Submission $submission
      * @param Publication $publication
-     * @param MetadataPublication $publicationMetadata
+     * @param MetadataPublication $metadataPublication
      * @param array $citations
      * @return bool
      */
@@ -67,10 +67,10 @@ class Deposit extends DepositAbstract
                             Issue               $issue,
                             Submission          $submission,
                             Publication         $publication,
-                            MetadataPublication $publicationMetadata,
+                            MetadataPublication $metadataPublication,
                             array               $citations): bool
     {
-        $this->publicationMetadata = $publicationMetadata;
+        $this->metadataPublication = $metadataPublication;
         $this->citations = $citations;
 
         // return false if required data not provided
@@ -81,10 +81,10 @@ class Deposit extends DepositAbstract
         $pluginDao = new PluginDAO();
 
         // journal
-        $journalMetaData = $pluginDao->getMetadataJournal($context->getId());
-        if (empty($journalMetaData->wikidata_id)) {
-            $journalMetaData->wikidata_id = $this->processJournal($locale, $context);
-            $pluginDao->saveMetadataJournal($context->getId(), $journalMetaData);
+        $metadataJournal = $pluginDao->getMetadataJournal($context->getId());
+        if (empty($metadataJournal->wikidata_id)) {
+            $metadataJournal->wikidata_id = $this->processJournal($locale, $context);
+            $pluginDao->saveMetadataJournal($context->getId(), $metadataJournal);
         }
 
         // author(s)
@@ -121,20 +121,20 @@ class Deposit extends DepositAbstract
         }
 
         // main article
-        $publicationMetadata->wikidata_id = $this->processMainArticle($locale, $issue, $publication);
+        $metadataPublication->wikidata_id = $this->processMainArticle($locale, $issue, $publication);
 
-        $this->publicationMetadata = $publicationMetadata;
+        $this->metadataPublication = $metadataPublication;
         $this->citations = $citations;
         $this->authors = $authors;
 
-        if (empty($publicationMetadata->wikidata_id)) return false;
+        if (empty($metadataPublication->wikidata_id)) return false;
 
         // get main article
-        $item = $this->api->getItemWithQid($publicationMetadata->wikidata_id);
+        $item = $this->api->getItemWithQid($metadataPublication->wikidata_id);
 
         // published in main article
         $this->addReferenceClaim($item,
-            (array)$journalMetaData,
+            (array)$metadataJournal,
             $this->property->publishedIn['id']);
 
         // authors in main article
@@ -159,12 +159,12 @@ class Deposit extends DepositAbstract
      *
      * @return MetadataPublication
      */
-    public function getPublicationMetadata(): MetadataPublication
+    public function getMetadataPublication(): MetadataPublication
     {
-        if (empty($this->publicationMetadata))
+        if (empty($this->metadataPublication))
             return new MetadataPublication();
 
-        return $this->publicationMetadata;
+        return $this->metadataPublication;
     }
 
     /**

@@ -34,7 +34,7 @@ abstract class DepositAbstract
      * @param Issue $issue
      * @param Submission $submission
      * @param Publication $publication
-     * @param MetadataPublication $publicationMetadata
+     * @param MetadataPublication $metadataPublication
      * @param array $citations
      * @return bool
      */
@@ -42,7 +42,7 @@ abstract class DepositAbstract
                             Issue               $issue,
                             Submission          $submission,
                             Publication         $publication,
-                            MetadataPublication $publicationMetadata,
+                            MetadataPublication $metadataPublication,
                             array               $citations): bool
     {
         return true;

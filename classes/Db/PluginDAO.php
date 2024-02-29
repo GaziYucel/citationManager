@@ -292,28 +292,4 @@ class PluginDAO
     {
         Repo::author()->dao->update($author);
     }
-
-    /**
-     * Gets submissions for batch process
-     *
-     * @param int $contextId
-     * @return Collector
-     */
-    public function getBatchProcessSubmissions(int $contextId): Collector
-    {
-        return Repo::submission()->getCollector()->filterByContextIds([$contextId]);
-    }
-
-    /**
-     * Gets submissions for batch deposit
-     *
-     * @param int $contextId
-     * @return Collector
-     */
-    public function getBatchDepositSubmissions(int $contextId): Collector
-    {
-        return Repo::submission()->getCollector()
-            ->filterByContextIds([$contextId])
-            ->filterByStatus([Submission::STATUS_PUBLISHED]);
-    }
 }
