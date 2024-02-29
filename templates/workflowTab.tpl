@@ -19,19 +19,19 @@
                         <div>
                             Journal
                             <a class="citationManager-Button citationManager-ButtonGreen"
-                               v-if="citationManagerApp.journalMetadata.openalex_id"
-                               :href="'{$url.wikidata}/' + citationManagerApp.journalMetadata.openalex_id"
+                               v-if="citationManagerApp.metadataJournal.openalex_id"
+                               :href="'{$url.wikidata}/' + citationManagerApp.metadataJournal.openalex_id"
                                target="_blank"><span>OpenAlex</span>
                             </a>
                             <span class="citationManager-Button citationManager-ButtonGrey"
-                                  v-if="!citationManagerApp.journalMetadata.openalex_id">OpenAlex</span>
+                                  v-if="!citationManagerApp.metadataJournal.openalex_id">OpenAlex</span>
 
                             <a class="citationManager-Button citationManager-ButtonGreen"
-                               v-if="citationManagerApp.journalMetadata.wikidata_id"
-                               :href="'{$url.wikidata}/' + citationManagerApp.journalMetadata.wikidata_id"
+                               v-if="citationManagerApp.metadataJournal.wikidata_id"
+                               :href="'{$url.wikidata}/' + citationManagerApp.metadataJournal.wikidata_id"
                                target="_blank"><span>Wikidata</span></a>
                             <span class="citationManager-Button citationManager-ButtonGrey"
-                                  v-if="!citationManagerApp.journalMetadata.wikidata_id">Wikidata</span>
+                                  v-if="!citationManagerApp.metadataJournal.wikidata_id">Wikidata</span>
 
                             Authors
                             <span v-for="(row, i) in citationManagerApp.authors" class="citationManager-Outline" style="margin-right: 5px;">
@@ -55,17 +55,17 @@
             <tr>
                 <td>
                     <a class="citationManager-Button citationManager-ButtonGreen"
-                       v-if="citationManagerApp.publicationMetadata.wikidata_id"
-                       :href="'{$url.wikidata}/' + citationManagerApp.publicationMetadata.wikidata_id"
+                       v-if="citationManagerApp.metadataPublication.wikidata_id"
+                       :href="'{$url.wikidata}/' + citationManagerApp.metadataPublication.wikidata_id"
                        target="_blank"><span>Wikidata</span></a>
                     <span class="citationManager-Button citationManager-ButtonGrey"
-                          v-if="!citationManagerApp.publicationMetadata.wikidata_id">Wikidata</span>
+                          v-if="!citationManagerApp.metadataPublication.wikidata_id">Wikidata</span>
                     <a class="citationManager-Button citationManager-ButtonGreen"
-                       v-if="citationManagerApp.publicationMetadata.opencitations_id"
-                       :href="'{$url.openCitations}/' + citationManagerApp.publicationMetadata.opencitations_id"
+                       v-if="citationManagerApp.metadataPublication.opencitations_id"
+                       :href="'{$url.openCitations}/' + citationManagerApp.metadataPublication.opencitations_id"
                        target="_blank"><span>OpenCitations</span></a>
                     <span class="citationManager-Button citationManager-ButtonGrey"
-                          v-if="!citationManagerApp.publicationMetadata.opencitations_id">OpenCitations</span>
+                          v-if="!citationManagerApp.metadataPublication.opencitations_id">OpenCitations</span>
                 </td>
                 <td class="citationManager-AlignRight">
                     <a @click="citationManagerApp.deposit()" id="buttonDeposit" class="pkpButton"
@@ -241,17 +241,17 @@
 
     <div>
         <div class="citationManager-Hide">
-            <span>{{ citationManagerApp.citationsRaw      = workingPublication.citationsRaw }}</span>
-            <span>{{ citationManagerApp.submissionId      = workingPublication.submissionId }}</span>
+            <span>{{ citationManagerApp.citationsRaw = workingPublication.citationsRaw }}</span>
+            <span>{{ citationManagerApp.submissionId = workingPublication.submissionId }}</span>
             <span>{{ citationManagerApp.publicationStatus = workingPublication.status }}</span>
-            <span>{{ citationManagerApp.workingCitations           = workingPublication.CitationManagerPlugin_CitationsStructured }}</span>
-            <span>{{ citationManagerApp.workingPublicationMetadata = workingPublication.CitationManagerPlugin_MetadataPublication }}</span>
-            <span>{{ citationManagerApp.workingJournalMetadata = workingPublication.CitationManagerPlugin_MetadataJournal }}</span>
-            <span>{{ citationManagerApp.workingPublicationId       = workingPublication.id }}</span>
-            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[0]['value'] = citationManagerApp.citationsJsonComputed }}</span>
-            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[1]['value'] = citationManagerApp.publicationMetadataJsonComputed }}</span>
-            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[2]['value'] = citationManagerApp.journalMetadataJsonComputed }}</span>
-            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.action             = '{$apiBaseUrl}submissions/' + workingPublication.submissionId + '/publications/' + workingPublication.id }}</span>
+            <span>{{ citationManagerApp.workingCitationsStructured = workingPublication.CitationManagerPlugin_CitationsStructured }}</span>
+            <span>{{ citationManagerApp.workingMetadataPublication = workingPublication.CitationManagerPlugin_MetadataPublication }}</span>
+            <span>{{ citationManagerApp.workingMetadataJournal = workingPublication.CitationManagerPlugin_MetadataJournal }}</span>
+            <span>{{ citationManagerApp.workingPublicationId = workingPublication.id }}</span>
+            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[0]['value'] = citationManagerApp.citationsStructuredJsonComputed }}</span>
+            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[1]['value'] = citationManagerApp.metadataPublicationJsonComputed }}</span>
+            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[2]['value'] = citationManagerApp.metadataJournalJsonComputed }}</span>
+            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.action = '{$apiBaseUrl}submissions/' + workingPublication.submissionId + '/publications/' + workingPublication.id }}</span>
         </div>
         <pkp-form v-bind="components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}" @set="set"/>
     </div>
@@ -267,29 +267,28 @@
             citations: {$structuredCitations},
             citationsHelper: [],
             citationsRaw: '', // workingPublication.citationsRaw
-            journalMetadata: {$journalMetadata},
+            metadataJournal: {$metadataPublication},
             authorsIn: {$authors},
             author: {$authorModel},
-            publicationMetadata: {$publicationMetadata},
+            metadataPublication: {$metadataPublication},
             statusCodePublished: pkp.const.STATUS_PUBLISHED,
             publicationStatus: 0, // workingPublication.status
             submissionId: 0, // workingPublication.submissionId
             publicationId: 0, // workingPublication.publicationId
             workingPublicationId: 0, // workingPublication.publicationId
-            workingCitations: [], // workingPublication.CitationManagerPlugin_StructuredCitations
-            workingPublicationMetadata: [], // workingPublication.CitationManagerPlugin_PublicationMetadata
-            workingJournalMetadata: [], // workingPublication.CitationManagerPlugin_MetadataJournal
-            workingAuthorsMetadata: [], // workingPublication.CitationManagerPlugin_MetadataAuthors
+            workingCitationsStructured: [], // workingPublication.CitationManagerPlugin_StructuredCitations
+            workingMetadataPublication: [], // workingPublication.CitationManagerPlugin_MetadataPublication
+            workingMetadataJournal: [], // workingPublication.CitationManagerPlugin_MetadataJournal
         },
         computed: {
-            citationsJsonComputed: function () {
+            citationsStructuredJsonComputed: function () {
                 return JSON.stringify(this.citations);
             },
-            publicationMetadataJsonComputed: function () {
-                return JSON.stringify(this.publicationMetadata);
+            metadataPublicationJsonComputed: function () {
+                return JSON.stringify(this.metadataPublication);
             },
-            journalMetadataJsonComputed: function () {
-                return JSON.stringify(this.journalMetadata);
+            metadataJournalJsonComputed: function () {
+                return JSON.stringify(this.metadataJournal);
             },
             isStructured: function () {
                 return this.citations.length !== 0;
@@ -407,7 +406,7 @@
                     data: {
                         submissionId: self.submissionId,
                         publicationId: self.publicationId,
-                        publicationMetadata: JSON.stringify(self.publicationMetadata),
+                        metadataPublication: JSON.stringify(self.metadataPublication),
                         citations: JSON.stringify(self.citations),
                         // citationsRaw: self.citationsRaw
                     },
@@ -421,7 +420,7 @@
 
                         self.citations = result['citations'];
                         self.citationsHelper = self.getCitationsHelper(result['citations']);
-                        self.publicationMetadata = result['publicationMetadata'];
+                        self.metadataPublication = result['metadataPublication'];
                         self.authors = result['authors'];
 
                         self.loadingImage(false);
@@ -457,20 +456,20 @@
             workingPublicationId(newValue, oldValue) {
                 this.publicationId = this.workingPublicationId;
                 if (oldValue !== 0) {
-                    if (this.workingCitations && this.workingCitations.length > 0) {
-                        this.citations = JSON.parse(this.workingCitations);
-                        this.citationsHelper = this.getCitationsHelper(JSON.parse(this.workingCitations));
+                    if (this.workingCitationsStructured && this.workingCitationsStructured.length > 0) {
+                        this.citations = JSON.parse(this.workingCitationsStructured);
+                        this.citationsHelper = this.getCitationsHelper(JSON.parse(this.workingCitationsStructured));
                     } else {
                         this.citations = [];
                         this.citationsHelper = [];
                     }
-                    this.publicationMetadata = [];
-                    if (this.workingPublicationMetadata && this.workingPublicationMetadata.length > 0) {
-                        this.publicationMetadata = JSON.parse(this.workingPublicationMetadata);
+                    this.metadataPublication = [];
+                    if (this.workingMetadataPublication && this.workingMetadataPublication.length > 0) {
+                        this.metadataPublication = JSON.parse(this.workingMetadataPublication);
                     }
-                    this.workingJournalMetadata = [];
-                    if (this.workingJournalMetadata && this.workingJournalMetadata.length > 0) {
-                        this.journalMetadata = JSON.parse(this.workingJournalMetadata);
+                    this.workingMetadataJournal = [];
+                    if (this.workingMetadataJournal && this.workingMetadataJournal.length > 0) {
+                        this.metadataJournal = JSON.parse(this.workingMetadataJournal);
                     }
                 }
                 console.log(oldValue + ' > ' + newValue);

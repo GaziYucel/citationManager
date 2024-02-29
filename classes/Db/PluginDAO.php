@@ -314,30 +314,4 @@ class PluginDAO
         $dao = DAORegistry::getDAO('AuthorDAO');
         $dao->updateObject($author);
     }
-
-    /**
-     * Gets submissions for batch process
-     *
-     * @param int $contextId
-     * @return LazyCollection
-     */
-    public function getBatchProcessSubmissions(int $contextId): LazyCollection
-    {
-        return Services::get('submission')->getMany([
-            'contextId' => $contextId,
-            'status' => STATUS_PUBLISHED]);
-    }
-
-    /**
-     * Gets submissions for batch deposit
-     *
-     * @param int $contextId
-     * @return LazyCollection
-     */
-    public function getBatchDepositSubmissions(int $contextId): LazyCollection
-    {
-        return Services::get('submission')->getMany([
-            'contextId' => $contextId,
-            'status' => STATUS_PUBLISHED]);
-    }
 }

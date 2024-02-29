@@ -21,6 +21,7 @@ use APP\plugins\generic\citationManager\classes\External\Wikidata\Deposit as Wik
 use Application;
 use Exception;
 use PluginRegistry;
+use Services;
 
 class DepositHandler
 {
@@ -28,10 +29,10 @@ class DepositHandler
     protected CitationManagerPlugin $plugin;
 
     /** @var MetadataJournal|null */
-    private ?MetadataJournal $journalMetadata = null;
+    private ?MetadataJournal $metadataPublication = null;
 
     /** @var MetadataPublication|null */
-    private ?MetadataPublication $publicationMetadata = null;
+    private ?MetadataPublication $metadataPublication = null;
 
     /** @var array|null */
     private ?array $citations = null;
@@ -51,13 +52,13 @@ class DepositHandler
      *
      * @param string $submissionId The ID of the submission.
      * @param string $publicationId The ID of the publication.
-     * @param MetadataPublication $publicationMetadata The MetadataPublication of the publication.
+     * @param MetadataPublication $metadataPublication The MetadataPublication of the publication.
      * @param array $citations Array of citations to be deposited.
      * @return bool
      */
     public function execute(string              $submissionId,
                             string              $publicationId,
-                            MetadataPublication $publicationMetadata,
+                            MetadataPublication $metadataPublication,
                             array               $citations): bool
     {
         $pluginDao = new PluginDAO();
@@ -81,10 +82,10 @@ class DepositHandler
             $issue,
             $submission,
             $publication,
-            $publicationMetadata,
+            $metadataPublication,
             $citations
         );
-        $this->publicationMetadata = $depositOC->getPublicationMetadata();
+        $this->metadataPublication = $depositOC->getMetadataPublication();
         $this->citations = $depositOC->getCitations();
 
         // Wikidata
@@ -94,16 +95,16 @@ class DepositHandler
             $issue,
             $submission,
             $publication,
-            $publicationMetadata,
+            $metadataPublication,
             $citations
         );
-        $this->publicationMetadata = $depositWD->getPublicationMetadata();
+        $this->metadataPublication = $depositWD->getMetadataPublication();
         $this->citations = $depositWD->getCitations();
         $this->authors = $depositWD->getAuthors();
 
         // save to database
         $pluginDao = new PluginDAO();
-        $pluginDao->saveMetadataPublication($publicationId, $this->publicationMetadata);
+        $pluginDao->saveMetadataPublication($publicationId, $this->metadataPublication);
         $pluginDao->saveCitations($publicationId, $this->citations);
 
         return true;
@@ -132,7 +133,9 @@ class DepositHandler
 
         foreach ($contextIds as $contextId) {
 
-            $submissions = $pluginDao->getBatchDepositSubmissions($contextId);
+            $submissions = Services::get('submission')->getMany([
+                'contextId' => $contextId,
+                'status' => STATUS_PUBLISHED]);
 
             foreach ($submissions as $submission) {
 
@@ -140,7 +143,7 @@ class DepositHandler
 
                 foreach ($publications as $publication) {
 
-                    $this->publicationMetadata = new MetadataPublication();
+                    $this->metadataPublication = new MetadataPublication();
                     $this->citations = [];
 
                     $this->execute(
@@ -160,12 +163,12 @@ class DepositHandler
      *
      * @return MetadataPublication
      */
-    public function getPublicationMetadata(): MetadataPublication
+    public function getMetadataPublication(): MetadataPublication
     {
-        if (empty($this->publicationMetadata))
+        if (empty($this->metadataPublication))
             return new MetadataPublication();
 
-        return $this->publicationMetadata;
+        return $this->metadataPublication;
     }
 
     /**

@@ -50,17 +50,17 @@ class WorkflowSave
         }
         $publication->setData(CitationManagerPlugin::CITATION_MANAGER_CITATIONS_STRUCTURED, $structuredCitations);
 
-        // publicationMetadata
+        // metadataPublication
 
         // submissionWizard
-        $publicationMetadata = $request->getuserVar(CitationManagerPlugin::CITATION_MANAGER_METADATA_PUBLICATION);
+        $metadataPublication = $request->getuserVar(CitationManagerPlugin::CITATION_MANAGER_METADATA_PUBLICATION);
 
         // publicationTab
         if (array_key_exists(CitationManagerPlugin::CITATION_MANAGER_METADATA_PUBLICATION, $params)) {
             if (!empty($params[CitationManagerPlugin::CITATION_MANAGER_CITATIONS_STRUCTURED])) {
-                $publicationMetadata = $params[CitationManagerPlugin::CITATION_MANAGER_METADATA_PUBLICATION];
+                $metadataPublication = $params[CitationManagerPlugin::CITATION_MANAGER_METADATA_PUBLICATION];
             }
         }
-        $publication->setData(CitationManagerPlugin::CITATION_MANAGER_METADATA_PUBLICATION, $publicationMetadata);
+        $publication->setData(CitationManagerPlugin::CITATION_MANAGER_METADATA_PUBLICATION, $metadataPublication);
     }
 }

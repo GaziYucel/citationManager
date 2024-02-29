@@ -29,6 +29,7 @@ use PluginRegistry;
 use Publication;
 use Submission;
 use Exception;
+use Services;
 
 class ProcessHandler
 {
@@ -175,7 +176,9 @@ class ProcessHandler
 
         foreach ($contextIds as $contextId) {
 
-            $submissions = $pluginDao->getBatchProcessSubmissions($contextId);
+            $submissions = Services::get('submission')->getMany([
+                'contextId' => $contextId,
+                'status' => STATUS_PUBLISHED]);
 
             /* @var Submission $submission */
             foreach ($submissions as $submission) {
