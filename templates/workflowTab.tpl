@@ -264,7 +264,7 @@
         data: {
             locale: '{$locale}',
             csrfToken: pkp.currentUser.csrfToken,
-            citations: {$structuredCitations},
+            citations: {$citationsStructured},
             citationsHelper: [],
             citationsRaw: '', // workingPublication.citationsRaw
             metadataJournal: {$metadataPublication},

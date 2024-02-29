@@ -37,18 +37,18 @@ class WorkflowSave
         $params = $args[2];
         $request = $this->plugin->getRequest();
 
-        // structuredCitations
+        // citationsStructured
 
         // submissionWizard
-        $structuredCitations = $request->getuserVar(CitationManagerPlugin::CITATION_MANAGER_CITATIONS_STRUCTURED);
+        $citationsStructured = $request->getuserVar(CitationManagerPlugin::CITATION_MANAGER_CITATIONS_STRUCTURED);
 
         // publicationTab
         if (array_key_exists(CitationManagerPlugin::CITATION_MANAGER_CITATIONS_STRUCTURED, $params)) {
             if (!empty($params[CitationManagerPlugin::CITATION_MANAGER_CITATIONS_STRUCTURED])) {
-                $structuredCitations = $params[CitationManagerPlugin::CITATION_MANAGER_CITATIONS_STRUCTURED];
+                $citationsStructured = $params[CitationManagerPlugin::CITATION_MANAGER_CITATIONS_STRUCTURED];
             }
         }
-        $publication->setData(CitationManagerPlugin::CITATION_MANAGER_CITATIONS_STRUCTURED, $structuredCitations);
+        $publication->setData(CitationManagerPlugin::CITATION_MANAGER_CITATIONS_STRUCTURED, $citationsStructured);
 
         // metadataPublication
 
