@@ -251,8 +251,8 @@ If you have none please register one through https://www.wikidata.org/w/index.ph
 
 Notes
 
-- Autoload of the classes in the folder `classes/` is done with
-  composer [classmap](https://getcomposer.org/doc/04-schema.md#classmap).
+- Autoload of the classes in the folder `classes/` is done with composer according 
+  to the PSR-4 specification.
 - All classes have namespaces and are structured according to PSR-4 standard.
 - If you add or remove classes in the `classes` folder, run the following
   command to update autoload files: `composer dump-autoload -o --no-dev`.
