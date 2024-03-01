@@ -17,6 +17,7 @@ use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationMode
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataAuthor;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
+use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
 use APP\plugins\generic\citationManager\classes\External\EnrichAbstract;
 use APP\plugins\generic\citationManager\classes\External\Wikidata\DataModels\Property;
 use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
@@ -130,8 +131,8 @@ class Enrich extends EnrichAbstract
      */
     public function processAuthor(Author $author): Author
     {
-        $metadata = json_decode($author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR), true);
-        $metadata = ClassHelper::getClassWithValuesAssigned(new MetadataAuthor(), $metadata);
+        $pluginDao = new PluginDAO();
+        $metadata = $pluginDao->getMetadataAuthor($author->getId(), $author);
 
         $orcidId = Orcid::removePrefix($author->getData('orcid'));
 

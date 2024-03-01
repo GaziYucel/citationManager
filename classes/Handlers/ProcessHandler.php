@@ -84,17 +84,15 @@ class ProcessHandler
         $issue = null;
         if (!empty($publication->getData('issueId')))
             $issue = $pluginDao->getIssue($publication->getData('issueId'));
-        $this->metadataJournal = $pluginDao->getMetadataJournal($context->getId());
-        $this->metadataPublication = $pluginDao->getMetadataPublication($publicationId);
+        $this->metadataJournal = $pluginDao->getMetadataJournal($context->getId(), $context);
+        $this->metadataPublication = $pluginDao->getMetadataPublication($publicationId, $publication);
         $this->citations = [];
 
         // author(s)
-        foreach ($publication->getData('authors') as $id => $author) {
-            /* @var Author $author */
-            $metadataAuthor = $author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR);
-            if (empty($metadataAuthor)) {
-                $author->setData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR, new MetadataAuthor());
-            }
+        /* @var Author $author */
+        foreach ($publication->getData('authors') as $index => $author) {
+            $author->setData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR,
+                $pluginDao->getMetadataAuthor($author->getId(), $author));
             $this->authors[] = $author;
         }
 
@@ -164,6 +162,10 @@ class ProcessHandler
             /* @var Submission $submission */
             foreach ($submissions as $submission) {
 
+                // skip if declined
+                if($submission->getData('status') === Submission::STATUS_DECLINED)
+                    continue;
+
                 $publications = $submission->getData('publications');
 
                 /* @var Publication $publication */
@@ -204,11 +206,12 @@ class ProcessHandler
 
         $local = [];
         foreach ($citations as $citationRaw) {
-            $citation = new CitationModel();
-            $citation->raw = $citationRaw;
-            $local[] = $citation;
+            if (!empty($citationRaw)) {
+                $citation = new CitationModel();
+                $citation->raw = $citationRaw;
+                $local[] = $citation;
+            }
         }
-
 
         return $local;
     }
