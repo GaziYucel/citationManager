@@ -6,13 +6,7 @@
 
     <div class="header">
         <div>
-            <label class="pkpFormFieldLabel">
-                {translate key="plugins.generic.citationManager.process.label"}
-            </label>
-            <br/>
-            <div class="pkpFormField__description">
-                {translate key="plugins.generic.citationManager.process.description"}
-            </div>
+            {translate key="plugins.generic.citationManager.process.description"}
         </div>
         <table>
             <tr>
