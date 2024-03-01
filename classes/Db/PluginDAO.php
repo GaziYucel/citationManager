@@ -102,9 +102,12 @@ class PluginDAO
     {
         if (empty($publicationId)) return new MetadataPublication();
 
-        if (empty($publication)) $publication = $this->getPublication($publicationId);
+        $key = CitationManagerPlugin::CITATION_MANAGER_METADATA_PUBLICATION;
 
-        $metadata = $publication->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_PUBLICATION);
+        if (empty($publication) || empty($publication->getData($key)))
+            $publication = $this->getPublication($publicationId);
+
+        $metadata = $publication->getData($key);
 
         if (is_string($metadata)) $metadata = json_decode($metadata, true);
 
@@ -149,9 +152,12 @@ class PluginDAO
     {
         if (empty($authorId)) return new MetadataAuthor();
 
-        if (empty($author)) $author = $this->getAuthor($authorId);
+        $key = CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR;
 
-        $metadata = $author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR);
+        if (empty($author) || empty($author->getData($key)))
+            $author = $this->getAuthor($authorId);
+
+        $metadata = $author->getData($key);
 
         if (is_string($metadata)) $metadata = json_decode($metadata, true);
 
@@ -196,12 +202,15 @@ class PluginDAO
     {
         if (empty($journalId)) return new MetadataJournal();
 
+        $key = CitationManagerPlugin::CITATION_MANAGER_METADATA_JOURNAL;
+
         // Reload the context schema
         Services::get('schema')->get(SCHEMA_CONTEXT, true);
 
-        if (empty($journal)) $journal = $this->getJournal($journalId);
+        if (empty($journal) || empty($journal->getData($key)))
+            $journal = $this->getJournal($journalId);
 
-        $metadata = $journal->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_JOURNAL);
+        $metadata = $journal->getData($key);
 
         if (is_string($metadata)) $metadata = json_decode($metadata, true);
 
