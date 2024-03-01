@@ -76,19 +76,17 @@ class DepositHandler
         $issue = null;
         if (!empty($publication->getData('issueId')))
             $issue = $pluginDao->getIssue($publication->getData('issueId'));
-        $this->metadataJournal = $pluginDao->getMetadataJournal($context->getId());
-        $this->metadataPublication = $pluginDao->getMetadataPublication($publicationId);
+        $this->metadataJournal = $pluginDao->getMetadataJournal($context->getId(), $context);
+        $this->metadataPublication = $pluginDao->getMetadataPublication($publicationId, $publication);
         $this->citations = $citations;
 
         if (empty($publication->getStoredPubId('doi')) || empty($issue)) return false;
 
         // author(s)
+        /* @var Author $author */
         foreach ($publication->getData('authors') as $id => $author) {
-            /* @var Author $author */
-            $metadataAuthor = $author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR);
-            if (empty($metadataAuthor)) {
-                $author->setData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR, new MetadataAuthor());
-            }
+            $author->setData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR,
+                $pluginDao->getMetadataAuthor($author->getId(), $author));
             $this->authors[] = $author;
         }
 

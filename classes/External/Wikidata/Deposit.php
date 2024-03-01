@@ -73,12 +73,11 @@ class Deposit extends DepositAbstract
         }
 
         // author(s)
+        /** @var Author $author */
         $countAuthors = count($this->authors);
         for ($i = 0; $i < $countAuthors; $i++) {
-            /** @var Author $author */
             $author = $this->authors[$i];
-            $metadata = json_decode($author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR), true);
-            $metadata = ClassHelper::getClassWithValuesAssigned(new MetadataAuthor(), $metadata);
+            $metadata = $pluginDao->getMetadataAuthor($author->getId(), $author);
 
             $orcidId = Orcid::removePrefix($author->getData('orcid'));
             $displayName = trim($author->getGivenName($locale) . ' ' . $author->getFamilyName($locale));
