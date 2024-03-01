@@ -194,7 +194,7 @@ If you have none please register one through https://www.wikidata.org/w/index.ph
 
 # Screenshot(s)
 
-![OPTIMETA screenshot add submission](assets/screenrecordings/submission-edit.gif)
+![OPTIMETA screenshot edit submission](assets/screenshots/submission-edit.png)
 
 # Development
 
