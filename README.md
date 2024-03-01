@@ -39,7 +39,10 @@ Citation Manager for OJS
 ### Get structured metadata from external services
 
 - OpenAlex.org
+    - see [Models for citations](#models-for-citations)
 - Orcid.org
+    - given_name
+    - family_name
 
 ### Batch process
 
@@ -55,24 +58,30 @@ Citation Manager for OJS
 
 ### Deposit to OpenCitations
 
-1. Metadata
-    - id
-    - title
-    - author
-    - pub_date
-    - venue
-    - volume
-    - issue
-    - page
-    - type
-    - publisher
-    - editor
+Metadata
 
-2. Citing and cited relation
-    - citing_id
-    - citing_publication_date
-    - cited_id
-    - cited_publication_date
+| name      | description                                  | example                                      |
+|-----------|----------------------------------------------|----------------------------------------------|
+| id        | doi, issn, isbn, url, wikidata, wikipedia    | doi:3233/ds-170012                           |
+| title     | the title of the document                    |                                              |                                         
+| author    | name of author(s), orcid if available        | Yücel, Gazi [orcid:0000-0002-2013-6920]      |
+| pub_date  | the date of publication of the document      | 2021-02-28                                   |
+| venue     | the venue of the document                    | Journal of Public Knowledge [issn:0378-5955] |
+| volume    | the volume if document in journal            |                                              |
+| issue     | the issue if document in journal             |                                              |
+| page      | the page range of document (first-last page) | 59-81                                        |
+| type      | type of document                             | journal article                              |
+| publisher | the publisher of the document                |                                              |
+| editor    | name of the editor(s)                        | Yücel, Gazi [orcid:0000-0002-2013-6920]      |
+
+Citing and cited relation
+
+| name                    | description                             | example            |
+|-------------------------|-----------------------------------------|--------------------|
+| citing_id               | identifier of the citing document       | doi:3233/ds-170012 |
+| citing_publication_date | publication date of the citing document | 2021-02-28         |
+| cited_id                | identifier of the cited document        | doi:3233/ds-170012 |
+| cited_publication_date  | publication date of the cited document  | 2022-02-28         |
 
 Please see https://github.com/opencitations/crowdsourcing for more information.
 
@@ -230,31 +239,53 @@ If you have none please register one through https://www.wikidata.org/w/index.ph
     ├─ vendor                               # Composer autoload and dependencies
     ├─ .gitignore                           # Git ignore file
     ├─ CitationManagerPlugin.php            # Main class of plugin
-    ├─ composer.json                        # Composer file, e.g. dependencies, classmap
-    ├─ CONDUCT.md                           # Code of conduct
+    ├─ composer.json                        # Composer configuration file
+    ├─ CODE_OF_CONDUCT.md                   # Code of conduct
     ├─ cypress.config.js                    # Cypress configuration file
+    ├─ index.php                            # Entry point plugin (ojs version 3.3.0)
     ├─ LICENSE                              # License file
     ├─ README.md                            # This file
+    ├─ package.json                         # npm packaging configuration
     ├─ scheduledTasks.xml                   # Scheduler configuration file
     └─ version.xml                          # Version information of the plugin
 
-### Notes
+Notes
 
-- Autoload of the classes in the folder `classes` is done with
+- Autoload of the classes in the folder `classes/` is done with
   composer [classmap](https://getcomposer.org/doc/04-schema.md#classmap).
-- If you add or remove classes in this folder, run the following command to update
-  autoload files: `composer dump-autoload -o --no-dev`.
-- Running `composer install -o --no-dev` or `composer update -o --no-dev` will also generate the autoload files.
+- All classes have namespaces and are structured according to PSR-4 standard.
+- If you add or remove classes in the `classes` folder, run the following
+  command to update autoload files: `composer dump-autoload -o --no-dev`.
+- Running `composer install -o --no-dev` or `composer update -o --no-dev`
+  will also generate the autoload files.
 - The `-o` option generates the optimised files ready for production.
-- If you are developing, you might use the classes in `tests/classes`.
-  Test or sandbox versions of API's will be used in this case, e.g. test.wikidata.org.
-  For using this, use `composer dump-autoload -o --dev` for creating the autoload files.
-- If isDebugMode = true, debug information will be written to the log file (see LogHelper class)
-  such as API calls. _Careful with sensitive information, (passwords, tokens) will be written in plain text._
-  Debug information is written to the log file in the `files_dir` directory of your OJS instance.
-  You can find this in your config.inc.php file.
+
+### Debugging
+
+There is a isDebugMode constant in file CitationManagerPlugin.php.
+This constant puts the plugin in debugging mode.
+Extra debug information will be written to the log file (see LogHelper class)
+such as API calls.
+Debug information is written to the log file in the `files_dir` directory of your OJS instance.
+You can find the `files_dir` constant in your config.inc.php file.
+
+_Careful with sensitive information, (passwords, tokens) will be written in plain text._
 
 ### Tests
+
+**Test classes**
+
+If you are developing, you might use the classes in `tests/classes/`.
+The classes in this folder have the same folder and namespace structure as in `classes` folder.
+The purpose of these classes is to override the main classes.
+You can accomplish this by running the composer command `composer dump-autoload -o --dev`.
+If this is done, then test or sandbox versions of API's will be used.
+For example test.wikidata.org instead of www.wikidata.org.
+Autoload of the classes is done with composer [classmap](https://getcomposer.org/doc/04-schema.md#classmap).  
+First the classes in `tests/classes/` are loaded, after which the classes in `classes/` are loaded.
+By doing this in this order, all classes present in `tests/classes/` will override the classes in `classes/`.
+
+**Headless tests**
 
 ```bash
 npm install
@@ -270,53 +301,71 @@ npm run-script test_open
 
 ## Models for citations
 
-1. Citation (CitationModel)
-    - doi _The DOI for the work._
-    - title _The title of this work._
-    - publication_year _The year this work was published._
-    - publication_date _The publication date, formatted as an ISO 8601 date e.g. 2018-02-13._
-    - type _The type or genre of the work, e.g. journal-article._
-    - volume _The volume of the issue of the journal, e.g. 495._
-    - issue _The issue of the journal, e.g. 7442._
-    - pages _The number of pages of the work/article, e.g. 4._
-    - first_page _The first page of the work/article, e.g. 49._
-    - last_page _The last page of the work/article, e.g. 59._
-    - abstract _The abstract of this work._
-    - authors _List of AuthorModel objects._
-    - journal_name _Name of the journal._
-    - journal_issn_l _Issn_l of the journal._
-    - journal_publisher _Publisher name of the journal._
-    - url _URL for the work._
-    - urn _URN for the work._
-    - arxiv_id _The arxiv id of the work._
-    - handle_id _The handle id of the work._
-    - openalex_id _The OpenAlex ID of the work._
-    - wikidata_id _The Wikidata QID of the work._
-    - opencitations_id _Open Citations ID._
-    - github_issue_id _GitHub Issue ID used by Open Citations._
-    - raw _The unchanged raw citation._
-    - isProcessed _Is processed / structured._
-2. Author (AuthorModel)
-    - orcid_id _The ORCID ID for this author._
-    - display_name _The name of the author as a single string._
-    - given_name _The given name of the author as a single string._
-    - family_name _The family name of the author as a single string._
-    - wikidata_id _The Wikidata QID._
-    - openalex_id _The OpenAlex ID._
+**CitationModel**
+
+| name              | description                                                       |
+|-------------------|-------------------------------------------------------------------|
+| doi               | The DOI for the work                                              |
+| title             | The title of this work                                            |
+| publication_year  | The year this work was published                                  |
+| publication_date  | The publication date, formatted as an ISO 8601 date eg 2018-02-13 |
+| type              | The type or genre of the work, eg journal-article                 |
+| volume            | The volume of the issue of the journal, eg 495                    |
+| issue             | The issue of the journal, eg 7442                                 |
+| pages             | The number of pages of the work/article, eg 4                     |
+| first_page        | The first page of the work/article, eg 49                         |
+| last_page         | The last page of the work/article, eg 59                          |
+| abstract          | The abstract of this work                                         |
+| authors           | List of AuthorModel objects                                       |
+| journal_name      | Name of the journal                                               |
+| journal_issn_l    | Issnl of the journal                                              |
+| journal_publisher | Publisher name of the journal                                     |
+| url               | URL for the work                                                  |
+| urn               | URN for the work                                                  |
+| arxiv_id          | The arxiv id of the work                                          |
+| handle_id         | The handle id of the work                                         |
+| openalex_id       | The OpenAlex ID of the work                                       |
+| wikidata_id       | The Wikidata QID of the work                                      |
+| opencitations_id  | Open Citations ID                                                 |
+| github_issue_id   | GitHub Issue ID used by Open Citations                            |
+| raw               | The unchanged raw citation                                        |
+| isProcessed       | Is processed / structured                                         |
+
+**AuthorModel**
+
+| name         | description                                      |
+|--------------|--------------------------------------------------|
+| orcid_id     | The ORCID ID for this author                     |
+| display_name | The name of the author as a single string        |
+| given_name   | The given name of the author as a single string  |
+| family_name  | The family name of the author as a single string |
+| wikidata_id  | The Wikidata QID                                 |
+| openalex_id  | The OpenAlex ID                                  |
 
 ## Metadata of OJS models
 
-1. Journal (MetadataJournal)
-    - openalex_id _The OpenAlex ID of the work._
-    - wikidata_id _The Wikidata QID of the work._
-2. Author (MetadataAuthor)
-    - openalex_id _The OpenAlex ID of the work._
-    - wikidata_id _The Wikidata QID of the work._
-3. Publication (MetadataPublication)
-    - openalex_id _The OpenAlex ID of the work._
-    - wikidata_id _The Wikidata QID of the work._
-    - opencitations_id _Open Citations ID._
-    - github_issue_id _GitHub Issue ID used by Open Citations._
+**MetadataJournal**
+
+| name        | description                  |
+|-------------|------------------------------|
+| openalex_id | The OpenAlex ID of the work  |
+| wikidata_id | The Wikidata QID of the work |
+
+**MetadataAuthor**
+
+| name        | description                  |
+|-------------|------------------------------|
+| openalex_id | The OpenAlex ID of the work  | 
+| wikidata_id | The Wikidata QID of the work |
+
+**MetadataPublication**
+
+| name             | description                            |
+|------------------|----------------------------------------|
+| openalex_id      | The OpenAlex ID of the work            |
+| wikidata_id      | The Wikidata QID of the work           |
+| opencitations_id | Open Citations ID                      |
+| github_issue_id  | GitHub Issue ID used by Open Citations |
 
 # Contribute
 
