@@ -25,6 +25,7 @@ use APP\plugins\generic\citationManager\classes\PID\Arxiv;
 use APP\plugins\generic\citationManager\classes\PID\Doi;
 use APP\plugins\generic\citationManager\classes\PID\Handle;
 use APP\plugins\generic\citationManager\classes\PID\Orcid;
+use Author;
 use Context;
 use Issue;
 use Publication;
@@ -71,20 +72,21 @@ class Deposit extends DepositAbstract
         // return false if required data not provided
         if (!$this->api->isDepositPossible()) return false;
 
-        // all is good, proceed with deposit
-        $publicationDate = date('Y-m-d', strtotime($this->issue->getData('datePublished')));
-
         // title of GitHub issue
-        $title = $this->getTitle($this->publication->getStoredPubId('doi'));
+        $title =
+            str_replace(
+                '{domain} {pid}',
+                $_SERVER['SERVER_NAME'] . ' ' . 'doi:' . $this->publication->getStoredPubId('doi'),
+                $this->titleSyntax);
 
         // body of GitHub issue
         $body =
             ClassHelper::getClassPropertiesAsCsv(new WorkMetaData()) . PHP_EOL .
-            $this->getPublicationCsv($this->submission, $this->publication, $this->authors, $this->issue, $this->context) . PHP_EOL .
-            $this->getCitationsCsv($this->citations) . PHP_EOL .
+            $this->getPublicationCsv() . PHP_EOL .
+            $this->getCitationsCsv() . PHP_EOL .
             $this->separator . PHP_EOL .
             ClassHelper::getClassPropertiesAsCsv(new WorkCitingCited()) . PHP_EOL .
-            $this->getRelationsCsv($this->citations, $this->publication->getStoredPubId('doi'), $publicationDate) . PHP_EOL;
+            $this->getRelationsCsv() . PHP_EOL;
 
         $githubIssueId = $this->api->addIssue($title, $body);
 
@@ -95,81 +97,65 @@ class Deposit extends DepositAbstract
     }
 
     /**
-     * Return title
-     *
-     * @param string $doi
-     * @return string
-     */
-    private function getTitle(string $doi): string
-    {
-        return
-            str_replace(
-                '{domain} {pid}',
-                $_SERVER['SERVER_NAME'] . ' ' . 'doi:' . $doi,
-                $this->titleSyntax
-            );
-    }
-
-    /**
      * Get Work as publication metadata in comma separated format
      *
-     * @param $submission
-     * @param $publication
-     * @param $authors
-     * @param $issue
-     * @param $journal
      * @return string
      */
-    private function getPublicationCsv($submission, $publication, $authors, $issue, $journal): string
+    private function getPublicationCsv(): string
     {
         $work = new WorkMetaData();
 
-        $locale = $publication->getData('locale');
+        $locale = $this->publication->getData('locale');
 
-        $work->id = 'doi:' . Doi::removePrefix($submission->getStoredPubId('doi'));
+        // id
+        $work->id = 'doi:' . Doi::removePrefix($this->publication->getStoredPubId('doi'));
 
-        $work->title = $publication->getData('title')[$locale];
+        // title
+        $work->title = $this->publication->getData('title')[$locale];
 
-        foreach ($authors as $index => $author) {
-            // familyName, givenNames [orcid: 0000];
-            if (isset($author['_data']['familyName'][$locale]))
-                $work->author .= $author['_data']['familyName'][$locale] . ', ';
-
-            if (isset($author['_data']['givenName'][$locale]))
-                $work->author .= $author['_data']['givenName'][$locale];
-
-            if (!empty($author['_data']['orcid']))
-                $work->author .= ' [orcid:' . Orcid::removePrefix($author['_data']['orcid']) . ']';
-
+        // familyName, givenNames [orcid: 0000]
+        /** @var Author $author */
+        foreach ($this->authors as $index => $author) {
+            if (!empty($author->getFamilyName($locale))) $work->author .= $author->getFamilyName($locale) . ', ';
+            if (!empty($author->getGivenName($locale))) $work->author .= $author->getGivenName($locale);
+            if (!empty($author->getData('orcid'))) $work->author .= ' [orcid:' . Orcid::removePrefix($author->getData('orcid')) . ']';
             $work->author .= '; ';
         }
         $work->author = trim($work->author, '; ');
 
+        // pub_date
         $work->pub_date = '';
-        if (!empty($issue->getData('datePublished')))
-            $work->pub_date = date('Y-m-d', strtotime($issue->getData('datePublished')));
+        if (!empty($this->issue->getData('datePublished')))
+            $work->pub_date = date('Y-m-d', strtotime($this->issue->getData('datePublished')));
 
-        $work->venue = $journal->getData('name')[$locale];
+        // venue
+        $work->venue = $this->context->getData('name')[$locale];
         $venueIds = '';
-        if (!empty($journal->getData('onlineIssn'))) $venueIds .= 'issn:' . $journal->getData('onlineIssn') . ' ';
-        if (!empty($journal->getData('printIssn'))) $venueIds .= 'issn:' . $journal->getData('printIssn') . ' ';
-        if (!empty($issue->getStoredPubId('doi'))) $venueIds .= 'doi:' . $issue->getStoredPubId('doi') . ' ';
+        if (!empty($this->context->getData('onlineIssn'))) $venueIds .= 'issn:' . $this->context->getData('onlineIssn') . ' ';
+        if (!empty($this->context->getData('printIssn'))) $venueIds .= 'issn:' . $this->context->getData('printIssn') . ' ';
+        if (!empty($this->issue->getStoredPubId('doi'))) $venueIds .= 'doi:' . $this->issue->getStoredPubId('doi') . ' ';
         if (!empty($venueIds)) $work->venue = trim($work->venue) . ' ' . '[' . trim($venueIds) . ']';
 
+        // volume
         $work->volume = '';
-        if (!empty($issue->getData('volume'))) $work->volume = $issue->getData('volume');
+        if (!empty($this->issue->getData('volume'))) $work->volume = $this->issue->getData('volume');
 
+        // issue
         $work->issue = '';
-        if (!empty($issue->getData('number'))) $work->issue = $issue->getData('number');
+        if (!empty($this->issue->getData('number'))) $work->issue = $this->issue->getData('number');
 
+        // page
         $work->page = '';
+
+        // type
         $work->type = $this->defaultType;
-        if (!empty($journal->getData('publisherInstitution')))
-            $work->publisher = $journal->getData('publisherInstitution');
+        if (!empty($this->context->getData('publisherInstitution')))
+            $work->publisher = $this->context->getData('publisherInstitution');
+
+        // editor
         $work->editor = '';
 
         $values = '';
-
         foreach ($work as $name => $value) {
             $values .= '"' . str_replace('"', '\"', $value) . '",';
         }
@@ -180,14 +166,13 @@ class Deposit extends DepositAbstract
     /**
      * Get Citations as citations in comma separated format
      *
-     * @param array $citations
      * @return string
      */
-    private function getCitationsCsv(array $citations): string
+    private function getCitationsCsv(): string
     {
         $values = '';
 
-        foreach ($citations as $citationRow) {
+        foreach ($this->citations as $citationRow) {
 
             /* @var CitationModel $citation */
             $citation = ClassHelper::getClassWithValuesAssigned(new CitationModel(), $citationRow);
@@ -243,16 +228,15 @@ class Deposit extends DepositAbstract
     /**
      * Get Citations in comma separated format
      *
-     * @param array $citations
-     * @param string $doi
-     * @param string $publicationDate
      * @return string
      */
-    private function getRelationsCsv(array $citations, string $doi, string $publicationDate): string
+    private function getRelationsCsv(): string
     {
-        $values = '';
+        $doi = $this->publication->getStoredPubId('doi');
+        $publicationDate = date('Y-m-d', strtotime($this->issue->getData('datePublished')));
 
-        foreach ($citations as $index => $citationRow) {
+        $values = '';
+        foreach ($this->citations as $index => $citationRow) {
 
             /* @var CitationModel $citation22 */
             $citation = ClassHelper::getClassWithValuesAssigned(new CitationModel(), $citationRow);
