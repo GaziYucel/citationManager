@@ -84,9 +84,6 @@ class Enrich extends EnrichAbstract
                         if (str_contains(strtolower($author->$key), 'deactivated'))
                             $author->$key = '';
                     }
-
-                    if (empty($author->given_name) && empty($author->family_name))
-                        $author->orcid_id = '';
                 }
 
                 $citation->authors[$j] = $author;
