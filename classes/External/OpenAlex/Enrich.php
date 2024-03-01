@@ -66,7 +66,7 @@ class Enrich extends EnrichAbstract
             if ($citation->isProcessed || empty($citation->doi) || !empty($citation->openalex_id))
                 continue;
 
-            $citation = $this->getWork($citation);
+            $citation = $this->getCitationWork($citation);
 
             if (!empty($citation->openalex_id)) $citation->isProcessed = true;
             $citation->openalex_id = OpenAlex::removePrefix($citation->openalex_id);
@@ -75,39 +75,6 @@ class Enrich extends EnrichAbstract
         }
 
         return true;
-    }
-
-    /**
-     * Get citation (work) from external service
-     *
-     * @param CitationModel $citation
-     * @return CitationModel
-     */
-    public function getWork(CitationModel $citation): CitationModel
-    {
-        $openAlexArray = $this->api->getWork(Doi::removePrefix($citation->doi));
-
-        if (empty($openAlexArray)) return $citation;
-
-        foreach (Mappings::getWork() as $key => $value) {
-            switch ($key) {
-                case 'authors':
-                    foreach ($openAlexArray['authorships'] as $index => $authorship) {
-                        $citation->authors[] = $this->getAuthor($authorship);
-                    }
-                    break;
-                default:
-                    if (is_array($value)) {
-                        $citation->$key =
-                            ArrayHelper::getValue($openAlexArray, $value);
-                    } else {
-                        $citation->$key = $openAlexArray[$value];
-                    }
-                    break;
-            }
-        }
-
-        return $citation;
     }
 
     /**
@@ -128,12 +95,45 @@ class Enrich extends EnrichAbstract
     }
 
     /**
+     * Get citation (work) from external service
+     *
+     * @param CitationModel $citation
+     * @return CitationModel
+     */
+    public function getCitationWork(CitationModel $citation): CitationModel
+    {
+        $openAlexArray = $this->api->getWork(Doi::removePrefix($citation->doi));
+
+        if (empty($openAlexArray)) return $citation;
+
+        foreach (Mappings::getWork() as $key => $value) {
+            switch ($key) {
+                case 'authors':
+                    foreach ($openAlexArray['authorships'] as $index => $authorship) {
+                        $citation->authors[] = $this->getCitationAuthor($authorship);
+                    }
+                    break;
+                default:
+                    if (is_array($value)) {
+                        $citation->$key =
+                            ArrayHelper::getValue($openAlexArray, $value);
+                    } else {
+                        $citation->$key = $openAlexArray[$value];
+                    }
+                    break;
+            }
+        }
+
+        return $citation;
+    }
+
+    /**
      * Convert to AuthorModel with mappings
      *
      * @param array $authorIn Input values
      * @return AuthorModel
      */
-    private function getAuthor(array $authorIn): AuthorModel
+    private function getCitationAuthor(array $authorIn): AuthorModel
     {
         $authorOut = new AuthorModel();
         $mappings = Mappings::getAuthor();
