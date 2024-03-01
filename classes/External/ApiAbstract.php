@@ -61,8 +61,9 @@ abstract class ApiAbstract
 
             if (empty($result) || json_last_error() !== JSON_ERROR_NONE) return [];
 
-            if (CitationManagerPlugin::isDebugMode)
-                LogHelper::logDebug([$method, $url, $options, $response->getStatusCode(), $result]);
+            if (CitationManagerPlugin::isDebugMode) {
+                LogHelper::logInfo([$method, $url, $options, $response->getStatusCode(), $result]);
+            }
 
             return $result;
 
