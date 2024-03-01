@@ -43,8 +43,7 @@ class PluginDAO
      */
     public function getCitations(int $publicationId): array
     {
-        if (empty($publicationId))
-            return [];
+        if (empty($publicationId)) return [];
 
         $publication = $this->getPublication($publicationId);
 
@@ -54,8 +53,7 @@ class PluginDAO
                 true
             );
 
-        if (empty($fromDb) || json_last_error() !== JSON_ERROR_NONE)
-            return [];
+        if (empty($fromDb) || json_last_error() !== JSON_ERROR_NONE) return [];
 
         $result = [];
 
@@ -77,8 +75,7 @@ class PluginDAO
      */
     public function saveCitations(int $publicationId, array $citations): bool
     {
-        if (empty($publicationId))
-            return false;
+        if (empty($publicationId)) return false;
 
         $publication = $this->getPublication($publicationId);
 
@@ -93,28 +90,27 @@ class PluginDAO
     }
 
     /**
-     * This method retrieves publicationWork for a publication and returns normalized to MetadataPublication.
+     * This method retrieves metadata for a publication and returns normalized to MetadataPublication.
      * If nothing found, the method returns a new MetadataPublication.
+     * If publication is provided, the metadata is retrieved from provided publication object.
      *
      * @param int $publicationId
+     * @param Publication|null $publication
      * @return MetadataPublication
      */
-    public function getMetadataPublication(int $publicationId): MetadataPublication
+    public function getMetadataPublication(int $publicationId, ?Publication $publication = null): MetadataPublication
     {
-        if (empty($publicationId))
-            return new MetadataPublication();
+        if (empty($publicationId)) return new MetadataPublication();
 
-        $publication = $this->getPublication($publicationId);
+        if (empty($publication)) $publication = $this->getPublication($publicationId);
 
-        $fromDb = json_decode(
-            $publication->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_PUBLICATION),
-            true
-        );
+        $metadata = $publication->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_PUBLICATION);
 
-        if (empty($fromDb) || json_last_error() !== JSON_ERROR_NONE)
-            return new MetadataPublication();
+        if (is_string($metadata)) $metadata = json_decode($metadata, true);
 
-        return ClassHelper::getClassWithValuesAssigned(new MetadataPublication(), $fromDb);
+        if (empty($metadata) || json_last_error() !== JSON_ERROR_NONE) return new MetadataPublication();
+
+        return ClassHelper::getClassWithValuesAssigned(new MetadataPublication(), (array)$metadata);
     }
 
     /**
@@ -126,8 +122,7 @@ class PluginDAO
      */
     public function saveMetadataPublication(int $publicationId, MetadataPublication $metadataPublication): bool
     {
-        if (empty($publicationId))
-            return false;
+        if (empty($publicationId)) return false;
 
         $publication = $this->getPublication($publicationId);
 
@@ -144,26 +139,25 @@ class PluginDAO
     /**
      * This method retrieves author metadata for an author and returns normalized.
      * If nothing found, the method returns a new MetadataAuthor.
+     * If author is provided, the metadata is retrieved from provided author object.
      *
      * @param int $authorId
+     * @param Author|null $author
      * @return MetadataAuthor
      */
-    public function getMetadataAuthor(int $authorId): MetadataAuthor
+    public function getMetadataAuthor(int $authorId, ?Author $author = null): MetadataAuthor
     {
-        if (empty($authorId))
-            return new MetadataAuthor();
+        if (empty($authorId)) return new MetadataAuthor();
 
-        $author = $this->getAuthor($authorId);
+        if (empty($author)) $author = $this->getAuthor($authorId);
 
-        $fromDb = json_decode(
-            $author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR),
-            true
-        );
+        $metadata = $author->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR);
 
-        if (empty($fromDb) || json_last_error() !== JSON_ERROR_NONE)
-            return new MetadataAuthor();
+        if (is_string($metadata)) $metadata = json_decode($metadata, true);
 
-        return ClassHelper::getClassWithValuesAssigned(new MetadataAuthor(), $fromDb);
+        if (empty($metadata) || json_last_error() !== JSON_ERROR_NONE) return new MetadataAuthor();
+
+        return ClassHelper::getClassWithValuesAssigned(new MetadataAuthor(), (array)$metadata);
     }
 
     /**
@@ -175,8 +169,7 @@ class PluginDAO
      */
     public function saveMetadataAuthor(int $authorId, MetadataAuthor $metadataAuthor): bool
     {
-        if (empty($authorId))
-            return false;
+        if (empty($authorId)) return false;
 
         $author = $this->getAuthor($authorId);
 
@@ -191,31 +184,31 @@ class PluginDAO
     }
 
     /**
-     * This method retrieves JournalModel from journal_settings and returns normalized to JournalModel.
-     * If nothing found, the method returns a new JournalModel.
+     * This method retrieves metadata for a journal and returns normalized to MetadataJournal.
+     * If nothing found, the method returns a new MetadataJournal.
+     * If journal is provided, the metadata is retrieved from provided journal object.
      *
-     * @param int $contextId
+     * @param int $journalId
+     * @param Journal|null $journal
      * @return MetadataJournal
      */
-    public function getMetadataJournal(int $contextId): MetadataJournal
+    public function getMetadataJournal(int $journalId, ?Journal $journal = null): MetadataJournal
     {
-        if (empty($contextId))
-            return new MetadataJournal();
+        if (empty($journalId)) return new MetadataJournal();
 
         // Reload the context schema
         Services::get('schema')->get(SCHEMA_CONTEXT, true);
 
-        $journal = $this->getJournal($contextId);
+        if (empty($journal)) $journal = $this->getJournal($journalId);
 
-        $fromDb = json_decode(
-            $journal->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_JOURNAL),
-            true
-        );
+        $metadata = $journal->getData(CitationManagerPlugin::CITATION_MANAGER_METADATA_JOURNAL);
 
-        if (empty($fromDb) || json_last_error() !== JSON_ERROR_NONE)
+        if (is_string($metadata)) $metadata = json_decode($metadata, true);
+
+        if (empty($metadata) || json_last_error() !== JSON_ERROR_NONE)
             return new MetadataJournal();
 
-        return ClassHelper::getClassWithValuesAssigned(new MetadataJournal(), $fromDb);
+        return ClassHelper::getClassWithValuesAssigned(new MetadataJournal(), (array)$metadata);
     }
 
     /**
@@ -227,8 +220,7 @@ class PluginDAO
      */
     public function saveMetadataJournal(int $contextId, MetadataJournal $metadataJournal): bool
     {
-        if (empty($contextId))
-            return false;
+        if (empty($contextId)) return false;
 
         // Reload the context schema
         Services::get('schema')->get(SCHEMA_CONTEXT, true);
