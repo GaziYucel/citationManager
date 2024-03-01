@@ -69,7 +69,7 @@ class Deposit extends DepositAbstract
         // journal
         if (empty($this->metadataJournal->wikidata_id)) {
             $this->metadataJournal->wikidata_id = $this->processJournal($locale, $this->context);
-            $pluginDao->saveMetadataJournal($this->publication->getId(), $this->metadataJournal);
+            $pluginDao->saveMetadataJournal($this->context->getId(), $this->metadataJournal);
         }
 
         // author(s)
