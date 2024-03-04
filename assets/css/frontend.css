@@ -11,10 +11,12 @@
 
 .citationManager-Button {
     display: inline-block;
-    color: #ffffff;
     text-decoration: none;
     padding: 0 .5em;
     line-height: 20px;
+    font-weight: normal;
+    -webkit-box-shadow: unset;
+    box-shadow: unset;
 }
 
 .citationManager-Button span {
@@ -22,13 +24,16 @@
 }
 
 .citationManager-ButtonGreen {
+    color: #ffffff;
     background-color: #60a917;
 }
 
 .citationManager-ButtonGrey {
+    color: #ffffff;
     background-color: #cccccc;
 }
 
 .citationManager-ButtonRed {
+    color: #ffffff;
     background-color: #00ffff;
 }

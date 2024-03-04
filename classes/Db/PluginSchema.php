@@ -41,13 +41,6 @@ class PluginSchema
             'validation' => ['nullable']
         ];
 
-        $schema->properties->{CitationManagerPlugin::CITATION_MANAGER_METADATA_JOURNAL} = (object)[
-            'type' => 'string',
-            'multilingual' => false,
-            'apiSummary' => true,
-            'validation' => ['nullable']
-        ];
-
         return false;
     }
 
