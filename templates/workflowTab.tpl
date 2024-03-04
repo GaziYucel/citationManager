@@ -12,56 +12,39 @@
             <tr>
                 <td style="width: 80px;"><strong>{translate key="context.context"}</strong></td>
                 <td colspan="2">
-                    <a class="citationManager-Button citationManager-ButtonGreen"
-                       v-if="citationManagerApp.metadataJournal.openalex_id"
-                       :href="'{$url.openAlex}/' + citationManagerApp.metadataJournal.openalex_id"
-                       target="_blank"><span>OpenAlex</span>
-                    </a>
-                    <span class="citationManager-Button citationManager-ButtonGrey"
-                          v-if="!citationManagerApp.metadataJournal.openalex_id">OpenAlex</span>
-
-                    <a class="citationManager-Button citationManager-ButtonGreen"
-                       v-if="citationManagerApp.metadataJournal.wikidata_id"
-                       :href="'{$url.wikidata}/' + citationManagerApp.metadataJournal.wikidata_id"
-                       target="_blank"><span>Wikidata</span></a>
-                    <span class="citationManager-Button citationManager-ButtonGrey"
-                          v-if="!citationManagerApp.metadataJournal.wikidata_id">Wikidata</span>
+                    <a class="pkpButton citationManager-Button" target="_blank"
+                       :class="(citationManagerApp.metadataJournal.openalex_id)?'':'citationManager-Disabled'"
+                       :href="'{$url.openAlex}/' + citationManagerApp.metadataJournal.openalex_id">OpenAlex</a>
+                    <a class="pkpButton citationManager-Button" target="_blank"
+                       :class="(citationManagerApp.metadataJournal.wikidata_id)?'':'citationManager-Disabled'"
+                       :href="'{$url.wikidata}/' + citationManagerApp.metadataJournal.wikidata_id">Wikidata</a>
                 </td>
             </tr>
             <tr>
                 <td><strong>{translate key="article.authors"}</strong></td>
                 <td colspan="2">
-                    <span v-for="(row, i) in citationManagerApp.authors" class="citationManager-Outline" style="margin-right: 5px;">
+                    <span v-for="(row, i) in citationManagerApp.authors" style="margin-right: 5px;">
                         <span class="citationManager-Tag">
-                            {{ row._data.givenName[citationManagerApp.locale] }} {{ row._data.familyName[citationManagerApp.locale] }}
-                        </span><a class="citationManager-Button citationManager-ButtonGreen"
-                                  v-if="row._data.orcid" :href="row._data.orcid" target="_blank">iD
-                        </a><span class="citationManager-Button citationManager-ButtonGrey"
-                                  v-if="!row._data.orcid">iD
-                        </span><a class="citationManager-Button citationManager-ButtonGreen"
-                                  v-if="row._data.metadata.wikidata_id"
-                                  :href="'{$url.wikidata}/' + row._data.metadata.wikidata_id"
-                                  target="_blank">WD
-                        </a><span class="citationManager-Button citationManager-ButtonGrey"
-                                  v-if="!row._data.metadata.wikidata_id">WD
-                    </span></span>
+                            {{ row._data.givenName[workingPublication.locale] }} {{ row._data.familyName[workingPublication.locale] }}
+                        </span>
+                        <a class="pkpButton citationManager-Button" target="_blank"
+                           :class="(row._data.orcid)?'':'citationManager-Disabled'"
+                           :href="row._data.orcid">iD</a>
+                        <a class="pkpButton citationManager-Button" target="_blank"
+                           :class="(row._data.{CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR}.wikidata_id)?'':'citationManager-Disabled'"
+                           :href="'{$url.wikidata}/' + row._data.{CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR}.wikidata_id">WD</a>
+			</span>
                 </td>
             </tr>
             <tr>
                 <td><strong>{translate key="common.publication"}</strong></td>
                 <td>
-                    <a class="citationManager-Button citationManager-ButtonGreen"
-                       v-if="citationManagerApp.metadataPublication.wikidata_id"
-                       :href="'{$url.wikidata}/' + citationManagerApp.metadataPublication.wikidata_id"
-                       target="_blank"><span>Wikidata</span></a>
-                    <span class="citationManager-Button citationManager-ButtonGrey"
-                          v-if="!citationManagerApp.metadataPublication.wikidata_id">Wikidata</span>
-                    <a class="citationManager-Button citationManager-ButtonGreen"
-                       v-if="citationManagerApp.metadataPublication.opencitations_id"
-                       :href="'{$url.openCitations}/' + citationManagerApp.metadataPublication.opencitations_id"
-                       target="_blank"><span>OpenCitations</span></a>
-                    <span class="citationManager-Button citationManager-ButtonGrey"
-                          v-if="!citationManagerApp.metadataPublication.opencitations_id">OpenCitations</span>
+                    <a class="pkpButton citationManager-Button" target="_blank"
+                       :class="(citationManagerApp.metadataPublication.wikidata_id)?'':'citationManager-Disabled'"
+                       :href="'{$url.wikidata}/' + citationManagerApp.metadataPublication.wikidata_id">Wikidata</a>
+                    <a class="pkpButton citationManager-Button" target="_blank"
+                       :class="(citationManagerApp.metadataPublication.opencitations_id)?'':'citationManager-Disabled'"
+                       :href="'{$url.openCitations}/' + citationManagerApp.metadataPublication.opencitations_id">OpenCitations</a>
                 </td>
                 <td class="citationManager-AlignRight">
                     <a @click="citationManagerApp.deposit()" id="buttonDeposit" class="pkpButton"
@@ -99,26 +82,18 @@
                     <td class="citationManager-ScrollableDiv-nr">{{ i + 1 }}</td>
                     <td class="citationManager-ScrollableDiv-parts">
                         <div>
-                             <span v-show="!row.editRow">
-                                 <a :href="'{$url.doi}' + '/' + citationManagerApp.citations[i].doi"
-                                    target="_blank">{{ citationManagerApp.citations[i].doi }}</a></span>
+                            <a :href="'{$url.doi}' + '/' + citationManagerApp.citations[i].doi"
+                               v-show="!row.editRow" target="_blank">{{ citationManagerApp.citations[i].doi }}</a>
                             <input id="doi-{{ i + 1 }}" placeholder="DOI" v-show="row.editRow"
-                                   v-model="citationManagerApp.citations[i].doi"
-                                   class="citationManager-Input"/>
-
-                            <span v-show="!row.editRow">
-                                    <a :href="citationManagerApp.citations[i].urn"
-                                       target="_blank">{{ citationManagerApp.citations[i].urn }}</a></span>
+                                   v-model="citationManagerApp.citations[i].doi" class="citationManager-Input"/>
+                            <a :href="citationManagerApp.citations[i].urn"
+                               v-show="!row.editRow" target="_blank">{{ citationManagerApp.citations[i].urn }}</a>
                             <input id="urn-{{ i + 1 }}" placeholder="URN" v-show="row.editRow"
-                                   v-model="citationManagerApp.citations[i].urn"
-                                   class="citationManager-Input"/>
-
-                            <span v-show="!row.editRow">
-                                    <a :href="citationManagerApp.citations[i].url"
-                                       target="_blank">{{ citationManagerApp.citations[i].url }}</a></span>
+                                   v-model="citationManagerApp.citations[i].urn" class="citationManager-Input"/>
+                            <a :href="citationManagerApp.citations[i].url"
+                               v-show="!row.editRow" target="_blank">{{ citationManagerApp.citations[i].url }}</a>
                             <input id="url-{{ i + 1 }}" placeholder="URL" v-show="row.editRow"
-                                   v-model="citationManagerApp.citations[i].url"
-                                   class="citationManager-Input"/>
+                                   v-model="citationManagerApp.citations[i].url" class="citationManager-Input"/>
                         </div>
 
                         <div>
@@ -131,33 +106,27 @@
                                            v-show="row.editRow"
                                            v-model="citationManagerApp.citations[i].authors[j].given_name"
                                            class="citationManager-Input"/>
-
                                     <span v-show="!row.editRow"
                                           class="citationManager-Tag">{{ citationManagerApp.citations[i].authors[j].family_name }}</span>
                                     <input id="family_name-{{ i + 1 }}-{{ j + 1 }}" placeholder="Family name"
                                            v-show="row.editRow"
                                            v-model="citationManagerApp.citations[i].authors[j].family_name"
                                            class="citationManager-Input"/>
-
-                                    <input id="orcid-{{ i + 1 }}-{{ j + 1 }}" placeholder="Orcid"
-                                           v-show="row.editRow"
+                                    <input id="orcid-{{ i + 1 }}-{{ j + 1 }}" placeholder="Orcid" v-show="row.editRow"
                                            v-model="citationManagerApp.citations[i].authors[j].orcid_id"
                                            class="citationManager-Input"/>
-
-                                    <span class="citationManager-Button citationManager-ButtonGrey"
-                                          v-if="!citationManagerApp.citations[i].authors[j].orcid_id">iD</span>
-                                    <a class="citationManager-Button citationManager-ButtonGreen"
-                                       v-if="citationManagerApp.citations[i].authors[j].orcid_id"
-                                       :href="'{$url.orcid}' + '/' + citationManagerApp.citations[i].authors[j].orcid_id"
-                                       target="_blank">iD</a>
-
+                                    <a class="pkpButton citationManager-Button" target="_blank"
+                                       :class="(citationManagerApp.citations[i].authors[j].orcid_id)?'':'citationManager-Disabled'"
+                                       :href="'{$url.orcid}' + '/' + citationManagerApp.citations[i].authors[j].orcid_id">iD</a>
                                     <a class="pkpButton" v-show="row.editRow"
                                        v-on:click="citationManagerApp.removeAuthor(i, j)">
-                                        <i class="fa fa-trash" aria-hidden="true"></i> </a>
+                                        <i class="fa fa-trash" aria-hidden="true"></i></a>
                                         <br v-show="row.editRow"/>
                                 </span>
                                 <a class="pkpButton" v-show="row.editRow"
-                                   v-on:click="citationManagerApp.addAuthor(i)">{translate key="plugins.generic.citationManager.author.add.button"}</a>
+                                   v-on:click="citationManagerApp.addAuthor(i)">
+                                    {translate key="plugins.generic.citationManager.author.add.button"}
+                                </a>
                             </div>
 
                             <div>
@@ -209,25 +178,20 @@
                         <div class="citationManager-RawText">{{ citationManagerApp.citations[i].raw }}</div>
 
                         <div>
-                            <a class="citationManager-Button citationManager-ButtonGreen"
-                               v-if="citationManagerApp.citations[i].wikidata_id"
-                               :href="'{$url.wikidata}/' + citationManagerApp.citations[i].wikidata_id"
-                               target="_blank"><span>Wikidata</span></a>
-                            <span class="citationManager-Button citationManager-ButtonGrey"
-                                  v-if="!citationManagerApp.citations[i].wikidata_id">Wikidata</span>
-                            <a class="citationManager-Button citationManager-Button citationManager-ButtonGreen"
-                               v-if="citationManagerApp.citations[i].openalex_id"
-                               :href="'{$url.openAlex}/' + citationManagerApp.citations[i].openalex_id"
-                               target="_blank"><span>OpenAlex</span></a>
-                            <span class="citationManager-Button citationManager-ButtonGrey"
-                                  v-if="!citationManagerApp.citations[i].openalex_id">OpenAlex</span>
+                            <a class="pkpButton citationManager-Button" target="_blank"
+                               :class="(citationManagerApp.citations[i].wikidata_id)?'':'citationManager-Disabled'"
+                               :href="'{$url.wikidata}/' + citationManagerApp.citations[i].wikidata_id">Wikidata</a>
+                            <a class="pkpButton citationManager-Button" target="_blank"
+                               :class="(citationManagerApp.citations[i].wikidata_id)?'':'citationManager-Disabled'"
+                               :href="'{$url.openAlex}/' + citationManagerApp.citations[i].openalex_id">OpenAlex</a>
                         </div>
                     </td>
                     <td class="citationManager-ScrollableDiv-actions">
-                        <a v-show="!row.editRow" @click="citationManagerApp.startEdit(i)"
-                           class="pkpButton"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                        <a v-show="row.editRow" @click="citationManagerApp.endEdit(i)"
-                           class="pkpButton"><i class="fa fa-check" aria-hidden="true"></i></a>
+                        <a v-show="!row.editRow"  @click="citationManagerApp.toggleEdit(i)" class="pkpButton"
+                           :class="(!citationManagerApp.isPublished)?'':'citationManager-Disabled'">
+                            <i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <a v-show="row.editRow"  @click="citationManagerApp.toggleEdit(i)" class="pkpButton">
+                            <i class="fa fa-check" aria-hidden="true"></i></a>
                     </td>
                 </tr>
                 </tbody>
@@ -237,25 +201,20 @@
 
     <div>
         <div class="citationManager-Hide">
-            <span>{{ citationManagerApp.citationsRaw               = workingPublication.citationsRaw }}</span>
+            <span>{{ citationManagerApp.workingPublicationStatus   = workingPublication.status }}</span>
             <span>{{ citationManagerApp.submissionId               = workingPublication.submissionId }}</span>
-            <span>{{ citationManagerApp.publicationStatus          = workingPublication.status }}</span>
-            <span>{{ citationManagerApp.workingCitationsStructured = workingPublication.CitationManagerPlugin_CitationsStructured }}</span>
-            <span>{{ citationManagerApp.workingMetadataPublication = workingPublication.CitationManagerPlugin_MetadataPublication }}</span>
-            <span>{{ citationManagerApp.workingMetadataJournal     = workingPublication.CitationManagerPlugin_MetadataJournal }}</span>
+            <span>{{ citationManagerApp.citationsRaw               = workingPublication.citationsRaw }}</span>
             <span>{{ citationManagerApp.workingPublicationId       = workingPublication.id }}</span>
-            <span>{{ citationManagerApp.locale                     = workingPublication.locale }}</span>
+            <span>{{ citationManagerApp.workingCitationsStructured = workingPublication.{CitationManagerPlugin::CITATION_MANAGER_CITATIONS_STRUCTURED} }}</span>
+            <span>{{ citationManagerApp.workingMetadataPublication = workingPublication.{CitationManagerPlugin::CITATION_MANAGER_METADATA_PUBLICATION} }}</span>
+            <span>{{ citationManagerApp.workingAuthors             = workingPublication.authors }}</span>
 
-            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[0]['value']
-                = citationManagerApp.citationsStructuredJsonComputed }}</span>
-            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[1]['value']
-                = citationManagerApp.metadataPublicationJsonComputed }}</span>
-            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.fields[2]['value']
-                = citationManagerApp.metadataJournalJsonComputed }}</span>
-            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}.action
-                = '{$apiBaseUrl}submissions/' + workingPublication.submissionId + '/publications/' + workingPublication.id }}</span>
+            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_CITATIONS_STRUCTURED_FORM}.fields[0]['value'] = JSON.stringify(citationManagerApp.citations) }}</span>
+            <span>{{ components.{CitationManagerPlugin::CITATION_MANAGER_CITATIONS_STRUCTURED_FORM}.action = '{$apiBaseUrl}submissions/' + workingPublication.submissionId + '/publications/' + workingPublication.id }}</span>
         </div>
-        <pkp-form v-bind="components.{CitationManagerPlugin::CITATION_MANAGER_STRUCTURED_CITATIONS_FORM}" @set="set"/>
+        <div>
+            <pkp-form v-bind="components.{CitationManagerPlugin::CITATION_MANAGER_CITATIONS_STRUCTURED_FORM}" @set="set"/>
+        </div>
     </div>
 
 </tab>
@@ -268,37 +227,25 @@
             metadataJournal: {$metadataJournal},
             metadataPublication: {$metadataPublication},
             authorsIn: {$authors},
-            author: {$authorModel},
+            authorModel: {$authorModel},
             citationsHelper: [],
-            csrfToken: pkp.currentUser.csrfToken,
-            statusCodePublished: pkp.const.STATUS_PUBLISHED,
-            locale: '',                     // workingPublication.locale
-            publicationStatus: 0,           // workingPublication.status
+            publicationId: 0,
             submissionId: 0,                // workingPublication.submissionId
-            publicationId: 0,               // workingPublication.publicationId
             citationsRaw: '',               // workingPublication.citationsRaw
-            workingPublicationId: 0,        // workingPublication.publicationId
+            workingPublicationId: 0,        // workingPublication.id
+            workingPublicationStatus: 0,    // workingPublication.status
             workingCitationsStructured: [], // workingPublication.CitationManagerPlugin_CitationsStructured
             workingMetadataPublication: [], // workingPublication.CitationManagerPlugin_MetadataPublication
-            workingMetadataJournal: [],     // workingPublication.CitationManagerPlugin_MetadataJournal
+            workingAuthors: [],             // workingPublication.authors
         },
         computed: {
-            citationsStructuredJsonComputed: function () {
-                return JSON.stringify(this.citations);
-            },
-            metadataPublicationJsonComputed: function () {
-                return JSON.stringify(this.metadataPublication);
-            },
-            metadataJournalJsonComputed: function () {
-                return JSON.stringify(this.metadataJournal);
-            },
             isStructured: function () {
                 return this.citations.length !== 0;
             },
             isPublished: function () {
                 let isPublished = false;
 
-                if (this.statusCodePublished === this.publicationStatus) {
+                if (pkp.const.STATUS_PUBLISHED === this.workingPublicationStatus) {
                     isPublished = true;
                 }
 
@@ -309,65 +256,28 @@
 
                 return isPublished;
             },
-            authors: function() {
+            authors: function () {
                 let result = this.authorsIn;
                 for (let i = 0; i < result.length; i++) {
-                    result[i]['_data']['metadata'] =
-                        result[i]['_data']['{CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR}']
+                    let metadata = result[i].{CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR};
+                    if (typeof metadata === 'string') {
+                        result[i].{CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR} = JSON.parse(metadata);
+                    }
                 }
                 return result;
             }
         },
         methods: {
-            startEdit: function (index) {
-                this.citationsHelper[index].editRow = true;
-            },
-            endEdit: function (index) {
-                if (this.citations[index].authors !== null) {
-                    this.cleanupEmptyAuthorRows(index);
-                }
-                this.citationsHelper[index].editRow = false;
-            },
-            addAuthor: function (index) {
-                if (this.citations[index].authors === null) {
-                    this.citations[index].authors = [];
-                }
-                this.citations[index].authors.push(this.author);
-            },
-            removeAuthor: function (index, authorIndex) {
-                if (confirm('{translate key="plugins.generic.citationManager.author.remove.question"}') !== true) {
-                    return;
-                }
-                this.citations[index].authors.splice(authorIndex, 1);
-            },
-            cleanupEmptyAuthorRows: function (index) {
-                let iS = '';
-                for (let i = 0; i < this.citations[index].authors.length; i++) {
-                    let rowIsNull = true;
-                    for (let key in this.citations[index].authors[i]) {
-                        if (this.citations[index].authors[i][key] !== null) {
-                            rowIsNull = false;
-                        }
-                    }
-                    if (rowIsNull === true) {
-                        this.citations[index].authors.splice(i);
-                    }
-                }
-            },
             clear: function () {
-                let questionText = '{translate key="plugins.generic.citationManager.clear.question"}';
-
-                if (confirm(questionText) !== true) return;
+                if (confirm('{translate key="plugins.generic.citationManager.clear.question"}') !== true) return;
 
                 this.citations = [];
                 this.citationsHelper = [];
             },
             process: function () {
-                let questionText = '{translate key="plugins.generic.citationManager.process.question"}';
+                if (confirm('{translate key="plugins.generic.citationManager.process.question"}') !== true) return;
 
-                if (confirm(questionText) !== true) return;
-
-                this.loadingImage(true);
+                this.toggleLoading();
 
                 let self = this;
                 $.ajax({
@@ -379,30 +289,28 @@
                         citationsRaw: self.citationsRaw
                     },
                     headers: {
-                        'X-Csrf-Token': self.csrfToken,
-                    },
-                    error(r) {
+                        'X-Csrf-Token': pkp.currentUser.csrfToken
                     },
                     success(response) {
                         let result = JSON.parse(JSON.stringify(response['message']));
-                        
+
                         self.metadataJournal = result['metadataJournal'];
                         self.metadataPublication = result['metadataPublication'];
                         self.citations = result['citations'];
                         self.citationsHelper = self.getCitationsHelper(result['citations']);
                         self.authorsIn = result['authors'];
-
-                        self.loadingImage(false);
+                    },
+                    complete() {
+                        self.toggleLoading();
                     }
                 });
             },
             deposit: function () {
-                let questionText = '{translate key="plugins.generic.citationManager.deposit.question"}';
-                if (confirm(questionText) !== true) {
+                if (confirm('{translate key="plugins.generic.citationManager.deposit.question"}') !== true) {
                     return;
                 }
 
-                this.loadingImage(true);
+                this.toggleLoading();
 
                 let self = this;
                 $.ajax({
@@ -414,9 +322,7 @@
                         citations: JSON.stringify(self.citations),
                     },
                     headers: {
-                        'X-Csrf-Token': self.csrfToken,
-                    },
-                    error(r) {
+                        'X-Csrf-Token': pkp.currentUser.csrfToken
                     },
                     success(response) {
                         let result = JSON.parse(JSON.stringify(response['message']));
@@ -426,32 +332,51 @@
                         self.citations = result['citations'];
                         self.citationsHelper = self.getCitationsHelper(result['citations']);
                         self.authorsIn = result['authors'];
-
-                        self.loadingImage(false);
+                    },
+                    complete() {
+                        self.toggleLoading();
                     }
                 });
             },
-            loadingImage: function (show) {
-                show = (typeof show !== 'undefined') ? show : true;
-
-                let elEmpty = document.getElementById('citationManager-ScrollableDivEmpty');
-                let elValue = document.getElementById('citationManager-ScrollableDivValue');
-                let elLoading = document.getElementById('citationManager-ScrollableDivLoading');
-
-                if (show === true) {
-                    elEmpty.classList.add('citationManager-Hide');
-                    elValue.classList.add('citationManager-Hide');
-                    elLoading.classList.remove('citationManager-Hide');
-                } else {
-                    elEmpty.classList.remove('citationManager-Hide');
-                    elValue.classList.remove('citationManager-Hide');
-                    elLoading.classList.add('citationManager-Hide');
+            toggleEdit: function (index) {
+                this.citationsHelper[index].editRow =
+                    !this.citationsHelper[index].editRow;
+                if (this.citations[index].authors !== null) {
+                    for (let i = 0; i < this.citations[index].authors.length; i++) {
+                        let rowIsNull = true;
+                        for (let key in this.citations[index].authors[i]) {
+                            if (this.citations[index].authors[i][key] !== null) {
+                                rowIsNull = false;
+                            }
+                        }
+                        if (rowIsNull === true) {
+                            this.citations[index].authors.splice(i);
+                        }
+                    }
                 }
+            },
+            addAuthor: function (index) {
+                if (this.citations[index].authors === null) {
+                    this.citations[index].authors = [];
+                }
+                this.citations[index].authors.push(JSON.parse(JSON.stringify(this.authorModel)));
+            },
+            removeAuthor: function (index, authorIndex) {
+                if (confirm('{translate key="plugins.generic.citationManager.author.remove.question"}') !== true) {
+                    return;
+                }
+                this.citations[index].authors.splice(authorIndex, 1);
+            },
+            toggleLoading: function () {
+                let cssClass = 'citationManager-Hide';
+                document.getElementById('citationManager-ScrollableDivEmpty').classList.toggle(cssClass);
+                document.getElementById('citationManager-ScrollableDivValue').classList.toggle(cssClass);
+                document.getElementById('citationManager-ScrollableDivLoading').classList.toggle(cssClass);
             },
             getCitationsHelper: function (arr) {
                 let result = [];
                 for (let i = 0; i < arr.length; i++) {
-                    result[i] = { 'editRow': false }; // fixme: don't use prettier CTRL+ALT+L
+                    result[i] = { /**/ 'editRow': false};
                 }
                 return result;
             }
@@ -467,14 +392,26 @@
                         this.citations = [];
                         this.citationsHelper = [];
                     }
+
                     this.metadataPublication = [];
                     if (this.workingMetadataPublication && this.workingMetadataPublication.length > 0) {
                         this.metadataPublication = JSON.parse(this.workingMetadataPublication);
                     }
-                    this.workingMetadataJournal = [];
-                    if (this.workingMetadataJournal && this.workingMetadataJournal.length > 0) {
-                        this.metadataJournal = JSON.parse(this.workingMetadataJournal);
+
+                    // authors
+                    let result = [];
+                    for (let i = 0; i < this.workingAuthors.length; i++) {
+                        let row = [];
+                        row._data = this.workingAuthors[i];
+
+                        let metadata = row._data.{CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR};
+                        if (typeof metadata === 'string') {
+                            row._data.{CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR} = JSON.parse(metadata);
+                        }
+                        result.push(row);
                     }
+                    this.authorsIn = result;
+
                 }
                 console.log(oldValue + ' > ' + newValue);
             },

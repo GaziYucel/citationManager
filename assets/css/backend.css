@@ -9,14 +9,8 @@
  * @brief Backend stylesheet for the plugin.
  */
 
-input[name="CitationManagerPlugin_CitationsStructured"],
-input[name="CitationManagerPlugin_MetadataJournal"],
-input[name="CitationManagerPlugin_MetadataPublication"]{
+input[name="CitationManagerPlugin_CitationsStructured"]{
     display: none;
-}
-
-.citationManager-Outline {
-    border: 1px solid #ccc;
 }
 
 #citationManager .pkpForm {
