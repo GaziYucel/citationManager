@@ -13,8 +13,14 @@
 namespace APP\plugins\generic\citationManager\classes\Workflow;
 
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
-use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataAuthor;
+use APP\plugins\generic\citationManager\classes\DataModels\Citation\AuthorModel;
 use APP\plugins\generic\citationManager\classes\Db\PluginDAO;
+use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
+use APP\plugins\generic\citationManager\classes\PID\Doi;
+use APP\plugins\generic\citationManager\classes\PID\GitHubIssue;
+use APP\plugins\generic\citationManager\classes\PID\OpenAlex;
+use APP\plugins\generic\citationManager\classes\PID\Orcid;
+use APP\plugins\generic\citationManager\classes\PID\Wikidata;
 use Application;
 use Author;
 use Exception;
@@ -44,6 +50,7 @@ class WorkflowTab
         /* @var Publication $publication */
         $templateMgr = &$args[1];
 
+        $pluginDao = new PluginDAO();
         $request = $this->plugin->getRequest();
         $context = $request->getContext();
         $submission = $templateMgr->getTemplateVars('submission');
@@ -73,22 +80,20 @@ class WorkflowTab
         $state['components'][CitationManagerPlugin::CITATION_MANAGER_CITATIONS_STRUCTURED_FORM] = $form->getConfig();
         $templateMgr->assign('state', $state);
 
-        $pluginDao = new PluginDAO();
-
-        // author(s)
-        $authors = [];
-        /* @var Author $author */
-        foreach ($publication->getData('authors') as $id => $author) {
-            $author->setData(CitationManagerPlugin::CITATION_MANAGER_METADATA_AUTHOR,
-                $pluginDao->getMetadataAuthor($author->getId(), $author));
-            $authors[] = $author;
-        }
-
-        $this->plugin->templateParameters['metadataJournal'] = json_encode($pluginDao->getMetadataJournal($context->getId()));
-        $this->plugin->templateParameters['authors'] = json_encode($authors);
-        $this->plugin->templateParameters['metadataPublication'] = json_encode($pluginDao->getMetadataPublication($publicationId));
-        $this->plugin->templateParameters['citationsStructured'] = json_encode($pluginDao->getCitations($publicationId));
-        $templateMgr->assign($this->plugin->templateParameters);
+        $templateParameters = [
+            'metadataJournal' => json_encode($pluginDao->getMetadataJournal($context->getId())),
+            'authorModel' => json_encode(ClassHelper::getClassAsArrayNullAssigned(new AuthorModel())),
+            'assetsUrl' => $request->getBaseUrl() . '/' . $this->plugin->getPluginPath() . '/assets',
+            'apiBaseUrl' => $apiBaseUrl,
+            'url' => [
+                'doi' => Doi::prefix,
+                'openAlex' => OpenAlex::prefix,
+                'openCitations' => GitHubIssue::prefix,
+                'orcid' => Orcid::prefix,
+                'wikidata' => Wikidata::prefix
+            ]
+        ];
+        $templateMgr->assign($templateParameters);
 
         $templateMgr->display($this->plugin->getTemplateResource("workflowTab.tpl"));
     }

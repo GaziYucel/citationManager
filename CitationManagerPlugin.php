@@ -10,29 +10,18 @@
  * @brief Plugin for parsing Citations and submitting to Open Access websites.
  */
 
-// todo: show citation manager tab only if $canAccessPublication && $metadataEnabled
-
 namespace APP\plugins\generic\citationManager;
 
 require_once(__DIR__ . '/vendor/autoload.php');
 
-use APP\plugins\generic\citationManager\classes\DataModels\Citation\AuthorModel;
-use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
 use APP\plugins\generic\citationManager\classes\Db\PluginSchema;
 use APP\plugins\generic\citationManager\classes\FrontEnd\ArticleView;
 use APP\plugins\generic\citationManager\classes\Handlers\PluginAPIHandler;
-use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
-use APP\plugins\generic\citationManager\classes\PID\Doi;
-use APP\plugins\generic\citationManager\classes\PID\GitHubIssue;
-use APP\plugins\generic\citationManager\classes\PID\OpenAlex;
-use APP\plugins\generic\citationManager\classes\PID\Orcid;
-use APP\plugins\generic\citationManager\classes\PID\Wikidata;
 use APP\plugins\generic\citationManager\classes\Settings\Actions;
 use APP\plugins\generic\citationManager\classes\Settings\Manage;
 use APP\plugins\generic\citationManager\classes\Workflow\SubmissionWizard;
 use APP\plugins\generic\citationManager\classes\Workflow\WorkflowSave;
 use APP\plugins\generic\citationManager\classes\Workflow\WorkflowTab;
-use APP\core\Application;
 use Config;
 use PKP\core\APIRouter;
 use PKP\core\JSONMessage;
@@ -72,8 +61,6 @@ class CitationManagerPlugin extends GenericPlugin
     public const CITATION_MANAGER_OPEN_CITATIONS_TOKEN = CITATION_MANAGER_PLUGIN_NAME . '_OpenCitations_Token';
     /** @var array Roles which can access PluginApiHandler */
     public const apiRoles = [Role::ROLE_ID_MANAGER, Role::ROLE_ID_SUB_EDITOR, Role::ROLE_ID_ASSISTANT, Role::ROLE_ID_REVIEWER, Role::ROLE_ID_AUTHOR];
-    /** @var array These are parameters which are used in templates in the front en backend. @see initPlugin() */
-    public array $templateParameters = [];
 
     /** @copydoc Plugin::register */
     public function register($category, $path, $mainContextId = null): bool
@@ -98,8 +85,6 @@ class CitationManagerPlugin extends GenericPlugin
                 Hook::add('Schema::get::context', function ($hookName, $args) use ($pluginSchema) {
                     $pluginSchema->addToSchemaContext($hookName, $args);
                 });
-
-                $this->initPlugin($category, $path, $mainContextId);
 
                 $submissionWizard = new SubmissionWizard($this);
                 Hook::add('Template::SubmissionWizard::Section', function ($hookName, $args) use ($submissionWizard) {
@@ -146,46 +131,6 @@ class CitationManagerPlugin extends GenericPlugin
         }
 
         return false;
-    }
-
-    /**
-     * Initializes this plugin
-     *
-     * @param $category
-     * @param $path
-     * @param $mainContextId
-     * @return void
-     */
-    public function initPlugin($category, $path, $mainContextId = null): void
-    {
-        $request = $this->getRequest();
-        $context = $request->getContext();
-
-        $apiBaseUrl = '';
-        if (!empty($context) && !empty($context->getData('urlPath'))) {
-            $apiBaseUrl = $request->getDispatcher()->url(
-                $request,
-                Application::ROUTE_API,
-                $context->getData('urlPath'),
-                '');
-        }
-
-        $this->templateParameters = [
-            'citationsStructured' => '',
-            'metadataJournal' => '',
-            'metadataPublication' => json_encode(ClassHelper::getClassAsArrayNullAssigned(new MetadataPublication())),
-            'authors' => '',
-            'authorModel' => json_encode(ClassHelper::getClassAsArrayNullAssigned(new AuthorModel())),
-            'assetsUrl' => $request->getBaseUrl() . '/' . $this->getPluginPath() . '/assets',
-            'apiBaseUrl' => $apiBaseUrl,
-            'url' => [
-                'doi' => Doi::prefix,
-                'openAlex' => OpenAlex::prefix,
-                'openCitations' => GitHubIssue::prefix,
-                'orcid' => Orcid::prefix,
-                'wikidata' => Wikidata::prefix
-            ]
-        ];
     }
 
     /** @copydoc Plugin::getActions() */
