@@ -9,7 +9,7 @@
  * @brief Backend stylesheet for the plugin.
  */
 
-input[name="CitationManagerPlugin_CitationsStructured"]{
+input[name="CitationManagerPlugin_CitationsStructured"] {
     display: none;
 }
 
@@ -44,6 +44,18 @@ input[name="CitationManagerPlugin_CitationsStructured"]{
 .citationManager-ScrollableDivLoading {
     height: 100%;
     display: grid;
+    align-content: center;
+    text-align: center;
+}
+
+.citationManager-ScrollableDivLoading > .pkpSpinner {
+}
+
+.citationManager-ScrollableDivLoading > .pkpSpinner::before {
+    width: 100px;
+    height: 100px;
+    -webkit-animation-duration: .8s;
+    animation-duration: .8s;
 }
 
 .citationManager-ScrollableDivLoading img {
