@@ -9,6 +9,7 @@ Citation Manager for OJS
 - [Features](#features)
     - [Extract PID's](#extract-pids)
     - [Get structured metadata from external services](#get-structured-metadata-from-external-services)
+    - [Task scheduler](#task-scheduler)
     - [Deposit to OpenCitations](#deposit-to-opencitations)
     - [Deposit Wikidata.org](#deposit-wikidataorg)
 - [Install and configure the plugin](#install-and-configure-the-plugin)
@@ -28,7 +29,7 @@ Citation Manager for OJS
 
 # Features
 
-### Extract PID's
+## Extract PID's
 
 - DOI
 - URL
@@ -36,7 +37,7 @@ Citation Manager for OJS
 - Handle
 - Arxiv
 
-### Get structured metadata from external services
+## Get structured metadata from external services
 
 - OpenAlex.org
     - see [Models for citations](#models-for-citations)
@@ -44,19 +45,21 @@ Citation Manager for OJS
     - given_name
     - family_name
 
-### Batch process
+## Task scheduler
+
+### Process and enrich
 
 - Batch process can be executed from Website > Plugins > Settings.
 - Batch process is automatically triggered by the Task Scheduler.
 - All publications which are not declined are processed.
 
-### Batch deposit
+### Deposit
 
 - Batch deposit can be executed from Website > Plugins > Settings.
 - Batch deposit is automatically triggered by the Task Scheduler.
 - All publications which are published are deposited.
 
-### Deposit to OpenCitations
+## Deposit to OpenCitations
 
 Metadata
 
@@ -85,7 +88,7 @@ Citing and cited relation
 
 Please see https://github.com/opencitations/crowdsourcing for more information.
 
-### Deposit Wikidata.org
+## Deposit Wikidata.org
 
 Only items which have unique identifiers will be deposited to Wikidata.
 
@@ -120,20 +123,20 @@ Only items which have unique identifiers will be deposited to Wikidata.
 
 # Install and configure the plugin
 
-### Requirements
+## Requirements
 
-- PHP 8.1+
+- PHP 8.0+
 
-### Install with Git
+## Install with Git
 
-Get the correct version for you OJS version:
+Get the correct version for your OJS version:
 
-- branch stable-3_3_0: use this version for OJS version 3.3.0.x \
+- branch stable-3_3_0: use this version for OJS version 3.3.0.x  
   `git clone -b stable-3_3_0 https://github.com/TIBHannover/citationManager`
-- branch stable-3_4_0: use this version for OJS version 3.4.0.x \
+- branch stable-3_4_0: use this version for OJS version 3.4.0.x  
   `git clone -b stable-3_4_0 https://github.com/TIBHannover/citationManager`
 
-### Install via direct download
+## Install via direct download
 
 - Download release for your OJS version from [here](https://github.com/TIBHannover/citationManager/releases).
   _Note the correct version for you OJS version._
@@ -141,7 +144,7 @@ Get the correct version for you OJS version:
   _Note the correct branch for your OJS version._
 - Extract the downloaded file to `/plugins/generic/citationManager`.
 
-### Configuration of the plugin
+## Configuration of the plugin
 
 - Login in your OJS instance as an Administrator or Manager
 - Navigate to Website > Plugins > Installed Plugins > Generic Plugins > Citation Manager Plugin
@@ -151,15 +154,15 @@ Get the correct version for you OJS version:
   and [Wikidata](#wikidataorg)
 - Click Save
 
-#### OpenCitations.org crowdsourcing
+### OpenCitations.org crowdsourcing
 
-Depositing at OpenCitations will be done through GitHub issues of OpenCitations/crowdsourcing. \
+Depositing at OpenCitations will be done through GitHub issues of [OpenCitations/crowdsourcing](https://github.com/OpenCitations/crowdsourcing). \
 For this you need a GitHub account, if you have none please register one through https://github.com/signup.
 
 - Login at https://github.com and navigate to https://github.com/settings/tokens
 - Click "Generate new token" button at the right top
-- At the input field "Note" typ in "OpenCitations CROCI"
-- Select "No expiration" at Expiration selectbox
+- At the input field "Note" typ in "OpenCitations Crowdsourcing"
+- Select "No expiration" at Expiration
 - Check the checkbox "public_repo"; leave all other checkboxes unchecked
 - Click on the button "Generate token"
 - You will be provided the token; save this token, as you will not shown this again
@@ -171,10 +174,10 @@ For this you need a GitHub account, if you have none please register one through
 - Fill in your token, which you generated above
 - Click Save
 
-#### Wikidata.org
+### Wikidata.org
 
-Depositing at Wikidata.org will be done through the wikidata API. \
-For this you need an account on Wikidata.org. \
+Depositing at Wikidata.org will be done through the wikidata API.  
+For this you need an account on Wikidata.org.  
 If you have none please register one through https://www.wikidata.org/w/index.php?title=Special:CreateAccount.
 
 - Login at https://www.wikidata.org and navigate to https://www.wikidata.org/wiki/Special:BotPasswords
@@ -202,52 +205,52 @@ If you have none please register one through https://www.wikidata.org/w/index.ph
 - Make your changes
 - Open a PR with your changes
 
-### Structure
+## Structure
 
     .
-    ├─ assets                               # Styles, images, javascript files
-    ├─ classes                              # Main folder with models / logic
-    │   ├─ DataModels                       # Data models used in this plugin
-    │   │   ├─ Citation                     # Data models for citations, authors in citations
-    │   │   └─ Metadata                     # Metadata for OJS authors, journals and publications
-    │   └─ Db                               # Database related classes
-    │   │   ├─ PluginDAO.php                # Retrieve / save data to / from database
-    │   │   └─ PluginSchema.php             # Schema extestions for data models
-    │   ├─ External                         # Classes for external services
-    │   |   ├─ Wikidata                     # Classes for Wikidata.org
-    |   |   |  ├─ DataModels                # Data models for this service, e.g. mappings
-    │   |   |  ├─ Api.php                   # Methods for connecting to their API
-    │   |   |  ├─ Deposit.php               # Methods for depositing data
-    │   |   |  └─ Enrich.php                # Methods for retrieving data
-    |   |   ├─ ... Other services           # Other services follow the same structure
-    |   |   ├─ ApiAbstract.php              # This class is used by service Api class
-    |   |   ├─ DepositAbstract.php          # This class is used by service Deposit class
-    |   |   └─ EnrichAbstract.php           # This class is used by service Enrich class
-    │   ├─ FrontEnd                         # Classes for the front end, e.g. ArticleView
-    │   ├─ Handlers                         # Handlers, e.g. Deposit, Enrich, API
-    │   ├─ Helpers                          # Helper classes
-    │   ├─ PID                              # PID classes
-    │   ├─ ScheduledTasks                   # Classes for the scheduler
-    │   ├─ Settings                         # Settings classes
-    │   └─ Workflow                         # Classes or the workflow and submission wizard
-    ├─ cypress                              # Cypress tests
-    ├─ docs                                 # Documentation, examples
-    ├─ locale                               # Language files
-    ├─ templates                            # Templates folder
-    ├─ tests                                # Tests folder
-    │   └─ classes                          # Classes for tests
-    ├─ vendor                               # Composer autoload and dependencies
-    ├─ .gitignore                           # Git ignore file
-    ├─ CitationManagerPlugin.php            # Main class of plugin
-    ├─ composer.json                        # Composer configuration file
-    ├─ CODE_OF_CONDUCT.md                   # Code of conduct
-    ├─ cypress.config.js                    # Cypress configuration file
-    ├─ index.php                            # Entry point plugin (ojs version 3.3.0)
-    ├─ LICENSE                              # License file
-    ├─ README.md                            # This file
-    ├─ package.json                         # npm packaging configuration
-    ├─ scheduledTasks.xml                   # Scheduler configuration file
-    └─ version.xml                          # Version information of the plugin
+    ├─ assets                        # Styles, images, javascript files
+    ├─ classes                       # Main folder with models / logic
+    │  ├─ DataModels                 # Data models used in this plugin
+    │  │  ├─ Citation                # Data models for citations, authors in citations
+    │  │  └─ Metadata                # Metadata for OJS authors, journals and publications
+    │  └─ Db                         # Database related classes
+    │  │  ├─ PluginDAO.php           # Retrieve / save data to / from database
+    │  │  └─ PluginSchema.php        # Schema extestions for data models
+    │  ├─ External                   # Classes for external services
+    │  |  ├─ Wikidata                # Classes for Wikidata.org
+    |  |  |  ├─ DataModels           # Data models for this service, e.g. mappings
+    │  |  |  ├─ Api.php              # Methods for connecting to their API
+    │  |  |  ├─ Inbound.php          # Methods for retrieving data
+    │  |  |  └─ Outbound.php         # Methods for depositing data 
+    |  |  ├─ ... Other services      # Other services follow the same structure
+    |  |  ├─ ApiAbstract.php         # This class is used by service Api class
+    |  |  ├─ InboundAbstract.php     # This class is used by service Inbound class
+    |  |  └─ OutboundAbstract.php    # This class is used by service Outbound class
+    │  ├─ FrontEnd                   # Classes for the front end, e.g. ArticleView
+    │  ├─ Handlers                   # Handlers, e.g. Outbound, Inbound, API
+    │  ├─ Helpers                    # Helper classes
+    │  ├─ PID                        # PID classes
+    │  ├─ ScheduledTasks             # Classes for the scheduler
+    │  ├─ Settings                   # Settings classes
+    │  └─ Workflow                   # Classes or the workflow and submission wizard
+    ├─ cypress                       # Cypress tests
+    ├─ docs                          # Documentation, examples
+    ├─ locale                        # Language files
+    ├─ templates                     # Templates folder
+    ├─ tests                         # Tests folder
+    │  └─ classes                    # Classes for tests
+    ├─ vendor                        # Composer autoload and dependencies
+    ├─ .gitignore                    # Git ignore file
+    ├─ CitationManagerPlugin.php     # Main class of plugin
+    ├─ composer.json                 # Composer configuration file
+    ├─ CODE_OF_CONDUCT.md            # Code of conduct
+    ├─ cypress.config.js             # Cypress configuration file
+    ├─ index.php                     # Entry point plugin (ojs version 3.3.0)
+    ├─ LICENSE                       # License file
+    ├─ README.md                     # This file
+    ├─ package.json                  # npm packaging configuration
+    ├─ scheduledTasks.xml            # Scheduler configuration file
+    └─ version.xml                   # Version information of the plugin
 
 Notes
 
@@ -260,7 +263,7 @@ Notes
   will also generate the autoload files.
 - The `-o` option generates the optimised files ready for production.
 
-### Debugging
+## Debugging
 
 There is a isDebugMode constant in file CitationManagerPlugin.php.
 This constant puts the plugin in debugging mode.
@@ -271,7 +274,7 @@ You can find the `files_dir` constant in your config.inc.php file.
 
 _Careful with sensitive information, (passwords, tokens) will be written in plain text._
 
-### Tests
+## Tests
 
 **Test classes**
 
@@ -318,7 +321,7 @@ npm run-script test_open
 | abstract          | The abstract of this work                                         |
 | authors           | List of AuthorModel objects                                       |
 | journal_name      | Name of the journal                                               |
-| journal_issn_l    | Issnl of the journal                                              |
+| journal_issn_l    | Issn_l of the journal                                             |
 | journal_publisher | Publisher name of the journal                                     |
 | url               | URL for the work                                                  |
 | urn               | URN for the work                                                  |

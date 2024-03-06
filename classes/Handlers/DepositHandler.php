@@ -44,8 +44,8 @@ class DepositHandler
 
     /** @var array|string[] */
     private array $services = [
-        '\APP\plugins\generic\citationManager\classes\External\OpenCitations\Deposit',
-        '\APP\plugins\generic\citationManager\classes\External\Wikidata\Deposit'
+        '\APP\plugins\generic\citationManager\classes\External\OpenCitations\Outbound',
+        '\APP\plugins\generic\citationManager\classes\External\Wikidata\Outbound'
     ];
 
     public function __construct()

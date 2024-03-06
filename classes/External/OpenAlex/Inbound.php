@@ -1,13 +1,13 @@
 <?php
 /**
- * @file classes/External/OpenAlex/Enrich.php
+ * @file classes/External/OpenAlex/Inbound.php
  *
  * @copyright (c) 2021+ TIB Hannover
  * @copyright (c) 2021+ Gazi Yücel
  * @license Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class OpenAlex
- * @brief OpenAlex class for OpenAlex
+ * @class Inbound
+ * @brief Inbound class for OpenAlex
  */
 
 namespace APP\plugins\generic\citationManager\classes\External\OpenAlex;
@@ -17,7 +17,7 @@ use APP\plugins\generic\citationManager\classes\DataModels\Citation\AuthorModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
-use APP\plugins\generic\citationManager\classes\External\EnrichAbstract;
+use APP\plugins\generic\citationManager\classes\External\InboundAbstract;
 use APP\plugins\generic\citationManager\classes\External\OpenAlex\DataModels\Mappings;
 use APP\plugins\generic\citationManager\classes\Helpers\ArrayHelper;
 use APP\plugins\generic\citationManager\classes\PID\Doi;
@@ -28,9 +28,9 @@ use Issue;
 use Publication;
 use Submission;
 
-class Enrich extends EnrichAbstract
+class Inbound extends InboundAbstract
 {
-    /** @copydoc EnrichAbstract::__construct */
+    /** @copydoc InboundAbstract::__construct */
     public function __construct(CitationManagerPlugin $plugin,
                                 ?Context              $context,
                                 ?Issue                $issue,

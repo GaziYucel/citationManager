@@ -1,13 +1,13 @@
 <?php
 /**
- * @file classes/External/OpenCitations/Deposit.php
+ * @file classes/External/OpenCitations/Outbound.php
  *
  * @copyright (c) 2021+ TIB Hannover
  * @copyright (c) 2021+ Gazi Yücel
  * @license Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class Deposit
- * @brief Deposit class for OpenCitations
+ * @class Outbound
+ * @brief Outbound class for OpenCitations
  */
 
 namespace APP\plugins\generic\citationManager\classes\External\OpenCitations;
@@ -17,7 +17,7 @@ use APP\plugins\generic\citationManager\classes\DataModels\Citation\AuthorModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
-use APP\plugins\generic\citationManager\classes\External\DepositAbstract;
+use APP\plugins\generic\citationManager\classes\External\OutboundAbstract;
 use APP\plugins\generic\citationManager\classes\External\OpenCitations\DataModels\WorkCitingCited;
 use APP\plugins\generic\citationManager\classes\External\OpenCitations\DataModels\WorkMetaData;
 use APP\plugins\generic\citationManager\classes\Helpers\ClassHelper;
@@ -31,7 +31,7 @@ use Issue;
 use Publication;
 use Submission;
 
-class Deposit extends DepositAbstract
+class Outbound extends OutboundAbstract
 {
     /** @var string The syntax for the title of the issue */
     protected string $titleSyntax = 'deposit {domain} {pid}';
@@ -42,7 +42,7 @@ class Deposit extends DepositAbstract
     /** @var string Default article type */
     protected string $defaultType = 'journal article';
 
-    /** @copydoc EnrichAbstract::__construct */
+    /** @copydoc InboundAbstract::__construct */
     public function __construct(CitationManagerPlugin $plugin,
                                 ?Context              $context,
                                 ?Issue                $issue,
