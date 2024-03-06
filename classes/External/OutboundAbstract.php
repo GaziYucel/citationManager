@@ -1,13 +1,13 @@
 <?php
 /**
- * @file classes/External/External/EnrichAbstract.php
+ * @file classes/External/OutboundAbstract.php
  *
  * @copyright (c) 2021+ TIB Hannover
  * @copyright (c) 2021+ Gazi Yücel
  * @license Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class EnrichAbstract
- * @brief Abstract enrich class to be extended by Enrich classes.
+ * @class OutboundAbstract
+ * @brief Abstract outbound class to be extended by Outbound classes.
  */
 
 namespace APP\plugins\generic\citationManager\classes\External;
@@ -20,7 +20,7 @@ use Issue;
 use Publication;
 use Submission;
 
-abstract class EnrichAbstract
+abstract class OutboundAbstract
 {
     /** @var ApiAbstract */
     public ApiAbstract $api;
@@ -87,7 +87,7 @@ abstract class EnrichAbstract
     }
 
     /**
-     * Process this external service
+     * Executes deposits to external services
      *
      * @return bool
      */

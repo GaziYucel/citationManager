@@ -23,7 +23,7 @@ msgstr "Publication Statement"
 msgid "plugins.generic.citationManager.publicationStatement.description"
 msgstr "Add a publication statement that you would like to appear on every publication's landing page"
 
-msgid "plugins.generic.citationManager.publication.label"
+msgid "plugins.generic.citationManager.workflow.label"
 msgstr "Citation Manager"
 
 msgid "plugins.generic.citationManager.deposit.button"
@@ -58,10 +58,7 @@ msgstr "After submission of this article, the references will be processed furth
 msgid "plugins.generic.citationManager.process.button"
 msgstr "Process"
 
-msgid "plugins.generic.citationManager.process.label"
-msgstr "Structured references/citations"
-
-msgid "plugins.generic.citationManager.process.description"
+msgid "plugins.generic.citationManager.workflow.description"
 msgstr "Please use the Process button to structure and enrich the citations.<br/>"
 "After DOIs are extracted, additional metadata from external websites will be collected and displayed below.<br/>"
 "Submission of this metadata occurs automatically when this article is published and receives a DOI.<br/>"
