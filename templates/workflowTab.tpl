@@ -2,11 +2,11 @@
 <link rel="stylesheet" href="{$assetsUrl}/css/frontend.css" type="text/css"/>
 
 <tab v-if="supportsReferences" id="citationManager"
-     label="{translate key="plugins.generic.citationManager.publication.label"}">
+     label="{translate key="plugins.generic.citationManager.workflow.label"}">
 
     <div class="header">
         <div>
-            {translate key="plugins.generic.citationManager.process.description"}
+            {translate key="plugins.generic.citationManager.workflow.description"}
         </div>
         <table>
             <tr>
