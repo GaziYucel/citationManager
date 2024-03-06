@@ -14,8 +14,8 @@ namespace APP\plugins\generic\citationManager\classes\Settings;
 
 use Application;
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
-use APP\plugins\generic\citationManager\classes\Handlers\DepositHandler;
-use APP\plugins\generic\citationManager\classes\Handlers\ProcessHandler;
+use APP\plugins\generic\citationManager\classes\Handlers\OutboundHandler;
+use APP\plugins\generic\citationManager\classes\Handlers\InboundHandler;
 use JSONMessage;
 use Notification;
 use NotificationManager;
@@ -53,7 +53,7 @@ class Manage
                 $form->initData();
                 return new JSONMessage(true, $form->fetch($request));
             case 'batch_process':
-                $process = new ProcessHandler();
+                $process = new InboundHandler();
                 $process->batchExecute();
                 $notificationManager = new NotificationManager();
                 $notificationManager->createTrivialNotification(
@@ -62,7 +62,7 @@ class Manage
                     array('contents' => __('plugins.generic.citationManager.settings.process.notification')));
                 return DAO::getDataChangedEvent();
             case 'batch_deposit':
-                $deposit = new DepositHandler();
+                $deposit = new OutboundHandler();
                 $deposit->batchExecute();
                 $notificationManager = new NotificationManager();
                 $notificationManager->createTrivialNotification(

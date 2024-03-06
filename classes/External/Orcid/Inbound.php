@@ -1,13 +1,13 @@
 <?php
 /**
- * @file classes/External/Orcid/Enrich.php
+ * @file classes/External/Orcid/Inbound.php
  *
  * @copyright (c) 2021+ TIB Hannover
  * @copyright (c) 2021+ Gazi Yücel
  * @license Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class Enrich
- * @brief Enrich class for Orcid
+ * @class Inbound
+ * @brief Inbound class for Orcid
  */
 
 namespace APP\plugins\generic\citationManager\classes\External\Orcid;
@@ -17,7 +17,7 @@ use APP\plugins\generic\citationManager\classes\DataModels\Citation\AuthorModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Citation\CitationModel;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataJournal;
 use APP\plugins\generic\citationManager\classes\DataModels\Metadata\MetadataPublication;
-use APP\plugins\generic\citationManager\classes\External\EnrichAbstract;
+use APP\plugins\generic\citationManager\classes\External\InboundAbstract;
 use APP\plugins\generic\citationManager\classes\External\Orcid\DataModels\Mappings;
 use APP\plugins\generic\citationManager\classes\Helpers\ArrayHelper;
 use APP\plugins\generic\citationManager\classes\PID\Orcid;
@@ -26,9 +26,9 @@ use Issue;
 use Publication;
 use Submission;
 
-class Enrich extends EnrichAbstract
+class Inbound extends InboundAbstract
 {
-    /** @copydoc EnrichAbstract::__construct */
+    /** @copydoc InboundAbstract::__construct */
     public function __construct(CitationManagerPlugin $plugin,
                                 ?Context              $journal,
                                 ?Issue                $issue,

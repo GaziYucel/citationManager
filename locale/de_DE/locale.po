@@ -24,7 +24,7 @@ msgid "plugins.generic.citationManager.publicationStatement.description"
 msgstr "Fügen Sie eine Beschreibung der Publikation hinzu, die auf jeder Landing Page der "
 "Publikation erscheinen soll."
 
-msgid "plugins.generic.citationManager.publication.label"
+msgid "plugins.generic.citationManager.workflow.label"
 msgstr "Zitations-Manager"
 
 msgid "plugins.generic.citationManager.deposit.button"
@@ -60,10 +60,7 @@ msgstr "After submission of this article, the references will be processed furth
 msgid "plugins.generic.citationManager.process.button"
 msgstr "Verarbeiten"
 
-msgid "plugins.generic.citationManager.process.label"
-msgstr "Strukturierte Literaturhinweise/Zitationen"
-
-msgid "plugins.generic.citationManager.process.description"
+msgid "plugins.generic.citationManager.workflow.description"
 msgstr "Bitte benutzen Sie den Button \"Verarbeiten\", um die Zitationen zu strukturieren und anzureichern.<br/>"
 "Nach der Extraktion der DOIs werden zusätzliche Metadaten von externen Websites erfasst und unten angezeigt.<br/>"
 "Die Übermittlung dieser Metadaten erfolgt automatisch, wenn dieser Beitrag veröffentlicht wird und einen DOI erhält."
