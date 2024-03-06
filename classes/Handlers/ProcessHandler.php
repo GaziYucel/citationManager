@@ -51,9 +51,9 @@ class ProcessHandler
 
     /** @var array|string[] */
     private array $services = [
-        '\APP\plugins\generic\citationManager\classes\External\OpenAlex\Enrich',
-        '\APP\plugins\generic\citationManager\classes\External\Orcid\Enrich',
-        '\APP\plugins\generic\citationManager\classes\External\Wikidata\Enrich'
+        '\APP\plugins\generic\citationManager\classes\External\OpenAlex\Inbound',
+        '\APP\plugins\generic\citationManager\classes\External\Orcid\Inbound',
+        '\APP\plugins\generic\citationManager\classes\External\Wikidata\Inbound'
     ];
 
     public function __construct()

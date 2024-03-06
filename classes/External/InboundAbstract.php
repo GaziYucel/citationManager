@@ -1,13 +1,13 @@
 <?php
 /**
- * @file classes/External/DepositAbstract.php
+ * @file classes/External/External/InboundAbstract.php
  *
  * @copyright (c) 2021+ TIB Hannover
  * @copyright (c) 2021+ Gazi Yücel
  * @license Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
- * @class DepositAbstract
- * @brief Abstract deposit class to deposit to external services
+ * @class InboundAbstract
+ * @brief Abstract inbound class to be extended by Inbound classes.
  */
 
 namespace APP\plugins\generic\citationManager\classes\External;
@@ -20,7 +20,7 @@ use Issue;
 use Publication;
 use Submission;
 
-abstract class DepositAbstract
+abstract class InboundAbstract
 {
     /** @var ApiAbstract */
     public ApiAbstract $api;
@@ -87,7 +87,7 @@ abstract class DepositAbstract
     }
 
     /**
-     * Executes deposits to external services
+     * Process this external service
      *
      * @return bool
      */
