@@ -195,9 +195,10 @@ If you have none please register one through https://www.wikidata.org/w/index.ph
 - At "Wikidata bot password", fill in the password which you have saved previously
 - Click Save
 
-# Screenshot(s)
+# Screenshot(s) / screen recording(s)
 
-![OPTIMETA screenshot edit submission](assets/screenshots/submission-edit.png)
+![screen recording workflowTab edit.gif](.project/screenrecordings/workflowTab-edit-ojs340.gif)
+![screenshot settings](.project/screenshots/settings-ojs340.png)
 
 # Development
 
