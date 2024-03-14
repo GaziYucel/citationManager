@@ -47,6 +47,8 @@ class ArticleView
         $templateMgr = $args[0];
         $template = $args[1];
 
+        $request = $this->plugin->getRequest();
+
         $showStructured = $this->plugin->getSetting($this->plugin->getCurrentContextId(),
             CitationManagerPlugin::CITATION_MANAGER_FRONTEND_SHOW_STRUCTURED);
 
@@ -55,7 +57,7 @@ class ArticleView
                 if ($showStructured === 'true') {
                     $templateMgr->addStyleSheet(
                         'citationManager',
-                        $this->plugin->templateParameters['assetsUrl'] . '/css/frontend.css', ['contexts' => ['frontend']]
+                        $request->getBaseUrl() . '/' . $this->plugin->getPluginPath() . '/assets' . '/css/frontend.css', ['contexts' => ['frontend']]
                     );
 
                     try {
