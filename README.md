@@ -199,6 +199,7 @@ If you have none please register one through https://www.wikidata.org/w/index.ph
 
 ![screen recording workflowTab edit.gif](.project/screenrecordings/workflowTab-edit-ojs340.gif)
 ![screenshot settings](.project/screenshots/settings-ojs340.png)
+![screenshot settings](.project/screenshots/frontend-ojs340.png)
 
 # Development
 

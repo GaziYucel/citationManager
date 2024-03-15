@@ -183,10 +183,10 @@ class ArticleView
             if (!empty($author['orcid_id'])) {
                 $out .= " " . str_replace(
                         ['{orcid}', '{name}'],
-                        [$author['orcid_id'], $author['family_name'] . ' ' . $author['given_name']],
+                        [$author['orcid_id'], $author['given_name'] . ' ' . $author['family_name']],
                         $orcidUrl);
             } else {
-                $out .= $author['family_name'] . ' ' . $author['given_name'];
+                $out .= $author['given_name'] . ' ' . $author['family_name'];
             }
             $out .= ', ';
         }
