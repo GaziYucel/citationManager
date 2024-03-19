@@ -7,7 +7,7 @@
  * @license Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class CitationManagerPlugin
- * @brief Plugin for parsing Citations and submitting to Open Access websites.
+ * @brief Plugin for structuring, enriching and depositing Citations from and to external services.
  */
 
 
@@ -31,9 +31,6 @@ define('CITATION_MANAGER_PLUGIN_NAME', basename(__FILE__, '.php'));
 
 class CitationManagerPlugin extends GenericPlugin
 {
-    /** @var true Whether debugging mode is activated, careful with exposing secrets! */
-    public const isDebugMode = false;
-
     /** @var string Whether show the structured or the raw citations */
     public const CITATION_MANAGER_FRONTEND_SHOW_STRUCTURED = CITATION_MANAGER_PLUGIN_NAME . '_FrontEndShowStructured';
     /** @var string Key for the journal metadata saved in journal */
@@ -159,28 +156,20 @@ class CitationManagerPlugin extends GenericPlugin
     }
 
     /**
-     * Load a setting  or load it from the config.inc.php if it is specified there.
-     *
-     * @param int $contextId The context or journal identifier.
-     * @param string $name The name of the setting.
-     * @return mixed|null|false The setting value or null if not found.
+     * Get isDebugMode from config, return false if setting not present
+     * @return bool
      */
-    public function getSetting($contextId, $name): mixed
+    public static function isDebugMode(): bool
     {
-        switch ($name) {
-            case 'isTestMode':
-                $config_value = Config::getVar(CITATION_MANAGER_PLUGIN_NAME, 'isTestMode');
-                if (!empty($config_value) && (strtolower($config_value) === 'true' || (string)$config_value === '1')) {
-                    $config_value = true;
-                } else if (!empty($config_value)) {
-                    $config_value = false;
-                }
-                break;
-            default:
-                return parent::getSetting($contextId, $name);
+        $config_value = Config::getVar(CITATION_MANAGER_PLUGIN_NAME, 'isDebugMode');
+
+        if (!empty($config_value)
+            && (strtolower($config_value) === 'true' || (string)$config_value === '1')
+        ) {
+            return true;
         }
 
-        return $config_value ?: parent::getSetting($contextId, $name);
+        return false;
     }
 }
 

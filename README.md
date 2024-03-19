@@ -267,12 +267,17 @@ Notes
 
 ## Debugging
 
-There is a isDebugMode constant in file CitationManagerPlugin.php.
-This constant puts the plugin in debugging mode.
+There is a debug mode possibility in this plugin. This constant puts the plugin in debugging mode.
 Extra debug information will be written to the log file (see LogHelper class)
 such as API calls.
 Debug information is written to the log file in the `files_dir` directory of your OJS instance.
 You can find the `files_dir` constant in your config.inc.php file.
+
+Please put the following in the file config.inc.php to enable this:
+```
+[citationmanager]
+isDebugMode=true
+```
 
 _Careful with sensitive information, (passwords, tokens) will be written in plain text._
 
