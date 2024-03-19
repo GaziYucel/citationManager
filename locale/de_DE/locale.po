@@ -15,14 +15,7 @@ msgid "plugins.generic.citationManager.displayName"
 msgstr "Zitation-Manager-Plugin"
 
 msgid "plugins.generic.citationManager.description"
-msgstr "Zitation-Manager-Plugin"
-
-msgid "plugins.generic.citationManager.publicationStatement"
-msgstr "Veröffentlichungserklärung"
-
-msgid "plugins.generic.citationManager.publicationStatement.description"
-msgstr "Fügen Sie eine Beschreibung der Publikation hinzu, die auf jeder Landing Page der "
-"Publikation erscheinen soll."
+msgstr "Plugin zur Strukturierung, Anreicherung und Hinterlegung von Zitaten von und zu externen Diensten."
 
 msgid "plugins.generic.citationManager.workflow.label"
 msgstr "Zitations-Manager"
