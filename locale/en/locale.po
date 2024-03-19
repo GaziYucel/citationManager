@@ -15,13 +15,7 @@ msgid "plugins.generic.citationManager.displayName"
 msgstr "Citation Manager Plugin"
 
 msgid "plugins.generic.citationManager.description"
-msgstr "Citation Manager Plugin"
-
-msgid "plugins.generic.citationManager.publicationStatement"
-msgstr "Publication Statement"
-
-msgid "plugins.generic.citationManager.publicationStatement.description"
-msgstr "Add a publication statement that you would like to appear on every publication's landing page"
+msgstr "Plugin for structuring, enriching and depositing Citations from and to external services."
 
 msgid "plugins.generic.citationManager.workflow.label"
 msgstr "Citation Manager"
