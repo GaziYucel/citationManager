@@ -14,9 +14,9 @@ namespace APP\plugins\generic\citationManager\classes\ScheduledTasks;
 
 use APP\plugins\generic\citationManager\CitationManagerPlugin;
 use APP\plugins\generic\citationManager\classes\Handlers\ProcessHandler;
+use PKP\scheduledTask\ScheduledTask;
+use PKP\scheduledTask\ScheduledTaskHelper;
 use PluginRegistry;
-use ScheduledTask;
-use ScheduledTaskHelper;
 
 class ProcessTask extends ScheduledTask
 {
