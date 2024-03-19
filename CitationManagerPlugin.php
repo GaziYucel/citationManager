@@ -108,7 +108,7 @@ class CitationManagerPlugin extends GenericPlugin
                         if ($router instanceof APIRouter
                             && str_contains($request->getRequestPath(), 'api/v1/' . CITATION_MANAGER_PLUGIN_NAME)
                         ) {
-                            $handler = new PluginAPIHandler($this);
+                            $handler = new PluginAPIHandler();
                             $router->setHandler($handler);
                             $handler->getApp()->run();
                             exit;
